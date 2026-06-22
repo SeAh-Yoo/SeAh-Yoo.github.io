@@ -172,7 +172,7 @@ https://seah-yoo.github.io/categories/#game-industry
 
 공통 UI는 `_layouts`, `_includes`, `styles/index.css`에서 관리하므로 글을 추가할 때 별도의 HTML이나 JavaScript를 작성할 필요가 없습니다.
 
-웹폰트는 `_includes/head.html`에서 불러오고 `styles/index.css`의 CSS 변수로 관리합니다. 헤더와 사이드바의 기본 한글은 경기천년체, 게시물 제목·본문·캡션과 라이선스 문구는 나눔스퀘어를 사용하며, 영어·특수문자는 Montserrat Alternates, 한자는 나눔명조 계열 폴백으로 표시합니다.
+웹폰트는 `_includes/head.html`에서 불러오고 `styles/index.css`의 CSS 변수로 관리합니다. 헤더와 사이드바의 기본 한글은 경기천년체, 게시물 제목·본문·캡션과 라이선스 문구는 나눔스퀘어를 사용하며, 영어·특수문자는 Poppins, 한자는 나눔명조 계열 폴백으로 표시합니다.
 
 사이드바는 데스크톱에서 화면 왼쪽에 고정되며, 아카이브와 카테고리 내비게이션을 하단에 묶어 표시합니다. 아카이브가 카테고리 바로 위에 오도록 구성되어 있고, 모바일에서는 아카이브 목록이 가로 스크롤 카드 형태로 전환됩니다.
 
