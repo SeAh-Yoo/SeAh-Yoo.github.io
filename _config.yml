@@ -12,6 +12,9 @@ markdown: kramdown
 plugins:
   - jekyll-sitemap
 
+include:
+  - _posts/txt260622-image-001.png
+
 author:
   name: "유세아"
   alternate_name: "SeAh Yoo"
