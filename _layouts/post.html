@@ -19,7 +19,8 @@
 
         <article class="post glass-panel">
           {% assign post_category = page.category | default: page.categories.first | default: "Column" %}
-          <a class="post-category-eyebrow" href="{{ '/categories/#' | append: post_category | slugify | relative_url }}">{{ post_category }}</a>
+          {% assign post_category_slug = post_category | slugify %}
+          <a class="post-category-eyebrow" href="{{ '/categories/#' | append: post_category_slug | relative_url }}">{{ post_category }}</a>
           {{ content }}
           <footer class="post-footer" aria-label="글 정보">
             <p>──<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %-m월 %-d일 %H:%M" }}</time>, {{ site.author.name }}.</p>
