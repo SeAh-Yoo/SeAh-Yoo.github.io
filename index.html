@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="마크다운 칼럼을 읽기 좋은 리퀴드 글래스 다크 테마 블로그" />
+    <title>SeAh Yoo | Columns</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles/index.css" />
+  </head>
+  <body>
+    <div class="aurora aurora-one"></div>
+    <div class="aurora aurora-two"></div>
+    <div class="shell">
+      <aside class="sidebar glass-panel" aria-label="칼럼 목록">
+        <a class="brand" href="#/">
+          <span class="brand-mark">S</span>
+          <span><strong>SeAh Yoo</strong><small>Columns</small></span>
+        </a>
+        <nav>
+          <p class="eyebrow">Archive</p>
+          <ol id="archiveList" class="archive-list"></ol>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <header class="hero glass-panel">
+          <p class="eyebrow">Markdown-powered GitHub Pages Blog</p>
+          <h1>생각의 결을 오래 머물 수 있는 글로.</h1>
+          <p>특정 폴더에 마크다운과 이미지를 함께 올리면, 글의 순서와 문장 구조를 보존해 읽기 좋은 칼럼으로 변환합니다.</p>
+        </header>
+        <section id="app" class="view" aria-live="polite"></section>
+      </main>
+    </div>
+    <script src="scripts/index.js" type="module"></script>
+  </body>
+</html>
