@@ -10,8 +10,12 @@ profile_image: "/assets/images/profile.jpg"
 permalink: /posts/:slug/
 markdown: kramdown
 
-plugins:
-  - jekyll-sitemap
+defaults:
+  - scope:
+      path: "google27564fde5057ccbe.html"
+    values:
+      sitemap: false
+
 
 author:
   name: "유세아"
