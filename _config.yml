@@ -12,6 +12,9 @@ markdown: kramdown
 plugins:
   - jekyll-sitemap
 
+exclude:
+  - posts/2026-06-22-ncsoft/index.md
+
 author:
   name: "유세아"
   alternate_name: "SeAh Yoo"
