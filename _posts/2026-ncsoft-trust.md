@@ -3,11 +3,11 @@ layout: post
 title: "신뢰 회복의 다리를 부순 고소장"
 subtitle: "엔씨소프트가 아직 사랑받지 못하는 이유"
 date: 2026-04-10 17:30:12 +0900
-last_modified_at: 2026-04-10 21:12:31 +0900
+last_modified_at: 2026-06-20 21:12:31 +0900
 category: "Game Industry"
 description: "엔씨소프트가 관심을 기울여야 할 것은 '주가'가 아니라 '유져와의 신뢰'라는 관점에서 넥슨과 글로벌 가챠 게임의 사례를 함께 살펴봅니다."
-slug: ncsoft-trust-2026
-permalink: /posts/ncsoft-trust-2026/
+slug: 2026-ncsoft-trust
+permalink: /posts/2026-ncsoft-trust/
 image1: /assets/images/nc-trust-image-001.jpg
 image2: /assets/images/nc-trust-image-002.jpg
 image3: /assets/images/nc-trust-image-003.png
