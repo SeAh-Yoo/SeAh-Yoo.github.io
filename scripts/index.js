@@ -5,14 +5,23 @@ if (legacyPost) {
 }
 
 const addPostImageCaptions = () => {
-  document.querySelectorAll('.post p > img:only-child').forEach((image) => {
-    const caption = image.getAttribute('alt')?.trim();
+  document.querySelectorAll('.post img[alt]').forEach((image) => {
+    if (image.closest('figure')) {
+      return;
+    }
+
+    const caption = image.getAttribute('alt').trim();
 
     if (!caption) {
       return;
     }
 
     const paragraph = image.parentElement;
+
+    if (!paragraph || paragraph.tagName !== 'P' || paragraph.childElementCount !== 1) {
+      return;
+    }
+
     const figure = document.createElement('figure');
     figure.className = 'post-image';
 
@@ -29,3 +38,5 @@ if (document.readyState === 'loading') {
 } else {
   addPostImageCaptions();
 }
+
+window.addEventListener('load', addPostImageCaptions);

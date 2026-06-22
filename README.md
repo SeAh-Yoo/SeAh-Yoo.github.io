@@ -37,7 +37,7 @@
 ├─ _posts/                         # 마크다운 칼럼 원본
 ├─ assets/
 │  └─ images/                      # 모든 칼럼의 공개 이미지
-├─ scripts/index.js                # 기존 해시 주소 호환 처리
+├─ scripts/index.js                # 기존 해시 주소 호환 처리 및 이미지 캡션 생성
 ├─ styles/index.css                # 사이트 디자인
 ├─ categories.html                 # 카테고리별 글 모아보기 페이지
 ├─ index.html                      # 홈페이지 진입점
