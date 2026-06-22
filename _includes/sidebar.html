@@ -1,15 +1,18 @@
 <aside class="sidebar glass-panel" aria-label="칼럼 목록">
   <a class="brand" href="{{ '/' | relative_url }}">
-    <span class="brand-mark">S</span>
+    <span class="brand-mark" aria-hidden="true">S</span>
     <span><strong>{{ site.english_title }}</strong><small>문하수도</small></span>
   </a>
-  <nav>
-    <p class="eyebrow">Archive</p>
+  <nav class="archive-nav" aria-labelledby="archive-heading">
+    <div class="archive-header">
+      <p class="eyebrow" id="archive-heading">Archive</p>
+      <span class="archive-hint">좌우로 넘겨 글 선택</span>
+    </div>
     <ol class="archive-list">
       {% for post in site.posts reversed %}
       <li>
         <a href="{{ post.url | relative_url }}"{% if page.url == post.url %} class="active" aria-current="page"{% endif %}>
-          {{ post.title }}
+          <span class="archive-title">{{ post.title }}</span>
           <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %-m월 %-d일" }}</time>
         </a>
       </li>
