@@ -275,7 +275,7 @@ body::before {
   font-size: 0.9rem;
 }
 .read-more {
-  display: inline-flex;
+  display: none;
   align-items: center;
   gap: 8px;
   margin-top: 18px;
@@ -476,6 +476,7 @@ body::before {
     font-size: 0.82rem;
   }
   .read-more {
+    display: inline-flex;
     width: 100%;
     justify-content: center;
     min-height: var(--tap);
