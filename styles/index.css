@@ -413,6 +413,19 @@ body::before {
   border: 1px solid var(--line);
   box-shadow: 0 22px 70px rgba(0, 0, 0, 0.35);
 }
+.post-image {
+  margin: 34px 0;
+}
+.post-image img {
+  margin: 0;
+}
+.post-image figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  text-align: center;
+}
 .empty {
   padding: 32px;
   border-radius: 24px;
@@ -590,6 +603,12 @@ body::before {
   .post img {
     margin: 24px 0;
     border-radius: 20px;
+  }
+  .post-image {
+    margin: 24px 0;
+  }
+  .post-image img {
+    margin: 0;
   }
   .empty {
     padding: 24px;

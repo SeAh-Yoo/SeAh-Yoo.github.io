@@ -100,6 +100,12 @@ assets/images/example-post-image-03.jpg
 ![이미지 설명]({{ page.image | relative_url }})
 ```
 
+이미지의 대체 텍스트는 접근성용 `alt`이자 게시물 화면의 작은 회색 캡션으로 자동 표시됩니다. 예를 들어 다음 Markdown은 이미지 아래에 `나는 돈슨입니다 (2014년 지스타 넥슨 티저)` 캡션을 생성합니다.
+
+```markdown
+![나는 돈슨입니다 (2014년 지스타 넥슨 티저)]({{ page.image1 | relative_url }})
+```
+
 본문에 이미지가 여러 장이라면 각 파일의 공개 경로를 직접 지정합니다.
 
 ```markdown
