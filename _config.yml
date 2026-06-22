@@ -5,6 +5,7 @@ url: "https://seah-yoo.github.io"
 baseurl: ""
 lang: "ko-KR"
 timezone: "Asia/Seoul"
+profile_image: "" # 예: /assets/images/profile.jpg
 
 permalink: /posts/:slug/
 markdown: kramdown
