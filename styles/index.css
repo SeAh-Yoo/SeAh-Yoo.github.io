@@ -15,7 +15,12 @@
   --shadow: 0 24px 90px rgba(0, 0, 0, 0.45);
   --radius: 30px;
   --tap: 48px;
+  --font-display: "GyeonggiTitle", "Gyeonggi Title", sans-serif;
+  --font-body: "NanumSquare", "Nanum Square", sans-serif;
+  --font-hanja: "Nanum Myeongjo", serif;
+  --font-symbol: "Montserrat Alternates", "Montserrat", sans-serif;
 }
+
 * {
   box-sizing: border-box;
 }
@@ -25,7 +30,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: Inter, "Noto Sans KR", system-ui, sans-serif;
+  font-family: var(--font-symbol), var(--font-display), var(--font-hanja), system-ui, sans-serif;
   background: radial-gradient(
     circle at 20% 10%,
     #20315f 0,
@@ -371,6 +376,14 @@ body::before {
 .post {
   padding: clamp(26px, 5vw, 72px);
   border-radius: var(--radius);
+}
+.post,
+.post h1,
+.post h2,
+.post h3,
+.post-image figcaption,
+.license-note {
+  font-family: var(--font-symbol), var(--font-body), var(--font-hanja), system-ui, sans-serif;
 }
 .post h1 {
   margin: 0 0 12px;
