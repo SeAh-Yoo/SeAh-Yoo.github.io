@@ -1,0 +1,20 @@
+title: "유세아의 문하수도"
+english_title: "The Literary Underground"
+description: "게임 산업, 인터넷 문화, 서브컬처, 영화, AI와 사회를 비평하는 유세아의 에세이·칼럼 아카이브."
+url: "https://seah-yoo.github.io"
+baseurl: ""
+lang: "ko-KR"
+timezone: "Asia/Seoul"
+
+permalink: /posts/:slug/
+markdown: kramdown
+
+plugins:
+  - jekyll-sitemap
+
+exclude:
+  - posts/2026-06-22-ncsoft/index.md
+
+author:
+  name: "유세아"
+  alternate_name: "SeAh Yoo"
