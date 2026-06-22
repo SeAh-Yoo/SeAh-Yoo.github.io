@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    {% include head.html %}
+  </head>
+  <body>
+    <div class="aurora aurora-one"></div>
+    <div class="aurora aurora-two"></div>
+    <div class="shell">
+      {% include sidebar.html %}
+
+      <main class="content">
+        <header class="hero glass-panel">
+          <p class="eyebrow">Literary Underground of SeAh Yoo</p>
+          <h1>유세아의 문하수도</h1>
+          <p>인터넷 문화 및 서브컬쳐/영화/게임을 위한 문화 하수도.</p>
+        </header>
+
+        <section class="view" aria-label="최신 칼럼">
+          {% for post in site.posts limit: 5 %}
+          <a class="card glass-panel" href="{{ post.url | relative_url }}">
+            <div class="meta">
+              <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %-m월 %-d일" }}</time>
+              <span>{{ post.category | default: "Column" }}</span>
+            </div>
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.description }}</p>
+          </a>
+          {% else %}
+          <section class="empty glass-panel">아직 등록된 칼럼이 없습니다.</section>
+          {% endfor %}
+        </section>
+      </main>
+    </div>
+    <script src="{{ '/scripts/index.js' | relative_url }}"></script>
+  </body>
+</html>
