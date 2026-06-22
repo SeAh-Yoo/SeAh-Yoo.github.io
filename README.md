@@ -33,7 +33,7 @@
 │  └─ post.html                    # 칼럼 레이아웃
 ├─ _posts/                         # 마크다운 칼럼 원본
 ├─ assets/
-│  └─ images/posts/                # 칼럼별 공개 이미지
+│  └─ images/                      # 모든 칼럼의 공개 이미지
 ├─ scripts/index.js                # 기존 해시 주소 호환 처리
 ├─ styles/index.css                # 사이트 디자인
 ├─ index.html                      # 홈페이지 진입점
@@ -72,7 +72,7 @@ category: "Game Industry"
 description: "검색 결과와 공유 미리보기에 표시할 글 소개"
 slug: example-post
 permalink: /posts/example-post/
-image: /assets/images/posts/example-post/cover.png
+image: /assets/images/example-post-cover.png
 ---
 ```
 
@@ -80,22 +80,34 @@ image: /assets/images/posts/example-post/cover.png
 
 ### 3. 이미지 추가하기
 
-이미지는 `_posts`가 아니라 공개 정적 자산 폴더에 저장합니다.
+이미지는 `_posts`가 아니라 `assets/images` 폴더에 저장합니다.
 
 ```text
-assets/images/posts/example-post/cover.png
+assets/images/example-post-cover.png
+assets/images/example-post-image-02.png
+assets/images/example-post-image-03.jpg
 ```
 
-본문에서는 다음처럼 사용할 수 있습니다.
+본문에서는 대표 이미지를 다음처럼 사용할 수 있습니다.
 
 ```markdown
 ![이미지 설명]({{ page.image | relative_url }})
 ```
 
-본문에 이미지가 여러 장이라면 각 파일을 같은 글 전용 폴더에 넣고 공개 경로를 직접 지정합니다.
+본문에 이미지가 여러 장이라면 각 파일의 공개 경로를 직접 지정합니다.
 
 ```markdown
-![추가 이미지](/assets/images/posts/example-post/image-02.png)
+![두 번째 이미지](/assets/images/example-post-image-02.png)
+
+![세 번째 이미지](/assets/images/example-post-image-03.jpg)
+```
+
+모든 이미지를 한 폴더에서 관리하므로 파일 이름이 겹치지 않도록 글의 slug나 날짜를 접두어로 붙이는 방식을 권장합니다.
+
+```text
+ncsoft-trust-2026-cover.png
+ncsoft-trust-2026-chart-01.png
+20260622-ncsoft-image-02.jpg
 ```
 
 ### 4. 본문 작성하기
