@@ -19,6 +19,8 @@
 - 자동 생성되는 `sitemap.xml`
 - `robots.txt`를 통한 검색 엔진 크롤링 안내
 - 이전 `#/post/<slug>` 주소의 새 글 주소 이동
+- `/categories/` 카테고리 모아보기와 카테고리별 앵커 이동
+- 하단 정렬된 사이드바 아카이브·카테고리 내비게이션
 
 ## 프로젝트 구조
 
@@ -27,8 +29,9 @@
 ├─ _config.yml                     # Jekyll 및 사이트 기본 설정
 ├─ _includes/
 │  ├─ head.html                    # SEO 메타 태그와 구조화 데이터
-│  └─ sidebar.html                 # 공통 아카이브 사이드바
+│  └─ sidebar.html                 # 공통 아카이브·카테고리 사이드바
 ├─ _layouts/
+│  ├─ categories.html              # 카테고리 페이지 레이아웃
 │  ├─ home.html                    # 홈페이지 레이아웃
 │  └─ post.html                    # 칼럼 레이아웃
 ├─ _posts/                         # 마크다운 칼럼 원본
@@ -36,6 +39,7 @@
 │  └─ images/                      # 모든 칼럼의 공개 이미지
 ├─ scripts/index.js                # 기존 해시 주소 호환 처리
 ├─ styles/index.css                # 사이트 디자인
+├─ categories.html                 # 카테고리별 글 모아보기 페이지
 ├─ index.html                      # 홈페이지 진입점
 ├─ robots.txt
 └─ README.md
@@ -77,6 +81,8 @@ image: /assets/images/example-post-cover.png
 ```
 
 `description`은 검색 결과에 표시될 수 있으므로 글의 핵심 내용을 자연스러운 한두 문장으로 작성합니다.
+
+`category` 값은 홈페이지 카드, 글 상단 카테고리 버튼, 사이드바 카테고리 목록, `/categories/` 페이지에서 자동으로 사용됩니다. 공백이 포함된 카테고리 이름도 앵커 이동이 가능하도록 slug로 변환되므로, 예를 들어 `Game Industry`는 `/categories/#game-industry`로 연결됩니다.
 
 ### 3. 이미지 추가하기
 
@@ -140,8 +146,32 @@ https://seah-yoo.github.io/posts/ncsoft-trust-2026/
 
 홈페이지와 사이드바에는 Jekyll이 `_posts`의 글을 읽어 최신순으로 자동 표시합니다.
 
+카테고리별 글 모아보기는 다음 URL에서 확인할 수 있습니다.
+
+```text
+https://seah-yoo.github.io/categories/
+```
+
+각 카테고리는 페이지 안의 앵커로 연결됩니다.
+
+```text
+https://seah-yoo.github.io/categories/#game-industry
+```
+
+글 상단의 카테고리 버튼과 사이드바의 카테고리 항목은 같은 앵커 규칙을 사용합니다.
+
 ## 디자인과 검색 최적화
 
 사이트는 JavaScript가 없어도 제목과 본문을 읽을 수 있는 정적 HTML을 생성합니다. 각 칼럼에는 제목, 설명, 작성일, 수정일, 대표 이미지, canonical URL과 `BlogPosting` 구조화 데이터가 포함됩니다.
 
 공통 UI는 `_layouts`, `_includes`, `styles/index.css`에서 관리하므로 글을 추가할 때 별도의 HTML이나 JavaScript를 작성할 필요가 없습니다.
+
+사이드바는 데스크톱에서 화면 왼쪽에 고정되며, 아카이브와 카테고리 내비게이션을 하단에 묶어 표시합니다. 아카이브가 카테고리 바로 위에 오도록 구성되어 있고, 모바일에서는 아카이브 목록이 가로 스크롤 카드 형태로 전환됩니다.
+
+글 본문 하단의 작성일·작성자 표기는 본문보다 작은 밝은 회색 텍스트로 우측 정렬되어, 본문 내용보다 낮은 시각적 우선순위를 갖도록 스타일링되어 있습니다.
+
+## 라이선스
+
+이 저장소에 직접 포함된 글, 이미지, 페이지 구성, 디자인은 별도 표기가 없는 한 [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/deed.ko)로 공개합니다.
+
+즉 가능한 범위에서 저작권과 인접권을 포기하며, 누구나 허락이나 출처 표기 없이 복사, 수정, 배포, 공연, 상업적 이용을 할 수 있습니다. 엄밀히 말하면 이는 저작권을 전제로 공유 조건을 유지하는 카피레프트라기보다, 저작권 제한을 두지 않는 퍼블릭 도메인 지향 선언입니다.

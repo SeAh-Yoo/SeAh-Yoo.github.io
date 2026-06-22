@@ -222,6 +222,8 @@ body::before {
 }
 .sidebar nav {
   min-height: 0;
+}
+.archive-nav {
   margin-top: auto;
 }
 .archive-header {
@@ -677,6 +679,16 @@ body::before {
   font-size: 0.75rem;
   letter-spacing: 0;
 }
+.license-note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+.license-note a {
+  color: var(--soft);
+  text-underline-offset: 3px;
+}
 .post-category-eyebrow {
   margin-bottom: 18px;
 }
@@ -688,8 +700,8 @@ body::before {
 }
 .post-footer p {
   margin: 0;
-  color: var(--muted);
-  font-size: 0.98rem;
+  color: #aeb7c8;
+  font-size: 0.54rem;
   line-height: 1.8;
   text-align: right;
 }
