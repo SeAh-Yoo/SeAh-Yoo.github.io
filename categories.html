@@ -1,0 +1,45 @@
+---
+layout: categories
+title: "카테고리별 글 모아보기"
+description: "유세아의 문하수도에 게시된 칼럼을 카테고리별로 모아봅니다."
+permalink: /categories/
+---
+<section class="category-index glass-panel" aria-labelledby="category-index-heading">
+  <p class="eyebrow">Categories</p>
+  <h1 id="category-index-heading">카테고리별 글 모아보기</h1>
+  <p>관심 있는 카테고리를 선택하면 같은 주제의 글만 모아볼 수 있습니다.</p>
+
+  <nav class="category-chip-list" aria-label="카테고리 목록">
+    {% assign categories = site.categories | sort %}
+    {% for category in categories %}
+      {% assign category_name = category[0] %}
+      {% assign category_posts = category[1] %}
+      <a class="category-chip" href="#{{ category_name | slugify }}">{{ category_name }} <span>{{ category_posts | size }}</span></a>
+    {% endfor %}
+  </nav>
+</section>
+
+{% assign categories = site.categories | sort %}
+{% for category in categories %}
+  {% assign category_name = category[0] %}
+  {% assign category_posts = category[1] %}
+  <section class="category-section" id="{{ category_name | slugify }}" aria-labelledby="category-{{ category_name | slugify }}">
+    <div class="category-section-heading">
+      <p class="eyebrow">{{ category_posts | size }} posts</p>
+      <h2 id="category-{{ category_name | slugify }}">{{ category_name }}</h2>
+    </div>
+    <div class="view">
+      {% for post in category_posts %}
+      <a class="card glass-panel" href="{{ post.url | relative_url }}">
+        <div class="meta">
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %-m월 %-d일" }}</time>
+          <span>{{ post.category | default: category_name }}</span>
+        </div>
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.description }}</p>
+        <span class="read-more" aria-hidden="true">읽으러 가기</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+{% endfor %}
