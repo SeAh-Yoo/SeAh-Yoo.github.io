@@ -25,4 +25,23 @@
       {% endfor %}
     </ol>
   </nav>
+
+  <nav class="category-nav" aria-labelledby="category-heading">
+    <div class="archive-header">
+      <p class="eyebrow" id="category-heading">Categories</p>
+    </div>
+    <ol class="category-list">
+      {% assign categories = site.categories | sort %}
+      {% for category in categories %}
+        {% assign category_name = category[0] %}
+        {% assign category_posts = category[1] %}
+        <li>
+          <a href="{{ '/categories/#' | append: category_name | slugify | relative_url }}">
+            <span>{{ category_name }}</span>
+            <small>{{ category_posts | size }}</small>
+          </a>
+        </li>
+      {% endfor %}
+    </ol>
+  </nav>
 </aside>
