@@ -1,6 +1,12 @@
 <aside class="sidebar glass-panel" aria-label="칼럼 목록">
   <a class="brand" href="{{ '/' | relative_url }}">
-    <span class="brand-mark" aria-hidden="true">S</span>
+    <span class="brand-mark" aria-hidden="true">
+      {% if site.profile_image %}
+      <img src="{{ site.profile_image | relative_url }}" alt="" />
+      {% else %}
+      <span>S</span>
+      {% endif %}
+    </span>
     <span><strong>{{ site.english_title }}</strong><small>문하수도</small></span>
   </a>
   <nav class="archive-nav" aria-labelledby="archive-heading">
