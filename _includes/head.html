@@ -106,4 +106,5 @@
 <link rel="stylesheet" href="{{ '/styles/index.css' | relative_url }}" />
 <link rel="stylesheet" href="{{ '/styles/sidebar-collapse.css' | relative_url }}" />
 <link rel="stylesheet" href="{{ '/styles/counter.css' | relative_url }}" />
+{% if page.layout == "post" %}<link rel="stylesheet" href="{{ '/styles/post-actions.css' | relative_url }}" />{% endif %}
 <script defer src="{{ '/scripts/sidebar-collapse.js' | relative_url }}"></script>
