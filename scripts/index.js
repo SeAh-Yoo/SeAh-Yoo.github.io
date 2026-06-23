@@ -72,14 +72,17 @@ const parseGoatCounterCount = (value) => {
   return Number.isFinite(parsed) ? parsed : 0;
 };
 
-// The sidebar uses at least four digits: 1 → 0001, 42 → 0042,
-// 1234 → 1234, and five or more digits are shown without truncation.
-const formatSiteCounterCount = (value) =>
-  String(Math.max(0, Math.trunc(value))).padStart(4, '0');
+// Counts below 10,000 stay ungrouped. Starting at five digits, use standard
+// thousands separators: 9999 → 9999, 10000 → 10,000, 50304 → 50,304.
+const formatCounterCount = (value, minimumDigits = 0) => {
+  const count = Math.max(0, Math.trunc(value));
 
-// Post view counts keep their normal locale-aware number formatting.
-const formatGoatCounterCount = (value) =>
-  new Intl.NumberFormat('ko-KR').format(Math.max(0, value));
+  if (count >= 10000) {
+    return count.toLocaleString('en-US');
+  }
+
+  return String(count).padStart(minimumDigits, '0');
+};
 
 const fetchGoatCounterCount = async (path, params = {}) => {
   const response = await fetch(buildGoatCounterUrl(path, params), {
@@ -104,6 +107,31 @@ const setCounterText = (container, selector, value) => {
   if (element) {
     element.textContent = value;
   }
+};
+
+const setColoredCounter = (container, selector, value) => {
+  const element = container.querySelector(selector);
+
+  if (!element) {
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+
+  Array.from(value).forEach((character) => {
+    const span = document.createElement('span');
+    span.textContent = character;
+
+    if (/^\d$/.test(character)) {
+      span.className = `counter-digit counter-digit-${character}`;
+    } else {
+      span.className = 'counter-separator';
+    }
+
+    fragment.appendChild(span);
+  });
+
+  element.replaceChildren(fragment);
 };
 
 // GoatCounter interprets the special start values "week" and "month" as
@@ -134,18 +162,18 @@ const updateSiteVisitorCounter = async () => {
     : null;
 
   const weekText = weekCount !== null
-    ? formatSiteCounterCount(weekCount)
+    ? formatCounterCount(weekCount, 4)
     : '----';
   const monthText = monthCount !== null
-    ? formatSiteCounterCount(monthCount)
+    ? formatCounterCount(monthCount, 4)
     : '----';
   const totalText = totalCount !== null
-    ? formatSiteCounterCount(totalCount)
+    ? formatCounterCount(totalCount, 4)
     : '----';
 
-  setCounterText(counter, '[data-goatcounter-value="week"]', weekText);
-  setCounterText(counter, '[data-goatcounter-value="month"]', monthText);
-  setCounterText(counter, '[data-goatcounter-value="total"]', totalText);
+  setColoredCounter(counter, '[data-goatcounter-value="week"]', weekText);
+  setColoredCounter(counter, '[data-goatcounter-value="month"]', monthText);
+  setColoredCounter(counter, '[data-goatcounter-value="total"]', totalText);
 
   [weekResult, monthResult, totalResult].forEach((result) => {
     if (result.status === 'rejected') {
@@ -167,7 +195,7 @@ const updatePostViewCounter = async () => {
       : window.location.pathname;
     const count = await fetchGoatCounterCount(path);
 
-    setCounterText(counter, '[data-goatcounter-post-count]', formatGoatCounterCount(count));
+    setCounterText(counter, '[data-goatcounter-post-count]', formatCounterCount(count));
   } catch (error) {
     setCounterText(counter, '[data-goatcounter-post-count]', '-');
     console.warn(error);
