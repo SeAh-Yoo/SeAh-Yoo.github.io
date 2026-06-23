@@ -23,7 +23,7 @@
           <a class="post-category-eyebrow" href="{{ '/categories/#' | append: post_category_slug | relative_url }}">{{ post_category }}</a>
           {% include post-translations.html %}
           {% capture post_view_counter %}<div class="post-view-counter" data-goatcounter-post-view aria-live="polite">조회수: <span data-goatcounter-post-count>-</span></div>{% endcapture %}
-          {% capture post_toc_mount %}<div class="post-toc-mount" data-post-toc-mount></div>{% endcapture %}
+          {% capture post_toc_mount %}<div class="post-toc-mount" data-post-toc-mount data-post-subtitle="{{ page.subtitle | default: '' | strip_html | escape }}"></div>{% endcapture %}
           {% capture title_with_tools %}</h1>{{ post_view_counter }}{{ post_toc_mount }}{% endcapture %}
           {% if content contains '</h1>' %}
           {{ content | replace_first: '</h1>', title_with_tools }}
