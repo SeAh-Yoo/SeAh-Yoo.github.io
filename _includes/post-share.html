@@ -1,13 +1,24 @@
 {% assign share_image = page.image | default: site.profile_image | absolute_url %}
-<section class="post-share" data-post-share
+<section class="post-actions-bar" data-post-share
          data-share-title="{{ page.title | strip_html | escape }}"
          data-share-url="{{ page.url | absolute_url | escape }}"
          data-share-description="{{ page.description | default: site.description | strip_html | normalize_whitespace | escape }}"
          data-share-image="{{ share_image | escape }}"
-         data-kakao-key="{{ site.kakao_javascript_key | default: '' | escape }}">
-  <button class="post-share-trigger" type="button" data-share-open aria-haspopup="dialog">
-    <span aria-hidden="true">↗</span>
-    이 글 공유하기
+         data-kakao-key="{{ site.kakao_javascript_key | default: '' | escape }}"
+         aria-label="글 도구">
+  <button class="post-action-button post-share-trigger" type="button" data-share-open aria-haspopup="dialog">
+    <span class="post-action-icon" aria-hidden="true">↗</span>
+    <span>공유</span>
+  </button>
+
+  <a class="post-action-button post-rss-button" href="{{ '/feed.xml' | relative_url }}" type="application/rss+xml" title="RSS 피드 구독">
+    <span class="post-action-icon post-rss-icon" aria-hidden="true">RSS</span>
+    <span>피드</span>
+  </a>
+
+  <button class="post-action-button post-print-button" type="button" data-print-post title="브라우저 인쇄 창에서 PDF로 저장할 수 있습니다">
+    <span class="post-action-icon" aria-hidden="true">⎙</span>
+    <span>인쇄 / PDF</span>
   </button>
 
   <dialog class="post-share-dialog" data-share-dialog aria-labelledby="post-share-title">
