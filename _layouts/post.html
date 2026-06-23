@@ -21,6 +21,7 @@
           {% assign post_category = page.category | default: page.categories.first | default: "Column" %}
           {% assign post_category_slug = post_category | slugify %}
           <a class="post-category-eyebrow" href="{{ '/categories/#' | append: post_category_slug | relative_url }}">{{ post_category }}</a>
+          {% include post-translations.html %}
           {% capture post_view_counter %}<div class="post-view-counter" data-goatcounter-post-view aria-live="polite">조회수: <span data-goatcounter-post-count>-</span></div>{% endcapture %}
           {% capture title_with_counter %}</h1>{{ post_view_counter }}{% endcapture %}
           {% if content contains '</h1>' %}
@@ -29,14 +30,20 @@
           {{ content }}
           {{ post_view_counter }}
           {% endif %}
+
+          {% include post-share.html %}
+
           <footer class="post-footer" aria-label="글 정보">
             <p>──작성: <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %-m월 %-d일 %H:%M" }}</time> / 수정: <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: "%Y년 %-m월 %-d일 %H:%M" }}</time>, {{ site.author.name }}.</p>
           </footer>
+
+          {% include post-comments.html %}
         </article>
       </main>
     </div>
     <!-- GoatCounter tracking script for seah-yoo.goatcounter.com; forked sites must replace this URL with their own counter. -->
     <script data-goatcounter="https://seah-yoo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
     <script src="{{ '/scripts/index.js' | relative_url }}"></script>
+    <script src="{{ '/scripts/post-actions.js' | relative_url }}"></script>
   </body>
 </html>
