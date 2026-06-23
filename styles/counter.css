@@ -1,0 +1,39 @@
+.visitor-counter-values strong {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.visitor-counter .counter-digit {
+  display: inline-block;
+  min-width: 0.56em;
+  text-align: center;
+  text-shadow: 0 0 10px currentColor;
+}
+
+.visitor-counter .counter-separator {
+  color: rgba(217, 226, 242, 0.58);
+  text-shadow: none;
+}
+
+.visitor-counter .counter-digit-0 { color: #8bd8ff; }
+.visitor-counter .counter-digit-1 { color: #a7c7ff; }
+.visitor-counter .counter-digit-2 { color: #bba7ff; }
+.visitor-counter .counter-digit-3 { color: #d7b8ff; }
+.visitor-counter .counter-digit-4 { color: #efb7ff; }
+.visitor-counter .counter-digit-5 { color: #ffb3d9; }
+.visitor-counter .counter-digit-6 { color: #ffb8b0; }
+.visitor-counter .counter-digit-7 { color: #ffd29b; }
+.visitor-counter .counter-digit-8 { color: #a8e6cf; }
+.visitor-counter .counter-digit-9 { color: #8fe9e1; }
+
+.post-view-counter {
+  margin: -2px 0 22px;
+  font-variant-numeric: tabular-nums;
+}
+
+.post-view-counter [data-goatcounter-post-count] {
+  color: rgba(217, 226, 242, 0.54);
+  font-weight: 700;
+}
