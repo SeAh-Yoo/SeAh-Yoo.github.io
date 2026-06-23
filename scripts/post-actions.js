@@ -218,9 +218,15 @@
   const article = document.querySelector('article.post');
 
   if (tocMount && article) {
+    const normalizeText = (value) => String(value ?? '')
+      .normalize('NFKC')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const declaredSubtitle = normalizeText(tocMount.dataset.postSubtitle);
     const excludedSections = '.post-series, .post-navigation, .post-comments, .post-share-dialog';
     const headings = Array.from(article.querySelectorAll('h2, h3'))
-      .filter((heading) => !heading.closest(excludedSections));
+      .filter((heading) => !heading.closest(excludedSections))
+      .filter((heading) => !declaredSubtitle || normalizeText(heading.textContent) !== declaredSubtitle);
 
     if (headings.length < 2) {
       tocMount.remove();
@@ -234,7 +240,8 @@
         .replace(/^-+|-+$/g, '') || 'section';
 
       headings.forEach((heading, index) => {
-        const headingText = heading.textContent.trim();
+        const headingText = normalizeText(heading.textContent);
+        heading.dataset.tocTitle = headingText;
 
         if (!heading.id) {
           const baseId = slugify(headingText);
@@ -290,11 +297,10 @@
       const tocLinks = headings.map((heading) => {
         const item = document.createElement('li');
         const link = document.createElement('a');
-        const title = heading.childNodes[0]?.textContent?.trim() || heading.textContent.replace('#', '').trim();
 
         item.className = heading.tagName === 'H3' ? 'toc-level-3' : 'toc-level-2';
         link.href = `#${encodeURIComponent(heading.id)}`;
-        link.textContent = title;
+        link.textContent = heading.dataset.tocTitle;
         link.dataset.tocLink = heading.id;
         link.addEventListener('click', () => {
           if (window.matchMedia('(max-width: 900px)').matches) {
