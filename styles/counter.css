@@ -1,3 +1,64 @@
+.visitor-counter-values {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  line-height: 1.45;
+}
+
+.counter-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.42em;
+  white-space: nowrap;
+}
+
+.counter-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
+}
+
+.counter-row-divider {
+  color: rgba(217, 226, 242, 0.42);
+  font-weight: 700;
+}
+
+.counter-label {
+  color: rgba(217, 226, 242, 0.72);
+  letter-spacing: 0.01em;
+}
+
+.counter-label-initial {
+  display: inline-block;
+  font-size: 1.06em;
+  font-weight: 900;
+  line-height: 1;
+  text-shadow: 0 0 9px currentColor;
+}
+
+/* Label accents deliberately use a separate palette from the digit colors. */
+.counter-label-week {
+  color: #ffe45e;
+}
+
+.counter-label-month {
+  color: #ff6f9f;
+}
+
+.counter-label-total {
+  color: #62f2a7;
+}
+
+.counter-total-row {
+  margin-top: 1px;
+}
+
+.counter-total-row .counter-label-rest {
+  color: rgba(244, 247, 251, 0.82);
+  font-weight: 700;
+}
+
 .visitor-counter-values strong {
   display: inline-flex;
   align-items: baseline;
@@ -36,4 +97,18 @@
 .post-view-counter [data-goatcounter-post-count] {
   color: rgba(217, 226, 242, 0.54);
   font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .counter-label-rest {
+    display: none;
+  }
+
+  .counter-row {
+    gap: 0.34em;
+  }
+
+  .counter-item {
+    gap: 0.24em;
+  }
 }
