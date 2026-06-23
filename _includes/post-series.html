@@ -5,6 +5,7 @@
   {% else %}
     {% assign series_posts = series_posts | sort: "date" %}
   {% endif %}
+  {% assign series_count = series_posts | size %}
   {% assign current_series_index = 0 %}
   {% for series_post in series_posts %}
     {% if series_post.url == page.url %}
@@ -18,23 +19,23 @@
         <p class="post-series-kicker">SERIES</p>
         <h2 id="post-series-title">{{ page.series }}</h2>
       </div>
-      <span class="post-series-progress">{{ current_series_index }} / {{ series_posts | size }}</span>
+      <span class="post-series-progress">{{ current_series_index }} / {{ series_count }}</span>
     </div>
 
-    <details class="post-series-list"{% if series_posts.size <= 4 %} open{% endif %}>
+    <details class="post-series-list"{% if series_count <= 4 %} open{% endif %}>
       <summary>연재 목록 보기</summary>
       <ol>
         {% for series_post in series_posts %}
         <li{% if series_post.url == page.url %} class="is-current"{% endif %}>
           {% if series_post.url == page.url %}
           <span aria-current="page">
-            <small>{{ series_post.series_order | default: forloop.index }}화</small>
+            <small>{{ series_post.series_order | default: forloop.index }}편</small>
             <strong>{{ series_post.title }}</strong>
             <em>현재 글</em>
           </span>
           {% else %}
           <a href="{{ series_post.url | relative_url }}">
-            <small>{{ series_post.series_order | default: forloop.index }}화</small>
+            <small>{{ series_post.series_order | default: forloop.index }}편</small>
             <strong>{{ series_post.title }}</strong>
           </a>
           {% endif %}
