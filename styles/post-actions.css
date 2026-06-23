@@ -1,0 +1,280 @@
+.post-translations {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: -4px 0 24px;
+}
+
+.post-translations-label {
+  margin-right: 2px;
+  color: rgba(169, 179, 199, 0.72);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.post-translation-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 6px 11px;
+  border: 1px solid rgba(139, 216, 255, 0.22);
+  border-radius: 999px;
+  font-family: var(--font-symbol), var(--font-body), system-ui, sans-serif;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+}
+
+.post-translation-button.is-available {
+  background: rgba(139, 216, 255, 0.1);
+  color: #dff5ff;
+  transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+
+.post-translation-button.is-available:hover,
+.post-translation-button.is-available:focus-visible {
+  border-color: rgba(139, 216, 255, 0.64);
+  background: rgba(139, 216, 255, 0.18);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.post-translation-button.is-unavailable {
+  border-style: dashed;
+  color: rgba(169, 179, 199, 0.48);
+  cursor: not-allowed;
+  user-select: none;
+}
+
+.post-share {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 52px;
+}
+
+.post-share-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 10px 16px;
+  border: 1px solid rgba(215, 184, 255, 0.3);
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(139, 216, 255, 0.12), rgba(215, 184, 255, 0.11));
+  color: #edf7ff;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+
+.post-share-trigger:hover,
+.post-share-trigger:focus-visible {
+  border-color: rgba(215, 184, 255, 0.66);
+  background: linear-gradient(135deg, rgba(139, 216, 255, 0.2), rgba(215, 184, 255, 0.18));
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.post-share-dialog {
+  width: min(560px, calc(100vw - 28px));
+  max-height: min(720px, calc(100vh - 28px));
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 26px;
+  background: rgba(12, 17, 29, 0.94);
+  color: var(--text);
+  box-shadow: 0 30px 120px rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  overflow: hidden;
+}
+
+.post-share-dialog::backdrop {
+  background: rgba(3, 5, 10, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.post-share-dialog-panel {
+  padding: 24px;
+}
+
+.post-share-dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.post-share-kicker,
+.post-comments-kicker {
+  margin: 0 0 5px;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.post-share-dialog h2,
+.post-comments h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.2rem;
+  letter-spacing: -0.03em;
+}
+
+.post-share-close {
+  display: grid;
+  place-items: center;
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(244, 247, 251, 0.78);
+  font: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.post-share-close:hover,
+.post-share-close:focus-visible {
+  border-color: rgba(139, 216, 255, 0.55);
+  color: #fff;
+  outline: none;
+}
+
+.post-share-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.post-share-service {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.045);
+  color: #eaf0fa;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+
+.post-share-service:hover,
+.post-share-service:focus-visible {
+  border-color: var(--share-accent, rgba(139, 216, 255, 0.55));
+  background: rgba(255, 255, 255, 0.09);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.share-service-mark {
+  display: grid;
+  place-items: center;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: var(--share-accent, rgba(139, 216, 255, 0.22));
+  color: var(--share-mark, #fff);
+  font-family: var(--font-symbol), system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+
+.share-kakao { --share-accent: #fee500; --share-mark: #191919; }
+.share-telegram { --share-accent: #2aabee; }
+.share-line { --share-accent: #06c755; }
+.share-x { --share-accent: #b9c2d0; --share-mark: #10131a; }
+.share-threads { --share-accent: #d7b8ff; --share-mark: #15101b; }
+.share-facebook { --share-accent: #1877f2; }
+.share-copy { --share-accent: #8bd8ff; --share-mark: #07101f; }
+
+.post-share-status {
+  min-height: 1.45em;
+  margin: 14px 2px 0;
+  color: rgba(217, 226, 242, 0.72);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.post-comments {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.post-comments-header {
+  margin-bottom: 20px;
+}
+
+.post-comments-header > p:last-child {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.post-comments .giscus,
+.post-comments .giscus-frame {
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .post-translations {
+    margin-bottom: 20px;
+  }
+
+  .post-share {
+    margin-top: 42px;
+  }
+
+  .post-share-dialog-panel {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .post-translations-label {
+    flex-basis: 100%;
+    margin-bottom: 1px;
+  }
+
+  .post-share-trigger {
+    width: 100%;
+  }
+
+  .post-share-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .post-share-dialog {
+    width: calc(100vw - 20px);
+    border-radius: 22px;
+  }
+
+  .post-share-dialog-panel {
+    padding: 18px;
+  }
+}
