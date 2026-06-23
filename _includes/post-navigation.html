@@ -1,0 +1,51 @@
+{% assign chronological_posts = site.posts | sort: "date" %}
+{% assign current_timestamp = page.date | date: "%s" | plus: 0 %}
+{% assign previous_post = nil %}
+{% assign next_post = nil %}
+
+{% for candidate in chronological_posts %}
+  {% assign candidate_timestamp = candidate.date | date: "%s" | plus: 0 %}
+  {% if candidate_timestamp < current_timestamp %}
+    {% if previous_post == nil %}
+      {% assign previous_post = candidate %}
+    {% else %}
+      {% assign previous_timestamp = previous_post.date | date: "%s" | plus: 0 %}
+      {% if candidate_timestamp > previous_timestamp %}
+        {% assign previous_post = candidate %}
+      {% endif %}
+    {% endif %}
+  {% elsif candidate_timestamp > current_timestamp %}
+    {% if next_post == nil %}
+      {% assign next_post = candidate %}
+    {% else %}
+      {% assign next_timestamp = next_post.date | date: "%s" | plus: 0 %}
+      {% if candidate_timestamp < next_timestamp %}
+        {% assign next_post = candidate %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% if previous_post or next_post %}
+<nav class="post-navigation" aria-label="작성 시간순 이전 글과 다음 글">
+  {% if previous_post %}
+  <a class="post-navigation-link post-navigation-previous" href="{{ previous_post.url | relative_url }}" rel="prev">
+    <span class="post-navigation-direction">← 이전 글</span>
+    <strong>{{ previous_post.title }}</strong>
+    <time datetime="{{ previous_post.date | date_to_xmlschema }}">{{ previous_post.date | date: "%Y년 %-m월 %-d일 %H:%M" }}</time>
+  </a>
+  {% else %}
+  <span class="post-navigation-link is-empty" aria-hidden="true"></span>
+  {% endif %}
+
+  {% if next_post %}
+  <a class="post-navigation-link post-navigation-next" href="{{ next_post.url | relative_url }}" rel="next">
+    <span class="post-navigation-direction">다음 글 →</span>
+    <strong>{{ next_post.title }}</strong>
+    <time datetime="{{ next_post.date | date_to_xmlschema }}">{{ next_post.date | date: "%Y년 %-m월 %-d일 %H:%M" }}</time>
+  </a>
+  {% else %}
+  <span class="post-navigation-link is-empty" aria-hidden="true"></span>
+  {% endif %}
+</nav>
+{% endif %}
