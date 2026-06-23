@@ -3,6 +3,10 @@
   margin-top: auto;
 }
 
+.sidebar-collapse-inner {
+  min-height: 0;
+}
+
 .sidebar-collapse-region .archive-nav {
   margin-top: 0;
 }
@@ -55,17 +59,28 @@
 
 @media (max-width: 900px) {
   .sidebar {
-    transition: padding 0.25s ease, box-shadow 0.25s ease;
+    transition: padding 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.42s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .sidebar-collapse-region {
-    max-height: 1200px;
+    display: grid;
+    grid-template-rows: 1fr;
     overflow: hidden;
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
-    transition: max-height 0.34s ease, opacity 0.2s ease, transform 0.26s ease,
+    transform-origin: top;
+    transition: grid-template-rows 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.34s ease 0.05s,
+      transform 0.48s cubic-bezier(0.22, 1, 0.36, 1),
       visibility 0s linear 0s;
+    will-change: grid-template-rows, opacity, transform;
+  }
+
+  .sidebar-collapse-inner {
+    min-height: 0;
+    overflow: hidden;
   }
 
   .sidebar.is-compact {
@@ -73,13 +88,15 @@
   }
 
   .sidebar.is-compact .sidebar-collapse-region {
-    max-height: 0;
+    grid-template-rows: 0fr;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-8px);
+    transform: translateY(-10px);
     pointer-events: none;
-    transition: max-height 0.34s ease, opacity 0.15s ease, transform 0.22s ease,
-      visibility 0s linear 0.34s;
+    transition: grid-template-rows 0.52s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.3s ease,
+      transform 0.46s cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0s linear 0.52s;
   }
 
   .sidebar.is-compact .visitor-counter {
