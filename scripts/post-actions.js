@@ -1,6 +1,4 @@
 (() => {
-  const shareRoot = document.querySelector('[data-post-share]');
-
   const copyText = async (text) => {
     if (navigator.clipboard && window.isSecureContext) {
       await navigator.clipboard.writeText(text);
@@ -57,10 +55,13 @@
     };
   })();
 
+  const shareRoot = document.querySelector('[data-post-share]');
+
   if (shareRoot) {
     const openButton = shareRoot.querySelector('[data-share-open]');
     const dialog = shareRoot.querySelector('[data-share-dialog]');
     const closeButton = shareRoot.querySelector('[data-share-close]');
+    const printButton = shareRoot.querySelector('[data-print-post]');
     const status = shareRoot.querySelector('[data-share-status]');
     const title = shareRoot.dataset.shareTitle || document.title;
     const url = shareRoot.dataset.shareUrl || window.location.href;
@@ -181,6 +182,7 @@
 
     openButton?.addEventListener('click', openDialog);
     closeButton?.addEventListener('click', closeDialog);
+    printButton?.addEventListener('click', () => window.print());
 
     dialog?.addEventListener('click', (event) => {
       if (event.target === dialog) {
@@ -210,6 +212,138 @@
         }
       });
     });
+  }
+
+  const tocMount = document.querySelector('[data-post-toc-mount]');
+  const article = document.querySelector('article.post');
+
+  if (tocMount && article) {
+    const excludedSections = '.post-series, .post-navigation, .post-comments, .post-share-dialog';
+    const headings = Array.from(article.querySelectorAll('h2, h3'))
+      .filter((heading) => !heading.closest(excludedSections));
+
+    if (headings.length < 2) {
+      tocMount.remove();
+    } else {
+      const usedIds = new Set(Array.from(document.querySelectorAll('[id]')).map((element) => element.id));
+      const slugify = (value) => String(value)
+        .normalize('NFKC')
+        .toLocaleLowerCase('ko-KR')
+        .replace(/["'’]/g, '')
+        .replace(/[^a-z0-9가-힣ぁ-んァ-ヶ一-龯]+/gi, '-')
+        .replace(/^-+|-+$/g, '') || 'section';
+
+      headings.forEach((heading, index) => {
+        const headingText = heading.textContent.trim();
+
+        if (!heading.id) {
+          const baseId = slugify(headingText);
+          let candidateId = baseId;
+          let suffix = 2;
+
+          while (usedIds.has(candidateId)) {
+            candidateId = `${baseId}-${suffix}`;
+            suffix += 1;
+          }
+
+          heading.id = candidateId;
+          usedIds.add(candidateId);
+        }
+
+        heading.classList.add('post-content-heading');
+        const anchorButton = document.createElement('button');
+        anchorButton.type = 'button';
+        anchorButton.className = 'post-heading-link';
+        anchorButton.textContent = '#';
+        anchorButton.setAttribute('aria-label', `「${headingText}」 위치 링크 복사`);
+        anchorButton.title = '이 소제목 링크 복사';
+        anchorButton.addEventListener('click', async () => {
+          const targetUrl = new URL(window.location.href);
+          targetUrl.hash = heading.id;
+
+          try {
+            await copyText(targetUrl.toString());
+            anchorButton.textContent = '✓';
+            window.setTimeout(() => {
+              anchorButton.textContent = '#';
+            }, 1300);
+          } catch (error) {
+            console.warn(error);
+          }
+        });
+        heading.append(anchorButton);
+        heading.dataset.tocIndex = String(index);
+      });
+
+      const details = document.createElement('details');
+      const summary = document.createElement('summary');
+      const summaryTitle = document.createElement('span');
+      const summaryCount = document.createElement('small');
+      const list = document.createElement('ol');
+
+      details.className = 'post-toc';
+      details.open = !window.matchMedia('(max-width: 900px)').matches;
+      summaryTitle.textContent = '목차';
+      summaryCount.textContent = `${headings.length}개 항목`;
+      summary.append(summaryTitle, summaryCount);
+
+      const tocLinks = headings.map((heading) => {
+        const item = document.createElement('li');
+        const link = document.createElement('a');
+        const title = heading.childNodes[0]?.textContent?.trim() || heading.textContent.replace('#', '').trim();
+
+        item.className = heading.tagName === 'H3' ? 'toc-level-3' : 'toc-level-2';
+        link.href = `#${encodeURIComponent(heading.id)}`;
+        link.textContent = title;
+        link.dataset.tocLink = heading.id;
+        link.addEventListener('click', () => {
+          if (window.matchMedia('(max-width: 900px)').matches) {
+            window.setTimeout(() => {
+              details.open = false;
+            }, 220);
+          }
+        });
+        item.append(link);
+        list.append(item);
+        return link;
+      });
+
+      details.append(summary, list);
+      tocMount.append(details);
+
+      let frameId = 0;
+      const updateActiveTocItem = () => {
+        frameId = 0;
+        const threshold = Math.min(window.innerHeight * 0.32, 260);
+        let activeIndex = 0;
+
+        headings.forEach((heading, index) => {
+          if (heading.getBoundingClientRect().top <= threshold) {
+            activeIndex = index;
+          }
+        });
+
+        tocLinks.forEach((link, index) => {
+          const active = index === activeIndex;
+          link.classList.toggle('is-active', active);
+          if (active) {
+            link.setAttribute('aria-current', 'location');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+      };
+
+      const scheduleTocUpdate = () => {
+        if (!frameId) {
+          frameId = window.requestAnimationFrame(updateActiveTocItem);
+        }
+      };
+
+      window.addEventListener('scroll', scheduleTocUpdate, { passive: true });
+      window.addEventListener('resize', scheduleTocUpdate);
+      updateActiveTocItem();
+    }
   }
 
   const giscusContainer = document.querySelector('[data-giscus-container]');
