@@ -15,6 +15,7 @@
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 <meta name="theme-color" content="#17151f" />
 <link rel="canonical" href="{{ canonical_url }}" />
+<link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }} RSS" href="{{ '/feed.xml' | absolute_url }}" />
 {% if page.layout == "post" %}
 <link rel="alternate" hreflang="ko" href="{{ canonical_url }}" />
 {% if page.translation_en %}<link rel="alternate" hreflang="en" href="{{ page.translation_en | absolute_url }}" />{% endif %}
@@ -111,5 +112,7 @@
 <link rel="stylesheet" href="{{ '/styles/index.css' | relative_url }}" />
 <link rel="stylesheet" href="{{ '/styles/sidebar-collapse.css' | relative_url }}" />
 <link rel="stylesheet" href="{{ '/styles/counter.css' | relative_url }}" />
+<link rel="stylesheet" href="{{ '/styles/search.css' | relative_url }}" />
 {% if page.layout == "post" %}<link rel="stylesheet" href="{{ '/styles/post-actions.css' | relative_url }}" />{% endif %}
 <script defer src="{{ '/scripts/sidebar-collapse.js' | relative_url }}"></script>
+<script defer src="{{ '/scripts/site-search.js' | relative_url }}"></script>
