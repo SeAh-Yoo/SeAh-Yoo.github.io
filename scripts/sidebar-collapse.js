@@ -16,6 +16,7 @@
   const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   const collapseThreshold = 120;
   let frameId = 0;
+  let lastScrollY = Math.max(0, window.scrollY);
 
   const setCollapsed = (collapsed) => {
     const shouldCollapse = mobileQuery.matches && collapsed;
@@ -27,7 +28,26 @@
 
   const syncSidebarState = () => {
     frameId = 0;
-    setCollapsed(window.scrollY > collapseThreshold);
+
+    const currentScrollY = Math.max(0, window.scrollY);
+
+    if (!mobileQuery.matches) {
+      setCollapsed(false);
+    } else if (currentScrollY <= 1) {
+      setCollapsed(false);
+    } else if (
+      currentScrollY > collapseThreshold &&
+      currentScrollY > lastScrollY + 1
+    ) {
+      setCollapsed(true);
+    }
+
+    lastScrollY = currentScrollY;
+  };
+
+  const resetSidebarState = () => {
+    lastScrollY = Math.max(0, window.scrollY);
+    setCollapsed(mobileQuery.matches && lastScrollY > collapseThreshold);
   };
 
   const scheduleSidebarSync = () => {
@@ -39,21 +59,24 @@
   };
 
   topButton.addEventListener('click', () => {
-    setCollapsed(false);
     window.scrollTo({
       top: 0,
       behavior: reducedMotionQuery.matches ? 'auto' : 'smooth',
     });
+
+    if (reducedMotionQuery.matches) {
+      window.requestAnimationFrame(syncSidebarState);
+    }
   });
 
   window.addEventListener('scroll', scheduleSidebarSync, { passive: true });
-  window.addEventListener('pageshow', syncSidebarState);
+  window.addEventListener('pageshow', resetSidebarState);
 
   if (typeof mobileQuery.addEventListener === 'function') {
-    mobileQuery.addEventListener('change', syncSidebarState);
+    mobileQuery.addEventListener('change', resetSidebarState);
   } else {
-    mobileQuery.addListener(syncSidebarState);
+    mobileQuery.addListener(resetSidebarState);
   }
 
-  syncSidebarState();
+  resetSidebarState();
 })();
