@@ -1,0 +1,105 @@
+.sidebar-collapse-region {
+  min-height: 0;
+  margin-top: auto;
+}
+
+.sidebar-collapse-region .archive-nav {
+  margin-top: 0;
+}
+
+.visitor-counter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.visitor-counter-values {
+  min-width: 0;
+}
+
+.sidebar-top-button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 30px;
+  padding: 5px 9px;
+  border: 1px solid rgba(139, 216, 255, 0.3);
+  border-radius: 999px;
+  background: rgba(139, 216, 255, 0.09);
+  color: rgba(223, 245, 255, 0.82);
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.sidebar-top-button:hover,
+.sidebar-top-button:focus-visible {
+  border-color: rgba(139, 216, 255, 0.68);
+  background: rgba(139, 216, 255, 0.18);
+  color: #f4fbff;
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.sidebar-top-button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    transition: padding 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .sidebar-collapse-region {
+    max-height: 1200px;
+    overflow: hidden;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: max-height 0.34s ease, opacity 0.2s ease, transform 0.26s ease,
+      visibility 0s linear 0s;
+  }
+
+  .sidebar.is-compact {
+    box-shadow: 0 12px 38px rgba(0, 0, 0, 0.42);
+  }
+
+  .sidebar.is-compact .sidebar-collapse-region {
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: max-height 0.34s ease, opacity 0.15s ease, transform 0.22s ease,
+      visibility 0s linear 0.34s;
+  }
+
+  .sidebar.is-compact .visitor-counter {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 420px) {
+  .visitor-counter {
+    gap: 7px;
+  }
+
+  .visitor-counter-values {
+    font-size: 0.68rem;
+    white-space: nowrap;
+  }
+
+  .sidebar-top-button {
+    min-height: 28px;
+    padding: 5px 8px;
+    font-size: 0.64rem;
+  }
+}
