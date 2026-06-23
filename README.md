@@ -21,6 +21,31 @@
 - 이전 `#/post/<slug>` 주소의 새 글 주소 이동
 - `/categories/` 카테고리 모아보기와 카테고리별 앵커 이동
 - 하단 정렬된 사이드바 아카이브·카테고리 내비게이션
+- GoatCounter 기반 사이드바 방문자 수 및 게시물별 조회수 표시
+
+
+## GoatCounter 방문자 수 카운터
+
+이 사이트는 [GoatCounter](https://www.goatcounter.com/)를 사용해 방문자 수를 표시합니다.
+
+- `_layouts/home.html`, `_layouts/categories.html`, `_layouts/post.html`에는 `https://seah-yoo.goatcounter.com/count`를 가리키는 GoatCounter 추적 스크립트가 들어 있습니다.
+- `_includes/sidebar.html`의 브랜드 바로 아래에는 `Today: 숫자 / Yesterday: 숫자 / Total: 숫자` 형식의 사이트 카운터가 표시됩니다.
+- `_layouts/post.html`의 게시물 상단에는 `조회수: 숫자` 형식의 게시물별 조회수가 작고 옅은 글씨로 표시됩니다.
+- `scripts/index.js`는 `https://seah-yoo.goatcounter.com`의 공개 카운터 JSON 엔드포인트를 호출하며, GoatCounter의 `TOTAL` 특수 경로로 Today·Yesterday·Total 값을 날짜 범위별로 각각 요청합니다.
+
+> **중요:** 이 저장소를 복사하거나 포크해 다른 GitHub Pages 사이트로 사용할 경우, GoatCounter 설정을 반드시 본인 사이트의 카운터로 바꿔야 합니다. 그대로 두면 방문 기록과 공개 카운터 요청이 `seah-yoo.goatcounter.com`으로 전송됩니다.
+
+복사 후 수정해야 하는 위치는 다음과 같습니다.
+
+```html
+<script data-goatcounter="https://seah-yoo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+```
+
+위 스크립트의 `data-goatcounter` 값을 본인의 GoatCounter 주소로 바꾸고, `scripts/index.js`의 `GOATCOUNTER_COUNTER_ORIGIN` 값도 같은 GoatCounter 사이트의 origin으로 바꿉니다.
+
+```js
+const GOATCOUNTER_COUNTER_ORIGIN = 'https://seah-yoo.goatcounter.com';
+```
 
 ## 프로젝트 구조
 
@@ -37,7 +62,7 @@
 ├─ _posts/                         # 마크다운 칼럼 원본
 ├─ assets/
 │  └─ images/                      # 모든 칼럼의 공개 이미지
-├─ scripts/index.js                # 기존 해시 주소 호환 처리 및 이미지 캡션 생성
+├─ scripts/index.js                # 기존 해시 주소 호환 처리, 이미지 캡션 생성, GoatCounter 표시
 ├─ styles/index.css                # 사이트 디자인
 ├─ categories.html                 # 카테고리별 글 모아보기 페이지
 ├─ index.html                      # 홈페이지 진입점
