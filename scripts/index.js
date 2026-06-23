@@ -45,21 +45,6 @@ window.addEventListener('load', addPostImageCaptions);
 // replace this with your own GoatCounter subdomain so counts do not point here.
 const GOATCOUNTER_COUNTER_ORIGIN = 'https://seah-yoo.goatcounter.com';
 
-const formatDate = (date) => {
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-  const day = String(date.getUTCDate()).padStart(2, '0');
-
-  return `${year}-${month}-${day}`;
-};
-
-const shiftDate = (date, days) => {
-  const shifted = new Date(date);
-  shifted.setUTCDate(shifted.getUTCDate() + days);
-
-  return shifted;
-};
-
 const buildGoatCounterUrl = (path, params = {}) => {
   // GoatCounter direct counter URLs expect the path as one encoded segment;
   // using encodeURI() leaves slashes unescaped and can return 404 for posts.
@@ -87,6 +72,12 @@ const parseGoatCounterCount = (value) => {
   return Number.isFinite(parsed) ? parsed : 0;
 };
 
+// The sidebar uses at least four digits: 1 → 0001, 42 → 0042,
+// 1234 → 1234, and five or more digits are shown without truncation.
+const formatSiteCounterCount = (value) =>
+  String(Math.max(0, Math.trunc(value))).padStart(4, '0');
+
+// Post view counts keep their normal locale-aware number formatting.
 const formatGoatCounterCount = (value) =>
   new Intl.NumberFormat('ko-KR').format(Math.max(0, value));
 
@@ -115,11 +106,10 @@ const setCounterText = (container, selector, value) => {
   }
 };
 
-// GoatCounter's public TOTAL counter applies date boundaries in UTC. Its
-// end=YYYY-MM-DD value points to the start of that date, so using the same
-// start and end date only counts the midnight bucket. Avoid end entirely:
-// today is "since today", yesterday is "since yesterday" minus "since today",
-// and total is the unfiltered lifetime count.
+// GoatCounter interprets the special start values "week" and "month" as
+// rolling seven-day and thirty-day ranges. These avoid local-midnight and UTC
+// boundary confusion. Cached ranges can refresh at slightly different times,
+// so enforce Week <= Month <= Total before displaying them.
 const updateSiteVisitorCounter = async () => {
   const counter = document.querySelector('[data-goatcounter-summary]');
 
@@ -127,40 +117,37 @@ const updateSiteVisitorCounter = async () => {
     return;
   }
 
-  const today = new Date();
-  const yesterday = shiftDate(today, -1);
-
-  const [todayResult, sinceYesterdayResult, totalResult] = await Promise.allSettled([
-    fetchGoatCounterCount('TOTAL', { start: formatDate(today) }),
-    fetchGoatCounterCount('TOTAL', { start: formatDate(yesterday) }),
+  const [weekResult, monthResult, totalResult] = await Promise.allSettled([
+    fetchGoatCounterCount('TOTAL', { start: 'week' }),
+    fetchGoatCounterCount('TOTAL', { start: 'month' }),
     fetchGoatCounterCount('TOTAL'),
   ]);
 
-  const todayCount = todayResult.status === 'fulfilled'
-    ? todayResult.value
+  const weekCount = weekResult.status === 'fulfilled'
+    ? weekResult.value
     : null;
-  const sinceYesterdayCount = sinceYesterdayResult.status === 'fulfilled'
-    ? Math.max(sinceYesterdayResult.value, todayCount ?? 0)
+  const monthCount = monthResult.status === 'fulfilled'
+    ? Math.max(monthResult.value, weekCount ?? 0)
     : null;
   const totalCount = totalResult.status === 'fulfilled'
-    ? Math.max(totalResult.value, sinceYesterdayCount ?? 0, todayCount ?? 0)
+    ? Math.max(totalResult.value, monthCount ?? 0, weekCount ?? 0)
     : null;
 
-  const todayText = todayCount !== null
-    ? formatGoatCounterCount(todayCount)
-    : '-';
-  const yesterdayText = todayCount !== null && sinceYesterdayCount !== null
-    ? formatGoatCounterCount(sinceYesterdayCount - todayCount)
-    : '-';
+  const weekText = weekCount !== null
+    ? formatSiteCounterCount(weekCount)
+    : '----';
+  const monthText = monthCount !== null
+    ? formatSiteCounterCount(monthCount)
+    : '----';
   const totalText = totalCount !== null
-    ? formatGoatCounterCount(totalCount)
-    : '-';
+    ? formatSiteCounterCount(totalCount)
+    : '----';
 
-  setCounterText(counter, '[data-goatcounter-value="today"]', todayText);
-  setCounterText(counter, '[data-goatcounter-value="yesterday"]', yesterdayText);
+  setCounterText(counter, '[data-goatcounter-value="week"]', weekText);
+  setCounterText(counter, '[data-goatcounter-value="month"]', monthText);
   setCounterText(counter, '[data-goatcounter-value="total"]', totalText);
 
-  [todayResult, sinceYesterdayResult, totalResult].forEach((result) => {
+  [weekResult, monthResult, totalResult].forEach((result) => {
     if (result.status === 'rejected') {
       console.warn(result.reason);
     }
