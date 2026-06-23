@@ -115,12 +115,13 @@
   margin-bottom: 20px;
 }
 
-.post-share-kicker,
-.post-comments-kicker {
+.post .post-share-kicker,
+.post .post-comments-kicker {
   margin: 0 0 5px;
   color: var(--accent);
   font-size: 0.7rem;
   font-weight: 800;
+  line-height: 1.4;
   letter-spacing: 0.16em;
 }
 
@@ -210,7 +211,7 @@
 .share-facebook { --share-accent: #1877f2; }
 .share-copy { --share-accent: #8bd8ff; --share-mark: #07101f; }
 
-.post-share-status {
+.post .post-share-status {
   min-height: 1.45em;
   margin: 14px 2px 0;
   color: rgba(217, 226, 242, 0.72);
@@ -229,7 +230,7 @@
   margin-bottom: 20px;
 }
 
-.post-comments-header > p:last-child {
+.post .post-comments-header > p:last-child {
   margin: 8px 0 0;
   color: var(--muted);
   font-size: 0.82rem;
