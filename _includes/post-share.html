@@ -1,0 +1,57 @@
+{% assign share_image = page.image | default: site.profile_image | absolute_url %}
+<section class="post-share" data-post-share
+         data-share-title="{{ page.title | strip_html | escape }}"
+         data-share-url="{{ page.url | absolute_url | escape }}"
+         data-share-description="{{ page.description | default: site.description | strip_html | normalize_whitespace | escape }}"
+         data-share-image="{{ share_image | escape }}"
+         data-kakao-key="{{ site.kakao_javascript_key | default: '' | escape }}">
+  <button class="post-share-trigger" type="button" data-share-open aria-haspopup="dialog">
+    <span aria-hidden="true">↗</span>
+    이 글 공유하기
+  </button>
+
+  <dialog class="post-share-dialog" data-share-dialog aria-labelledby="post-share-title">
+    <div class="post-share-dialog-panel">
+      <header class="post-share-dialog-header">
+        <div>
+          <p class="post-share-kicker">SHARE</p>
+          <h2 id="post-share-title">이 글 공유하기</h2>
+        </div>
+        <button class="post-share-close" type="button" data-share-close aria-label="공유 창 닫기">×</button>
+      </header>
+
+      <div class="post-share-grid">
+        <button class="post-share-service share-kakao" type="button" data-share-service="kakao">
+          <span class="share-service-mark" aria-hidden="true">K</span>
+          <span>카카오톡</span>
+        </button>
+        <button class="post-share-service share-telegram" type="button" data-share-service="telegram">
+          <span class="share-service-mark" aria-hidden="true">TG</span>
+          <span>텔레그램</span>
+        </button>
+        <button class="post-share-service share-line" type="button" data-share-service="line">
+          <span class="share-service-mark" aria-hidden="true">L</span>
+          <span>LINE</span>
+        </button>
+        <button class="post-share-service share-x" type="button" data-share-service="x">
+          <span class="share-service-mark" aria-hidden="true">X</span>
+          <span>X</span>
+        </button>
+        <button class="post-share-service share-threads" type="button" data-share-service="threads">
+          <span class="share-service-mark" aria-hidden="true">@</span>
+          <span>Threads</span>
+        </button>
+        <button class="post-share-service share-facebook" type="button" data-share-service="facebook">
+          <span class="share-service-mark" aria-hidden="true">f</span>
+          <span>Facebook</span>
+        </button>
+        <button class="post-share-service share-copy" type="button" data-share-service="copy">
+          <span class="share-service-mark" aria-hidden="true">⧉</span>
+          <span>주소 복사</span>
+        </button>
+      </div>
+
+      <p class="post-share-status" data-share-status role="status" aria-live="polite"></p>
+    </div>
+  </dialog>
+</section>
