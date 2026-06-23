@@ -19,7 +19,6 @@
   }
 
   let indexPromise;
-  let visibleResults = [];
   let selectedIndex = -1;
   let inputTimer = 0;
 
@@ -149,8 +148,8 @@
 
   const renderResults = (items, tokens) => {
     resultsList.replaceChildren();
-    visibleResults = items;
     selectedIndex = -1;
+    empty.textContent = '일치하는 글을 찾지 못했습니다.';
 
     items.forEach((item, index) => {
       const listItem = document.createElement('li');
@@ -192,7 +191,6 @@
 
     if (!tokens.length) {
       resultsList.replaceChildren();
-      visibleResults = [];
       selectedIndex = -1;
       empty.hidden = true;
       status.textContent = '검색어를 입력하세요.';
@@ -235,7 +233,18 @@
 
     document.body.classList.add('is-search-open');
     window.requestAnimationFrame(() => input.focus());
-    loadIndex().catch((error) => console.warn(error));
+    loadIndex()
+      .then(() => {
+        if (normalize(input.value)) {
+          runSearch();
+        } else {
+          status.textContent = '검색어를 입력하세요.';
+        }
+      })
+      .catch((error) => {
+        console.warn(error);
+        status.textContent = '검색을 사용할 수 없습니다.';
+      });
   };
 
   function closeDialog() {
