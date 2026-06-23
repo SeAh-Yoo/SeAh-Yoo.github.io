@@ -29,9 +29,10 @@
 이 사이트는 [GoatCounter](https://www.goatcounter.com/)를 사용해 방문자 수를 표시합니다.
 
 - `_layouts/home.html`, `_layouts/categories.html`, `_layouts/post.html`에는 `https://seah-yoo.goatcounter.com/count`를 가리키는 GoatCounter 추적 스크립트가 들어 있습니다.
-- `_includes/sidebar.html`의 브랜드 바로 아래에는 `Today: 숫자 / Yesterday: 숫자 / Total: 숫자` 형식의 사이트 카운터가 표시됩니다.
+- `_includes/sidebar.html`의 브랜드 바로 아래에는 `Week: 숫자 / Month: 숫자 / Total: 숫자` 형식의 사이트 카운터가 표시됩니다.
+- 사이드바 카운터는 1자리 수를 `0001`처럼 최소 네 자리로 표시하며, 10,000 이상은 자릿수를 자르지 않고 그대로 표시합니다.
 - `_layouts/post.html`의 게시물 상단에는 `조회수: 숫자` 형식의 게시물별 조회수가 작고 옅은 글씨로 표시됩니다.
-- `scripts/index.js`는 `https://seah-yoo.goatcounter.com`의 공개 카운터 JSON 엔드포인트를 호출하며, GoatCounter의 `TOTAL` 특수 경로로 Today·Yesterday·Total 값을 날짜 범위별로 각각 요청합니다.
+- `scripts/index.js`는 `https://seah-yoo.goatcounter.com`의 공개 카운터 JSON 엔드포인트를 호출하며, GoatCounter의 `TOTAL` 특수 경로로 최근 7일·최근 30일·전체 누적값을 각각 요청합니다.
 
 > **중요:** 이 저장소를 복사하거나 포크해 다른 GitHub Pages 사이트로 사용할 경우, GoatCounter 설정을 반드시 본인 사이트의 카운터로 바꿔야 합니다. 그대로 두면 방문 기록과 공개 카운터 요청이 `seah-yoo.goatcounter.com`으로 전송됩니다.
 
@@ -118,93 +119,3 @@ assets/images/example-post-cover.png
 assets/images/example-post-image-02.png
 assets/images/example-post-image-03.jpg
 ```
-
-본문에서는 대표 이미지를 다음처럼 사용할 수 있습니다.
-
-```markdown
-![이미지 설명]({{ page.image | relative_url }})
-```
-
-이미지의 대체 텍스트는 접근성용 `alt`이자 게시물 화면의 작은 회색 캡션으로 자동 표시됩니다. 예를 들어 다음 Markdown은 이미지 아래에 `나는 돈슨입니다 (2014년 지스타 넥슨 티저)` 캡션을 생성합니다.
-
-```markdown
-![나는 돈슨입니다 (2014년 지스타 넥슨 티저)]({{ page.image1 | relative_url }})
-```
-
-본문에 이미지가 여러 장이라면 각 파일의 공개 경로를 직접 지정합니다.
-
-```markdown
-![두 번째 이미지](/assets/images/example-post-image-02.png)
-
-![세 번째 이미지](/assets/images/example-post-image-03.jpg)
-```
-
-모든 이미지를 한 폴더에서 관리하므로 파일 이름이 겹치지 않도록 글의 slug나 날짜를 접두어로 붙이는 방식을 권장합니다.
-
-```text
-ncsoft-trust-2026-cover.png
-ncsoft-trust-2026-chart-01.png
-20260622-ncsoft-image-02.jpg
-```
-
-### 4. 본문 작성하기
-
-Front Matter 아래부터 일반 Markdown 문법으로 글을 작성합니다.
-
-```markdown
-# 글 제목
-
-## 부제목
-
-첫 문단을 작성합니다.
-```
-
-파일을 `main` 브랜치에 반영하면 GitHub Pages가 글별 HTML과 사이트맵을 자동으로 다시 생성합니다.
-
-## URL 규칙
-
-각 글은 다음 형태의 실제 URL로 공개됩니다.
-
-```text
-https://seah-yoo.github.io/posts/<slug>/
-```
-
-예시:
-
-```text
-https://seah-yoo.github.io/posts/ncsoft-trust-2026/
-```
-
-홈페이지와 사이드바에는 Jekyll이 `_posts`의 글을 읽어 최신순으로 자동 표시합니다.
-
-카테고리별 글 모아보기는 다음 URL에서 확인할 수 있습니다.
-
-```text
-https://seah-yoo.github.io/categories/
-```
-
-각 카테고리는 페이지 안의 앵커로 연결됩니다.
-
-```text
-https://seah-yoo.github.io/categories/#game-industry
-```
-
-글 상단의 카테고리 버튼과 사이드바의 카테고리 항목은 같은 앵커 규칙을 사용합니다.
-
-## 디자인과 검색 최적화
-
-사이트는 JavaScript가 없어도 제목과 본문을 읽을 수 있는 정적 HTML을 생성합니다. 각 칼럼에는 제목, 설명, 작성일, 수정일, 대표 이미지, canonical URL과 `BlogPosting` 구조화 데이터가 포함됩니다.
-
-공통 UI는 `_layouts`, `_includes`, `styles/index.css`에서 관리하므로 글을 추가할 때 별도의 HTML이나 JavaScript를 작성할 필요가 없습니다.
-
-웹폰트는 `_includes/head.html`에서 불러오고 `styles/index.css`의 CSS 변수로 관리합니다. 헤더와 사이드바의 기본 한글은 경기천년체, 게시물 제목·본문·캡션과 라이선스 문구는 나눔스퀘어를 사용하며, 영어·특수문자는 Poppins, 한자는 나눔명조 계열 폴백으로 표시합니다.
-
-사이드바는 데스크톱에서 화면 왼쪽에 고정되며, 아카이브와 카테고리 내비게이션을 하단에 묶어 표시합니다. 아카이브가 카테고리 바로 위에 오도록 구성되어 있고, 모바일에서는 아카이브 목록이 가로 스크롤 카드 형태로 전환됩니다.
-
-글 본문 하단의 작성일·작성자 표기는 본문보다 작은 밝은 회색 텍스트로 우측 정렬되어, 본문 내용보다 낮은 시각적 우선순위를 갖도록 스타일링되어 있습니다.
-
-## 라이선스
-
-이 저장소에 직접 포함된 글, 이미지, 페이지 구성, 디자인은 별도 표기가 없는 한 [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/deed.ko)로 공개합니다.
-
-즉 가능한 범위에서 저작권과 인접권을 포기하며, 누구나 허락이나 출처 표기 없이 복사, 수정, 배포, 공연, 상업적 이용을 할 수 있습니다. 엄밀히 말하면 이는 저작권을 전제로 공유 조건을 유지하는 카피레프트라기보다, 저작권 제한을 두지 않는 퍼블릭 도메인 지향 선언입니다.
