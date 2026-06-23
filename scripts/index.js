@@ -136,14 +136,24 @@ const updateSiteVisitorCounter = async () => {
     fetchGoatCounterCount('TOTAL'),
   ]);
 
-  const todayText = todayResult.status === 'fulfilled'
-    ? formatGoatCounterCount(todayResult.value)
+  const todayCount = todayResult.status === 'fulfilled'
+    ? todayResult.value
+    : null;
+  const sinceYesterdayCount = sinceYesterdayResult.status === 'fulfilled'
+    ? Math.max(sinceYesterdayResult.value, todayCount ?? 0)
+    : null;
+  const totalCount = totalResult.status === 'fulfilled'
+    ? Math.max(totalResult.value, sinceYesterdayCount ?? 0, todayCount ?? 0)
+    : null;
+
+  const todayText = todayCount !== null
+    ? formatGoatCounterCount(todayCount)
     : '-';
-  const yesterdayText = todayResult.status === 'fulfilled' && sinceYesterdayResult.status === 'fulfilled'
-    ? formatGoatCounterCount(sinceYesterdayResult.value - todayResult.value)
+  const yesterdayText = todayCount !== null && sinceYesterdayCount !== null
+    ? formatGoatCounterCount(sinceYesterdayCount - todayCount)
     : '-';
-  const totalText = totalResult.status === 'fulfilled'
-    ? formatGoatCounterCount(totalResult.value)
+  const totalText = totalCount !== null
+    ? formatGoatCounterCount(totalCount)
     : '-';
 
   setCounterText(counter, '[data-goatcounter-value="today"]', todayText);
