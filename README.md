@@ -31,7 +31,7 @@
 - `_layouts/home.html`, `_layouts/categories.html`, `_layouts/post.html`에는 `https://seah-yoo.goatcounter.com/count`를 가리키는 GoatCounter 추적 스크립트가 들어 있습니다.
 - `_includes/sidebar.html`의 브랜드 바로 아래에는 `Today: 숫자 / Yesterday: 숫자 / Total: 숫자` 형식의 사이트 카운터가 표시됩니다.
 - `_layouts/post.html`의 게시물 상단에는 `조회수: 숫자` 형식의 게시물별 조회수가 작고 옅은 글씨로 표시됩니다.
-- `scripts/index.js`는 `https://seah-yoo.goatcounter.com`의 공개 카운터 JSON 엔드포인트를 호출하며, Today·Yesterday·Total 값을 날짜 범위별로 각각 요청합니다.
+- `scripts/index.js`는 `https://seah-yoo.goatcounter.com`의 공개 카운터 JSON 엔드포인트를 호출하며, GoatCounter의 `TOTAL` 특수 경로로 Today·Yesterday·Total 값을 날짜 범위별로 각각 요청합니다.
 
 > **중요:** 이 저장소를 복사하거나 포크해 다른 GitHub Pages 사이트로 사용할 경우, GoatCounter 설정을 반드시 본인 사이트의 카운터로 바꿔야 합니다. 그대로 두면 방문 기록과 공개 카운터 요청이 `seah-yoo.goatcounter.com`으로 전송됩니다.
 

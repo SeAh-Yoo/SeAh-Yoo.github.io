@@ -61,8 +61,11 @@ const shiftDate = (date, days) => {
 };
 
 const buildGoatCounterUrl = (path, params = {}) => {
-  const normalizedPath = path && path.startsWith('/') ? path : `/${path || ''}`;
-  const url = new URL(`/counter/${encodeURI(normalizedPath)}.json`, GOATCOUNTER_COUNTER_ORIGIN);
+  // GoatCounter direct counter URLs expect the path as one encoded segment;
+  // using encodeURI() leaves slashes unescaped and can return 404 for posts.
+  const normalizedPath = path === 'TOTAL' ? path : path && path.startsWith('/') ? path : `/${path || ''}`;
+  const encodedPath = encodeURIComponent(normalizedPath);
+  const url = new URL(`/counter/${encodedPath}.json`, GOATCOUNTER_COUNTER_ORIGIN);
 
   Object.entries(params).forEach(([key, value]) => {
     if (value) {
@@ -85,6 +88,14 @@ const fetchGoatCounterCount = async (path, params) => {
   return data.count || data.count_unique || '0';
 };
 
+const setCounterText = (container, selector, value) => {
+  const element = container.querySelector(selector);
+
+  if (element) {
+    element.textContent = value;
+  }
+};
+
 // Sidebar summary: request the public counter three times with date ranges
 // for Today, Yesterday, and a long Total range.
 const updateSiteVisitorCounter = async () => {
@@ -102,20 +113,21 @@ const updateSiteVisitorCounter = async () => {
     total: { start: '2000-01-01', end: formatDate(today) },
   };
 
-  try {
-    const [todayCount, yesterdayCount, totalCount] = await Promise.all([
-      fetchGoatCounterCount('/', ranges.today),
-      fetchGoatCounterCount('/', ranges.yesterday),
-      fetchGoatCounterCount('/', ranges.total),
-    ]);
+  const [todayResult, yesterdayResult, totalResult] = await Promise.allSettled([
+    fetchGoatCounterCount('TOTAL', ranges.today),
+    fetchGoatCounterCount('TOTAL', ranges.yesterday),
+    fetchGoatCounterCount('TOTAL', ranges.total),
+  ]);
 
-    counter.querySelector('[data-goatcounter-value="today"]').textContent = todayCount;
-    counter.querySelector('[data-goatcounter-value="yesterday"]').textContent = yesterdayCount;
-    counter.querySelector('[data-goatcounter-value="total"]').textContent = totalCount;
-  } catch (error) {
-    counter.hidden = true;
-    console.warn(error);
-  }
+  setCounterText(counter, '[data-goatcounter-value="today"]', todayResult.status === 'fulfilled' ? todayResult.value : '-');
+  setCounterText(counter, '[data-goatcounter-value="yesterday"]', yesterdayResult.status === 'fulfilled' ? yesterdayResult.value : '-');
+  setCounterText(counter, '[data-goatcounter-value="total"]', totalResult.status === 'fulfilled' ? totalResult.value : '-');
+
+  [todayResult, yesterdayResult, totalResult].forEach((result) => {
+    if (result.status === 'rejected') {
+      console.warn(result.reason);
+    }
+  });
 };
 
 const updatePostViewCounter = async () => {
@@ -126,14 +138,17 @@ const updatePostViewCounter = async () => {
   }
 
   try {
-    const count = await fetchGoatCounterCount(window.location.pathname, {
+    const path = window.goatcounter && window.goatcounter.get_data
+      ? window.goatcounter.get_data().p
+      : window.location.pathname;
+    const count = await fetchGoatCounterCount(path, {
       start: '2000-01-01',
       end: formatDate(new Date()),
     });
 
-    counter.querySelector('[data-goatcounter-post-count]').textContent = count;
+    setCounterText(counter, '[data-goatcounter-post-count]', count);
   } catch (error) {
-    counter.hidden = true;
+    setCounterText(counter, '[data-goatcounter-post-count]', '-');
     console.warn(error);
   }
 };
