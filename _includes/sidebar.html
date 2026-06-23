@@ -42,45 +42,47 @@
   </div>
 
   <div class="sidebar-collapse-region" data-sidebar-collapse-region>
-    <nav class="archive-nav" aria-labelledby="archive-heading">
-      <div class="archive-header">
-        <p class="eyebrow" id="archive-heading">Archive</p>
-        <span class="archive-hint">좌우로 넘겨 글 선택</span>
-      </div>
-      <ol class="archive-list">
-        {% for post in site.posts reversed %}
-        <li>
-          <a href="{{ post.url | relative_url }}"{% if page.url == post.url %} class="active" aria-current="page"{% endif %}>
-            <span class="archive-title">{{ post.title }}</span>
-            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %-m월 %-d일" }}</time>
-          </a>
-        </li>
-        {% endfor %}
-      </ol>
-    </nav>
-
-    <nav class="category-nav" aria-labelledby="category-heading">
-      <div class="archive-header">
-        <p class="eyebrow" id="category-heading">Categories</p>
-      </div>
-      <ol class="category-list">
-        {% assign categories = site.categories | sort %}
-        {% for category in categories %}
-          {% assign category_name = category[0] %}
-          {% assign category_posts = category[1] %}
-          {% assign category_slug = category_name | slugify %}
+    <div class="sidebar-collapse-inner">
+      <nav class="archive-nav" aria-labelledby="archive-heading">
+        <div class="archive-header">
+          <p class="eyebrow" id="archive-heading">Archive</p>
+          <span class="archive-hint">좌우로 넘겨 글 선택</span>
+        </div>
+        <ol class="archive-list">
+          {% for post in site.posts reversed %}
           <li>
-            <a href="{{ '/categories/#' | append: category_slug | relative_url }}">
-              <span>{{ category_name }}</span>
-              <small>{{ category_posts | size }}</small>
+            <a href="{{ post.url | relative_url }}"{% if page.url == post.url %} class="active" aria-current="page"{% endif %}>
+              <span class="archive-title">{{ post.title }}</span>
+              <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %-m월 %-d일" }}</time>
             </a>
           </li>
-        {% endfor %}
-      </ol>
-      <p class="license-note">
-        글·이미지·디자인은 별도 표기가 없는 한
-        <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.ko" rel="license noopener" target="_blank">CC0 1.0</a>입니다.
-      </p>
-    </nav>
+          {% endfor %}
+        </ol>
+      </nav>
+
+      <nav class="category-nav" aria-labelledby="category-heading">
+        <div class="archive-header">
+          <p class="eyebrow" id="category-heading">Categories</p>
+        </div>
+        <ol class="category-list">
+          {% assign categories = site.categories | sort %}
+          {% for category in categories %}
+            {% assign category_name = category[0] %}
+            {% assign category_posts = category[1] %}
+            {% assign category_slug = category_name | slugify %}
+            <li>
+              <a href="{{ '/categories/#' | append: category_slug | relative_url }}">
+                <span>{{ category_name }}</span>
+                <small>{{ category_posts | size }}</small>
+              </a>
+            </li>
+          {% endfor %}
+        </ol>
+        <p class="license-note">
+          글·이미지·디자인은 별도 표기가 없는 한
+          <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.ko" rel="license noopener" target="_blank">CC0 1.0</a>입니다.
+        </p>
+      </nav>
+    </div>
   </div>
 </aside>
