@@ -12,9 +12,29 @@
   <!-- GoatCounter site summary. If you fork this site, update scripts/index.js and layout script tags to your own GoatCounter URL. -->
   <div class="visitor-counter">
     <span class="visitor-counter-values" data-goatcounter-summary aria-live="polite">
-      <span>Week: <strong data-goatcounter-value="week">----</strong></span>
-      <span> / Month: <strong data-goatcounter-value="month">----</strong></span>
-      <span> / Total: <strong data-goatcounter-value="total">----</strong></span>
+      <span class="counter-row counter-period-row">
+        <span class="counter-item counter-week">
+          <span class="counter-label" aria-label="Week">
+            <span class="counter-label-initial counter-label-week" aria-hidden="true">W</span><span class="counter-label-rest" aria-hidden="true">eek</span>
+          </span>
+          <strong data-goatcounter-value="week">----</strong>
+        </span>
+        <span class="counter-row-divider" aria-hidden="true">·</span>
+        <span class="counter-item counter-month">
+          <span class="counter-label" aria-label="Month">
+            <span class="counter-label-initial counter-label-month" aria-hidden="true">M</span><span class="counter-label-rest" aria-hidden="true">onth</span>
+          </span>
+          <strong data-goatcounter-value="month">----</strong>
+        </span>
+      </span>
+      <span class="counter-row counter-total-row">
+        <span class="counter-item counter-total">
+          <span class="counter-label" aria-label="Total">
+            <span class="counter-label-initial counter-label-total" aria-hidden="true">T</span><span class="counter-label-rest" aria-hidden="true">otal</span>
+          </span>
+          <strong data-goatcounter-value="total">----</strong>
+        </span>
+      </span>
     </span>
     <button class="sidebar-top-button" type="button" data-scroll-top aria-label="페이지 맨 위로 이동">
       <span aria-hidden="true">↑</span> TOP
