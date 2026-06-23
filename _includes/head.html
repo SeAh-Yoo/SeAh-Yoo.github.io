@@ -15,6 +15,11 @@
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 <meta name="theme-color" content="#17151f" />
 <link rel="canonical" href="{{ canonical_url }}" />
+{% if page.layout == "post" %}
+<link rel="alternate" hreflang="ko" href="{{ canonical_url }}" />
+{% if page.translation_en %}<link rel="alternate" hreflang="en" href="{{ page.translation_en | absolute_url }}" />{% endif %}
+{% if page.translation_ja %}<link rel="alternate" hreflang="ja" href="{{ page.translation_ja | absolute_url }}" />{% endif %}
+{% endif %}
 
 <meta property="og:locale" content="ko_KR" />
 <meta property="og:site_name" content="{{ site.title | escape }}" />
