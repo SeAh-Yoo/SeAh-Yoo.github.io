@@ -18,23 +18,40 @@
         </header>
 
         <section class="view" aria-label="최신 칼럼">
-          {% for post in site.posts limit: 5 %}
-          <a class="card glass-panel" href="{{ post.url | relative_url }}">
+          {% if site.posts.size > 0 %}
+          {% assign featured_post = site.posts | first %}
+          <a class="card card-featured glass-panel" href="{{ featured_post.url | relative_url }}">
+            <span class="card-kicker" aria-hidden="true">Latest column</span>
             <div class="meta">
-              <time datetime="{{ post.date | date_to_xmlschema }}"
-                >{{ post.date | date: "%Y년 %-m월 %-d일" }}</time
+              <time datetime="{{ featured_post.date | date_to_xmlschema }}"
+                >{{ featured_post.date | date: "%Y년 %-m월 %-d일" }}</time
               >
-              <span>{{ post.category | default: "Column" }}</span>
+              <span>{{ featured_post.category | default: "Column" }}</span>
             </div>
-            <h2>{{ post.title }}</h2>
-            <p>{{ post.description }}</p>
-            <span class="read-more" aria-hidden="true">읽으러 가기</span>
+            <h2>{{ featured_post.title }}</h2>
+            <p>{{ featured_post.description }}</p>
+            <span class="read-more" aria-hidden="true">최신 칼럼 읽기</span>
           </a>
+
+          <div class="card-grid">
+            {% for post in site.posts offset: 1 limit: 4 %}
+            <a class="card glass-panel" href="{{ post.url | relative_url }}">
+              <div class="meta">
+                <time datetime="{{ post.date | date_to_xmlschema }}"
+                  >{{ post.date | date: "%Y년 %-m월 %-d일" }}</time
+                >
+                <span>{{ post.category | default: "Column" }}</span>
+              </div>
+              <h2>{{ post.title }}</h2>
+              <p>{{ post.description }}</p>
+            </a>
+            {% endfor %}
+          </div>
           {% else %}
           <section class="empty glass-panel">
             아직 등록된 칼럼이 없습니다.
           </section>
-          {% endfor %}
+          {% endif %}
         </section>
       </main>
     </div>
