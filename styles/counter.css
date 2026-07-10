@@ -1,3 +1,38 @@
+.visitor-counter-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.visitor-counter-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.visitor-counter-eyebrow {
+  color: rgba(139, 216, 255, 0.82);
+  font-family: var(--font-symbol);
+  font-size: 0.61rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.visitor-counter-detail-link {
+  color: rgba(217, 226, 242, 0.66);
+  font-size: 0.66rem;
+  text-decoration: none;
+}
+
+.visitor-counter-detail-link:hover,
+.visitor-counter-detail-link:focus-visible {
+  color: #f4fbff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .visitor-counter-values {
   display: flex;
   flex-direction: column;
@@ -35,6 +70,18 @@
   font-weight: 900;
   line-height: 1;
   text-shadow: 0 0 9px currentColor;
+}
+
+.visitor-counter-note {
+  margin: 3px 0 0;
+  color: rgba(217, 226, 242, 0.48);
+  font-size: 0.59rem;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+}
+
+.visitor-counter-content[aria-busy="true"] .visitor-counter-values {
+  opacity: 0.68;
 }
 
 /* Label accents deliberately use a separate palette from the digit colors. */
@@ -91,12 +138,18 @@
 
 .post-view-counter {
   margin: -2px 0 22px;
+  color: rgba(217, 226, 242, 0.62);
   font-variant-numeric: tabular-nums;
 }
 
 .post-view-counter [data-goatcounter-post-count] {
-  color: rgba(217, 226, 242, 0.54);
+  color: rgba(217, 226, 242, 0.76);
   font-weight: 700;
+}
+
+.post-view-counter-note {
+  color: rgba(217, 226, 242, 0.44);
+  margin-left: 0.12em;
 }
 
 @media (max-width: 900px) {

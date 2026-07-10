@@ -41,14 +41,46 @@ if (document.readyState === 'loading') {
 
 window.addEventListener('load', addPostImageCaptions);
 
-// GoatCounter public counter origin for this site. If you copy/fork this site,
-// replace this with your own GoatCounter subdomain so counts do not point here.
-const GOATCOUNTER_COUNTER_ORIGIN = 'https://seah-yoo.goatcounter.com';
+const analyticsOriginMeta = document.querySelector('meta[name="goatcounter-counter-origin"]');
+const analyticsCacheMeta = document.querySelector('meta[name="goatcounter-summary-cache-minutes"]');
+const analyticsLabelMeta = document.querySelector('meta[name="goatcounter-summary-label"]');
+const GOATCOUNTER_COUNTER_ORIGIN = analyticsOriginMeta?.content.replace(/\/$/, '') || '';
+const SUMMARY_CACHE_MINUTES = Math.min(
+  120,
+  Math.max(5, Number.parseInt(analyticsCacheMeta?.content || '20', 10) || 20),
+);
+const SUMMARY_CACHE_KEY = 'literary-underground:goatcounter-summary:v2';
+const SUMMARY_CACHE_DURATION = SUMMARY_CACHE_MINUTES * 60 * 1000;
+const SUMMARY_LABEL = analyticsLabelMeta?.content || '익명 방문 집계';
+const analyticsEventQueue = [];
+let analyticsRetryId = 0;
+
+const getCanonicalPath = () => {
+  const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href');
+
+  if (canonical) {
+    try {
+      const url = new URL(canonical, window.location.origin);
+
+      if (url.origin === window.location.origin) {
+        return `${url.pathname}${url.search}` || '/';
+      }
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+
+  return window.location.pathname || '/';
+};
 
 const buildGoatCounterUrl = (path, params = {}) => {
-  // GoatCounter direct counter URLs expect the path as one encoded segment;
-  // using encodeURI() leaves slashes unescaped and can return 404 for posts.
-  const normalizedPath = path === 'TOTAL' ? path : path && path.startsWith('/') ? path : `/${path || ''}`;
+  if (!GOATCOUNTER_COUNTER_ORIGIN) {
+    return null;
+  }
+
+  const normalizedPath = path === 'TOTAL'
+    ? path
+    : path && path.startsWith('/') ? path : `/${path || ''}`;
   const encodedPath = encodeURIComponent(normalizedPath);
   const url = new URL(`/counter/${encodedPath}.json`, GOATCOUNTER_COUNTER_ORIGIN);
 
@@ -72,33 +104,51 @@ const parseGoatCounterCount = (value) => {
   return Number.isFinite(parsed) ? parsed : 0;
 };
 
-// Counts below 10,000 stay ungrouped. Starting at five digits, use standard
-// thousands separators: 9999 → 9999, 10000 → 10,000, 50304 → 50,304.
-const formatCounterCount = (value, minimumDigits = 0) => {
-  const count = Math.max(0, Math.trunc(value));
-
-  if (count >= 10000) {
-    return count.toLocaleString('en-US');
-  }
-
-  return String(count).padStart(minimumDigits, '0');
-};
+const formatCounterCount = (value) => new Intl.NumberFormat('ko-KR').format(
+  Math.max(0, Math.trunc(value)),
+);
 
 const fetchGoatCounterCount = async (path, params = {}) => {
-  const response = await fetch(buildGoatCounterUrl(path, params), {
+  const url = buildGoatCounterUrl(path, params);
+
+  if (!url) {
+    throw new Error('GoatCounter is not configured.');
+  }
+
+  const response = await fetch(url, {
     credentials: 'omit',
-    cache: 'no-store',
   });
 
-  // GoatCounter may return a JSON count of 0 with HTTP 404 when a path has
-  // no recorded views yet. Treat that as a valid zero rather than an error.
+  // GoatCounter returns a JSON count of 0 with HTTP 404 for unseen paths.
   if (!response.ok && response.status !== 404) {
     throw new Error(`GoatCounter request failed: ${response.status}`);
   }
 
   const data = await response.json();
 
-  return parseGoatCounterCount(data.count ?? data.count_unique ?? 0);
+  return parseGoatCounterCount(data.count ?? 0);
+};
+
+const readSummaryCache = () => {
+  try {
+    const cached = JSON.parse(window.sessionStorage.getItem(SUMMARY_CACHE_KEY) || 'null');
+
+    if (!cached || !cached.updatedAt || Date.now() - cached.updatedAt > SUMMARY_CACHE_DURATION) {
+      return null;
+    }
+
+    return cached;
+  } catch (error) {
+    return null;
+  }
+};
+
+const writeSummaryCache = (summary) => {
+  try {
+    window.sessionStorage.setItem(SUMMARY_CACHE_KEY, JSON.stringify(summary));
+  } catch (error) {
+    // The counter still works in browsers that deny session storage.
+  }
 };
 
 const setCounterText = (container, selector, value) => {
@@ -116,34 +166,43 @@ const setColoredCounter = (container, selector, value) => {
     return;
   }
 
+  const displayValue = value === null ? '–' : formatCounterCount(value);
   const fragment = document.createDocumentFragment();
 
-  Array.from(value).forEach((character) => {
+  Array.from(displayValue).forEach((character) => {
     const span = document.createElement('span');
     span.textContent = character;
-
-    if (/^\d$/.test(character)) {
-      span.className = `counter-digit counter-digit-${character}`;
-    } else {
-      span.className = 'counter-separator';
-    }
-
+    span.className = /^\d$/.test(character)
+      ? `counter-digit counter-digit-${character}`
+      : 'counter-separator';
     fragment.appendChild(span);
   });
 
   element.replaceChildren(fragment);
+  element.setAttribute('aria-label', `${element.getAttribute('aria-label')?.replace(/\s+[^\s]+$/, '') || '방문 수'} ${displayValue}`);
 };
 
-// GoatCounter interprets the special start values "week" and "month" as
-// rolling seven-day and thirty-day ranges. These avoid local-midnight and UTC
-// boundary confusion. Cached ranges can refresh at slightly different times,
-// so enforce Week <= Month <= Total before displaying them.
-const updateSiteVisitorCounter = async () => {
-  const counter = document.querySelector('[data-goatcounter-summary]');
+const setSummaryStatus = (container, message) => {
+  setCounterText(container, '[data-goatcounter-status]', message);
+};
 
-  if (!counter) {
+const renderSiteVisitorCounter = (container, summary, status) => {
+  setColoredCounter(container, '[data-goatcounter-value="week"]', summary.week);
+  setColoredCounter(container, '[data-goatcounter-value="month"]', summary.month);
+  setColoredCounter(container, '[data-goatcounter-value="total"]', summary.total);
+  container.setAttribute('aria-busy', 'false');
+  setSummaryStatus(container, status);
+};
+
+const updateSiteVisitorCounter = async (container) => {
+  const cached = readSummaryCache();
+
+  if (cached) {
+    renderSiteVisitorCounter(container, cached, `방문 집계를 ${SUMMARY_CACHE_MINUTES}분 동안 표시합니다.`);
     return;
   }
+
+  setSummaryStatus(container, '방문 집계를 불러오는 중입니다.');
 
   const [weekResult, monthResult, totalResult] = await Promise.allSettled([
     fetchGoatCounterCount('TOTAL', { start: 'week' }),
@@ -151,60 +210,164 @@ const updateSiteVisitorCounter = async () => {
     fetchGoatCounterCount('TOTAL'),
   ]);
 
-  const weekCount = weekResult.status === 'fulfilled'
-    ? weekResult.value
+  const week = weekResult.status === 'fulfilled' ? weekResult.value : null;
+  const month = monthResult.status === 'fulfilled'
+    ? Math.max(monthResult.value, week ?? 0)
     : null;
-  const monthCount = monthResult.status === 'fulfilled'
-    ? Math.max(monthResult.value, weekCount ?? 0)
+  const total = totalResult.status === 'fulfilled'
+    ? Math.max(totalResult.value, month ?? 0, week ?? 0)
     : null;
-  const totalCount = totalResult.status === 'fulfilled'
-    ? Math.max(totalResult.value, monthCount ?? 0, weekCount ?? 0)
-    : null;
+  const summary = { week, month, total, updatedAt: Date.now() };
 
-  const weekText = weekCount !== null
-    ? formatCounterCount(weekCount, 4)
-    : '----';
-  const monthText = monthCount !== null
-    ? formatCounterCount(monthCount, 4)
-    : '----';
-  const totalText = totalCount !== null
-    ? formatCounterCount(totalCount, 4)
-    : '----';
+  if (week === null && month === null && total === null) {
+    renderSiteVisitorCounter(container, summary, '방문 집계를 불러오지 못했습니다.');
+    return;
+  }
 
-  setColoredCounter(counter, '[data-goatcounter-value="week"]', weekText);
-  setColoredCounter(counter, '[data-goatcounter-value="month"]', monthText);
-  setColoredCounter(counter, '[data-goatcounter-value="total"]', totalText);
+  writeSummaryCache(summary);
+  renderSiteVisitorCounter(container, summary, `${SUMMARY_LABEL}입니다.`);
+};
 
-  [weekResult, monthResult, totalResult].forEach((result) => {
-    if (result.status === 'rejected') {
-      console.warn(result.reason);
+const initSiteVisitorCounter = () => {
+  const counter = document.querySelector('[data-goatcounter-summary]');
+
+  if (!counter || !GOATCOUNTER_COUNTER_ORIGIN) {
+    return;
+  }
+
+  let requested = false;
+  const requestCounter = () => {
+    if (requested) {
+      return;
     }
-  });
+
+    requested = true;
+    updateSiteVisitorCounter(counter).catch((error) => {
+      console.warn(error);
+      counter.setAttribute('aria-busy', 'false');
+      setSummaryStatus(counter, '방문 집계를 불러오지 못했습니다.');
+    });
+  };
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        observer.disconnect();
+        requestCounter();
+      }
+    }, { rootMargin: '160px 0px' });
+
+    observer.observe(counter);
+    return;
+  }
+
+  requestCounter();
 };
 
 const updatePostViewCounter = async () => {
   const counter = document.querySelector('[data-goatcounter-post-view]');
 
-  if (!counter) {
+  if (!counter || !GOATCOUNTER_COUNTER_ORIGIN) {
     return;
   }
 
   try {
-    const path = window.goatcounter && window.goatcounter.get_data
-      ? window.goatcounter.get_data().p
-      : window.location.pathname;
-    const count = await fetchGoatCounterCount(path);
+    const trackedPath = window.goatcounter?.get_data?.().p || getCanonicalPath();
+    const count = await fetchGoatCounterCount(trackedPath);
 
     setCounterText(counter, '[data-goatcounter-post-count]', formatCounterCount(count));
+    setCounterText(counter, '[data-goatcounter-post-note]', '회');
   } catch (error) {
-    setCounterText(counter, '[data-goatcounter-post-count]', '-');
+    setCounterText(counter, '[data-goatcounter-post-count]', '표시할 수 없음');
+    setCounterText(counter, '[data-goatcounter-post-note]', '');
     console.warn(error);
+  } finally {
+    counter.setAttribute('aria-busy', 'false');
   }
 };
 
+const sendAnalyticsEvent = (event) => {
+  const counter = window.goatcounter;
+
+  if (!counter || typeof counter.count !== 'function') {
+    return false;
+  }
+
+  try {
+    counter.count({
+      path: event.name,
+      title: event.title,
+      event: true,
+    });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+const flushAnalyticsEvents = (attempt = 0) => {
+  analyticsRetryId = 0;
+
+  while (analyticsEventQueue.length && sendAnalyticsEvent(analyticsEventQueue[0])) {
+    analyticsEventQueue.shift();
+  }
+
+  if (analyticsEventQueue.length && attempt < 20) {
+    analyticsRetryId = window.setTimeout(() => flushAnalyticsEvents(attempt + 1), 500);
+  }
+};
+
+const trackSiteEvent = (name, title = document.title) => {
+  if (!GOATCOUNTER_COUNTER_ORIGIN || !name) {
+    return false;
+  }
+
+  const normalizedName = String(name).trim().replace(/^\/+/, '').slice(0, 180);
+
+  if (!normalizedName) {
+    return false;
+  }
+
+  const event = {
+    name: normalizedName,
+    title: String(title || normalizedName).trim().slice(0, 200),
+  };
+
+  if (sendAnalyticsEvent(event)) {
+    return true;
+  }
+
+  if (analyticsEventQueue.length < 12) {
+    analyticsEventQueue.push(event);
+  }
+
+  if (!analyticsRetryId) {
+    flushAnalyticsEvents();
+  }
+
+  return false;
+};
+
+window.siteAnalytics = Object.assign(window.siteAnalytics || {}, {
+  trackEvent: trackSiteEvent,
+  getCanonicalPath,
+});
+
+const bindAnalyticsClickEvents = () => {
+  document.querySelectorAll('[data-analytics-event]').forEach((element) => {
+    element.addEventListener('click', () => {
+      trackSiteEvent(
+        element.dataset.analyticsEvent,
+        element.dataset.analyticsTitle || element.textContent.trim(),
+      );
+    }, { once: true });
+  });
+};
+
 const updateGoatCounterDisplays = () => {
-  updateSiteVisitorCounter();
+  initSiteVisitorCounter();
   updatePostViewCounter();
+  bindAnalyticsClickEvents();
 };
 
 if (document.readyState === 'loading') {

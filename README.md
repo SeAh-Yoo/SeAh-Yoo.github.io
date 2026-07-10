@@ -16,12 +16,13 @@
 - 포스트별 고유 URL과 canonical 주소
 - Open Graph, X 카드, `Blog`·`BlogPosting` JSON-LD
 - 자동 `sitemap.xml`과 `robots.txt`
-- GoatCounter 방문자 카운터와 게시물별 조회수
+- GoatCounter 익명 방문·읽기 신호와 정적 독서의 맥박
 - 예상 읽기 시간, 스크롤 진행 표시, 핵심 논지와 자동 목차
 - Kramdown 미주와 본문·미주 상호 이동
 - Front Matter 작성 시각 기준 이전 글·다음 글
 - Front Matter 기반 연재 목록
 - 시작 경로, 주제 지도, 자동 아카이브 타임라인
+- 공개 카운터 기반 정적 「독서의 맥박」 페이지
 - Front Matter 기반 참고문헌 자료실
 - 제목·본문·카테고리·주제·연재 전체 검색
 - 영어·일본어 번역 링크
@@ -139,48 +140,90 @@ Esc                    검색창 닫기
 - `styles/search.css`
 - `_includes/sidebar.html`
 
-## GoatCounter 방문자 카운터와 조회수
+## GoatCounter: 익명 방문과 독서의 맥박
 
-이 사이트는 GoatCounter를 사용해 방문자 수와 게시물별 조회수를 표시합니다.
+이 사이트는 GoatCounter를 사용합니다. 여기서 숫자는 사람을 식별한 정확한 독자 수가 아니라, 세션 기반으로 집계된 **익명 방문 흐름**입니다. GoatCounter의 공개 카운터 응답에서 `count_unique`는 `count`와 같은 하위호환 필드이므로 별도의 순방문 지표로 표시하지 않습니다.
 
-### 사이드바 카운터
+### 공통 설정
 
-최근 7일, 최근 30일, 전체 누적 방문 수를 표시합니다. `Week`와 `Month`는 달력상의 주·월이 아니라 각각 최근 7일과 최근 30일 범위입니다.
+GoatCounter 사이트 코드와 화면 캐시 시간은 한 곳에서 관리합니다.
 
-PC:
-
-```text
-Week 0001 · Month 0001
-Total 0001
+```json
+// _data/analytics.json
+{
+  "goatcounterCode": "seah-yoo",
+  "summaryCacheMinutes": 20,
+  "summaryLabel": "익명 방문 집계"
+}
 ```
 
-모바일:
+- `goatcounterCode`만 바꾸면 모든 레이아웃의 추적 스크립트와 공개 카운터 요청이 함께 바뀝니다.
+- 공통 추적 태그는 `_includes/analytics-tracking.html`에 있습니다.
+- 정적 페이지·홈·카테고리·포스트가 같은 설정을 사용하므로 포크하거나 도메인을 바꿀 때 누락될 위험이 적습니다.
+
+### 사이드바와 게시물 카운터
+
+사이드바에는 `READING PULSE`라는 이름으로 최근 7일, 최근 30일, 누적 방문을 보입니다.
 
 ```text
-W 0001 · M 0001
-T 0001
+7일 42 · 30일 84
+Σ누적 1,240
 ```
 
-표시 규칙:
+- 달력상 주·월이 아니라 각각 최근 7일·최근 30일 범위입니다.
+- 숫자는 사이드바가 화면 가까이에 보일 때만 불러옵니다.
+- 같은 브라우저 탭에서는 `sessionStorage`에 짧게 보관해 매 페이지 이동마다 3~4회 요청하지 않습니다. 이 저장값에는 방문자 식별 정보가 없습니다.
+- 새 경로와 새 읽기 이벤트의 `404 + count: 0` 응답은 정상적인 0으로 처리합니다.
+- 게시물 제목 아래에는 `누적 방문 N회`를 보입니다. 카운터 경로는 canonical URL을 우선 사용해 레거시 URL과 통계가 갈라질 가능성을 줄입니다.
+- GoatCounter 공개 카운터는 즉시 갱신되는 수치가 아니며, 광고 차단기·네트워크 환경에 따라 일부 방문이 빠질 수 있습니다.
+
+### 읽기·공유 이벤트
+
+페이지뷰만으로는 글이 실제로 읽혔는지 알기 어려우므로, 다음의 익명 이벤트를 추가로 기록합니다. 읽기 진행 이벤트는 게시물당 한 번만 보내고, 나머지 상호작용은 GoatCounter의 기본 세션 집계로 중복을 줄입니다. 검색어·인용문 원문·이메일·사용자 입력은 보내지 않습니다.
+
+| 이벤트 | 발생 조건 |
+| --- | --- |
+| `read-75--<slug>` | 글의 읽기 진행이 75%에 도달했을 때 |
+| `read-complete--<slug>` | 30초 이상 머문 뒤 읽기 진행이 90%에 도달했을 때 |
+| `quote-card-export--<slug>` | PNG 인용 카드를 만들었을 때 |
+| `share-*--<slug>` | 공유 창·공유 수단·주소 복사·인쇄/PDF를 사용했을 때 |
+| `reference-open--<id>` | 자료실의 외부 참고문헌을 열었을 때 |
+| `start-here-select--<path>` | 시작 경로에서 글을 선택했을 때 |
+
+GoatCounter가 아직 준비되지 않은 아주 이른 클릭은 짧은 큐에 보관해 전송을 재시도합니다. 동적으로 만들어지는 인용 카드처럼 초기 자동 바인딩 대상이 아닌 요소도 JavaScript에서 직접 기록합니다.
+
+### 공유 UTM 규칙
+
+카카오톡, 텔레그램, LINE, X, Threads, Facebook 및 시스템 공유는 공유 대상 URL에 아래 UTM 값을 붙입니다. GoatCounter는 이 값을 캠페인으로 자동 분류합니다.
 
 ```text
-0       → 0000
-1       → 0001
-42      → 0042
-1234    → 1234
-10000   → 10,000
-50304   → 50,304
-1000000 → 1,000,000
+utm_source=threads
+utm_medium=share
+utm_campaign=post-2026-07-07-game-for-girls
 ```
 
-- 네 자리 미만은 앞에 `0`을 채움
-- 다섯 자리부터 천 단위 쉼표 적용
-- 숫자 `0`부터 `9`까지 서로 다른 파스텔 색상 적용
-- `W`, `M`, `T`는 숫자와 다른 포인트 색상으로 강조
-- 독립적인 캐시 시점에도 `Week ≤ Month ≤ Total` 관계가 유지되도록 보정
-- 데이터가 없을 때의 `404 + count: 0` 응답을 정상적인 0으로 처리
+주소 복사는 읽기 좋은 canonical 주소를 그대로 유지하고, 복사 행동 자체만 이벤트로 기록합니다. 뉴스레터나 직접 작성한 SNS 게시물에도 같은 규칙을 사용하면 유입원을 비교할 수 있습니다.
 
-게시물 조회수는 포스트 제목 바로 아래에 표시하며, 다섯 자리부터 천 단위 쉼표를 적용합니다.
+### 정적 「독서의 맥박」 페이지
+
+[`/reading-pulse/`](https://seah-yoo.github.io/reading-pulse/)는 공개 GoatCounter 카운터를 하루 한 번 읽어 만든 정적 스냅샷입니다. 누적 방문, 최근 30일 글 방문, 75% 읽기와 완독 신호를 글별로 보여 줍니다.
+
+- 원본 데이터: `_data/reading_pulse.json`
+- 생성 도구: `scripts/refresh-reading-pulse.mjs`
+- 자동 갱신: `.github/workflows/refresh-reading-pulse.yml` — 매일 12:17 KST 및 수동 실행
+- 비밀키를 사용하지 않습니다. 공개 `/counter/*.json` 응답만 읽으므로 브라우저나 저장소에 GoatCounter API 키를 넣지 않습니다.
+
+로컬에서 스냅샷을 새로 만들려면 Node.js 20 이상에서 다음을 실행합니다.
+
+```powershell
+node scripts/refresh-reading-pulse.mjs
+```
+
+### 개인정보와 통계 제외
+
+GoatCounter는 쿠키·localStorage·영구 식별자를 사용하지 않는 익명 집계를 표방합니다. 사이트의 [소개 페이지](https://seah-yoo.github.io/about/)에는 `#toggle-goatcounter`를 이용해 이 브라우저의 추적을 제외하는 링크를 둡니다. 통계 제외를 선택해도 공개 숫자를 화면에 보여 주는 읽기 전용 요청은 별도로 남을 수 있습니다.
+
+관련 문서: [Visitor counter](https://www.goatcounter.com/help/visitor-counter), [Events](https://www.goatcounter.com/help/events), [Campaign tracking](https://www.goatcounter.com/help/campaigns), [Privacy policy](https://www.goatcounter.com/help/privacy).
 
 ## 번역 링크
 
@@ -494,9 +537,12 @@ assets/images/example-post-image-03.jpg
 
 ```text
 .
+├─ .github/workflows/
+│  └─ refresh-reading-pulse.yml    # 매일 공개 카운터 스냅샷 갱신
 ├─ _config.yml
 ├─ _includes/
 │  ├─ head.html                    # SEO, RSS 발견, SNS 카드, JSON-LD, hreflang
+│  ├─ analytics-tracking.html      # 공통 GoatCounter 추적 태그
 │  ├─ sidebar.html                 # 카운터, TOP, 검색, Archive, Categories
 │  ├─ site-search.html             # 명령 팔레트 검색 UI
 │  ├─ post-translations.html       # 영어·일본어 번역 버튼
@@ -505,20 +551,23 @@ assets/images/example-post-image-03.jpg
 │  ├─ post-share.html              # 공유, RSS, 인쇄·PDF와 공유 모달
 │  └─ post-comments.html           # giscus 댓글 설정
 ├─ _data/
+│  ├─ analytics.json               # GoatCounter 코드와 요약 캐시 설정
 │  ├─ paths.yml                    # 시작 경로의 제목과 소개
+│  ├─ reading_pulse.json           # 공개 카운터 기반 정적 독서 스냅샷
 │  └─ topics.yml                   # 주제 지도 항목과 설명
 ├─ _layouts/
 │  ├─ categories.html
 │  ├─ home.html
-│  ├─ page.html                    # 시작·주제·자료실·타임라인·소개 공통 레이아웃
+│  ├─ page.html                    # 시작·주제·자료실·타임라인·독서의 맥박·소개 공통 레이아웃
 │  └─ post.html                    # 포스트 전체 구성과 읽기 정보·목차 삽입 위치
 ├─ _posts/                         # 포스트 마크다운 원본
 ├─ assets/images/                  # 포스트와 프로필 이미지
 ├─ scripts/
-│  ├─ index.js                     # 레거시 URL, 캡션, GoatCounter
+│  ├─ index.js                     # 레거시 URL, 캡션, GoatCounter 요약·이벤트
 │  ├─ sidebar-collapse.js          # 모바일 사이드바와 TOP 동작
 │  ├─ site-search.js               # 전체 검색, 단축키, 결과 정렬
-│  └─ post-actions.js              # 공유, 인쇄, 읽기 시간, 미주, 목차, 인용 카드, giscus 지연 로딩
+│  ├─ post-actions.js              # 공유, 인쇄, 읽기 시간, 미주, 목차, 인용 카드, giscus 지연 로딩
+│  └─ refresh-reading-pulse.mjs    # 공개 GoatCounter 정적 스냅샷 생성
 ├─ styles/
 │  ├─ index.css                    # 기본 디자인과 반응형 레이아웃
 │  ├─ sidebar-collapse.css         # 모바일 사이드바 애니메이션
@@ -530,6 +579,7 @@ assets/images/example-post-image-03.jpg
 ├─ topics.html                     # 주제 지도
 ├─ timeline.html                   # 작성 시각순 타임라인
 ├─ references.html                 # 참고문헌 자료실
+├─ reading-pulse.html               # 익명 방문과 읽기 신호 정적 대시보드
 ├─ about.html                      # 소개와 편집 원칙
 ├─ search.json                     # Jekyll이 생성하는 정적 검색 색인
 ├─ feed.xml                        # RSS 2.0 피드
@@ -542,9 +592,9 @@ assets/images/example-post-image-03.jpg
 ## 외부 서비스 의존성
 
 - GitHub Pages 및 Jekyll: 정적 사이트 호스팅과 빌드
-- GoatCounter: 방문자 카운터와 게시물 조회수
+- GoatCounter: 익명 방문·읽기 신호·공개 카운터 기반 정적 독서 스냅샷
 - giscus 및 GitHub Discussions: 댓글과 반응
 - Google Fonts 및 jsDelivr: 웹폰트와 스타일 리소스
 - 각 SNS의 공식 공유 URL: 포스트 공유
 
-전체 검색, 시작 경로, 주제 지도, 타임라인, 자료실, 읽기 시간, 미주, 인용 카드, 목차, 연재, 이전·다음 글, RSS 생성과 인쇄 레이아웃은 별도의 유료 서버 없이 정적으로 동작합니다.
+전체 검색, 시작 경로, 주제 지도, 타임라인, 자료실, 독서의 맥박, 읽기 시간, 미주, 인용 카드, 목차, 연재, 이전·다음 글, RSS 생성과 인쇄 레이아웃은 별도의 유료 서버 없이 정적으로 동작합니다.

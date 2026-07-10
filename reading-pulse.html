@@ -1,0 +1,87 @@
+---
+layout: page
+title: "독서의 맥박"
+permalink: /reading-pulse/
+eyebrow: "Reading pulse"
+intro: "익명으로 집계한 방문과 읽기 신호를, 하루 한 번 정적인 기록으로 남깁니다."
+---
+
+{% assign pulse = site.data.reading_pulse %}
+
+<section class="reading-pulse glass-panel" aria-labelledby="reading-pulse-title">
+  <div class="reading-pulse-heading">
+    <p class="section-label">ANONYMOUS READING SIGNALS</p>
+    <h2 id="reading-pulse-title">읽기의 흔적</h2>
+    <p>숫자는 정확한 독자 수가 아니라, 이곳에서 발생한 익명 방문과 읽기 행동의 대략적인 흐름입니다.</p>
+  </div>
+
+  {% if pulse and pulse.posts and pulse.posts.size > 0 %}
+    {% assign month_total = 0 %}
+    {% assign reading_signal_total = 0 %}
+    {% for post in pulse.posts %}
+      {% assign month_total = month_total | plus: post.month %}
+      {% assign post_signals = post.read75 | plus: post.readComplete %}
+      {% assign reading_signal_total = reading_signal_total | plus: post_signals %}
+    {% endfor %}
+
+    <dl class="reading-pulse-summary" aria-label="독서의 맥박 요약">
+      <div>
+        <dt>누적 방문</dt>
+        <dd>{{ pulse.site.total | default: 0 }}</dd>
+      </div>
+      <div>
+        <dt>최근 30일 글 방문</dt>
+        <dd>{{ month_total }}</dd>
+      </div>
+      <div>
+        <dt>읽기 신호</dt>
+        <dd>{{ reading_signal_total }}</dd>
+      </div>
+    </dl>
+
+    <p class="reading-pulse-updated">
+      마지막 집계: <time datetime="{{ pulse.generated_at | date_to_xmlschema }}">{{ pulse.generated_at | date: "%Y년 %-m월 %-d일" }}</time>
+    </p>
+
+    {% assign ranked_posts = pulse.posts | sort: "month" | reverse %}
+    <div class="reading-pulse-list" aria-label="글별 읽기 흐름">
+      {% for post in ranked_posts %}
+        <article class="reading-pulse-item">
+          <div class="reading-pulse-item-heading">
+            <p class="eyebrow">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</p>
+            <h3><a href="{{ post.path | relative_url }}">{{ post.title }}</a></h3>
+          </div>
+
+          <dl class="reading-pulse-metrics">
+            <div>
+              <dt>최근 30일 방문</dt>
+              <dd>{{ post.month | default: 0 }}</dd>
+            </div>
+            <div>
+              <dt>누적 방문</dt>
+              <dd>{{ post.total | default: 0 }}</dd>
+            </div>
+            <div>
+              <dt>75% 읽기</dt>
+              <dd>{{ post.read75 | default: 0 }}</dd>
+            </div>
+            <div>
+              <dt>완독 신호</dt>
+              <dd>{{ post.readComplete | default: 0 }}</dd>
+            </div>
+          </dl>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="reading-pulse-empty" role="status">
+      <p class="section-label">SNAPSHOT PENDING</p>
+      <h2>첫 번째 기록을 준비하고 있습니다.</h2>
+      <p>공개 통계의 첫 스냅샷이 만들어지면, 이곳에 글별 읽기 흐름이 나타납니다.</p>
+    </div>
+  {% endif %}
+
+  <p class="reading-pulse-note">
+    이 기록은 GoatCounter의 공개 카운터를 바탕으로 하루 한 번 갱신됩니다. 광고 차단기나 네트워크 환경에 따라 일부 방문은 집계되지 않을 수 있습니다.
+  </p>
+</section>

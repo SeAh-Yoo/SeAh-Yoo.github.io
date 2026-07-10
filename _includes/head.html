@@ -18,6 +18,12 @@
 <meta name="theme-color" content="#17151f" />
 <link rel="canonical" href="{{ canonical_url }}" />
 <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }} RSS" href="{{ '/feed.xml' | absolute_url }}" />
+{% assign goatcounter_code = site.data.analytics.goatcounterCode %}
+{% if goatcounter_code and goatcounter_code != '' %}
+<meta name="goatcounter-counter-origin" content="https://{{ goatcounter_code | escape }}.goatcounter.com" />
+<meta name="goatcounter-summary-cache-minutes" content="{{ site.data.analytics.summaryCacheMinutes | default: 20 }}" />
+<meta name="goatcounter-summary-label" content="{{ site.data.analytics.summaryLabel | default: '익명 방문 집계' | escape }}" />
+{% endif %}
 {% if page.layout == "post" %}
 <link rel="alternate" hreflang="ko" href="{{ canonical_url }}" />
 {% if page.translation_en %}<link rel="alternate" hreflang="en" href="{{ page.translation_en | absolute_url }}" />{% endif %}

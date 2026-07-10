@@ -31,7 +31,9 @@ permalink: /start-here/
       {% for post in ordered_posts %}
         {% if post.start_here == path.id %}
         <li>
-          <a class="path-card glass-panel" href="{{ post.url | relative_url }}">
+          <a class="path-card glass-panel" href="{{ post.url | relative_url }}"
+             data-analytics-event="start-here-select--{{ path.id | slugify }}"
+             data-analytics-title="{{ path.title | escape }} · {{ post.title | escape }}">
             <span class="path-card-order" aria-hidden="true">{{ post.start_here_order | default: forloop.index }}</span>
             <span>
               <span class="meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %-m월 %-d일" }}</time><span>{{ post.category | default: "Column" }}</span></span>

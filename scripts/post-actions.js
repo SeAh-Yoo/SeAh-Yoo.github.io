@@ -32,6 +32,17 @@
     }
   };
 
+  const getPostAnalyticsName = (prefix) => {
+    const post = document.querySelector('article.post');
+    const postSlug = post?.dataset.analyticsPost;
+
+    return postSlug ? `${prefix}--${postSlug}` : prefix;
+  };
+
+  const trackPostEvent = (prefix, title = document.title) => {
+    window.siteAnalytics?.trackEvent?.(getPostAnalyticsName(prefix), title);
+  };
+
   const loadKakaoSdk = (() => {
     let sdkPromise;
 
@@ -68,6 +79,23 @@
     const description = shareRoot.dataset.shareDescription || '';
     const image = shareRoot.dataset.shareImage || '';
     const kakaoKey = shareRoot.dataset.kakaoKey || '';
+    const campaign = shareRoot.dataset.shareCampaign || 'post-share';
+
+    const getTrackedShareUrl = (source) => {
+      try {
+        const trackedUrl = new URL(url, window.location.origin);
+
+        if (trackedUrl.origin === window.location.origin) {
+          trackedUrl.searchParams.set('utm_source', source);
+          trackedUrl.searchParams.set('utm_medium', 'share');
+          trackedUrl.searchParams.set('utm_campaign', campaign);
+        }
+
+        return trackedUrl.toString();
+      } catch (error) {
+        return url;
+      }
+    };
 
     const setStatus = (message) => {
       if (!status) {
@@ -106,6 +134,8 @@
     };
 
     const shareWithKakao = async () => {
+      const trackedUrl = getTrackedShareUrl('kakao');
+
       if (kakaoKey) {
         try {
           const Kakao = await loadKakaoSdk();
@@ -121,20 +151,21 @@
               description,
               imageUrl: image,
               link: {
-                mobileWebUrl: url,
-                webUrl: url,
+                mobileWebUrl: trackedUrl,
+                webUrl: trackedUrl,
               },
             },
             buttons: [
               {
                 title: '글 읽기',
                 link: {
-                  mobileWebUrl: url,
-                  webUrl: url,
+                  mobileWebUrl: trackedUrl,
+                  webUrl: trackedUrl,
                 },
               },
             ],
           });
+          trackPostEvent('share-kakao', title);
           return;
         } catch (error) {
           console.warn(error);
@@ -143,7 +174,8 @@
 
       if (navigator.share) {
         try {
-          await navigator.share({ title, text: description || title, url });
+          await navigator.share({ title, text: description || title, url: getTrackedShareUrl('native-share') });
+          trackPostEvent('share-native', title);
           return;
         } catch (error) {
           if (error && error.name === 'AbortError') {
@@ -154,35 +186,43 @@
       }
 
       await copyText(url);
+      trackPostEvent('share-copy', title);
       setStatus('주소를 복사했습니다. 카카오톡 채팅방에 붙여 넣어 주세요.');
     };
 
     const shareHandlers = {
       kakao: shareWithKakao,
       telegram: () => openShareWindow(
-        `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+        `https://t.me/share/url?url=${encodeURIComponent(getTrackedShareUrl('telegram'))}&text=${encodeURIComponent(title)}`,
       ),
       line: () => openShareWindow(
-        `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}`,
+        `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(getTrackedShareUrl('line'))}`,
       ),
       x: () => openShareWindow(
-        `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+        `https://twitter.com/intent/tweet?url=${encodeURIComponent(getTrackedShareUrl('x'))}&text=${encodeURIComponent(title)}`,
       ),
       threads: () => openShareWindow(
-        `https://www.threads.net/intent/post?text=${encodeURIComponent(`${title}\n${url}`)}`,
+        `https://www.threads.net/intent/post?text=${encodeURIComponent(`${title}\n${getTrackedShareUrl('threads')}`)}`,
       ),
       facebook: () => openShareWindow(
-        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(getTrackedShareUrl('facebook'))}`,
       ),
       copy: async () => {
         await copyText(url);
+        trackPostEvent('share-copy', title);
         setStatus('웹페이지 주소를 복사했습니다.');
       },
     };
 
-    openButton?.addEventListener('click', openDialog);
+    openButton?.addEventListener('click', () => {
+      openDialog();
+      trackPostEvent('share-dialog-open', title);
+    });
     closeButton?.addEventListener('click', closeDialog);
-    printButton?.addEventListener('click', () => window.print());
+    printButton?.addEventListener('click', () => {
+      trackPostEvent('print-or-pdf', title);
+      window.print();
+    });
 
     dialog?.addEventListener('click', (event) => {
       if (event.target === dialog) {
@@ -206,6 +246,9 @@
 
         try {
           await handler();
+          if (button.dataset.shareService !== 'kakao' && button.dataset.shareService !== 'copy') {
+            trackPostEvent(`share-${button.dataset.shareService}`, title);
+          }
         } catch (error) {
           console.warn(error);
           setStatus('공유 기능을 실행하지 못했습니다. 잠시 후 다시 시도해 주세요.');
@@ -411,14 +454,56 @@
       return;
     }
 
+    const postTitle = normalizeReaderText(root.querySelector('h1')?.textContent || document.title);
+    const readingStartedAt = Date.now();
     let frameId = 0;
+    let currentProgress = 0;
+    let read75Tracked = false;
+    let readCompleteTracked = false;
+    let completionTimerId = 0;
+
+    const trackReadingCompletion = () => {
+      if (readCompleteTracked || currentProgress < 0.9 || Date.now() - readingStartedAt < 30000) {
+        return;
+      }
+
+      readCompleteTracked = true;
+      trackPostEvent('read-complete', postTitle);
+    };
+
+    const scheduleReadingCompletion = () => {
+      if (readCompleteTracked || completionTimerId || currentProgress < 0.9) {
+        return;
+      }
+
+      const waitTime = Math.max(0, 30000 - (Date.now() - readingStartedAt));
+
+      if (waitTime === 0) {
+        trackReadingCompletion();
+        return;
+      }
+
+      completionTimerId = window.setTimeout(() => {
+        completionTimerId = 0;
+        trackReadingCompletion();
+      }, waitTime);
+    };
+
     const updateProgress = () => {
       frameId = 0;
       const articleTop = root.getBoundingClientRect().top + window.scrollY;
       const readableHeight = Math.max(1, root.offsetHeight - window.innerHeight);
       const progress = Math.min(1, Math.max(0, (window.scrollY - articleTop) / readableHeight));
 
+      currentProgress = progress;
       progressBar.style.transform = `scaleX(${progress})`;
+
+      if (!read75Tracked && progress >= 0.75) {
+        read75Tracked = true;
+        trackPostEvent('read-75', postTitle);
+      }
+
+      scheduleReadingCompletion();
     };
     const scheduleProgressUpdate = () => {
       if (!frameId) {
@@ -698,6 +783,7 @@
             .slice(0, 48) || `quote-${index + 1}`;
 
           downloadQuoteCard(canvas, `문하수도-인용-${safeTitle}.png`);
+          trackPostEvent('quote-card-export', postTitle);
           status.textContent = 'PNG 인용 카드를 저장했습니다.';
           button.textContent = 'PNG 저장됨';
         } catch (error) {

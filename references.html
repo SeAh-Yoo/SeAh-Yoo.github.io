@@ -27,7 +27,7 @@ permalink: /references/
           <div class="reference-item-main">
             <p class="eyebrow">{{ reference.type | default: "Source" }}</p>
             <h2>
-              {% if reference.url %}<a href="{{ reference.url | escape }}" rel="noopener noreferrer" target="_blank">{{ reference.title }}</a>{% else %}{{ reference.title }}{% endif %}
+              {% if reference.url %}<a href="{{ reference.url | escape }}" rel="noopener noreferrer" target="_blank" data-analytics-event="reference-open--{{ reference.id | slugify }}" data-analytics-title="{{ reference.title | escape }}">{{ reference.title }}</a>{% else %}{{ reference.title }}{% endif %}
             </h2>
             <p class="reference-citation">
               {% if reference.author %}<span>{{ reference.author }}</span>{% endif %}

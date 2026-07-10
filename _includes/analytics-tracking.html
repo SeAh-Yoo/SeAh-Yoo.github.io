@@ -1,0 +1,4 @@
+{% assign goatcounter_code = site.data.analytics.goatcounterCode %}
+{% if goatcounter_code and goatcounter_code != '' %}
+<script data-goatcounter="https://{{ goatcounter_code | escape }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+{% endif %}
