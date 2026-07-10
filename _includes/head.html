@@ -5,6 +5,8 @@
 {% assign canonical_url = page.url | absolute_url %}
 {% if page.layout == "post" %}
   {% capture document_title %}{{ page.title }} | {{ site.title }}{% endcapture %}
+{% elsif page.title %}
+  {% capture document_title %}{{ page.title }} | {{ site.title }}{% endcapture %}
 {% else %}
   {% capture document_title %}{{ site.title }} | 게임·서브컬처·인터넷 문화 비평{% endcapture %}
 {% endif %}

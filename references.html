@@ -1,0 +1,60 @@
+---
+layout: page
+title: "자료실과 참고문헌"
+eyebrow: "Sources"
+intro: "각 글의 Front Matter에 등록한 참고문헌을 한데 모아, 어떤 글에서 인용했는지 함께 보여줍니다."
+description: "유세아의 문하수도에 인용된 책, 보고서, 기사와 원문 자료를 모아보는 참고문헌 자료실입니다."
+permalink: /references/
+---
+{% assign seen_references = "|" %}
+{% assign reference_count = 0 %}
+
+<section class="reference-intro glass-panel" aria-labelledby="reference-intro-title">
+  <p class="eyebrow">Source library</p>
+  <h2 id="reference-intro-title">글을 지탱한 자료</h2>
+  <p>각 게시물의 <code>references</code> 목록은 이 페이지에 자동으로 모입니다. 같은 <code>id</code>를 사용한 자료는 한 번만 표시하고, 아래에 인용된 글을 함께 남깁니다.</p>
+</section>
+
+<section class="reference-library" aria-label="참고문헌 목록">
+  <ol class="reference-list">
+  {% for post in site.posts %}
+    {% for reference in post.references %}
+      {% capture reference_marker %}|{{ reference.id }}|{% endcapture %}
+      {% unless seen_references contains reference_marker %}
+        {% capture seen_references %}{{ seen_references }}{{ reference_marker }}{% endcapture %}
+        {% assign reference_count = reference_count | plus: 1 %}
+        <li class="reference-item glass-panel" id="{{ reference.id | slugify }}">
+          <div class="reference-item-main">
+            <p class="eyebrow">{{ reference.type | default: "Source" }}</p>
+            <h2>
+              {% if reference.url %}<a href="{{ reference.url | escape }}" rel="noopener noreferrer" target="_blank">{{ reference.title }}</a>{% else %}{{ reference.title }}{% endif %}
+            </h2>
+            <p class="reference-citation">
+              {% if reference.author %}<span>{{ reference.author }}</span>{% endif %}
+              {% if reference.publisher %}<span>{{ reference.publisher }}</span>{% endif %}
+              {% if reference.year %}<span>{{ reference.year }}</span>{% endif %}
+            </p>
+            {% if reference.note %}<p class="reference-note">{{ reference.note }}</p>{% endif %}
+          </div>
+          <div class="reference-cited-in">
+            <p>인용된 글</p>
+            <ul>
+              {% for cited_post in site.posts %}
+                {% for cited_reference in cited_post.references %}
+                  {% if cited_reference.id == reference.id %}
+                  <li><a href="{{ cited_post.url | relative_url }}">{{ cited_post.title }}</a></li>
+                  {% endif %}
+                {% endfor %}
+              {% endfor %}
+            </ul>
+          </div>
+        </li>
+      {% endunless %}
+    {% endfor %}
+  {% endfor %}
+  </ol>
+
+  {% if reference_count == 0 %}
+  <p class="reference-empty glass-panel">아직 등록된 참고문헌이 없습니다. 게시물 Front Matter에 <code>references</code>를 추가하면 이곳에 자동으로 모입니다.</p>
+  {% endif %}
+</section>

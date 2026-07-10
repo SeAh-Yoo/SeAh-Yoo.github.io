@@ -11,6 +11,7 @@ sitemap: false
     "date": {{ post.date | date_to_xmlschema | jsonify }},
     "dateLabel": {{ post.date | date: "%Y년 %-m월 %-d일" | jsonify }},
     "category": {{ post.category | default: post.categories.first | default: "Column" | jsonify }},
+    "topics": {{ post.topics | jsonify }},
     "series": {{ post.series | default: "" | jsonify }},
     "description": {{ post.description | default: post.excerpt | strip_html | strip_newlines | normalize_whitespace | jsonify }},
     "content": {{ post.content | markdownify | strip_html | strip_newlines | normalize_whitespace | jsonify }}

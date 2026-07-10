@@ -59,6 +59,84 @@
   margin: 16px 0 30px;
 }
 
+.post-reading-progress {
+  position: fixed;
+  z-index: 1000;
+  inset: 0 0 auto;
+  height: 3px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+.post-reading-progress-bar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #8bd8ff, #d7b8ff 62%, #ffb36b);
+  box-shadow: 0 0 18px rgba(139, 216, 255, 0.72);
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.post-reading-meta {
+  display: flex;
+  align-items: center;
+  min-height: 24px;
+  margin: -2px 0 16px;
+}
+
+.post-reading-time {
+  display: inline-flex;
+  align-items: center;
+  min-height: 25px;
+  padding: 4px 9px;
+  border: 1px solid rgba(139, 216, 255, 0.19);
+  border-radius: 999px;
+  background: rgba(139, 216, 255, 0.07);
+  color: rgba(218, 242, 255, 0.84);
+  font-family: var(--font-symbol), var(--font-body), system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+.post-thesis {
+  position: relative;
+  margin: 0 0 25px;
+  padding: 18px 20px 18px 23px;
+  border: 1px solid rgba(215, 184, 255, 0.25);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(215, 184, 255, 0.1), rgba(139, 216, 255, 0.055));
+  overflow: hidden;
+}
+
+.post-thesis::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--accent2), var(--accent));
+  content: "";
+}
+
+.post .post-thesis-label {
+  margin: 0 0 5px;
+  color: var(--accent2);
+  font-family: var(--font-symbol), var(--font-body), system-ui, sans-serif;
+  font-size: 0.67rem;
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+}
+
+.post .post-thesis > p:last-child {
+  margin: 0;
+  color: rgba(240, 245, 255, 0.9);
+  font-size: 0.91rem;
+  line-height: 1.75;
+}
+
 .post-toc {
   border: 1px solid rgba(139, 216, 255, 0.18);
   border-radius: 20px;
@@ -590,7 +668,238 @@
   width: 100%;
 }
 
+.post .footnotes {
+  margin-top: 58px;
+  padding: 24px;
+  border: 1px solid rgba(139, 216, 255, 0.2);
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(139, 216, 255, 0.07), rgba(215, 184, 255, 0.05));
+  scroll-margin-top: 110px;
+}
+
+.post .footnotes > hr {
+  display: none;
+}
+
+.post-endnotes-header {
+  margin-bottom: 16px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.post .post-endnotes-eyebrow {
+  margin: 0 0 4px;
+  color: var(--accent);
+  font-family: var(--font-symbol), var(--font-body), system-ui, sans-serif;
+  font-size: 0.67rem;
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: 0.16em;
+}
+
+.post .post-endnotes-heading {
+  margin: 0;
+  color: #f4f8ff;
+  font-size: clamp(1.12rem, 2vw, 1.38rem);
+  letter-spacing: -0.035em;
+}
+
+.post .post-endnotes-help {
+  margin: 8px 0 0;
+  color: rgba(199, 211, 230, 0.72);
+  font-size: 0.76rem;
+  line-height: 1.65;
+}
+
+.post .footnotes ol {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 1.45rem;
+}
+
+.post .footnotes li {
+  padding: 10px 12px 10px 4px;
+  border-radius: 12px;
+  color: rgba(231, 238, 249, 0.84);
+  font-size: 0.88rem;
+  line-height: 1.75;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post .footnotes li::marker {
+  color: var(--accent);
+  font-family: var(--font-symbol), var(--font-body), system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.post .footnotes li p {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.post .post-endnote-reference {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.38em;
+  height: 1.38em;
+  margin: 0 0.12em;
+  padding: 0 0.25em;
+  border: 1px solid rgba(139, 216, 255, 0.3);
+  border-radius: 999px;
+  background: rgba(139, 216, 255, 0.1);
+  color: #c8f1ff;
+  font-family: var(--font-symbol), var(--font-body), system-ui, sans-serif;
+  font-size: 0.68em;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  vertical-align: 0.26em;
+}
+
+.post .post-endnote-reference:hover,
+.post .post-endnote-reference:focus-visible {
+  border-color: rgba(139, 216, 255, 0.74);
+  background: rgba(139, 216, 255, 0.2);
+  color: #fff;
+  text-shadow: none;
+}
+
+.post .post-endnote-backlink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  min-height: 28px;
+  margin-left: 5px;
+  border: 1px solid rgba(215, 184, 255, 0.25);
+  border-radius: 999px;
+  background: rgba(215, 184, 255, 0.08);
+  color: #e8d8ff;
+  font-family: var(--font-symbol), var(--font-body), system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.post .post-endnote-backlink:hover,
+.post .post-endnote-backlink:focus-visible {
+  border-color: rgba(215, 184, 255, 0.65);
+  background: rgba(215, 184, 255, 0.17);
+  color: #fff;
+  text-shadow: none;
+}
+
+.post .footnotes li.is-footnote-target,
+.post sup.is-footnote-target {
+  background: rgba(139, 216, 255, 0.13);
+  box-shadow: 0 0 0 3px rgba(139, 216, 255, 0.11);
+}
+
+.post-quote-card {
+  margin: 2.35em 0;
+}
+
+.post .post-quote-card blockquote {
+  position: relative;
+  margin: 0;
+  padding: 23px 26px 23px 29px;
+  border: 1px solid rgba(215, 184, 255, 0.25);
+  border-left: 4px solid var(--accent2);
+  border-radius: 0 20px 20px 0;
+  background: linear-gradient(135deg, rgba(215, 184, 255, 0.1), rgba(139, 216, 255, 0.055));
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.07);
+}
+
+.post .post-quote-card blockquote::before {
+  position: absolute;
+  top: 8px;
+  right: 19px;
+  color: rgba(215, 184, 255, 0.32);
+  font-family: "Nanum Myeongjo", Georgia, serif;
+  font-size: 4.1rem;
+  line-height: 1;
+  content: "“";
+}
+
+.post .post-quote-card blockquote p {
+  position: relative;
+  margin: 0;
+  color: rgba(246, 243, 255, 0.93);
+  font-family: "Nanum Myeongjo", Georgia, serif;
+  font-size: clamp(1.06rem, 1.65vw, 1.22rem);
+  font-weight: 700;
+  line-height: 1.85;
+}
+
+.post .post-quote-card blockquote p + p {
+  margin-top: 1em;
+}
+
+.quote-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-height: 46px;
+  padding: 10px 4px 0;
+}
+
+.quote-card-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid rgba(139, 216, 255, 0.27);
+  border-radius: 999px;
+  background: rgba(139, 216, 255, 0.08);
+  color: #dff5ff;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.quote-card-button:hover,
+.quote-card-button:focus-visible {
+  border-color: rgba(139, 216, 255, 0.68);
+  background: rgba(139, 216, 255, 0.16);
+  color: #fff;
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.quote-card-button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+}
+
+.quote-card-status {
+  min-height: 1.45em;
+  color: rgba(199, 211, 230, 0.75);
+  font-family: var(--font-symbol), var(--font-body), system-ui, sans-serif;
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
 @media (max-width: 900px) {
+  .post .footnotes {
+    scroll-margin-top: 150px;
+  }
+
+  .post-quote-card {
+    margin: 2em 0;
+  }
+
   .post-translations {
     margin-bottom: 20px;
   }
@@ -626,6 +935,47 @@
 }
 
 @media (max-width: 520px) {
+  .post-reading-meta {
+    margin-bottom: 13px;
+  }
+
+  .post-thesis {
+    margin-bottom: 22px;
+    padding: 16px 16px 16px 19px;
+    border-radius: 16px;
+  }
+
+  .post .footnotes {
+    margin-top: 44px;
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .post .post-endnotes-help {
+    font-size: 0.72rem;
+  }
+
+  .post .post-quote-card blockquote {
+    padding: 20px 18px 20px 21px;
+    border-radius: 0 17px 17px 0;
+  }
+
+  .post .post-quote-card blockquote::before {
+    top: 4px;
+    right: 12px;
+    font-size: 3.4rem;
+  }
+
+  .quote-card-actions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .quote-card-button {
+    min-height: 40px;
+  }
+
   .post-translations-label {
     flex-basis: 100%;
     margin-bottom: 1px;
@@ -704,16 +1054,19 @@
   body::before,
   .aurora,
   .skip-link,
+  .post-reading-progress,
   .sidebar,
   .hero,
   .post-category-eyebrow,
   .post-translations,
   .post-view-counter,
+  .post-reading-meta,
   .post-toc-mount,
   .post-series,
   .post-navigation,
   .post-actions-bar,
   .post-comments,
+  .quote-card-actions,
   .post-heading-link {
     display: none !important;
   }
@@ -784,5 +1137,14 @@
   .post-footer {
     margin-top: 28pt !important;
     border-top: 1px solid #aaa !important;
+  }
+
+  .post .footnotes {
+    padding: 0 !important;
+    border: 0 !important;
+    border-top: 1px solid #aaa !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
   }
 }

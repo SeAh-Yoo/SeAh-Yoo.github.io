@@ -100,10 +100,12 @@
   const scoreItem = (item, tokens) => {
     const title = normalize(item.title);
     const category = normalize(item.category);
+    const topics = Array.isArray(item.topics) ? item.topics.map(normalize).filter(Boolean) : [];
+    const topicText = topics.join(' ');
     const series = normalize(item.series);
     const description = normalize(item.description);
     const content = normalize(item.content);
-    const combined = `${title} ${category} ${series} ${description} ${content}`;
+    const combined = `${title} ${category} ${topicText} ${series} ${description} ${content}`;
 
     if (!tokens.every((token) => combined.includes(token))) {
       return null;
@@ -116,6 +118,7 @@
       if (title.startsWith(token)) score += 120;
       if (title.includes(token)) score += 90;
       if (series.includes(token)) score += 48;
+      if (topics.some((topic) => topic.includes(token))) score += 44;
       if (category.includes(token)) score += 36;
       if (description.includes(token)) score += 22;
       if (content.includes(token)) score += 8;
@@ -166,7 +169,8 @@
 
       heading.append(createHighlightedText(item.title || '제목 없는 글', tokens));
       metadata.className = 'site-search-result-meta';
-      metadata.textContent = [item.category, item.series, item.dateLabel].filter(Boolean).join(' · ');
+      const topics = Array.isArray(item.topics) ? item.topics : [];
+      metadata.textContent = [item.category, topics.join(', '), item.series, item.dateLabel].filter(Boolean).join(' · ');
       snippet.className = 'site-search-result-snippet';
       snippet.append(createHighlightedText(makeSnippet(item, tokens), tokens));
 

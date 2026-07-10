@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    {% include head.html %}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">본문으로 바로가기</a>
+    <div class="aurora aurora-one"></div>
+    <div class="aurora aurora-two"></div>
+    <div class="shell">
+      {% include sidebar.html %}
+
+      <main class="content" id="main-content">
+        <header class="hero page-hero glass-panel">
+          <p class="eyebrow">{{ page.eyebrow | default: "The Literary Underground" }}</p>
+          <h1>{{ page.title }}</h1>
+          {% if page.intro %}<p>{{ page.intro }}</p>{% endif %}
+        </header>
+
+        {{ content }}
+      </main>
+    </div>
+    <script data-goatcounter="https://seah-yoo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script src="{{ '/scripts/index.js' | relative_url }}"></script>
+  </body>
+</html>

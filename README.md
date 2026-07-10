@@ -17,12 +17,15 @@
 - Open Graph, X 카드, `Blog`·`BlogPosting` JSON-LD
 - 자동 `sitemap.xml`과 `robots.txt`
 - GoatCounter 방문자 카운터와 게시물별 조회수
-- 자동 목차와 현재 읽는 항목 표시
+- 예상 읽기 시간, 스크롤 진행 표시, 핵심 논지와 자동 목차
+- Kramdown 미주와 본문·미주 상호 이동
 - Front Matter 작성 시각 기준 이전 글·다음 글
 - Front Matter 기반 연재 목록
-- 제목·본문·카테고리·연재 전체 검색
+- 시작 경로, 주제 지도, 자동 아카이브 타임라인
+- Front Matter 기반 참고문헌 자료실
+- 제목·본문·카테고리·주제·연재 전체 검색
 - 영어·일본어 번역 링크
-- SNS 공유, RSS, 인쇄와 PDF 저장
+- SNS 공유, RSS, 인쇄와 PDF 저장, 인용문 PNG 카드
 - giscus 댓글과 반응
 - 모바일 사이드바 접힘과 `TOP` 버튼
 
@@ -279,15 +282,116 @@ Discussion 메타데이터 전송: 사용 안 함
 - CSS Grid의 실제 콘텐츠 높이를 사용한 약 0.52초 애니메이션
 - `prefers-reduced-motion` 환경에서는 모션 최소화
 
+## 발견과 아카이브 페이지
+
+사이드바의 `Explore` 영역에서 아래 정적 페이지로 이동할 수 있습니다. 모든 목록은 Jekyll 빌드 시 게시물 Front Matter를 읽어 자동으로 생성됩니다.
+
+| 주소 | 역할 | 작성자가 관리할 값 |
+| --- | --- | --- |
+| `/start-here/` | 질문별 입문 읽기 순서 | `start_here`, `start_here_order` |
+| `/topics/` | 한 글을 여러 질문으로 가로질러 찾는 주제 지도 | `topics` |
+| `/timeline/` | 작성 시각순 유리 레이어 아카이브 | 없음 |
+| `/references/` | 게시물 참고문헌을 중복 없이 모은 자료실 | `references` |
+| `/about/` | 블로그 소개와 편집 원칙 | `about.html`의 문구 |
+
+### 시작 경로
+
+`_data/paths.yml`에 경로의 제목·소개·순서를 정하고, 각 포스트에 아래 값을 추가합니다.
+
+```yaml
+start_here: "game-industry"
+start_here_order: 2
+```
+
+`start_here` 값은 `_data/paths.yml`의 `id`와 정확히 같아야 합니다. 같은 경로의 글은 `start_here_order` 오름차순으로 표시됩니다. 경로에 넣지 않을 글은 두 값을 생략하면 됩니다.
+
+### 주제 지도
+
+`category`가 큰 분류라면 `topics`는 글을 여러 관점으로 연결하는 세분화된 분류입니다. 주제 목록과 설명은 `_data/topics.yml`에 두고, 게시물에서는 사람에게 읽기 쉬운 `label` 값을 그대로 씁니다.
+
+```yaml
+topics:
+  - "여성향 게임"
+  - "게임 문화"
+  - "시장 관성"
+```
+
+주제는 2~4개 정도를 권장합니다. 새 주제는 먼저 `_data/topics.yml`에 `label`, `slug`, `description`을 등록한 뒤 같은 `label`을 게시물에 추가합니다. 주제는 검색 색인에도 포함됩니다.
+
+### 자료실과 참고문헌
+
+`/references/`는 각 포스트의 `references` 배열을 합쳐 보여줍니다. 동일한 `id`를 쓰면 자료실에는 한 번만 보이고, 그 자료를 인용한 글이 함께 표시됩니다.
+
+```yaml
+references:
+  - id: "esa-2025-game-player-survey"
+    type: "Report"
+    author: "미국 엔터테인먼트소프트웨어협회"
+    title: "2025년 게임 이용자 조사"
+    publisher: "선택 사항"
+    year: 2025
+    url: "https://example.com/source" # 선택 사항
+    note: "이 자료를 인용한 이유나 범위" # 선택 사항
+```
+
+- `id`는 영문·숫자·하이픈으로 만든 안정적인 식별자이며 필수입니다.
+- 같은 자료를 여러 글에서 쓸 때는 서지 정보와 `id`를 동일하게 적습니다.
+- `url`이 있으면 자료실의 제목이 외부 원문 링크가 됩니다.
+- 본문 속 설명용 미주와 자료실용 `references`는 함께 쓸 수 있습니다. 전자는 문장 가까이, 후자는 블로그 전체의 서지를 관리합니다.
+
+### 타임라인과 소개 페이지
+
+타임라인은 모든 포스트를 연도·날짜순으로 자동으로 배열하므로 별도 메타데이터가 필요 없습니다. 연도별 반투명 글래스 패널 위에 각 글의 기록 카드를 배치하며, 모바일에서는 같은 정보를 더 촘촘한 세로 흐름으로 보여줍니다.
+
+소개·편집 원칙은 `about.html`을 직접 고쳐 관리합니다. 현재 초안에는 블로그가 다루는 범위, 쓰는 방식, 읽는 방법, 이용과 참여 원칙이 들어 있습니다.
+
+## 글 읽기 보강
+
+### 예상 읽기 시간, 진행 표시, 핵심 논지
+
+포스트가 열리면 본문 텍스트를 기준으로 예상 읽기 시간을 계산하고, 화면 맨 위에 읽기 진행 표시를 보여줍니다. 서버 요청 없이 브라우저에서 동작합니다.
+
+글의 핵심 주장을 제목 아래에 따로 보여주려면 선택적으로 `thesis`를 추가합니다.
+
+```yaml
+thesis: "이 글에서 독자가 먼저 붙잡아야 할 핵심 주장"
+```
+
+값이 없으면 핵심 논지 카드도 표시하지 않습니다.
+
+### 미주
+
+Kramdown의 표준 미주 문법을 사용합니다. 기술적으로는 footnote 문법이지만, 화면에서는 글 끝의 `미주` 영역으로 정리되며 본문 번호와 돌아가기 링크를 제공합니다.
+
+```markdown
+이 주장은 한 조사 결과와 함께 읽을 필요가 있다.[^source-1]
+
+[^source-1]: 저자 또는 기관, 『자료 제목』, 2025, 12–15쪽. [원문 보기](https://example.com)
+```
+
+미주 영역은 자동 목차에서 제외됩니다. 미주 안의 제목이 본문 목차에 섞이지 않도록 처리되어 있습니다.
+
+### 인용 카드
+
+Markdown 인용문(`>`)은 글래스 인용 블록으로 표시되고, 그 아래에 `인용 카드 만들기` 버튼이 자동으로 생깁니다.
+
+```markdown
+> 독립적으로 읽혀야 할 문장 또는 짧은 단락입니다.
+```
+
+버튼을 누르면 브라우저에서만 Canvas로 1080×1350 PNG를 만들고 저장합니다. 서버 업로드나 자동 다운로드는 없으며, 독자가 직접 버튼을 누를 때만 파일을 만듭니다. 긴 인용문은 카드 안에서 읽기 좋게 일부가 말줄임 처리될 수 있습니다.
+
 ## 현재 포스트 화면 순서
 
 ```text
 카테고리
 번역 버튼
 제목
+예상 읽기 시간 / 핵심 논지
 조회수
 자동 목차
 부제목과 본문
+미주
 연재 목록
 이전 글 / 다음 글
 공유 / RSS / 인쇄·PDF
@@ -316,6 +420,17 @@ date: 2026-06-22 14:30:00 +0900
 last_modified_at: 2026-06-24 20:00:00 +0900
 category: "Game Industry"
 description: "검색 결과와 공유 미리보기에 표시할 글 소개"
+thesis: "선택 사항: 제목 아래에 표시할 핵심 논지"
+start_here: "game-industry" # 선택 사항: _data/paths.yml의 id
+start_here_order: 1 # 선택 사항: 같은 시작 경로 안의 순서
+topics: # 선택 사항: _data/topics.yml의 label을 2~4개 권장
+  - "게임 문화"
+references: # 선택 사항: /references/에 자동 수집
+  - id: "source-id"
+    type: "Report"
+    author: "저자 또는 기관"
+    title: "자료 제목"
+    year: 2025
 slug: example-post
 permalink: /posts/example-post/
 image: /assets/images/example-post-cover.png
@@ -338,6 +453,10 @@ image: /assets/images/example-post-cover.png
 - `last_modified_at`: 화면과 구조화 데이터에 표시할 마지막 수정 시각
 - `category`: 카테고리 분류
 - `description`: 검색 결과와 SNS 미리보기 설명
+- `thesis`: 제목 아래에 표시할 선택적인 핵심 논지
+- `start_here`, `start_here_order`: 시작 경로와 해당 경로의 읽기 순서
+- `topics`: 주제 지도와 검색에 쓰는 세분화된 주제 배열
+- `references`: 자료실에 자동 수집할 참고문헌 배열
 - `slug`, `permalink`: 포스트 식별자와 공개 URL
 - `image`: 대표 이미지
 - `series`, `series_order`: 선택적인 연재명과 회차
@@ -385,24 +504,33 @@ assets/images/example-post-image-03.jpg
 │  ├─ post-navigation.html         # date 기준 이전·다음 글
 │  ├─ post-share.html              # 공유, RSS, 인쇄·PDF와 공유 모달
 │  └─ post-comments.html           # giscus 댓글 설정
+├─ _data/
+│  ├─ paths.yml                    # 시작 경로의 제목과 소개
+│  └─ topics.yml                   # 주제 지도 항목과 설명
 ├─ _layouts/
 │  ├─ categories.html
 │  ├─ home.html
-│  └─ post.html                    # 포스트 전체 구성과 목차 삽입 위치
+│  ├─ page.html                    # 시작·주제·자료실·타임라인·소개 공통 레이아웃
+│  └─ post.html                    # 포스트 전체 구성과 읽기 정보·목차 삽입 위치
 ├─ _posts/                         # 포스트 마크다운 원본
 ├─ assets/images/                  # 포스트와 프로필 이미지
 ├─ scripts/
 │  ├─ index.js                     # 레거시 URL, 캡션, GoatCounter
 │  ├─ sidebar-collapse.js          # 모바일 사이드바와 TOP 동작
 │  ├─ site-search.js               # 전체 검색, 단축키, 결과 정렬
-│  └─ post-actions.js              # 공유, 인쇄, 목차, giscus 지연 로딩
+│  └─ post-actions.js              # 공유, 인쇄, 읽기 시간, 미주, 목차, 인용 카드, giscus 지연 로딩
 ├─ styles/
 │  ├─ index.css                    # 기본 디자인과 반응형 레이아웃
 │  ├─ sidebar-collapse.css         # 모바일 사이드바 애니메이션
 │  ├─ counter.css                  # 카운터 디자인
 │  ├─ search.css                   # 검색 버튼과 명령 팔레트
-│  └─ post-actions.css             # 목차, 연재, 탐색, 공유, 인쇄, 댓글
+│  └─ post-actions.css             # 읽기 보강, 미주, 목차, 연재, 공유, 인쇄, 댓글
 ├─ categories.html
+├─ start-here.html                 # 입문 읽기 경로
+├─ topics.html                     # 주제 지도
+├─ timeline.html                   # 작성 시각순 타임라인
+├─ references.html                 # 참고문헌 자료실
+├─ about.html                      # 소개와 편집 원칙
 ├─ search.json                     # Jekyll이 생성하는 정적 검색 색인
 ├─ feed.xml                        # RSS 2.0 피드
 ├─ index.html
@@ -419,4 +547,4 @@ assets/images/example-post-image-03.jpg
 - Google Fonts 및 jsDelivr: 웹폰트와 스타일 리소스
 - 각 SNS의 공식 공유 URL: 포스트 공유
 
-전체 검색, 목차, 연재, 이전·다음 글, RSS 생성과 인쇄 레이아웃은 별도의 유료 서버 없이 정적으로 동작합니다.
+전체 검색, 시작 경로, 주제 지도, 타임라인, 자료실, 읽기 시간, 미주, 인용 카드, 목차, 연재, 이전·다음 글, RSS 생성과 인쇄 레이아웃은 별도의 유료 서버 없이 정적으로 동작합니다.

@@ -1,0 +1,50 @@
+---
+layout: page
+title: "처음 읽는 문하수도"
+eyebrow: "Start here"
+intro: "관심 있는 질문을 하나 고르면, 그 질문을 따라 읽을 수 있는 글의 순서를 안내합니다."
+description: "게임 산업과 AI·사회를 주제로 유세아의 문하수도를 처음 읽는 독자를 위한 큐레이션 경로입니다."
+permalink: /start-here/
+---
+{% assign ordered_posts = site.posts | sort: "start_here_order" %}
+
+<section class="path-intro glass-panel" aria-labelledby="path-intro-title">
+  <p class="eyebrow">Reading paths</p>
+  <h2 id="path-intro-title">질문에서 시작하세요</h2>
+  <p>이 페이지의 순서는 최신순이 아니라 읽는 흐름을 위한 편집 순서입니다. 각 글의 경로와 순서는 게시물 Front Matter에서 관리됩니다.</p>
+</section>
+
+{% for path in site.data.paths %}
+  {% assign path_post_count = 0 %}
+  {% for post in ordered_posts %}
+    {% if post.start_here == path.id %}{% assign path_post_count = path_post_count | plus: 1 %}{% endif %}
+  {% endfor %}
+  <section class="path-section" aria-labelledby="path-{{ path.id }}">
+    <div class="path-section-heading">
+      <p class="eyebrow">{{ path_post_count }} posts</p>
+      <h2 id="path-{{ path.id }}">{{ path.title }}</h2>
+      <p>{{ path.description }}</p>
+      <small>{{ path.prompt }}</small>
+    </div>
+    {% if path_post_count > 0 %}
+    <ol class="path-list">
+      {% for post in ordered_posts %}
+        {% if post.start_here == path.id %}
+        <li>
+          <a class="path-card glass-panel" href="{{ post.url | relative_url }}">
+            <span class="path-card-order" aria-hidden="true">{{ post.start_here_order | default: forloop.index }}</span>
+            <span>
+              <span class="meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %-m월 %-d일" }}</time><span>{{ post.category | default: "Column" }}</span></span>
+              <strong>{{ post.title }}</strong>
+              <small>{{ post.description }}</small>
+            </span>
+          </a>
+        </li>
+        {% endif %}
+      {% endfor %}
+    </ol>
+    {% else %}
+    <p class="path-empty">이 경로에 들어갈 글을 준비하고 있습니다.</p>
+    {% endif %}
+  </section>
+{% endfor %}

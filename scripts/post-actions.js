@@ -214,8 +214,513 @@
     });
   }
 
-  const tocMount = document.querySelector('[data-post-toc-mount]');
   const article = document.querySelector('article.post');
+
+  const normalizeReaderText = (value) => String(value ?? '')
+    .normalize('NFKC')
+    .replace(/\u00a0/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const getReadingText = (root) => {
+    const clone = root.cloneNode(true);
+    const excludedContent = [
+      '.post-category-eyebrow',
+      '.post-translations',
+      '[data-post-reading-meta]',
+      '.post-thesis',
+      '.post-view-counter',
+      '.post-toc-mount',
+      '.post-series',
+      '.post-navigation',
+      '[data-post-share]',
+      '.post-footer',
+      '.post-comments',
+      '.footnotes',
+      '.quote-card-actions',
+      'script',
+      'style',
+    ].join(', ');
+
+    clone.querySelectorAll(excludedContent).forEach((element) => element.remove());
+    return normalizeReaderText(clone.textContent);
+  };
+
+  const estimateReadingMinutes = (text) => {
+    const cjkCharacters = (text.match(/[가-힣ㄱ-ㅎㅏ-ㅣ一-龯々〆〤]/g) || []).length;
+    const latinWords = (text.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g) || []).length;
+    const estimatedMinutes = (cjkCharacters / 500) + (latinWords / 220);
+
+    return Math.max(1, Math.ceil(estimatedMinutes));
+  };
+
+  const setTemporaryTargetState = (target) => {
+    target.classList.add('is-footnote-target');
+    window.clearTimeout(target.footnoteTargetTimeoutId);
+    target.footnoteTargetTimeoutId = window.setTimeout(() => {
+      target.classList.remove('is-footnote-target');
+    }, 1800);
+  };
+
+  const getHashTarget = (href) => {
+    if (!href) {
+      return null;
+    }
+
+    try {
+      const targetUrl = new URL(href, window.location.href);
+
+      if (
+        targetUrl.origin !== window.location.origin
+        || targetUrl.pathname !== window.location.pathname
+        || !targetUrl.hash
+      ) {
+        return null;
+      }
+
+      return document.getElementById(decodeURIComponent(targetUrl.hash.slice(1)));
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const enhanceEndnotes = (root) => {
+    const footnotes = root.querySelector('.footnotes');
+
+    if (!footnotes) {
+      return;
+    }
+
+    let heading = footnotes.querySelector('.post-endnotes-heading');
+
+    if (!heading) {
+      const header = document.createElement('div');
+      const eyebrow = document.createElement('p');
+      const help = document.createElement('p');
+
+      heading = document.createElement('h2');
+      heading.className = 'post-endnotes-heading';
+      heading.id = 'post-endnotes';
+      heading.textContent = '미주';
+      heading.tabIndex = -1;
+
+      header.className = 'post-endnotes-header';
+      eyebrow.className = 'post-endnotes-eyebrow';
+      eyebrow.textContent = 'NOTES';
+      help.className = 'post-endnotes-help';
+      help.textContent = '본문의 번호를 선택하면 해당 미주로 이동하고, 각 미주의 돌아가기 링크로 본문에 돌아갈 수 있습니다.';
+      header.append(eyebrow, heading, help);
+      footnotes.prepend(header);
+    }
+
+    footnotes.setAttribute('role', 'doc-endnotes');
+    footnotes.setAttribute('aria-labelledby', heading.id);
+
+    const getEndnoteNumber = (link, index) => {
+      const matchedNumber = normalizeReaderText(link.textContent).match(/\d+/);
+
+      return matchedNumber ? matchedNumber[0] : String(index + 1);
+    };
+
+    const focusHashTarget = (event) => {
+      if (
+        event.defaultPrevented
+        || event.button !== 0
+        || event.metaKey
+        || event.ctrlKey
+        || event.shiftKey
+        || event.altKey
+      ) {
+        return;
+      }
+
+      const target = getHashTarget(event.currentTarget.getAttribute('href'));
+
+      if (!target) {
+        return;
+      }
+
+      event.preventDefault();
+      const hash = `#${encodeURIComponent(target.id)}`;
+
+      if (window.history && typeof window.history.pushState === 'function') {
+        window.history.pushState(null, '', hash);
+      } else {
+        window.location.hash = target.id;
+      }
+
+      if (!target.hasAttribute('tabindex')) {
+        target.tabIndex = -1;
+      }
+
+      try {
+        target.focus({ preventScroll: true });
+      } catch (error) {
+        target.focus();
+      }
+
+      target.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'center',
+      });
+      setTemporaryTargetState(target);
+    };
+
+    root.querySelectorAll('a.footnote').forEach((link, index) => {
+      const number = getEndnoteNumber(link, index);
+
+      link.classList.add('post-endnote-reference');
+      link.setAttribute('aria-label', `미주 ${number}으로 이동`);
+      link.setAttribute('title', `미주 ${number}으로 이동`);
+      link.setAttribute('role', 'doc-noteref');
+      link.addEventListener('click', focusHashTarget);
+    });
+
+    footnotes.querySelectorAll('li').forEach((item, index) => {
+      item.setAttribute('role', 'doc-endnote');
+      item.setAttribute('aria-label', `미주 ${index + 1}`);
+      item.tabIndex = -1;
+    });
+
+    footnotes.querySelectorAll('a.reversefootnote').forEach((link, index) => {
+      const number = getEndnoteNumber(link, index);
+
+      link.classList.add('post-endnote-backlink');
+      link.setAttribute('aria-label', `본문의 미주 ${number} 위치로 돌아가기`);
+      link.setAttribute('title', `본문의 미주 ${number} 위치로 돌아가기`);
+      link.setAttribute('role', 'doc-backlink');
+      link.addEventListener('click', focusHashTarget);
+    });
+  };
+
+  const setupReadingMeta = (root) => {
+    const readingTime = root.querySelector('[data-reading-time]');
+
+    if (readingTime) {
+      const minutes = estimateReadingMinutes(getReadingText(root));
+      const label = `약 ${minutes}분 읽기`;
+
+      readingTime.textContent = label;
+      readingTime.setAttribute('aria-label', `예상 읽기 시간 ${label}`);
+    }
+
+    const progressRoot = document.querySelector('[data-reading-progress]');
+    const progressBar = progressRoot?.querySelector('[data-reading-progress-bar]');
+
+    if (!progressRoot || !progressBar) {
+      return;
+    }
+
+    let frameId = 0;
+    const updateProgress = () => {
+      frameId = 0;
+      const articleTop = root.getBoundingClientRect().top + window.scrollY;
+      const readableHeight = Math.max(1, root.offsetHeight - window.innerHeight);
+      const progress = Math.min(1, Math.max(0, (window.scrollY - articleTop) / readableHeight));
+
+      progressBar.style.transform = `scaleX(${progress})`;
+    };
+    const scheduleProgressUpdate = () => {
+      if (!frameId) {
+        frameId = window.requestAnimationFrame(updateProgress);
+      }
+    };
+
+    window.addEventListener('scroll', scheduleProgressUpdate, { passive: true });
+    window.addEventListener('resize', scheduleProgressUpdate);
+    updateProgress();
+  };
+
+  const drawRoundedRect = (context, x, y, width, height, radius) => {
+    const corner = Math.min(radius, width / 2, height / 2);
+
+    context.beginPath();
+    context.moveTo(x + corner, y);
+    context.arcTo(x + width, y, x + width, y + height, corner);
+    context.arcTo(x + width, y + height, x, y + height, corner);
+    context.arcTo(x, y + height, x, y, corner);
+    context.arcTo(x, y, x + width, y, corner);
+    context.closePath();
+  };
+
+  const wrapCanvasText = (context, text, maxWidth) => {
+    const lines = [];
+    const paragraphs = String(text || '').split(/\n+/);
+
+    paragraphs.forEach((paragraph, paragraphIndex) => {
+      const words = paragraph.trim().split(/\s+/).filter(Boolean);
+      let line = '';
+
+      words.forEach((word) => {
+        const candidate = line ? `${line} ${word}` : word;
+
+        if (context.measureText(candidate).width <= maxWidth) {
+          line = candidate;
+          return;
+        }
+
+        if (line) {
+          lines.push(line);
+          line = '';
+        }
+
+        if (context.measureText(word).width <= maxWidth) {
+          line = word;
+          return;
+        }
+
+        let segment = '';
+        Array.from(word).forEach((character) => {
+          const nextSegment = `${segment}${character}`;
+
+          if (segment && context.measureText(nextSegment).width > maxWidth) {
+            lines.push(segment);
+            segment = character;
+          } else {
+            segment = nextSegment;
+          }
+        });
+        line = segment;
+      });
+
+      if (line) {
+        lines.push(line);
+      }
+
+      if (paragraphIndex < paragraphs.length - 1 && lines.length) {
+        lines.push('');
+      }
+    });
+
+    return lines;
+  };
+
+  const fitQuoteText = (context, text, maxWidth, maxHeight) => {
+    for (let fontSize = 62; fontSize >= 38; fontSize -= 2) {
+      const lineHeight = Math.round(fontSize * 1.48);
+
+      context.font = `700 ${fontSize}px "Nanum Myeongjo", Georgia, serif`;
+      const lines = wrapCanvasText(context, text, maxWidth);
+
+      if (lines.length * lineHeight <= maxHeight) {
+        return { fontSize, lineHeight, lines, truncated: false };
+      }
+    }
+
+    const fontSize = 38;
+    const lineHeight = Math.round(fontSize * 1.48);
+    const allLines = wrapCanvasText(context, text, maxWidth);
+    const maxLines = Math.max(1, Math.floor(maxHeight / lineHeight));
+    const lines = allLines.slice(0, maxLines);
+
+    if (allLines.length > maxLines) {
+      let lastLine = lines[lines.length - 1].trim();
+
+      while (lastLine && context.measureText(`${lastLine}…`).width > maxWidth) {
+        lastLine = Array.from(lastLine).slice(0, -1).join('');
+      }
+
+      lines[lines.length - 1] = `${lastLine}…`;
+    }
+
+    return { fontSize, lineHeight, lines, truncated: allLines.length > maxLines };
+  };
+
+  const createQuoteCardCanvas = (quoteText, postTitle, postUrl) => {
+    const canvas = document.createElement('canvas');
+    const width = 1080;
+    const height = 1350;
+    const context = canvas.getContext('2d');
+
+    if (!context) {
+      throw new Error('Canvas context is unavailable.');
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+
+    const background = context.createLinearGradient(0, 0, width, height);
+    background.addColorStop(0, '#151c35');
+    background.addColorStop(0.46, '#0d1325');
+    background.addColorStop(1, '#15101f');
+    context.fillStyle = background;
+    context.fillRect(0, 0, width, height);
+
+    const cyanGlow = context.createRadialGradient(120, 80, 0, 120, 80, 630);
+    cyanGlow.addColorStop(0, 'rgba(104, 220, 255, 0.38)');
+    cyanGlow.addColorStop(1, 'rgba(104, 220, 255, 0)');
+    context.fillStyle = cyanGlow;
+    context.fillRect(0, 0, width, height);
+
+    const violetGlow = context.createRadialGradient(1000, 1270, 0, 1000, 1270, 650);
+    violetGlow.addColorStop(0, 'rgba(208, 142, 255, 0.32)');
+    violetGlow.addColorStop(1, 'rgba(208, 142, 255, 0)');
+    context.fillStyle = violetGlow;
+    context.fillRect(0, 0, width, height);
+
+    const panelX = 72;
+    const panelY = 86;
+    const panelWidth = width - (panelX * 2);
+    const panelHeight = height - (panelY * 2);
+
+    context.save();
+    context.shadowColor = 'rgba(0, 0, 0, 0.42)';
+    context.shadowBlur = 80;
+    context.shadowOffsetY = 24;
+    drawRoundedRect(context, panelX, panelY, panelWidth, panelHeight, 54);
+    const glass = context.createLinearGradient(panelX, panelY, panelX + panelWidth, panelY + panelHeight);
+    glass.addColorStop(0, 'rgba(255, 255, 255, 0.16)');
+    glass.addColorStop(0.42, 'rgba(255, 255, 255, 0.075)');
+    glass.addColorStop(1, 'rgba(255, 255, 255, 0.045)');
+    context.fillStyle = glass;
+    context.fill();
+    context.restore();
+
+    drawRoundedRect(context, panelX, panelY, panelWidth, panelHeight, 54);
+    context.lineWidth = 2;
+    context.strokeStyle = 'rgba(235, 249, 255, 0.45)';
+    context.stroke();
+
+    context.fillStyle = 'rgba(255, 255, 255, 0.12)';
+    drawRoundedRect(context, panelX + 2, panelY + 2, panelWidth - 4, 186, 52);
+    context.fill();
+
+    context.fillStyle = '#aeeeff';
+    context.font = '700 25px Poppins, Arial, sans-serif';
+    context.letterSpacing = '0px';
+    context.fillText('THE LITERARY UNDERGROUND', 136, 174);
+    context.fillStyle = 'rgba(229, 236, 248, 0.72)';
+    context.font = '600 22px Poppins, Arial, sans-serif';
+    context.fillText('문하수도의 인용', 136, 214);
+
+    context.fillStyle = 'rgba(174, 238, 255, 0.9)';
+    context.font = '700 116px "Nanum Myeongjo", Georgia, serif';
+    context.fillText('“', 128, 364);
+
+    const quoteLayout = fitQuoteText(context, quoteText, 780, 570);
+    const quoteHeight = quoteLayout.lines.length * quoteLayout.lineHeight;
+    const quoteStartY = 423 + Math.max(0, (570 - quoteHeight) / 2);
+
+    context.font = `700 ${quoteLayout.fontSize}px "Nanum Myeongjo", Georgia, serif`;
+    context.fillStyle = '#f5f8ff';
+    context.textBaseline = 'top';
+    quoteLayout.lines.forEach((line, index) => {
+      context.fillText(line, 158, quoteStartY + (index * quoteLayout.lineHeight));
+    });
+
+    if (quoteLayout.truncated) {
+      context.font = '600 20px Poppins, Arial, sans-serif';
+      context.fillStyle = 'rgba(229, 236, 248, 0.58)';
+      context.fillText('긴 인용문은 카드 안에서 일부만 표시됩니다.', 158, 1012);
+    }
+
+    context.beginPath();
+    context.moveTo(136, 1064);
+    context.lineTo(944, 1064);
+    context.lineWidth = 2;
+    context.strokeStyle = 'rgba(174, 238, 255, 0.26)';
+    context.stroke();
+
+    context.font = '700 28px "Nanum Myeongjo", Georgia, serif';
+    const titleLines = wrapCanvasText(context, normalizeReaderText(postTitle), 730).slice(0, 2);
+    context.fillStyle = '#ffffff';
+    context.textBaseline = 'top';
+    titleLines.forEach((line, index) => {
+      context.fillText(line, 136, 1114 + (index * 40));
+    });
+
+    const displayUrl = String(postUrl || window.location.href)
+      .replace(/^https?:\/\//, '')
+      .replace(/\/$/, '');
+    context.font = '600 22px Poppins, Arial, sans-serif';
+    context.fillStyle = 'rgba(229, 236, 248, 0.68)';
+    context.fillText(displayUrl, 136, 1226);
+
+    return canvas;
+  };
+
+  const downloadQuoteCard = (canvas, filename) => {
+    const downloadLink = document.createElement('a');
+
+    downloadLink.href = canvas.toDataURL('image/png');
+    downloadLink.download = filename;
+    downloadLink.rel = 'noopener';
+    document.body.append(downloadLink);
+    downloadLink.click();
+    downloadLink.remove();
+  };
+
+  const setupQuoteCards = (root) => {
+    const postTitle = normalizeReaderText(root.querySelector('h1')?.textContent || document.title);
+    const canonicalUrl = document.querySelector('link[rel="canonical"]')?.href || window.location.href;
+    const ignoredQuotes = '.footnotes, .post-series, .post-navigation, .post-comments, .post-share-dialog';
+
+    root.querySelectorAll('blockquote').forEach((quote, index) => {
+      if (quote.closest(ignoredQuotes) || quote.closest('.post-quote-card')) {
+        return;
+      }
+
+      const quoteText = normalizeReaderText(quote.textContent);
+
+      if (!quoteText) {
+        return;
+      }
+
+      const wrapper = document.createElement('div');
+      const controls = document.createElement('div');
+      const button = document.createElement('button');
+      const status = document.createElement('span');
+      const originalLabel = '인용 카드 만들기';
+
+      wrapper.className = 'post-quote-card';
+      controls.className = 'quote-card-actions';
+      button.className = 'quote-card-button';
+      button.type = 'button';
+      button.textContent = originalLabel;
+      button.setAttribute('aria-label', '이 인용문으로 PNG 인용 카드 만들기');
+      status.className = 'quote-card-status';
+      status.setAttribute('role', 'status');
+      status.setAttribute('aria-live', 'polite');
+
+      quote.parentNode.insertBefore(wrapper, quote);
+      wrapper.append(quote, controls);
+      controls.append(button, status);
+
+      button.addEventListener('click', () => {
+        button.disabled = true;
+        button.textContent = '카드 만드는 중…';
+
+        try {
+          const canvas = createQuoteCardCanvas(quoteText, postTitle, canonicalUrl);
+          const safeTitle = postTitle
+            .replace(/[\\/:*?"<>|]/g, '')
+            .replace(/\s+/g, '-')
+            .slice(0, 48) || `quote-${index + 1}`;
+
+          downloadQuoteCard(canvas, `문하수도-인용-${safeTitle}.png`);
+          status.textContent = 'PNG 인용 카드를 저장했습니다.';
+          button.textContent = 'PNG 저장됨';
+        } catch (error) {
+          console.warn(error);
+          status.textContent = '인용 카드를 만들지 못했습니다. 잠시 후 다시 시도해 주세요.';
+          button.textContent = '다시 시도하기';
+        }
+
+        window.setTimeout(() => {
+          button.disabled = false;
+          button.textContent = originalLabel;
+        }, 2200);
+      });
+    });
+  };
+
+  if (article) {
+    enhanceEndnotes(article);
+    setupQuoteCards(article);
+    setupReadingMeta(article);
+  }
+
+  const tocMount = document.querySelector('[data-post-toc-mount]');
 
   if (tocMount && article) {
     const normalizeText = (value) => String(value ?? '')
@@ -223,7 +728,7 @@
       .replace(/\s+/g, ' ')
       .trim();
     const declaredSubtitle = normalizeText(tocMount.dataset.postSubtitle);
-    const excludedSections = '.post-series, .post-navigation, .post-comments, .post-share-dialog';
+    const excludedSections = '.footnotes, .post-series, .post-navigation, .post-comments, .post-share-dialog';
     const headings = Array.from(article.querySelectorAll('h2, h3'))
       .filter((heading) => !heading.closest(excludedSections))
       .filter((heading) => !declaredSubtitle || normalizeText(heading.textContent) !== declaredSubtitle);
