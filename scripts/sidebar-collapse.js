@@ -6,91 +6,94 @@
   }
 
   const collapseRegion = sidebar.querySelector('[data-sidebar-collapse-region]');
+  const quickActions = sidebar.querySelector('.sidebar-quick-actions');
   const topButton = sidebar.querySelector('[data-scroll-top]');
 
-  if (!collapseRegion || !topButton) {
+  if (!collapseRegion || !quickActions || !topButton) {
     return;
   }
 
   const mobileQuery = window.matchMedia('(max-width: 900px)');
   const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const collapseThreshold = 120;
-  const topRevealThreshold = 24;
-  const revealDistance = 96;
-  const directionDeadZone = 2;
-  let frameId = 0;
-  let lastScrollY = Math.max(0, window.scrollY);
-  let upwardTravel = 0;
+  const regionId = collapseRegion.id || 'mobile-sidebar-navigation';
+  collapseRegion.id = regionId;
 
-  const setCollapsed = (collapsed) => {
-    const shouldCollapse = mobileQuery.matches && collapsed;
+  const menuButton = document.createElement('button');
+  menuButton.className = 'sidebar-menu-button sidebar-top-button';
+  menuButton.type = 'button';
+  menuButton.setAttribute('aria-controls', regionId);
+  menuButton.setAttribute('aria-expanded', 'false');
+  menuButton.setAttribute('aria-label', '탐색 메뉴 열기');
+  menuButton.innerHTML = '<span class="sidebar-menu-icon" aria-hidden="true">☰</span><span class="sidebar-top-label">MENU</span>';
+  quickActions.insertBefore(menuButton, topButton);
 
-    sidebar.classList.toggle('is-compact', shouldCollapse);
-    collapseRegion.setAttribute('aria-hidden', String(shouldCollapse));
-    collapseRegion.inert = shouldCollapse;
-  };
+  const setExpanded = (expanded, options = {}) => {
+    const isMobile = mobileQuery.matches;
+    const shouldExpand = !isMobile || expanded;
 
-  const syncSidebarState = () => {
-    frameId = 0;
+    sidebar.classList.toggle('is-compact', isMobile && !shouldExpand);
+    sidebar.classList.toggle('is-menu-open', isMobile && shouldExpand);
+    collapseRegion.setAttribute('aria-hidden', String(isMobile && !shouldExpand));
+    collapseRegion.inert = isMobile && !shouldExpand;
+    menuButton.hidden = !isMobile;
+    menuButton.setAttribute('aria-expanded', String(isMobile && shouldExpand));
+    menuButton.setAttribute('aria-label', shouldExpand ? '탐색 메뉴 닫기' : '탐색 메뉴 열기');
 
-    const currentScrollY = Math.max(0, window.scrollY);
-    const scrollDelta = currentScrollY - lastScrollY;
-
-    if (!mobileQuery.matches) {
-      upwardTravel = 0;
-      setCollapsed(false);
-    } else if (currentScrollY <= topRevealThreshold) {
-      upwardTravel = 0;
-      setCollapsed(false);
-    } else if (scrollDelta > directionDeadZone) {
-      upwardTravel = 0;
-
-      if (currentScrollY > collapseThreshold) {
-        setCollapsed(true);
-      }
-    } else if (scrollDelta < -directionDeadZone) {
-      if (sidebar.classList.contains('is-compact')) {
-        upwardTravel += Math.abs(scrollDelta);
-
-        if (upwardTravel >= revealDistance) {
-          upwardTravel = 0;
-          setCollapsed(false);
-        }
-      } else {
-        upwardTravel = 0;
-      }
+    const icon = menuButton.querySelector('.sidebar-menu-icon');
+    if (icon) {
+      icon.textContent = shouldExpand ? '×' : '☰';
     }
 
-    lastScrollY = currentScrollY;
+    if (options.focusButton && isMobile) {
+      menuButton.focus({ preventScroll: true });
+    }
   };
+
+  const isExpanded = () => !sidebar.classList.contains('is-compact');
 
   const resetSidebarState = () => {
-    lastScrollY = Math.max(0, window.scrollY);
-    upwardTravel = 0;
-    setCollapsed(mobileQuery.matches && lastScrollY > collapseThreshold);
+    setExpanded(!mobileQuery.matches);
   };
 
-  const scheduleSidebarSync = () => {
-    if (frameId) {
-      return;
-    }
-
-    frameId = window.requestAnimationFrame(syncSidebarState);
-  };
+  menuButton.addEventListener('click', () => {
+    setExpanded(!isExpanded());
+  });
 
   topButton.addEventListener('click', () => {
-    upwardTravel = 0;
+    if (mobileQuery.matches) {
+      setExpanded(false);
+    }
+
     window.scrollTo({
       top: 0,
       behavior: reducedMotionQuery.matches ? 'auto' : 'smooth',
     });
+  });
 
-    if (reducedMotionQuery.matches) {
-      window.requestAnimationFrame(syncSidebarState);
+  collapseRegion.addEventListener('click', (event) => {
+    const link = event.target.closest('a');
+
+    if (link && mobileQuery.matches) {
+      setExpanded(false);
     }
   });
 
-  window.addEventListener('scroll', scheduleSidebarSync, { passive: true });
+  document.addEventListener('pointerdown', (event) => {
+    if (
+      mobileQuery.matches &&
+      isExpanded() &&
+      !sidebar.contains(event.target)
+    ) {
+      setExpanded(false);
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && mobileQuery.matches && isExpanded()) {
+      setExpanded(false, { focusButton: true });
+    }
+  });
+
   window.addEventListener('pageshow', resetSidebarState);
 
   if (typeof mobileQuery.addEventListener === 'function') {
