@@ -1,0 +1,202 @@
+/* Editorial home hierarchy: one expressive lead story, quieter supporting routes. */
+
+.recent-post-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 246, 240, 0.14);
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.026);
+  box-shadow:
+    0 24px 68px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.065);
+  backdrop-filter: blur(20px) saturate(125%);
+  -webkit-backdrop-filter: blur(20px) saturate(125%);
+}
+
+.recent-post-list .card {
+  grid-template-columns: 168px minmax(0, 1fr);
+  min-height: 164px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.recent-post-list .card + .card {
+  border-top: 1px solid rgba(255, 255, 255, 0.075);
+}
+
+.recent-post-list .card::before {
+  display: none;
+}
+
+.recent-post-list .card:hover,
+.recent-post-list .card:focus-visible {
+  background: linear-gradient(135deg, rgba(255, 235, 225, 0.07), rgba(255, 106, 0, 0.022));
+  box-shadow: inset 3px 0 0 rgba(255, 116, 34, 0.58);
+  transform: none;
+}
+
+.recent-post-list .card-media {
+  min-height: 164px;
+}
+
+.recent-post-list .card-media::after {
+  background: linear-gradient(110deg, rgba(255, 255, 255, 0.075), transparent 38%, rgba(8, 8, 11, 0.12));
+}
+
+.recent-post-list .card-copy {
+  justify-content: center;
+  padding: 24px 28px;
+}
+
+.recent-post-list .card h2 {
+  margin-top: 8px;
+  font-size: clamp(1.22rem, 1.8vw, 1.58rem);
+  line-height: 1.28;
+}
+
+.recent-post-list .card p {
+  max-width: 62ch;
+  margin-top: 9px;
+  -webkit-line-clamp: 2;
+  color: rgba(218, 209, 205, 0.76);
+  line-height: 1.65;
+}
+
+.home-discovery {
+  margin-top: 10px;
+}
+
+.home-discovery-heading {
+  margin-bottom: 14px;
+}
+
+.home-discovery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.home-discovery-card {
+  position: relative;
+  display: grid;
+  min-height: 190px;
+  align-content: end;
+  gap: 8px;
+  overflow: hidden;
+  padding: 24px;
+  border: 1px solid rgba(255, 246, 240, 0.12);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 14% 0%, rgba(255, 255, 255, 0.09), transparent 36%),
+    rgba(255, 255, 255, 0.028);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.home-discovery-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.055), transparent 42%, rgba(255, 137, 72, 0.025));
+}
+
+.home-discovery-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.home-discovery-card > span {
+  position: absolute;
+  top: 20px;
+  right: 22px;
+  color: rgba(255, 180, 140, 0.54);
+  font-family: var(--font-symbol), sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.home-discovery-card strong {
+  font-size: 1.18rem;
+  letter-spacing: -0.025em;
+}
+
+.home-discovery-card p {
+  margin: 0;
+  color: rgba(210, 201, 198, 0.72);
+  font-size: 0.9rem;
+  line-height: 1.62;
+}
+
+.home-discovery-card:hover,
+.home-discovery-card:focus-visible {
+  border-color: rgba(255, 151, 91, 0.36);
+  background:
+    radial-gradient(circle at 14% 0%, rgba(255, 255, 255, 0.11), transparent 36%),
+    rgba(255, 112, 29, 0.045);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  .recent-post-list .card {
+    grid-template-columns: 120px minmax(0, 1fr);
+    min-height: 142px;
+  }
+
+  .recent-post-list .card-media {
+    min-height: 142px;
+  }
+
+  .recent-post-list .card-copy {
+    padding: 20px;
+  }
+
+  .home-discovery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-discovery-card {
+    min-height: 150px;
+  }
+}
+
+@media (max-width: 560px) {
+  .recent-post-list {
+    border-radius: 22px;
+  }
+
+  .recent-post-list .card {
+    grid-template-columns: 96px minmax(0, 1fr);
+    min-height: 132px;
+  }
+
+  .recent-post-list .card-media {
+    min-height: 132px;
+    aspect-ratio: auto;
+  }
+
+  .recent-post-list .card-copy {
+    padding: 17px 16px;
+  }
+
+  .recent-post-list .card h2 {
+    font-size: 1.1rem;
+  }
+
+  .recent-post-list .card p {
+    display: none;
+  }
+
+  .recent-post-list .meta {
+    font-size: 0.72rem;
+  }
+}
