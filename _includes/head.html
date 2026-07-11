@@ -18,7 +18,8 @@
 <meta name="description" content="{{ page_description | strip_html | normalize_whitespace | escape }}" />
 <meta name="author" content="{{ site.author.name | escape }}" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-<meta name="theme-color" content="#06111f" />
+<meta name="theme-color" content="#100d24" />
+<script src="{{ '/scripts/site-preferences.js' | relative_url }}"></script>
 <link rel="canonical" href="{{ canonical_url }}" />
 <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }} RSS" href="{{ '/feed.xml' | absolute_url }}" />
 {% assign goatcounter_code = site.data.analytics.goatcounterCode %}
@@ -135,5 +136,6 @@
 <link rel="stylesheet" href="{{ '/styles/home-editorial.css' | relative_url }}" />
 <link rel="stylesheet" href="{{ '/styles/design-system.css' | relative_url }}" />
 <link rel="stylesheet" href="{{ '/styles/skyline-interface.css' | relative_url }}" />
+<link rel="stylesheet" href="{{ '/styles/theme-system.css' | relative_url }}" />
 <script defer src="{{ '/scripts/sidebar-collapse.js' | relative_url }}"></script>
 <script defer src="{{ '/scripts/site-search.js' | relative_url }}"></script>
