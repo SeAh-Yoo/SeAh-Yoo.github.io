@@ -14,10 +14,15 @@
       {% include sidebar.html %}
 
       <main class="content" id="main-content">
-        <header class="hero glass-panel">
-          <p class="eyebrow">Literary Underground of SeAh Yoo</p>
-          <p class="post-site-title"><a class="hero-title-link" href="{{ '/' | relative_url }}">유세아의 문하수도</a></p>
-          <p>게임 산업, 인터넷 문화, 서브컬처, 영화, AI와 사회를 비평하는 유세아의 에세이·칼럼 아카이브.</p>
+        <header class="post-site-bar glass-panel" aria-label="사이트 안내">
+          <a class="post-site-home" href="{{ '/' | relative_url }}">
+            <span class="post-site-mark" aria-hidden="true">S</span>
+            <span class="post-site-name">
+              <strong>유세아의 문하수도</strong>
+              <small>{{ site.english_title }}</small>
+            </span>
+          </a>
+          <span class="post-site-context">게임·AI·서브컬처 비평 아카이브</span>
         </header>
 
         <article class="post glass-panel" data-analytics-post="{{ page.slug | default: page.title | slugify | escape }}">
@@ -57,7 +62,7 @@
           {% include post-navigation.html %}
 
           <footer class="post-footer" aria-label="글 정보">
-            <p>──작성: <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %-m월 %-d일 %H:%M" }}</time> / 수정: <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: "%Y년 %-m월 %-d일 %H:%M" }}</time>, {{ site.author.name }}.</p>
+            <p>──작성: <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %-m월 %-d일 %H:%M" }}</time>{% if page.last_modified_at %} / 수정: <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: "%Y년 %-m월 %-d일 %H:%M" }}</time>{% endif %}, {{ site.author.name }}.</p>
           </footer>
 
           {% include post-comments.html %}
