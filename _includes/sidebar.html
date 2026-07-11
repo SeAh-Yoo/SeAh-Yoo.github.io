@@ -1,4 +1,4 @@
-<aside class="sidebar glass-panel" aria-label="칼럼 목록" data-mobile-sidebar>
+<aside class="sidebar glass-panel" aria-label="블로그 탐색" data-mobile-sidebar>
   <div class="sidebar-header">
     <a class="brand" href="{{ '/' | relative_url }}">
       <span class="brand-mark" aria-hidden="true">
@@ -8,7 +8,7 @@
         <span>S</span>
         {% endif %}
       </span>
-      <span><strong>{{ site.english_title }}</strong><small>문하수도</small></span>
+      <span><strong>유세아의 문하수도</strong><small>{{ site.english_title }}</small></span>
     </a>
 
     <div class="sidebar-quick-actions" role="group" aria-label="빠른 도구">
@@ -21,6 +21,41 @@
 
   <div class="sidebar-collapse-region" data-sidebar-collapse-region>
     <div class="sidebar-collapse-inner">
+      <nav class="explore-nav primary-nav" aria-labelledby="explore-heading">
+        <p class="eyebrow" id="explore-heading">Explore</p>
+        <ul>
+          <li>
+            <a href="{{ '/start-here/' | relative_url }}"{% if page.url == '/start-here/' %} aria-current="page"{% endif %}>
+              <span class="nav-label">처음 읽기</span><small class="nav-metaphor">관측 시작</small>
+            </a>
+          </li>
+          <li>
+            <a href="{{ '/timeline/' | relative_url }}"{% if page.url == '/timeline/' %} aria-current="page"{% endif %}>
+              <span class="nav-label">전체 글</span><small class="nav-metaphor">시간의 궤적</small>
+            </a>
+          </li>
+          <li>
+            <a href="{{ '/topics/' | relative_url }}"{% if page.url == '/topics/' %} aria-current="page"{% endif %}>
+              <span class="nav-label">주제별 보기</span><small class="nav-metaphor">주제 성좌</small>
+            </a>
+          </li>
+          <li>
+            <a href="{{ '/about/' | relative_url }}"{% if page.url == '/about/' %} aria-current="page"{% endif %}>
+              <span class="nav-label">소개</span><small class="nav-metaphor">관측자</small>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <nav class="sidebar-utility-nav" aria-label="보조 탐색">
+        <a href="{{ '/reading-pulse/' | relative_url }}"{% if page.url == '/reading-pulse/' %} aria-current="page"{% endif %}>
+          <span>인기와 읽기</span><small>읽기의 맥박</small>
+        </a>
+        <a href="{{ '/references/' | relative_url }}"{% if page.url == '/references/' %} aria-current="page"{% endif %}>
+          <span>참고 자료</span><small>자료 기록실</small>
+        </a>
+      </nav>
+
       <!-- GoatCounter summary; site settings live in _data/analytics.json. -->
       <div class="visitor-counter">
         <div class="visitor-counter-content" data-goatcounter-summary aria-busy="true">
@@ -58,25 +93,13 @@
         </div>
       </div>
 
-      <nav class="explore-nav" aria-labelledby="explore-heading">
-        <p class="eyebrow" id="explore-heading">Observe</p>
-        <ul>
-          <li><a href="{{ '/start-here/' | relative_url }}"{% if page.url == '/start-here/' %} aria-current="page"{% endif %}>관측 시작</a></li>
-          <li><a href="{{ '/about/' | relative_url }}"{% if page.url == '/about/' %} aria-current="page"{% endif %}>관측자</a></li>
-          <li><a href="{{ '/timeline/' | relative_url }}"{% if page.url == '/timeline/' %} aria-current="page"{% endif %}>시간의 궤적</a></li>
-          <li><a href="{{ '/reading-pulse/' | relative_url }}"{% if page.url == '/reading-pulse/' %} aria-current="page"{% endif %}>읽기의 맥박</a></li>
-          <li><a href="{{ '/topics/' | relative_url }}"{% if page.url == '/topics/' %} aria-current="page"{% endif %}>주제 성좌</a></li>
-          <li><a href="{{ '/references/' | relative_url }}"{% if page.url == '/references/' %} aria-current="page"{% endif %}>자료 기록실</a></li>
-        </ul>
-      </nav>
-
       <nav class="archive-nav" aria-labelledby="archive-heading">
         <div class="archive-header">
-          <p class="eyebrow" id="archive-heading">Archive</p>
+          <p class="eyebrow" id="archive-heading">Latest posts</p>
           <span class="archive-hint">좌우로 넘겨 글 선택</span>
         </div>
         <ol class="archive-list">
-          {% for post in site.posts reversed %}
+          {% for post in site.posts limit: 8 %}
           <li>
             <a href="{{ post.url | relative_url }}"{% if page.url == post.url %} class="active" aria-current="page"{% endif %}>
               <span class="archive-title">{{ post.title }}</span>
@@ -85,6 +108,7 @@
           </li>
           {% endfor %}
         </ol>
+        <a class="archive-all-link" href="{{ '/timeline/' | relative_url }}">전체 글 보기</a>
       </nav>
 
       <nav class="category-nav" aria-labelledby="category-heading">
