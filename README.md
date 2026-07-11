@@ -11,7 +11,7 @@
 
 각 글은 `/posts/<slug>/` 형태의 독립적인 정적 HTML 문서로 생성됩니다. 검색 엔진과 소셜 미디어 미리보기 봇이 제목, 설명, 본문, 대표 이미지와 구조화 데이터를 직접 읽을 수 있도록 구성되어 있습니다.
 
-깊은 네이비 위의 시안·코발트 오로라, 오렌지 포인트, 리퀴드 글래스 패널과 고정형 사이드바를 중심으로 한 디자인을 유지하면서 다음 기능을 제공합니다.
+제한된 색상 수의 리퀴드 글래스 패널과 고정형 사이드바를 중심으로 한 디자인을 유지하면서 다음 기능을 제공합니다.
 
 - 포스트별 고유 URL과 canonical 주소
 - Open Graph, X 카드, `Blog`·`BlogPosting` JSON-LD
@@ -29,6 +29,16 @@
 - SNS 공유, RSS, 인쇄와 PDF 저장, 인용문 PNG 카드
 - giscus 댓글과 반응
 - 모바일 사이드바 접힘과 `TOP` 버튼
+
+## 데스크톱 색상 테마와 브라우저 설정
+
+PC 사이드바에서는 세 가지 색상 테마를 선택할 수 있으며 모바일에는 선택기를 표시하지 않습니다.
+
+- `unit-01`: 기본 테마. 초호기의 보라·인디고 바탕과 민트 강조색
+- `unit-02`: 2호기의 적색 바탕과 주홍 강조색
+- `kivotos`: 블루 아카이브 계열의 블루 바탕과 민트 강조색
+
+선택값은 `localStorage`의 `literary-underground:preferences:v1`에 JSON으로 보존됩니다. `scripts/site-preferences.js`의 `get()`과 `set()`은 이후 언어 국기 선택처럼 다른 사용자 설정도 같은 저장 구조에 추가할 수 있도록 작성되어 있습니다.
 
 ## 콘텐츠와 탐색
 
@@ -307,7 +317,7 @@ Discussion 카테고리: Announcements
 반응: 사용
 Discussion 메타데이터 전송: 사용 안 함
 댓글 입력창: 위쪽
-테마: Skyline Glass 사용자 정의 테마
+테마: 선택한 사이트 테마와 연동되는 사용자 정의 테마
 언어: 한국어
 로딩: lazy
 ```
@@ -570,6 +580,7 @@ assets/images/example-post-image-03.jpg
 │  ├─ index.js                     # 레거시 URL, 캡션, GoatCounter 요약·이벤트
 │  ├─ sidebar-collapse.js          # 모바일 사이드바와 TOP 동작
 │  ├─ site-search.js               # 전체 검색, 단축키, 결과 정렬
+│  ├─ site-preferences.js          # 테마·향후 언어 선택용 브라우저 설정 저장소
 │  ├─ post-actions.js              # 공유, 인쇄, 완독 시간, 각주, 목차, 인용 카드, giscus 지연 로딩
 │  └─ refresh-reading-pulse.mjs    # 공개 GoatCounter 정적 스냅샷 생성
 ├─ styles/
@@ -579,8 +590,12 @@ assets/images/example-post-image-03.jpg
 │  ├─ search.css                   # 검색 버튼과 명령 팔레트
 │  ├─ post-actions.css             # 읽기 보강, 각주, 목차, 연재, 공유, 인쇄, 댓글
 │  ├─ cosmic-orange.css            # 이전 오렌지 테마의 호환 레이어
-│  ├─ skyline-interface.css        # 시안·코발트·오렌지 최종 디자인 레이어
-│  └─ giscus-cosmic-orange.css     # 기존 URL을 유지하는 giscus Skyline Glass 테마
+│  ├─ skyline-interface.css        # 공통 Skyline Glass 디자인 레이어
+│  ├─ theme-system.css             # 초호기·2호기·키보토스 테마와 PC 선택기
+│  ├─ giscus-theme-base.css        # giscus 공통 테마 기반
+│  ├─ giscus-unit-01.css           # giscus 초호기 테마
+│  ├─ giscus-unit-02.css           # giscus 2호기 테마
+│  └─ giscus-kivotos.css           # giscus 키보토스 테마
 ├─ categories.html
 ├─ start-here.html                 # 관측 시작: 입문 읽기 경로
 ├─ topics.html                     # 주제 성좌
