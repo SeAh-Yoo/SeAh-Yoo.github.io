@@ -11,42 +11,81 @@
       {% include sidebar.html %}
 
       <main class="content" id="main-content">
-        <header class="hero glass-panel">
-          <p class="eyebrow">The Literary Underground of SeAh Yoo</p>
-          <h1><a class="hero-title-link" href="{{ '/' | relative_url }}">유세아의 문하수도</a></h1>
-          <p>게임 산업, 인터넷 문화, 서브컬처, 영화, AI와 사회를 비평하는 유세아의 에세이·칼럼 아카이브.</p>
+        <header class="hero home-hero glass-panel">
+          <div class="home-hero-copy">
+            <p class="eyebrow">The Literary Underground of SeAh Yoo</p>
+            <h1><a class="hero-title-link" href="{{ '/' | relative_url }}">유세아의 문하수도</a></h1>
+            <p>게임 산업, 인터넷 문화, 서브컬처, 영화, AI와 사회를 비평하는 에세이·칼럼 아카이브.</p>
+            <div class="hero-actions" aria-label="추천 탐색 경로">
+              <a class="hero-action hero-action-primary" href="{{ '/start-here/' | relative_url }}">처음 읽기</a>
+              <a class="hero-action" href="{{ '/timeline/' | relative_url }}">전체 글 보기</a>
+              <a class="hero-action" href="{{ '/topics/' | relative_url }}">주제별 탐색</a>
+            </div>
+          </div>
         </header>
 
         <section class="view" aria-label="최신 칼럼">
           {% if site.posts.size > 0 %}
           {% assign featured_post = site.posts | first %}
+          {% assign featured_image = featured_post.image | default: featured_post.image1 %}
           <a class="card card-featured glass-panel" href="{{ featured_post.url | relative_url }}">
-            <span class="card-kicker" aria-hidden="true">Latest column</span>
-            <div class="meta">
-              <time datetime="{{ featured_post.date | date_to_xmlschema }}"
-                >{{ featured_post.date | date: "%Y년 %-m월 %-d일" }}</time
-              >
-              <span>{{ featured_post.category | default: "Column" }}</span>
-            </div>
-            <h2>{{ featured_post.title }}</h2>
-            <p>{{ featured_post.description }}</p>
-            <span class="read-more" aria-hidden="true">최신 칼럼 읽기</span>
+            <span class="featured-media" aria-hidden="true">
+              {% if featured_image %}
+              <img src="{{ featured_image | relative_url }}" alt="" loading="eager" fetchpriority="high" />
+              {% else %}
+              <span class="card-media-fallback">
+                <span>{{ featured_post.category | default: "Column" }}</span>
+                <strong>{{ featured_post.title | slice: 0, 1 }}</strong>
+              </span>
+              {% endif %}
+            </span>
+            <span class="card-copy">
+              <span class="card-kicker" aria-hidden="true">Latest column</span>
+              <span class="meta">
+                <time datetime="{{ featured_post.date | date_to_xmlschema }}">{{ featured_post.date | date: "%Y년 %-m월 %-d일" }}</time>
+                <span>{{ featured_post.category | default: "Column" }}</span>
+              </span>
+              <h2>{{ featured_post.title }}</h2>
+              <p>{{ featured_post.description }}</p>
+              <span class="read-more" aria-hidden="true">최신 칼럼 읽기</span>
+            </span>
           </a>
+
+          {% if site.posts.size > 1 %}
+          <header class="section-heading">
+            <div>
+              <p class="eyebrow">Recent archive</p>
+              <h2>최근 글</h2>
+            </div>
+            <a class="section-heading-link" href="{{ '/timeline/' | relative_url }}">전체 글 보기</a>
+          </header>
 
           <div class="card-grid">
             {% for post in site.posts offset: 1 limit: 4 %}
+            {% assign card_image = post.image | default: post.image1 %}
             <a class="card glass-panel" href="{{ post.url | relative_url }}">
-              <div class="meta">
-                <time datetime="{{ post.date | date_to_xmlschema }}"
-                  >{{ post.date | date: "%Y년 %-m월 %-d일" }}</time
-                >
-                <span>{{ post.category | default: "Column" }}</span>
-              </div>
-              <h2>{{ post.title }}</h2>
-              <p>{{ post.description }}</p>
+              <span class="card-media" aria-hidden="true">
+                {% if card_image %}
+                <img src="{{ card_image | relative_url }}" alt="" loading="lazy" />
+                {% else %}
+                <span class="card-media-fallback">
+                  <span>{{ post.category | default: "Column" }}</span>
+                  <strong>{{ post.title | slice: 0, 1 }}</strong>
+                </span>
+                {% endif %}
+              </span>
+              <span class="card-copy">
+                <span class="meta">
+                  <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %-m월 %-d일" }}</time>
+                  <span>{{ post.category | default: "Column" }}</span>
+                </span>
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.description }}</p>
+              </span>
             </a>
             {% endfor %}
           </div>
+          {% endif %}
           {% else %}
           <section class="empty glass-panel">
             아직 등록된 칼럼이 없습니다.
