@@ -304,7 +304,8 @@ summary:focus-visible {
   margin-bottom: 24px;
   background: linear-gradient(128deg, rgba(65, 144, 222, 0.3), rgba(28, 40, 76, 0.28) 52%, rgba(137, 72, 217, 0.3));
 }
-.hero h1 {
+.hero h1,
+.hero .post-site-title {
   max-width: 820px;
   margin: 0;
   font-size: clamp(1.9rem, 4.2vw, 3.95rem);
@@ -604,7 +605,8 @@ summary:focus-visible {
     border-radius: 24px;
     margin-bottom: 14px;
   }
-  .hero h1 {
+  .hero h1,
+  .hero .post-site-title {
     font-size: clamp(1.5rem, 10vw, 2.7rem);
     line-height: 1.06;
     letter-spacing: -0.075em;

@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "독서의 맥박"
+title: "읽기의 맥박"
 permalink: /reading-pulse/
 eyebrow: "Reading pulse"
 intro: "익명으로 집계한 방문과 읽기 신호를, 하루 한 번 정적인 기록으로 남깁니다."
@@ -24,7 +24,7 @@ intro: "익명으로 집계한 방문과 읽기 신호를, 하루 한 번 정적
       {% assign reading_signal_total = reading_signal_total | plus: post_signals %}
     {% endfor %}
 
-    <dl class="reading-pulse-summary" aria-label="독서의 맥박 요약">
+    <dl class="reading-pulse-summary" aria-label="읽기의 맥박 요약">
       <div>
         <dt>누적 방문</dt>
         <dd>{{ pulse.site.total | default: 0 }}</dd>

@@ -1,70 +1,75 @@
 <aside class="sidebar glass-panel" aria-label="칼럼 목록" data-mobile-sidebar>
-  <a class="brand" href="{{ '/' | relative_url }}">
-    <span class="brand-mark" aria-hidden="true">
-      {% if site.profile_image %}
-      <img src="{{ site.profile_image | relative_url }}" alt="" />
-      {% else %}
-      <span>S</span>
-      {% endif %}
-    </span>
-    <span><strong>{{ site.english_title }}</strong><small>문하수도</small></span>
-  </a>
-  <!-- GoatCounter summary; site settings live in _data/analytics.json. -->
-  <div class="visitor-counter">
-    <div class="visitor-counter-content" data-goatcounter-summary aria-busy="true">
-      <div class="visitor-counter-heading">
-        <span class="visitor-counter-eyebrow">Reading pulse</span>
-        <a class="visitor-counter-detail-link" href="{{ '/reading-pulse/' | relative_url }}">자세히</a>
-      </div>
-      <span class="visitor-counter-values">
-      <span class="counter-row counter-period-row">
-        <span class="counter-item counter-week">
-          <span class="counter-label" aria-label="최근 7일 방문">
-            <span class="counter-label-initial counter-label-week" aria-hidden="true">7</span><span class="counter-label-rest" aria-hidden="true">일</span>
-          </span>
-          <strong data-goatcounter-value="week" aria-label="최근 7일 방문 수">----</strong>
-        </span>
-        <span class="counter-row-divider" aria-hidden="true">·</span>
-        <span class="counter-item counter-month">
-          <span class="counter-label" aria-label="최근 30일 방문">
-            <span class="counter-label-initial counter-label-month" aria-hidden="true">30</span><span class="counter-label-rest" aria-hidden="true">일</span>
-          </span>
-          <strong data-goatcounter-value="month" aria-label="최근 30일 방문 수">----</strong>
-        </span>
+  <div class="sidebar-header">
+    <a class="brand" href="{{ '/' | relative_url }}">
+      <span class="brand-mark" aria-hidden="true">
+        {% if site.profile_image %}
+        <img src="{{ site.profile_image | relative_url }}" alt="" />
+        {% else %}
+        <span>S</span>
+        {% endif %}
       </span>
-      <span class="counter-row counter-total-row">
-        <span class="counter-item counter-total">
-          <span class="counter-label" aria-label="누적 방문">
-            <span class="counter-label-initial counter-label-total" aria-hidden="true">Σ</span><span class="counter-label-rest" aria-hidden="true">누적</span>
-          </span>
-          <strong data-goatcounter-value="total" aria-label="누적 방문 수">----</strong>
-        </span>
-      </span>
-      </span>
-      <p class="visitor-counter-note">최근 7일 · 최근 30일 · 누적 방문</p>
-      <span class="visually-hidden" data-goatcounter-status role="status">방문 집계를 불러오는 중입니다.</span>
+      <span><strong>{{ site.english_title }}</strong><small>문하수도</small></span>
+    </a>
+
+    <div class="sidebar-quick-actions" role="group" aria-label="빠른 도구">
+      {% include site-search.html %}
+      <button class="sidebar-top-button" type="button" data-scroll-top aria-label="페이지 맨 위로 이동">
+        <span aria-hidden="true">↑</span><span class="sidebar-top-label">TOP</span>
+      </button>
     </div>
-    <button class="sidebar-top-button" type="button" data-scroll-top aria-label="페이지 맨 위로 이동">
-      <span aria-hidden="true">↑</span> TOP
-    </button>
   </div>
-
-  {% include site-search.html %}
-
-  <nav class="explore-nav" aria-labelledby="explore-heading">
-    <p class="eyebrow" id="explore-heading">Explore</p>
-    <ul>
-      <li><a href="{{ '/start-here/' | relative_url }}">처음 읽기</a></li>
-      <li><a href="{{ '/topics/' | relative_url }}">주제 지도</a></li>
-      <li><a href="{{ '/timeline/' | relative_url }}">타임라인</a></li>
-      <li><a href="{{ '/references/' | relative_url }}">자료실</a></li>
-      <li><a href="{{ '/reading-pulse/' | relative_url }}">독서의 맥박</a></li>
-      <li><a href="{{ '/about/' | relative_url }}">소개</a></li>
-    </ul>
-  </nav>
 
   <div class="sidebar-collapse-region" data-sidebar-collapse-region>
     <div class="sidebar-collapse-inner">
+      <!-- GoatCounter summary; site settings live in _data/analytics.json. -->
+      <div class="visitor-counter">
+        <div class="visitor-counter-content" data-goatcounter-summary aria-busy="true">
+          <div class="visitor-counter-heading">
+            <span class="visitor-counter-eyebrow">Reading pulse</span>
+            <a class="visitor-counter-detail-link" href="{{ '/reading-pulse/' | relative_url }}">자세히</a>
+          </div>
+          <span class="visitor-counter-values">
+          <span class="counter-row counter-period-row">
+            <span class="counter-item counter-week">
+              <span class="counter-label" aria-label="최근 7일 방문">
+                <span class="counter-label-initial counter-label-week" aria-hidden="true">7</span><span class="counter-label-rest" aria-hidden="true">일</span>
+              </span>
+              <strong data-goatcounter-value="week" aria-label="최근 7일 방문 수">----</strong>
+            </span>
+            <span class="counter-row-divider" aria-hidden="true">·</span>
+            <span class="counter-item counter-month">
+              <span class="counter-label" aria-label="최근 30일 방문">
+                <span class="counter-label-initial counter-label-month" aria-hidden="true">30</span><span class="counter-label-rest" aria-hidden="true">일</span>
+              </span>
+              <strong data-goatcounter-value="month" aria-label="최근 30일 방문 수">----</strong>
+            </span>
+          </span>
+          <span class="counter-row counter-total-row">
+            <span class="counter-item counter-total">
+              <span class="counter-label" aria-label="누적 방문">
+                <span class="counter-label-initial counter-label-total" aria-hidden="true">Σ</span><span class="counter-label-rest" aria-hidden="true">누적</span>
+              </span>
+              <strong data-goatcounter-value="total" aria-label="누적 방문 수">----</strong>
+            </span>
+          </span>
+          </span>
+          <p class="visitor-counter-note">최근 7일 · 최근 30일 · 누적 방문</p>
+          <span class="visually-hidden" data-goatcounter-status role="status">방문 집계를 불러오는 중입니다.</span>
+        </div>
+      </div>
+
+      <nav class="explore-nav" aria-labelledby="explore-heading">
+        <p class="eyebrow" id="explore-heading">Observe</p>
+        <ul>
+          <li><a href="{{ '/start-here/' | relative_url }}"{% if page.url == '/start-here/' %} aria-current="page"{% endif %}>관측 시작</a></li>
+          <li><a href="{{ '/about/' | relative_url }}"{% if page.url == '/about/' %} aria-current="page"{% endif %}>관측자</a></li>
+          <li><a href="{{ '/timeline/' | relative_url }}"{% if page.url == '/timeline/' %} aria-current="page"{% endif %}>시간의 궤적</a></li>
+          <li><a href="{{ '/reading-pulse/' | relative_url }}"{% if page.url == '/reading-pulse/' %} aria-current="page"{% endif %}>읽기의 맥박</a></li>
+          <li><a href="{{ '/topics/' | relative_url }}"{% if page.url == '/topics/' %} aria-current="page"{% endif %}>주제 성좌</a></li>
+          <li><a href="{{ '/references/' | relative_url }}"{% if page.url == '/references/' %} aria-current="page"{% endif %}>자료 기록실</a></li>
+        </ul>
+      </nav>
+
       <nav class="archive-nav" aria-labelledby="archive-heading">
         <div class="archive-header">
           <p class="eyebrow" id="archive-heading">Archive</p>

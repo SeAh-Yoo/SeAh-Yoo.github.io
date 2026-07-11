@@ -9,6 +9,8 @@ profile_image: "/assets/images/profile.jpg"
 
 permalink: /posts/:slug/
 markdown: kramdown
+kramdown:
+  hard_wrap: true
 
 defaults:
   - scope:

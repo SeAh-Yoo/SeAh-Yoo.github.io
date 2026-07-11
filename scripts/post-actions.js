@@ -268,6 +268,7 @@
   const getReadingText = (root) => {
     const clone = root.cloneNode(true);
     const excludedContent = [
+      '.post-header',
       '.post-category-eyebrow',
       '.post-translations',
       '[data-post-reading-meta]',
@@ -276,6 +277,7 @@
       '.post-toc-mount',
       '.post-series',
       '.post-navigation',
+      '.post-continuation',
       '[data-post-share]',
       '.post-footer',
       '.post-comments',
@@ -344,14 +346,14 @@
       heading = document.createElement('h2');
       heading.className = 'post-endnotes-heading';
       heading.id = 'post-endnotes';
-      heading.textContent = '미주';
+      heading.textContent = '각주 및 참고 문헌';
       heading.tabIndex = -1;
 
       header.className = 'post-endnotes-header';
       eyebrow.className = 'post-endnotes-eyebrow';
       eyebrow.textContent = 'NOTES';
       help.className = 'post-endnotes-help';
-      help.textContent = '본문의 번호를 선택하면 해당 미주로 이동하고, 각 미주의 돌아가기 링크로 본문에 돌아갈 수 있습니다.';
+      help.textContent = '본문의 각주 번호를 선택하면 이곳으로 이동합니다. 참고 문헌 번호 또는 돌아가기 화살표를 선택하면 읽던 위치로 돌아갑니다.';
       header.append(eyebrow, heading, help);
       footnotes.prepend(header);
     }
@@ -413,24 +415,39 @@
       const number = getEndnoteNumber(link, index);
 
       link.classList.add('post-endnote-reference');
-      link.setAttribute('aria-label', `미주 ${number}으로 이동`);
-      link.setAttribute('title', `미주 ${number}으로 이동`);
+      link.setAttribute('aria-label', `각주 및 참고 문헌 ${number}으로 이동`);
+      link.setAttribute('title', `각주 및 참고 문헌 ${number}으로 이동`);
       link.setAttribute('role', 'doc-noteref');
       link.addEventListener('click', focusHashTarget);
     });
 
     footnotes.querySelectorAll('li').forEach((item, index) => {
       item.setAttribute('role', 'doc-endnote');
-      item.setAttribute('aria-label', `미주 ${index + 1}`);
+      item.setAttribute('aria-label', `각주 및 참고 문헌 ${index + 1}`);
       item.tabIndex = -1;
+
+      const backlink = item.querySelector('a.reversefootnote');
+
+      if (backlink && !item.querySelector('.post-endnote-number-link')) {
+        const numberLink = document.createElement('a');
+
+        numberLink.className = 'post-endnote-number-link';
+        numberLink.href = backlink.getAttribute('href');
+        numberLink.textContent = String(index + 1);
+        numberLink.setAttribute('aria-label', `본문의 각주 ${index + 1} 위치로 돌아가기`);
+        numberLink.setAttribute('title', `본문의 각주 ${index + 1} 위치로 돌아가기`);
+        numberLink.setAttribute('role', 'doc-backlink');
+        numberLink.addEventListener('click', focusHashTarget);
+        item.prepend(numberLink);
+      }
     });
 
     footnotes.querySelectorAll('a.reversefootnote').forEach((link, index) => {
       const number = getEndnoteNumber(link, index);
 
       link.classList.add('post-endnote-backlink');
-      link.setAttribute('aria-label', `본문의 미주 ${number} 위치로 돌아가기`);
-      link.setAttribute('title', `본문의 미주 ${number} 위치로 돌아가기`);
+      link.setAttribute('aria-label', `본문의 각주 ${number} 위치로 돌아가기`);
+      link.setAttribute('title', `본문의 각주 ${number} 위치로 돌아가기`);
       link.setAttribute('role', 'doc-backlink');
       link.addEventListener('click', focusHashTarget);
     });
@@ -441,10 +458,10 @@
 
     if (readingTime) {
       const minutes = estimateReadingMinutes(getReadingText(root));
-      const label = `약 ${minutes}분 읽기`;
+      const label = `예상 완독 시간: ${minutes}분`;
 
       readingTime.textContent = label;
-      readingTime.setAttribute('aria-label', `예상 읽기 시간 ${label}`);
+      readingTime.setAttribute('aria-label', label);
     }
 
     const progressRoot = document.querySelector('[data-reading-progress]');
@@ -625,22 +642,22 @@
     canvas.height = height;
 
     const background = context.createLinearGradient(0, 0, width, height);
-    background.addColorStop(0, '#151c35');
-    background.addColorStop(0.46, '#0d1325');
-    background.addColorStop(1, '#15101f');
+    background.addColorStop(0, '#32170d');
+    background.addColorStop(0.46, '#160d09');
+    background.addColorStop(1, '#0b0908');
     context.fillStyle = background;
     context.fillRect(0, 0, width, height);
 
-    const cyanGlow = context.createRadialGradient(120, 80, 0, 120, 80, 630);
-    cyanGlow.addColorStop(0, 'rgba(104, 220, 255, 0.38)');
-    cyanGlow.addColorStop(1, 'rgba(104, 220, 255, 0)');
-    context.fillStyle = cyanGlow;
+    const orangeGlow = context.createRadialGradient(120, 80, 0, 120, 80, 630);
+    orangeGlow.addColorStop(0, 'rgba(255, 82, 24, 0.42)');
+    orangeGlow.addColorStop(1, 'rgba(255, 82, 24, 0)');
+    context.fillStyle = orangeGlow;
     context.fillRect(0, 0, width, height);
 
-    const violetGlow = context.createRadialGradient(1000, 1270, 0, 1000, 1270, 650);
-    violetGlow.addColorStop(0, 'rgba(208, 142, 255, 0.32)');
-    violetGlow.addColorStop(1, 'rgba(208, 142, 255, 0)');
-    context.fillStyle = violetGlow;
+    const amberGlow = context.createRadialGradient(1000, 1270, 0, 1000, 1270, 650);
+    amberGlow.addColorStop(0, 'rgba(255, 164, 92, 0.34)');
+    amberGlow.addColorStop(1, 'rgba(255, 164, 92, 0)');
+    context.fillStyle = amberGlow;
     context.fillRect(0, 0, width, height);
 
     const panelX = 72;
@@ -663,14 +680,14 @@
 
     drawRoundedRect(context, panelX, panelY, panelWidth, panelHeight, 54);
     context.lineWidth = 2;
-    context.strokeStyle = 'rgba(235, 249, 255, 0.45)';
+    context.strokeStyle = 'rgba(255, 224, 201, 0.46)';
     context.stroke();
 
     context.fillStyle = 'rgba(255, 255, 255, 0.12)';
     drawRoundedRect(context, panelX + 2, panelY + 2, panelWidth - 4, 186, 52);
     context.fill();
 
-    context.fillStyle = '#aeeeff';
+    context.fillStyle = '#ffb474';
     context.font = '700 25px Poppins, Arial, sans-serif';
     context.letterSpacing = '0px';
     context.fillText('THE LITERARY UNDERGROUND', 136, 174);
@@ -678,7 +695,7 @@
     context.font = '600 22px Poppins, Arial, sans-serif';
     context.fillText('문하수도의 인용', 136, 214);
 
-    context.fillStyle = 'rgba(174, 238, 255, 0.9)';
+    context.fillStyle = 'rgba(255, 174, 105, 0.92)';
     context.font = '700 116px "Nanum Myeongjo", Georgia, serif';
     context.fillText('“', 128, 364);
 
@@ -703,7 +720,7 @@
     context.moveTo(136, 1064);
     context.lineTo(944, 1064);
     context.lineWidth = 2;
-    context.strokeStyle = 'rgba(174, 238, 255, 0.26)';
+    context.strokeStyle = 'rgba(255, 174, 105, 0.28)';
     context.stroke();
 
     context.font = '700 28px "Nanum Myeongjo", Georgia, serif';
@@ -738,7 +755,7 @@
   const setupQuoteCards = (root) => {
     const postTitle = normalizeReaderText(root.querySelector('h1')?.textContent || document.title);
     const canonicalUrl = document.querySelector('link[rel="canonical"]')?.href || window.location.href;
-    const ignoredQuotes = '.footnotes, .post-series, .post-navigation, .post-comments, .post-share-dialog';
+    const ignoredQuotes = '.footnotes, .post-series, .post-continuation, .post-comments, .post-share-dialog';
 
     root.querySelectorAll('blockquote').forEach((quote, index) => {
       if (quote.closest(ignoredQuotes) || quote.closest('.post-quote-card')) {
@@ -801,6 +818,12 @@
   };
 
   if (article) {
+    const postActionAnchor = article.querySelector('.footnotes, .post-series, .post-continuation, .post-footer');
+
+    if (shareRoot && postActionAnchor) {
+      postActionAnchor.before(shareRoot);
+    }
+
     enhanceEndnotes(article);
     setupQuoteCards(article);
     setupReadingMeta(article);
@@ -814,7 +837,7 @@
       .replace(/\s+/g, ' ')
       .trim();
     const declaredSubtitle = normalizeText(tocMount.dataset.postSubtitle);
-    const excludedSections = '.footnotes, .post-series, .post-navigation, .post-comments, .post-share-dialog';
+    const excludedSections = '.footnotes, .post-series, .post-continuation, .post-comments, .post-share-dialog';
     const headings = Array.from(article.querySelectorAll('h2, h3'))
       .filter((heading) => !heading.closest(excludedSections))
       .filter((heading) => !declaredSubtitle || normalizeText(heading.textContent) !== declaredSubtitle);

@@ -15,6 +15,7 @@
   const mobileQuery = window.matchMedia('(max-width: 900px)');
   const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   const collapseThreshold = 120;
+  const revealDelta = 1;
   let frameId = 0;
   let lastScrollY = Math.max(0, window.scrollY);
 
@@ -40,6 +41,8 @@
       currentScrollY > lastScrollY + 1
     ) {
       setCollapsed(true);
+    } else if (currentScrollY < lastScrollY - revealDelta) {
+      setCollapsed(false);
     }
 
     lastScrollY = currentScrollY;

@@ -27,6 +27,11 @@
 {% endfor %}
 
 {% if previous_post or next_post %}
+<section class="post-continuation" aria-labelledby="post-continuation-title">
+  <header class="post-continuation-header">
+    <p>NEXT OBSERVATION</p>
+    <h2 id="post-continuation-title">이어 읽기</h2>
+  </header>
 <nav class="post-navigation" aria-label="작성 시간순 이전 글과 다음 글">
   {% if previous_post %}
   <a class="post-navigation-link post-navigation-previous" href="{{ previous_post.url | relative_url }}" rel="prev">
@@ -48,4 +53,5 @@
   <span class="post-navigation-link is-empty" aria-hidden="true"></span>
   {% endif %}
 </nav>
+</section>
 {% endif %}
