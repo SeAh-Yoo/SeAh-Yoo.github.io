@@ -11,7 +11,7 @@
 
 각 글은 `/posts/<slug>/` 형태의 독립적인 정적 HTML 문서로 생성됩니다. 검색 엔진과 소셜 미디어 미리보기 봇이 제목, 설명, 본문, 대표 이미지와 구조화 데이터를 직접 읽을 수 있도록 구성되어 있습니다.
 
-코스믹 오렌지 오로라, 리퀴드 글래스 패널, 고정형 사이드바를 중심으로 한 디자인을 유지하면서 다음 기능을 제공합니다.
+깊은 네이비 위의 시안·코발트 오로라, 오렌지 포인트, 리퀴드 글래스 패널과 고정형 사이드바를 중심으로 한 디자인을 유지하면서 다음 기능을 제공합니다.
 
 - 포스트별 고유 URL과 canonical 주소
 - Open Graph, X 카드, `Blog`·`BlogPosting` JSON-LD
@@ -307,7 +307,7 @@ Discussion 카테고리: Announcements
 반응: 사용
 Discussion 메타데이터 전송: 사용 안 함
 댓글 입력창: 위쪽
-테마: Cosmic Orange 사용자 정의 테마
+테마: Skyline Glass 사용자 정의 테마
 언어: 한국어
 로딩: lazy
 ```
@@ -578,8 +578,9 @@ assets/images/example-post-image-03.jpg
 │  ├─ counter.css                  # 카운터 디자인
 │  ├─ search.css                   # 검색 버튼과 명령 팔레트
 │  ├─ post-actions.css             # 읽기 보강, 각주, 목차, 연재, 공유, 인쇄, 댓글
-│  ├─ cosmic-orange.css            # 코스믹 오렌지 디자인 토큰과 전체 테마
-│  └─ giscus-cosmic-orange.css     # giscus 코스믹 오렌지 사용자 정의 테마
+│  ├─ cosmic-orange.css            # 이전 오렌지 테마의 호환 레이어
+│  ├─ skyline-interface.css        # 시안·코발트·오렌지 최종 디자인 레이어
+│  └─ giscus-cosmic-orange.css     # 기존 URL을 유지하는 giscus Skyline Glass 테마
 ├─ categories.html
 ├─ start-here.html                 # 관측 시작: 입문 읽기 경로
 ├─ topics.html                     # 주제 성좌

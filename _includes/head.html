@@ -6,6 +6,8 @@
 {% assign social_image = page.image | default: page.image1 | default: site.profile_image %}
 {% if page.layout == "post" %}
   {% capture document_title %}{{ page.title }} | {{ site.title }}{% endcapture %}
+{% elsif page.url == "/" %}
+  {% capture document_title %}{{ site.title }} | 게임·서브컬처·인터넷 문화 비평{% endcapture %}
 {% elsif page.title %}
   {% capture document_title %}{{ page.title }} | {{ site.title }}{% endcapture %}
 {% else %}
@@ -16,7 +18,7 @@
 <meta name="description" content="{{ page_description | strip_html | normalize_whitespace | escape }}" />
 <meta name="author" content="{{ site.author.name | escape }}" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-<meta name="theme-color" content="#111014" />
+<meta name="theme-color" content="#06111f" />
 <link rel="canonical" href="{{ canonical_url }}" />
 <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }} RSS" href="{{ '/feed.xml' | absolute_url }}" />
 {% assign goatcounter_code = site.data.analytics.goatcounterCode %}
@@ -132,5 +134,6 @@
 <link rel="stylesheet" href="{{ '/styles/reading-experience.css' | relative_url }}" />
 <link rel="stylesheet" href="{{ '/styles/home-editorial.css' | relative_url }}" />
 <link rel="stylesheet" href="{{ '/styles/design-system.css' | relative_url }}" />
+<link rel="stylesheet" href="{{ '/styles/skyline-interface.css' | relative_url }}" />
 <script defer src="{{ '/scripts/sidebar-collapse.js' | relative_url }}"></script>
 <script defer src="{{ '/scripts/site-search.js' | relative_url }}"></script>

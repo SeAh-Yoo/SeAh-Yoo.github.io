@@ -835,6 +835,7 @@ summary:focus-visible {
   border-radius: var(--radius);
 }
 .category-index h1,
+.category-index h2,
 .category-section-heading h2 {
   margin: 8px 0 12px;
   letter-spacing: -0.05em;

@@ -1,6 +1,6 @@
 <aside class="sidebar glass-panel" aria-label="블로그 탐색" data-mobile-sidebar>
   <div class="sidebar-header">
-    <a class="brand" href="{{ '/' | relative_url }}">
+    <a class="brand" href="{{ '/' | relative_url }}" aria-label="유세아의 문하수도 홈">
       <span class="brand-mark" aria-hidden="true">
         {% if site.profile_image %}
         <img src="{{ site.profile_image | relative_url }}" alt="" />
@@ -8,7 +8,7 @@
         <span>S</span>
         {% endif %}
       </span>
-      <span><strong>유세아의 문하수도</strong><small>{{ site.english_title }}</small></span>
+      <span class="brand-copy"><strong>유세아의 문하수도</strong><small>{{ site.english_title }}</small></span>
     </a>
 
     <div class="sidebar-quick-actions" role="group" aria-label="빠른 도구">
@@ -36,7 +36,7 @@
           </li>
           <li>
             <a href="{{ '/topics/' | relative_url }}"{% if page.url == '/topics/' %} aria-current="page"{% endif %}>
-              <span class="nav-label">주제별 보기</span><small class="nav-metaphor">주제 성좌</small>
+              <span class="nav-label">질문별 보기</span><small class="nav-metaphor">주제 성좌</small>
             </a>
           </li>
           <li>
@@ -66,7 +66,7 @@
       {% endif %}
 
       <nav class="sidebar-footer-nav" aria-label="보조 링크">
-        <a href="{{ '/categories/' | relative_url }}">분야별 보기</a>
+        <a href="{{ '/categories/' | relative_url }}">분야별 서가</a>
         <a href="{{ '/reading-pulse/' | relative_url }}">인기와 읽기</a>
         <a href="{{ '/references/' | relative_url }}">참고 자료</a>
         <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
