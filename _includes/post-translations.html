@@ -1,5 +1,5 @@
 <nav class="post-translations" aria-label="이 글의 번역">
-  <span class="post-translations-label">Translate</span>
+  <span class="post-translations-label" aria-hidden="true">Translate</span>
   {% if page.translation_en %}
   <a class="post-translation-button is-available" href="{{ page.translation_en | escape }}" hreflang="en" lang="en">English</a>
   {% else %}

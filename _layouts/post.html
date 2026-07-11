@@ -16,33 +16,45 @@
       <main class="content" id="main-content">
         <header class="hero glass-panel">
           <p class="eyebrow">Literary Underground of SeAh Yoo</p>
-          <h1><a class="hero-title-link" href="{{ '/' | relative_url }}">유세아의 문하수도</a></h1>
+          <p class="post-site-title"><a class="hero-title-link" href="{{ '/' | relative_url }}">유세아의 문하수도</a></p>
           <p>게임 산업, 인터넷 문화, 서브컬처, 영화, AI와 사회를 비평하는 유세아의 에세이·칼럼 아카이브.</p>
         </header>
 
         <article class="post glass-panel" data-analytics-post="{{ page.slug | default: page.title | slugify | escape }}">
           {% assign post_category = page.category | default: page.categories.first | default: "Column" %}
           {% assign post_category_slug = post_category | slugify %}
-          <a class="post-category-eyebrow" href="{{ '/categories/#' | append: post_category_slug | relative_url }}">{{ post_category }}</a>
-          {% include post-translations.html %}
-          {% capture post_reading_meta %}<div class="post-reading-meta" data-post-reading-meta aria-label="글 읽기 정보"><span class="post-reading-time" data-reading-time>읽는 시간 계산 중</span></div>{% endcapture %}
-          {% capture post_thesis %}{% if page.thesis %}<aside class="post-thesis" aria-label="핵심 논지"><p class="post-thesis-label">핵심 논지</p><p>{{ page.thesis | strip_html | escape }}</p></aside>{% endif %}{% endcapture %}
-          {% capture post_view_counter %}<div class="post-view-counter" data-goatcounter-post-view aria-live="polite" aria-busy="true">누적 방문 <span data-goatcounter-post-count>불러오는 중</span><span class="post-view-counter-note" data-goatcounter-post-note></span></div>{% endcapture %}
-          {% capture post_toc_mount %}<div class="post-toc-mount" data-post-toc-mount data-post-subtitle="{{ page.subtitle | default: '' | strip_html | escape }}"></div>{% endcapture %}
-          {% capture title_with_tools %}</h1>{{ post_reading_meta }}{{ post_thesis }}{{ post_view_counter }}{{ post_toc_mount }}{% endcapture %}
-          {% if content contains '</h1>' %}
-          {{ content | replace_first: '</h1>', title_with_tools }}
-          {% else %}
+          <header class="post-header">
+            <div class="post-utility-row">
+              <a class="post-category-eyebrow" href="{{ '/categories/#' | append: post_category_slug | relative_url }}">{{ post_category }}</a>
+              {% include post-translations.html %}
+            </div>
+
+            <h1>{{ page.title }}</h1>
+            {% if page.subtitle %}<p class="post-subtitle">{{ page.subtitle }}</p>{% endif %}
+
+            <div class="post-reading-stats" aria-label="글 읽기 정보">
+              <div class="post-reading-meta" data-post-reading-meta>
+                <span class="post-reading-time" data-reading-time>완독 시간 계산 중</span>
+              </div>
+              <div class="post-view-counter" data-goatcounter-post-view aria-live="polite" aria-busy="true">
+                누적 방문 <span data-goatcounter-post-count>불러오는 중</span><span class="post-view-counter-note" data-goatcounter-post-note></span>
+              </div>
+            </div>
+
+            <div class="post-toc-mount" data-post-toc-mount></div>
+            {% if page.thesis %}
+            <aside class="post-thesis" aria-label="핵심 논지">
+              <p class="post-thesis-label">핵심 논지</p>
+              <p>{{ page.thesis | strip_html | escape }}</p>
+            </aside>
+            {% endif %}
+          </header>
+
           {{ content }}
-          {{ post_reading_meta }}
-          {{ post_thesis }}
-          {{ post_view_counter }}
-          {{ post_toc_mount }}
-          {% endif %}
 
           {% include post-series.html %}
-          {% include post-navigation.html %}
           {% include post-share.html %}
+          {% include post-navigation.html %}
 
           <footer class="post-footer" aria-label="글 정보">
             <p>──작성: <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %-m월 %-d일 %H:%M" }}</time> / 수정: <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: "%Y년 %-m월 %-d일 %H:%M" }}</time>, {{ site.author.name }}.</p>
