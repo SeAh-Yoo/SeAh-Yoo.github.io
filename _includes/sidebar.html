@@ -47,59 +47,13 @@
         </ul>
       </nav>
 
-      <nav class="sidebar-utility-nav" aria-label="보조 탐색">
-        <a href="{{ '/reading-pulse/' | relative_url }}"{% if page.url == '/reading-pulse/' %} aria-current="page"{% endif %}>
-          <span>인기와 읽기</span><small>읽기의 맥박</small>
-        </a>
-        <a href="{{ '/references/' | relative_url }}"{% if page.url == '/references/' %} aria-current="page"{% endif %}>
-          <span>참고 자료</span><small>자료 기록실</small>
-        </a>
-      </nav>
-
-      <!-- GoatCounter summary; site settings live in _data/analytics.json. -->
-      <div class="visitor-counter">
-        <div class="visitor-counter-content" data-goatcounter-summary aria-busy="true">
-          <div class="visitor-counter-heading">
-            <span class="visitor-counter-eyebrow">Reading pulse</span>
-            <a class="visitor-counter-detail-link" href="{{ '/reading-pulse/' | relative_url }}">자세히</a>
-          </div>
-          <span class="visitor-counter-values">
-          <span class="counter-row counter-period-row">
-            <span class="counter-item counter-week">
-              <span class="counter-label" aria-label="최근 7일 방문">
-                <span class="counter-label-initial counter-label-week" aria-hidden="true">7</span><span class="counter-label-rest" aria-hidden="true">일</span>
-              </span>
-              <strong data-goatcounter-value="week" aria-label="최근 7일 방문 수">----</strong>
-            </span>
-            <span class="counter-row-divider" aria-hidden="true">·</span>
-            <span class="counter-item counter-month">
-              <span class="counter-label" aria-label="최근 30일 방문">
-                <span class="counter-label-initial counter-label-month" aria-hidden="true">30</span><span class="counter-label-rest" aria-hidden="true">일</span>
-              </span>
-              <strong data-goatcounter-value="month" aria-label="최근 30일 방문 수">----</strong>
-            </span>
-          </span>
-          <span class="counter-row counter-total-row">
-            <span class="counter-item counter-total">
-              <span class="counter-label" aria-label="누적 방문">
-                <span class="counter-label-initial counter-label-total" aria-hidden="true">Σ</span><span class="counter-label-rest" aria-hidden="true">누적</span>
-              </span>
-              <strong data-goatcounter-value="total" aria-label="누적 방문 수">----</strong>
-            </span>
-          </span>
-          </span>
-          <p class="visitor-counter-note">최근 7일 · 최근 30일 · 누적 방문</p>
-          <span class="visually-hidden" data-goatcounter-status role="status">방문 집계를 불러오는 중입니다.</span>
-        </div>
-      </div>
-
-      <nav class="archive-nav" aria-labelledby="archive-heading">
+      {% if site.posts.size > 0 %}
+      <nav class="archive-nav sidebar-latest" aria-labelledby="archive-heading">
         <div class="archive-header">
           <p class="eyebrow" id="archive-heading">Latest posts</p>
-          <span class="archive-hint">좌우로 넘겨 글 선택</span>
         </div>
         <ol class="archive-list">
-          {% for post in site.posts limit: 8 %}
+          {% for post in site.posts limit: 3 %}
           <li>
             <a href="{{ post.url | relative_url }}"{% if page.url == post.url %} class="active" aria-current="page"{% endif %}>
               <span class="archive-title">{{ post.title }}</span>
@@ -108,32 +62,20 @@
           </li>
           {% endfor %}
         </ol>
-        <a class="archive-all-link" href="{{ '/timeline/' | relative_url }}">전체 글 보기</a>
+      </nav>
+      {% endif %}
+
+      <nav class="sidebar-footer-nav" aria-label="보조 링크">
+        <a href="{{ '/categories/' | relative_url }}">분야별 보기</a>
+        <a href="{{ '/reading-pulse/' | relative_url }}">인기와 읽기</a>
+        <a href="{{ '/references/' | relative_url }}">참고 자료</a>
+        <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
       </nav>
 
-      <nav class="category-nav" aria-labelledby="category-heading">
-        <div class="archive-header">
-          <p class="eyebrow" id="category-heading">Categories</p>
-        </div>
-        <ol class="category-list">
-          {% assign categories = site.categories | sort %}
-          {% for category in categories %}
-            {% assign category_name = category[0] %}
-            {% assign category_posts = category[1] %}
-            {% assign category_slug = category_name | slugify %}
-            <li>
-              <a href="{{ '/categories/#' | append: category_slug | relative_url }}">
-                <span>{{ category_name }}</span>
-                <small>{{ category_posts | size }}</small>
-              </a>
-            </li>
-          {% endfor %}
-        </ol>
-        <p class="license-note">
-          글·이미지·디자인은 별도 표기가 없는 한
-          <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.ko" rel="license noopener" target="_blank">CC0 1.0</a>입니다.
-        </p>
-      </nav>
+      <p class="license-note sidebar-license">
+        글·이미지·디자인은 별도 표기가 없는 한
+        <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.ko" rel="license noopener" target="_blank">CC0 1.0</a>입니다.
+      </p>
     </div>
   </div>
 </aside>
