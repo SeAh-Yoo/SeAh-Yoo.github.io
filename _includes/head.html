@@ -3,6 +3,7 @@
 
 {% assign page_description = page.description | default: site.description %}
 {% assign canonical_url = page.url | absolute_url %}
+{% assign social_image = page.image | default: page.image1 | default: site.profile_image %}
 {% if page.layout == "post" %}
   {% capture document_title %}{{ page.title }} | {{ site.title }}{% endcapture %}
 {% elsif page.title %}
@@ -15,7 +16,7 @@
 <meta name="description" content="{{ page_description | strip_html | normalize_whitespace | escape }}" />
 <meta name="author" content="{{ site.author.name | escape }}" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-<meta name="theme-color" content="#0b0908" />
+<meta name="theme-color" content="#111014" />
 <link rel="canonical" href="{{ canonical_url }}" />
 <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }} RSS" href="{{ '/feed.xml' | absolute_url }}" />
 {% assign goatcounter_code = site.data.analytics.goatcounterCode %}
@@ -42,12 +43,15 @@
 {% else %}
 <meta property="og:type" content="website" />
 {% endif %}
-{% if page.image %}<meta property="og:image" content="{{ page.image | absolute_url }}" />{% endif %}
+{% if social_image %}
+<meta property="og:image" content="{{ social_image | absolute_url }}" />
+<meta property="og:image:alt" content="{{ page.title | default: site.title | escape }}" />
+{% endif %}
 
-<meta name="twitter:card" content="{% if page.image %}summary_large_image{% else %}summary{% endif %}" />
+<meta name="twitter:card" content="{% if social_image %}summary_large_image{% else %}summary{% endif %}" />
 <meta name="twitter:title" content="{{ document_title | strip | escape }}" />
 <meta name="twitter:description" content="{{ page_description | strip_html | normalize_whitespace | escape }}" />
-{% if page.image %}<meta name="twitter:image" content="{{ page.image | absolute_url }}" />{% endif %}
+{% if social_image %}<meta name="twitter:image" content="{{ social_image | absolute_url }}" />{% endif %}
 
 <script type="application/ld+json">
 {% if page.layout == "post" %}
@@ -64,7 +68,7 @@
   "description": {{ page_description | strip_html | normalize_whitespace | jsonify }},
   "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
   "dateModified": {{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
-  {% if page.image %}"image": [{{ page.image | absolute_url | jsonify }}],{% endif %}
+  {% if social_image %}"image": [{{ social_image | absolute_url | jsonify }}],{% endif %}
   "author": {
     "@type": "Person",
     "@id": {{ site.url | append: "/#author" | jsonify }},
@@ -123,5 +127,6 @@
 <link rel="stylesheet" href="{{ '/styles/search.css' | relative_url }}" />
 {% if page.layout == "post" %}<link rel="stylesheet" href="{{ '/styles/post-actions.css' | relative_url }}" />{% endif %}
 <link rel="stylesheet" href="{{ '/styles/cosmic-orange.css' | relative_url }}" />
+<link rel="stylesheet" href="{{ '/styles/editorial-refinement.css' | relative_url }}" />
 <script defer src="{{ '/scripts/sidebar-collapse.js' | relative_url }}"></script>
 <script defer src="{{ '/scripts/site-search.js' | relative_url }}"></script>
