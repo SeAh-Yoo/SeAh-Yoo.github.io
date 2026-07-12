@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="ko">
+<html lang="{{ site.lang | default: 'ko-KR' }}">
   <head>
     {% include head.html %}
   </head>
   <body>
     <a class="skip-link" href="#main-content">본문으로 바로가기</a>
-    <div class="aurora aurora-one"></div>
-    <div class="aurora aurora-two"></div>
+    <div class="aurora aurora-one" aria-hidden="true"></div>
+    <div class="aurora aurora-two" aria-hidden="true"></div>
     <div class="shell">
       {% include sidebar.html %}
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko">
+<html lang="{{ site.lang | default: 'ko-KR' }}">
   <head>
     {% include head.html %}
   </head>
@@ -8,8 +8,8 @@
       <span class="post-reading-progress-bar" data-reading-progress-bar></span>
     </div>
     <a class="skip-link" href="#main-content">본문으로 바로가기</a>
-    <div class="aurora aurora-one"></div>
-    <div class="aurora aurora-two"></div>
+    <div class="aurora aurora-one" aria-hidden="true"></div>
+    <div class="aurora aurora-two" aria-hidden="true"></div>
     <div class="shell">
       {% include sidebar.html %}
 
@@ -38,6 +38,7 @@
             {% if page.subtitle %}<p class="post-subtitle">{{ page.subtitle }}</p>{% endif %}
 
             <div class="post-reading-stats" aria-label="글 읽기 정보">
+              <time class="post-published" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %-m월 %-d일" }}</time>
               <div class="post-reading-meta" data-post-reading-meta>
                 <span class="post-reading-time" data-reading-time>완독 시간 계산 중</span>
               </div>
@@ -55,7 +56,9 @@
             {% endif %}
           </header>
 
-          {{ content }}
+          <div class="post-content">
+            {{ content }}
+          </div>
 
           {% include post-series.html %}
           {% include post-share.html %}

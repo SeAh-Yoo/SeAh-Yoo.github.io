@@ -271,6 +271,12 @@
 
   dialog.addEventListener('close', () => {
     document.body.classList.remove('is-search-open');
+    openButton.focus({ preventScroll: true });
+  });
+
+  dialog.addEventListener('cancel', (event) => {
+    event.preventDefault();
+    closeDialog();
   });
 
   input.addEventListener('input', () => {
@@ -293,6 +299,12 @@
   });
 
   document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && dialog.open) {
+      event.preventDefault();
+      closeDialog();
+      return;
+    }
+
     const target = event.target;
     const isTyping = target instanceof HTMLElement && (
       target.isContentEditable ||

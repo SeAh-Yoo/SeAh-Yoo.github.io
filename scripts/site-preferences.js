@@ -1,23 +1,35 @@
 (() => {
   const STORAGE_KEY = 'literary-underground:preferences:v1';
-  const DEFAULTS = Object.freeze({ theme: 'unit-01' });
-  const THEMES = Object.freeze(['unit-01', 'unit-02', 'kivotos']);
+  const DEFAULTS = Object.freeze({ theme: 'unit-violet' });
+  const THEMES = Object.freeze(['unit-violet', 'ember-white', 'azure-form', 'sovereign-obsidian', 'neon-shell']);
+  const LEGACY_THEMES = Object.freeze({
+    'unit-01': 'unit-violet',
+    'unit-02': 'ember-white',
+    kivotos: 'azure-form',
+  });
   const THEME_COLORS = Object.freeze({
-    'unit-01': '#100d24',
-    'unit-02': '#21080d',
-    kivotos: '#06172a',
+    'unit-violet': '#0c0d18',
+    'ember-white': '#15110f',
+    'azure-form': '#07131d',
+    'sovereign-obsidian': '#0d0c0e',
+    'neon-shell': '#071312',
   });
   const GISCUS_THEMES = Object.freeze({
-    'unit-01': 'giscus-unit-01.css',
-    'unit-02': 'giscus-unit-02.css',
-    kivotos: 'giscus-kivotos.css',
+    'unit-violet': 'giscus-theme-base.css',
+    'ember-white': 'giscus-theme-base.css',
+    'azure-form': 'giscus-theme-base.css',
+    'sovereign-obsidian': 'giscus-theme-base.css',
+    'neon-shell': 'giscus-theme-base.css',
   });
   const GISCUS_BASE = 'https://cdn.jsdelivr.net/gh/SeAh-Yoo/SeAh-Yoo.github.io@main/styles/';
 
-  const normalize = (value = {}) => ({
-    ...value,
-    theme: THEMES.includes(value.theme) ? value.theme : DEFAULTS.theme,
-  });
+  const normalize = (value = {}) => {
+    const migratedTheme = LEGACY_THEMES[value.theme] || value.theme;
+    return {
+      ...value,
+      theme: THEMES.includes(migratedTheme) ? migratedTheme : DEFAULTS.theme,
+    };
+  };
 
   const read = () => {
     try {
