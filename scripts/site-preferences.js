@@ -2,11 +2,6 @@
   const STORAGE_KEY = 'literary-underground:preferences:v1';
   const DEFAULTS = Object.freeze({ theme: 'unit-01' });
   const THEMES = Object.freeze(['unit-01', 'unit-02', 'kivotos']);
-  const THEME_LABELS = Object.freeze({
-    'unit-01': '초호기',
-    'unit-02': '2호기',
-    kivotos: '키보토스',
-  });
   const THEME_COLORS = Object.freeze({
     'unit-01': '#100d24',
     'unit-02': '#21080d',
@@ -69,10 +64,6 @@
     document.querySelectorAll('[data-theme-option]').forEach((button) => {
       const active = button.dataset.themeOption === preferences.theme;
       button.setAttribute('aria-pressed', String(active));
-    });
-
-    document.querySelectorAll('[data-theme-status]').forEach((status) => {
-      status.textContent = THEME_LABELS[preferences.theme];
     });
   };
 

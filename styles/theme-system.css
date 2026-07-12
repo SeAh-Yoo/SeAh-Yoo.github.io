@@ -505,51 +505,29 @@ body::before {
 }
 
 .desktop-theme-switcher {
-  display: grid;
-  gap: 5px;
+  display: block;
   margin-top: 8px;
   padding-top: 8px;
   border-top: 1px solid var(--theme-border-soft);
 }
 
-.theme-switcher-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.theme-switcher-heading .eyebrow {
-  margin: 0;
-}
-
-.theme-switcher-heading > span {
-  color: var(--theme-muted);
-  font-size: 0.62rem;
-  font-weight: 800;
-}
-
 .theme-switcher-options {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 6px;
+  grid-template-columns: repeat(3, 42px);
+  justify-content: center;
+  gap: 8px;
 }
 
 .theme-switcher-options button {
-  display: flex;
-  min-width: 0;
-  min-height: 36px;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: 5px 4px;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  padding: 7px;
   border: 1px solid var(--theme-border-soft);
   border-radius: 12px;
   background: var(--surface-glass-secondary);
   color: var(--theme-muted);
-  font: inherit;
-  font-size: 0.64rem;
-  font-weight: 800;
   cursor: pointer;
   transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease, transform 0.18s ease;
 }
@@ -569,15 +547,16 @@ body::before {
 
 .theme-swatch {
   display: block;
-  flex: 0 0 15px;
-  width: 15px;
-  height: 5px;
-  border-radius: 999px;
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
-.theme-swatch-unit-01 { background: linear-gradient(90deg, #7355cf, #43e8bd); }
-.theme-swatch-unit-02 { background: linear-gradient(90deg, #da303c, #ff913d); }
-.theme-swatch-kivotos { background: linear-gradient(90deg, #3e93df, #43e5c3); }
+.theme-swatch-unit-01 { background: linear-gradient(135deg, #7355cf 0 50%, #43e8bd 50% 100%); }
+.theme-swatch-unit-02 { background: linear-gradient(135deg, #da303c 0 50%, #ff913d 50% 100%); }
+.theme-swatch-kivotos { background: linear-gradient(135deg, #3e93df 0 50%, #43e5c3 50% 100%); }
 
 @media (min-width: 901px) {
   .sidebar-latest {
