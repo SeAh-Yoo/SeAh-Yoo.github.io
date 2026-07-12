@@ -18,19 +18,6 @@
       </button>
     </div>
 
-    <section class="desktop-theme-switcher" aria-label="색상 테마 선택">
-      <div class="theme-switcher-options" role="group" aria-label="색상 테마 선택">
-        <button type="button" data-theme-option="unit-01" aria-label="초호기 테마" aria-pressed="true" title="초호기: 파랑·보라와 민트">
-          <span class="theme-swatch theme-swatch-unit-01" aria-hidden="true"></span>
-        </button>
-        <button type="button" data-theme-option="unit-02" aria-label="2호기 테마" aria-pressed="false" title="2호기: 빨강과 주홍">
-          <span class="theme-swatch theme-swatch-unit-02" aria-hidden="true"></span>
-        </button>
-        <button type="button" data-theme-option="kivotos" aria-label="키보토스 테마" aria-pressed="false" title="키보토스: 블루와 민트">
-          <span class="theme-swatch theme-swatch-kivotos" aria-hidden="true"></span>
-        </button>
-      </div>
-    </section>
   </div>
 
   <div class="sidebar-collapse-region" data-sidebar-collapse-region>
@@ -85,6 +72,17 @@
         <a href="{{ '/references/' | relative_url }}">참고 자료</a>
         <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
       </nav>
+
+      <section class="theme-switcher" aria-labelledby="theme-switcher-heading">
+        <p class="eyebrow" id="theme-switcher-heading">색상 테마</p>
+        <div class="theme-switcher-options" role="group" aria-label="색상 테마 선택">
+          <button type="button" data-theme-option="unit-violet" aria-label="유닛 바이올렛 테마" aria-pressed="true" title="유닛 바이올렛"><span class="theme-swatch theme-swatch-unit-violet" aria-hidden="true"></span><span>유닛 바이올렛</span></button>
+          <button type="button" data-theme-option="ember-white" aria-label="엠버 화이트 테마" aria-pressed="false" title="엠버 화이트"><span class="theme-swatch theme-swatch-ember-white" aria-hidden="true"></span><span>엠버 화이트</span></button>
+          <button type="button" data-theme-option="azure-form" aria-label="애저 폼 테마" aria-pressed="false" title="애저 폼"><span class="theme-swatch theme-swatch-azure-form" aria-hidden="true"></span><span>애저 폼</span></button>
+          <button type="button" data-theme-option="sovereign-obsidian" aria-label="소버린 옵시디언 테마" aria-pressed="false" title="소버린 옵시디언"><span class="theme-swatch theme-swatch-sovereign-obsidian" aria-hidden="true"></span><span>소버린 옵시디언</span></button>
+          <button type="button" data-theme-option="neon-shell" aria-label="네온 셸 테마" aria-pressed="false" title="네온 셸"><span class="theme-swatch theme-swatch-neon-shell" aria-hidden="true"></span><span>네온 셸</span></button>
+        </div>
+      </section>
 
       <p class="license-note sidebar-license">
         글·이미지·디자인은 별도 표기가 없는 한

@@ -22,6 +22,7 @@
   menuButton.className = 'sidebar-menu-button sidebar-top-button';
   menuButton.type = 'button';
   menuButton.setAttribute('aria-controls', regionId);
+  menuButton.setAttribute('data-sidebar-menu', '');
   menuButton.setAttribute('aria-expanded', 'false');
   menuButton.setAttribute('aria-label', '탐색 메뉴 열기');
   menuButton.innerHTML = '<span class="sidebar-menu-icon" aria-hidden="true">☰</span><span class="sidebar-top-label">MENU</span>';

@@ -1,123 +1,89 @@
 <!doctype html>
-<html lang="ko">
+<html lang="{{ site.lang | default: 'ko-KR' }}">
   <head>
     {% include head.html %}
   </head>
   <body>
     <a class="skip-link" href="#main-content">본문으로 바로가기</a>
-    <div class="aurora aurora-one"></div>
-    <div class="aurora aurora-two"></div>
+    <div class="aurora aurora-one" aria-hidden="true"></div>
+    <div class="aurora aurora-two" aria-hidden="true"></div>
     <div class="shell">
       {% include sidebar.html %}
 
       <main class="content" id="main-content">
-        <header class="hero home-hero glass-panel">
-          <div class="home-hero-copy">
-            <p class="eyebrow">The Literary Underground of SeAh Yoo</p>
-            <h1><a class="hero-title-link" href="{{ '/' | relative_url }}">유세아의 문하수도</a></h1>
-            <p>게임 산업, 인터넷 문화, 서브컬처, 영화, AI와 사회를 비평하는 에세이·칼럼 아카이브.</p>
-            <div class="hero-actions" aria-label="추천 탐색 경로">
+        {% if site.posts.size > 0 %}
+        {% assign featured_post = site.posts | first %}
+        {% assign featured_image = featured_post.image | default: featured_post.image1 %}
+        <section class="home-cover" aria-labelledby="home-title">
+          <header class="home-hero">
+            <p class="eyebrow">The Literary Underground</p>
+            <h1 id="home-title"><a class="hero-title-link" href="{{ '/' | relative_url }}">유세아의 문하수도</a></h1>
+            <p class="home-deck">게임 산업, 인터넷 문화, 서브컬처, 영화, AI와 사회를 오래 읽고 깊게 비평하는 에세이·칼럼 아카이브.</p>
+            <nav class="hero-actions" aria-label="추천 탐색 경로">
               <a class="hero-action hero-action-primary" href="{{ '/start-here/' | relative_url }}">처음 읽기</a>
-              <a class="hero-action" href="{{ '/timeline/' | relative_url }}">전체 글 보기</a>
+              <a class="hero-action" href="{{ '/timeline/' | relative_url }}">전체 글</a>
               <a class="hero-action" href="{{ '/topics/' | relative_url }}">질문별 탐색</a>
-            </div>
-          </div>
-        </header>
-
-        <section class="view" aria-label="최신 칼럼">
-          {% if site.posts.size > 0 %}
-          {% assign featured_post = site.posts | first %}
-          {% assign featured_image = featured_post.image | default: featured_post.image1 %}
-          <a class="card card-featured glass-panel" href="{{ featured_post.url | relative_url }}">
-            <span class="featured-media" aria-hidden="true">
-              {% if featured_image %}
-              <img src="{{ featured_image | relative_url }}" alt="" loading="eager" fetchpriority="high" />
-              {% else %}
-              <span class="card-media-fallback">
-                <span>{{ featured_post.category | default: "Column" }}</span>
-                <strong>{{ featured_post.title | slice: 0, 1 }}</strong>
-              </span>
-              {% endif %}
-            </span>
-            <span class="card-copy">
-              <span class="card-kicker" aria-hidden="true">Latest column</span>
-              <span class="meta">
-                <time datetime="{{ featured_post.date | date_to_xmlschema }}">{{ featured_post.date | date: "%Y년 %-m월 %-d일" }}</time>
-                <span>{{ featured_post.category | default: "Column" }}</span>
-              </span>
-              <h2>{{ featured_post.title }}</h2>
-              <p>{{ featured_post.description }}</p>
-              <span class="read-more" aria-hidden="true">최신 칼럼 읽기</span>
-            </span>
-          </a>
-
-          {% if site.posts.size > 1 %}
-          <header class="section-heading">
-            <div>
-              <p class="eyebrow">Recent archive</p>
-              <h2>최근 글</h2>
-            </div>
-            <a class="section-heading-link" href="{{ '/timeline/' | relative_url }}">전체 글 보기</a>
+            </nav>
           </header>
 
-          <div class="card-grid recent-post-list">
+          <a class="home-featured" href="{{ featured_post.url | relative_url }}" aria-label="최신 칼럼: {{ featured_post.title | escape }}">
+            <span class="featured-media" aria-hidden="true">
+              {% if featured_image %}
+              <img src="{{ featured_image | relative_url }}" alt="" loading="eager" decoding="async" fetchpriority="high" />
+              {% else %}
+              <span class="featured-fallback"><span>{{ featured_post.category | default: "Column" }}</span><strong>{{ featured_post.title | slice: 0, 1 }}</strong></span>
+              {% endif %}
+            </span>
+            <span class="featured-copy">
+              <span class="featured-kicker">최신 칼럼</span>
+              <span class="meta"><time datetime="{{ featured_post.date | date_to_xmlschema }}">{{ featured_post.date | date: "%Y년 %-m월 %-d일" }}</time><span>{{ featured_post.category | default: "Column" }}</span></span>
+              <h2>{{ featured_post.title }}</h2>
+              <p>{{ featured_post.description }}</p>
+              <span class="featured-link" aria-hidden="true">글 읽기 <span>→</span></span>
+            </span>
+          </a>
+        </section>
+
+        {% if site.posts.size > 1 %}
+        <section class="recent-section" aria-labelledby="recent-posts-title">
+          <header class="section-heading">
+            <div><p class="eyebrow">Recent archive</p><h2 id="recent-posts-title">최근 글</h2></div>
+            <a class="section-heading-link" href="{{ '/timeline/' | relative_url }}">전체 글 보기</a>
+          </header>
+          <div class="recent-post-list">
             {% for post in site.posts offset: 1 limit: 3 %}
             {% assign card_image = post.image | default: post.image1 %}
-            <a class="card glass-panel" href="{{ post.url | relative_url }}">
-              <span class="card-media" aria-hidden="true">
-                {% if card_image %}
-                <img src="{{ card_image | relative_url }}" alt="" loading="lazy" />
-                {% else %}
-                <span class="card-media-fallback">
-                  <span>{{ post.category | default: "Column" }}</span>
-                  <strong>{{ post.title | slice: 0, 1 }}</strong>
-                </span>
-                {% endif %}
+            <a class="recent-post" href="{{ post.url | relative_url }}">
+              <span class="recent-media" aria-hidden="true">
+                {% if card_image %}<img src="{{ card_image | relative_url }}" alt="" loading="lazy" decoding="async" />{% else %}<span>{{ post.title | slice: 0, 1 }}</span>{% endif %}
               </span>
-              <span class="card-copy">
-                <span class="meta">
-                  <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %-m월 %-d일" }}</time>
-                  <span>{{ post.category | default: "Column" }}</span>
-                </span>
-                <h2>{{ post.title }}</h2>
+              <span class="recent-copy">
+                <span class="meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %-m월 %-d일" }}</time><span>{{ post.category | default: "Column" }}</span></span>
+                <h3>{{ post.title }}</h3>
                 <p>{{ post.description }}</p>
               </span>
             </a>
             {% endfor %}
           </div>
-          {% endif %}
-
-          <section class="home-discovery" aria-labelledby="home-discovery-title">
-            <header class="section-heading home-discovery-heading">
-              <div>
-                <p class="eyebrow">Find your route</p>
-                <h2 id="home-discovery-title">다음 글을 찾는 방법</h2>
-              </div>
-            </header>
-            <div class="home-discovery-grid">
-              <a class="home-discovery-card" href="{{ '/start-here/' | relative_url }}">
-                <span>01</span>
-                <strong>처음 읽기</strong>
-                <p>관심 질문에 맞춰 설계된 입문 순서로 읽습니다.</p>
-              </a>
-              <a class="home-discovery-card" href="{{ '/topics/' | relative_url }}">
-                <span>02</span>
-                <strong>질문별 탐색</strong>
-                <p>분야를 넘나드는 하나의 질문으로 여러 글을 함께 읽습니다.</p>
-              </a>
-              <a class="home-discovery-card" href="{{ '/categories/' | relative_url }}">
-                <span>03</span>
-                <strong>분야별 서가</strong>
-                <p>게임 산업·AI처럼 글이 속한 큰 전문 분야 안에서 고릅니다.</p>
-              </a>
-            </div>
-          </section>
-          {% else %}
-          <section class="empty glass-panel">
-            아직 등록된 칼럼이 없습니다.
-          </section>
-          {% endif %}
         </section>
+        {% endif %}
+
+        <section class="home-discovery" aria-labelledby="home-discovery-title">
+          <header class="section-heading home-discovery-heading"><div><p class="eyebrow">Find your route</p><h2 id="home-discovery-title">다음 글을 찾는 방법</h2></div></header>
+          <div class="home-discovery-layout">
+            <a class="discovery-primary" href="{{ '/start-here/' | relative_url }}">
+              <span>추천 경로</span><strong>처음 읽기</strong><p>관심 질문에 맞춰 편집한 순서로 문하수도의 핵심 글을 읽습니다.</p><em aria-hidden="true">읽기 경로 열기 →</em>
+            </a>
+            <nav class="discovery-links" aria-label="다른 탐색 방법">
+              <a href="{{ '/topics/' | relative_url }}"><strong>질문별 탐색</strong><span>분야를 넘나드는 문제의식으로 찾기</span></a>
+              <a href="{{ '/categories/' | relative_url }}"><strong>분야별 서가</strong><span>게임 산업·AI 등 전문 분야로 찾기</span></a>
+              <a href="{{ '/timeline/' | relative_url }}"><strong>전체 글</strong><span>발행 순서와 시간의 흐름으로 찾기</span></a>
+            </nav>
+          </div>
+        </section>
+        {% else %}
+        <section class="empty glass-panel">아직 등록된 칼럼이 없습니다.</section>
+        {% endif %}
       </main>
     </div>
     {% include analytics-tracking.html %}

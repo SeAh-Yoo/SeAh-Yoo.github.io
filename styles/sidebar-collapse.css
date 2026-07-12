@@ -1,122 +1,38 @@
-.sidebar-collapse-region {
-  min-height: 0;
-  margin-top: auto;
-}
-
-.sidebar-collapse-inner {
-  min-height: 0;
-}
-
-.sidebar-collapse-region .archive-nav {
-  margin-top: 0;
-}
-
-.visitor-counter {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.visitor-counter-values {
-  min-width: 0;
-}
-
-.sidebar-top-button {
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  min-height: 30px;
-  padding: 5px 9px;
-  border: 1px solid rgba(139, 216, 255, 0.3);
-  border-radius: 999px;
-  background: rgba(139, 216, 255, 0.09);
-  color: rgba(223, 245, 255, 0.82);
-  font: inherit;
-  font-size: 0.68rem;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease,
-    transform 0.18s ease;
-}
-
-.sidebar-top-button:hover,
-.sidebar-top-button:focus-visible {
-  border-color: rgba(139, 216, 255, 0.68);
-  background: rgba(139, 216, 255, 0.18);
-  color: #f4fbff;
-  outline: none;
-  transform: translateY(-1px);
-}
-
-.sidebar-top-button:active {
-  transform: translateY(0);
-}
+.sidebar-menu-button[hidden] { display: none; }
+.sidebar-collapse-region { min-height: 0; }
 
 @media (max-width: 900px) {
-  .sidebar {
-    transition: padding 0.42s cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 0.42s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
+  .sidebar { overflow: visible; }
+  .sidebar-header { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+  .sidebar-header .brand { min-width: 0; flex: 1 1 auto; }
+  .sidebar-quick-actions { flex: 0 0 auto; margin-top: 0; }
+  .sidebar-search-trigger { width: var(--tap-target); min-width: var(--tap-target); padding-inline: 0; }
+  .sidebar-search-label, .sidebar-search-shortcut, .sidebar-top-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
   .sidebar-collapse-region {
-    display: grid;
-    grid-template-rows: 1fr;
-    overflow: hidden;
+    position: absolute;
+    top: calc(100% - 1px);
+    right: -1px;
+    left: -1px;
+    max-height: calc(100dvh - var(--header-height) - 2rem - env(safe-area-inset-top));
+    overflow-y: auto;
+    border: 1px solid var(--color-border-subtle);
+    border-top: 0;
+    border-radius: 0 0 var(--radius-medium) var(--radius-medium);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-elevated);
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
-    transform-origin: top;
-    transition: grid-template-rows 0.52s cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 0.34s ease 0.05s,
-      transform 0.48s cubic-bezier(0.22, 1, 0.36, 1),
-      visibility 0s linear 0s;
-    will-change: grid-template-rows, opacity, transform;
+    transition: opacity var(--transition-fast), transform var(--transition-normal), visibility 0s;
   }
-
-  .sidebar-collapse-inner {
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  .sidebar.is-compact {
-    box-shadow: 0 12px 38px rgba(0, 0, 0, 0.42);
-  }
-
-  .sidebar.is-compact .sidebar-collapse-region {
-    grid-template-rows: 0fr;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    pointer-events: none;
-    transition: grid-template-rows 0.52s cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 0.3s ease,
-      transform 0.46s cubic-bezier(0.4, 0, 0.2, 1),
-      visibility 0s linear 0.52s;
-  }
-
-  .sidebar.is-compact .visitor-counter {
-    margin-top: 8px;
-  }
+  .sidebar-collapse-inner { padding: 0.75rem; padding-bottom: max(0.75rem, env(safe-area-inset-bottom)); }
+  .sidebar.is-compact .sidebar-collapse-region { opacity: 0; visibility: hidden; transform: translateY(-8px); pointer-events: none; transition: opacity var(--transition-fast), transform var(--transition-normal), visibility 0s var(--transition-normal); }
 }
 
-@media (max-width: 420px) {
-  .visitor-counter {
-    gap: 7px;
-  }
-
-  .visitor-counter-values {
-    font-size: 0.68rem;
-    white-space: nowrap;
-  }
-
-  .sidebar-top-button {
-    min-height: 28px;
-    padding: 5px 8px;
-    font-size: 0.64rem;
-  }
+@media (max-width: 390px) {
+  .sidebar { padding-inline: 0.6rem; }
+  .brand { grid-template-columns: 38px minmax(0, 1fr); gap: 0.55rem; }
+  .brand-mark { width: 38px; border-radius: 10px; }
+  .brand strong { font-size: 0.9rem; }
+  .sidebar-quick-actions { gap: 0.25rem; }
 }
