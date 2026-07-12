@@ -6,6 +6,12 @@ if (legacyPost) {
 
 const addPostImageCaptions = () => {
   document.querySelectorAll('.post img[alt]').forEach((image) => {
+    image.decoding = 'async';
+
+    if (!image.hasAttribute('loading')) {
+      image.loading = 'lazy';
+    }
+
     if (image.closest('figure')) {
       return;
     }

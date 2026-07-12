@@ -107,7 +107,7 @@
   position: relative;
   display: grid;
   grid-template-columns: 1rem minmax(0, 1fr) 1rem;
-  min-height: 38px;
+  min-height: var(--tap-target);
   align-items: center;
   gap: 0.55rem;
   padding: 0.4rem 0.5rem;
