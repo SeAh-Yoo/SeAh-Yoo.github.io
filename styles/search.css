@@ -58,6 +58,7 @@
   min-width: 0;
   flex: 1;
   text-align: left;
+  white-space: nowrap;
 }
 
 .sidebar-search-shortcut,
