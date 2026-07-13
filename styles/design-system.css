@@ -3,6 +3,14 @@
  * Theme files may change color atmosphere only; typography, spacing and layout
  * stay stable across every palette.
  */
+@font-face {
+  font-family: "MabinogiClassic";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2207-01@1.0/MabinogiClassicR.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   color-scheme: dark;
 
@@ -27,7 +35,7 @@
   --radius-small: 8px;
   --radius-medium: 14px;
   --radius-large: 20px;
-  --content-width: 1180px;
+  --content-width: 1244px;
   --reading-width: 66ch;
   --sidebar-width: 272px;
   --header-height: 72px;
@@ -37,6 +45,7 @@
 
   --font-display: "GyeonggiTitle", "Gyeonggi Title", "NanumSquare", system-ui, sans-serif;
   --font-body: "NanumSquare", "Nanum Square", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-quote: "MabinogiClassic", "NanumSquare", serif;
 
   /* Compatibility aliases for the feature stylesheets. */
   --bg: var(--color-background);
