@@ -73,9 +73,8 @@
   };
 
   const syncControls = () => {
-    document.querySelectorAll('[data-theme-option]').forEach((button) => {
-      const active = button.dataset.themeOption === preferences.theme;
-      button.setAttribute('aria-pressed', String(active));
+    document.querySelectorAll('[data-theme-select]').forEach((select) => {
+      select.value = preferences.theme;
     });
   };
 
@@ -108,8 +107,8 @@
   const bindControls = () => {
     applyTheme(preferences.theme);
     syncControls();
-    document.querySelectorAll('[data-theme-option]').forEach((button) => {
-      button.addEventListener('click', () => set('theme', button.dataset.themeOption));
+    document.querySelectorAll('[data-theme-select]').forEach((select) => {
+      select.addEventListener('change', () => set('theme', select.value));
     });
   };
 
