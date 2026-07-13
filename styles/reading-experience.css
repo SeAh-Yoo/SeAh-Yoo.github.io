@@ -88,6 +88,10 @@ body:has(.post) .aurora { opacity: 0.05; }
 .post-content a { color: var(--color-text-primary); text-decoration-color: var(--color-accent-secondary); text-decoration-line: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; overflow-wrap: anywhere; }
 .post-content a:hover { color: var(--color-accent-secondary); text-decoration-thickness: 2px; }
 .post-content blockquote { margin: 2.25rem 0; padding: 0.25rem 0 0.25rem clamp(1rem, 3vw, 1.6rem); border-left: 3px solid var(--color-accent); color: var(--color-text-secondary); }
+.post-content blockquote,
+.post-content blockquote p,
+.post .post-quote-card blockquote,
+.post .post-quote-card blockquote p { font-family: var(--font-quote); font-weight: 400; }
 .post-content blockquote p:last-child { margin-bottom: 0; }
 .post-content hr { height: 1px; margin: 3.5rem 0; border: 0; background: var(--color-border-subtle); }
 

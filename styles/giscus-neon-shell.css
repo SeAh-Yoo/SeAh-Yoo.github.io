@@ -1,0 +1,35 @@
+@import url("https://cdn.jsdelivr.net/gh/SeAh-Yoo/SeAh-Yoo.github.io@main/styles/giscus-theme-base.css");
+
+main {
+  --color-btn-text: #e5f4f0;
+  --color-btn-bg: rgba(85, 225, 218, 0.1);
+  --color-btn-border: rgba(137, 218, 204, 0.3);
+  --color-btn-hover-bg: rgba(85, 225, 218, 0.18);
+  --color-btn-hover-border: rgba(85, 225, 218, 0.58);
+  --color-btn-active-bg: rgba(85, 225, 218, 0.24);
+  --color-btn-active-border: rgba(85, 225, 218, 0.68);
+  --color-btn-selected-bg: rgba(85, 225, 218, 0.18);
+  --color-btn-primary-text: #061514;
+  --color-btn-primary-bg: #55e1da;
+  --color-btn-primary-border: #7de9e3;
+  --color-btn-primary-hover-bg: #6ce6df;
+  --color-btn-primary-hover-border: #98efea;
+  --color-btn-primary-selected-bg: #3fc7c0;
+  --color-btn-primary-disabled-bg: rgba(85, 225, 218, 0.5);
+  --color-btn-primary-disabled-border: rgba(85, 225, 218, 0.25);
+  --color-fg-default: #f1f8f6;
+  --color-fg-muted: #c1d4cf;
+  --color-fg-subtle: #8fa8a1;
+  --color-canvas-overlay: #0f201e;
+  --color-canvas-inset: rgba(85, 225, 218, 0.045);
+  --color-canvas-subtle: rgba(240, 166, 90, 0.05);
+  --color-border-default: rgba(137, 218, 204, 0.28);
+  --color-border-muted: rgba(168, 222, 210, 0.13);
+  --color-neutral-muted: rgba(85, 225, 218, 0.13);
+  --color-accent-fg: #6ce6df;
+  --color-accent-emphasis: #55e1da;
+  --color-accent-muted: rgba(85, 225, 218, 0.34);
+  --color-accent-subtle: rgba(85, 225, 218, 0.11);
+  --color-success-fg: #55e1da;
+  --color-attention-fg: #f0a65a;
+}

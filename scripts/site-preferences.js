@@ -15,11 +15,11 @@
     'neon-shell': '#071312',
   });
   const GISCUS_THEMES = Object.freeze({
-    'unit-violet': 'giscus-theme-base.css',
-    'ember-white': 'giscus-theme-base.css',
-    'azure-form': 'giscus-theme-base.css',
-    'sovereign-obsidian': 'giscus-theme-base.css',
-    'neon-shell': 'giscus-theme-base.css',
+    'unit-violet': 'giscus-unit-violet.css',
+    'ember-white': 'giscus-ember-white.css',
+    'azure-form': 'giscus-azure-form.css',
+    'sovereign-obsidian': 'giscus-sovereign-obsidian.css',
+    'neon-shell': 'giscus-neon-shell.css',
   });
   const GISCUS_BASE = 'https://cdn.jsdelivr.net/gh/SeAh-Yoo/SeAh-Yoo.github.io@main/styles/';
 

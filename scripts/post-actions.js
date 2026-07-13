@@ -601,7 +601,7 @@
     for (let fontSize = 62; fontSize >= 38; fontSize -= 2) {
       const lineHeight = Math.round(fontSize * 1.48);
 
-      context.font = `700 ${fontSize}px "Nanum Myeongjo", Georgia, serif`;
+      context.font = `400 ${fontSize}px "MabinogiClassic", "NanumSquare", serif`;
       const lines = wrapCanvasText(context, text, maxWidth);
 
       if (lines.length * lineHeight <= maxHeight) {
@@ -696,14 +696,14 @@
     context.fillText('문하수도의 인용', 136, 214);
 
     context.fillStyle = 'rgba(255, 174, 105, 0.92)';
-    context.font = '700 116px "Nanum Myeongjo", Georgia, serif';
+    context.font = '400 116px "MabinogiClassic", "NanumSquare", serif';
     context.fillText('“', 128, 364);
 
     const quoteLayout = fitQuoteText(context, quoteText, 780, 570);
     const quoteHeight = quoteLayout.lines.length * quoteLayout.lineHeight;
     const quoteStartY = 423 + Math.max(0, (570 - quoteHeight) / 2);
 
-    context.font = `700 ${quoteLayout.fontSize}px "Nanum Myeongjo", Georgia, serif`;
+    context.font = `400 ${quoteLayout.fontSize}px "MabinogiClassic", "NanumSquare", serif`;
     context.fillStyle = '#f5f8ff';
     context.textBaseline = 'top';
     quoteLayout.lines.forEach((line, index) => {
@@ -723,7 +723,7 @@
     context.strokeStyle = 'rgba(255, 174, 105, 0.28)';
     context.stroke();
 
-    context.font = '700 28px "Nanum Myeongjo", Georgia, serif';
+    context.font = '400 28px "MabinogiClassic", "NanumSquare", serif';
     const titleLines = wrapCanvasText(context, normalizeReaderText(postTitle), 730).slice(0, 2);
     context.fillStyle = '#ffffff';
     context.textBaseline = 'top';
@@ -788,11 +788,15 @@
       wrapper.append(quote, controls);
       controls.append(button, status);
 
-      button.addEventListener('click', () => {
+      button.addEventListener('click', async () => {
         button.disabled = true;
         button.textContent = '카드 만드는 중…';
 
         try {
+          if (document.fonts?.load) {
+            await document.fonts.load('400 62px "MabinogiClassic"').catch(() => []);
+          }
+
           const canvas = createQuoteCardCanvas(quoteText, postTitle, canonicalUrl);
           const safeTitle = postTitle
             .replace(/[\\/:*?"<>|]/g, '')
