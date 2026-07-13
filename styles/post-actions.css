@@ -92,8 +92,13 @@
   display: block;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, #8bd8ff, #d7b8ff 62%, #ffb36b);
-  box-shadow: 0 0 18px rgba(139, 216, 255, 0.72);
+  background: linear-gradient(
+    90deg,
+    var(--color-reading-progress-start),
+    var(--color-reading-progress-middle) 62%,
+    var(--color-reading-progress-end)
+  );
+  box-shadow: 0 0 18px var(--color-reading-progress-glow);
   transform: scaleX(0);
   transform-origin: left center;
   will-change: transform;
