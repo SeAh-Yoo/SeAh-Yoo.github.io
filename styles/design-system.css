@@ -36,7 +36,9 @@
   --radius-medium: 14px;
   --radius-large: 20px;
   --content-width: 1244px;
-  --reading-width: 66ch;
+  --reading-width: 43rem;
+  --reading-font-size: clamp(1rem, 0.96rem + 0.24vw, 1.125rem);
+  --reading-line-height: 1.8;
   --sidebar-width: 272px;
   --header-height: 72px;
   --tap-target: 44px;

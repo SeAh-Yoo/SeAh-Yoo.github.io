@@ -2,6 +2,7 @@
 body:has(.post) .aurora { opacity: 0.05; }
 
 .post {
+  min-width: 0;
   padding: clamp(1.5rem, 4vw, 4.25rem);
   background: var(--color-reading-surface);
   box-shadow: var(--shadow-elevated);
@@ -22,7 +23,7 @@ body:has(.post) .aurora { opacity: 0.05; }
 .post-utility-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .post-category-eyebrow {
   display: inline-flex;
-  min-height: 36px;
+  min-height: var(--tap-target);
   align-items: center;
   color: var(--color-accent-secondary);
   font-size: 0.75rem;
@@ -40,6 +41,7 @@ body:has(.post) .aurora { opacity: 0.05; }
   line-height: 1.08;
   letter-spacing: -0.035em;
   text-wrap: balance;
+  word-break: keep-all;
 }
 .post-subtitle { max-width: 55ch; margin: 1rem 0 0; color: var(--color-text-secondary); font-size: clamp(1rem, 1.6vw, 1.16rem); line-height: 1.7; word-break: keep-all; }
 .post-reading-stats { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 0.5rem; margin-top: 1.25rem; color: var(--color-text-muted); font-size: 0.75rem; }
@@ -71,7 +73,7 @@ body:has(.post) .aurora { opacity: 0.05; }
 .post .post-thesis-label { margin: 0; color: var(--color-accent-secondary); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; }
 .post-thesis > p:last-child { margin: 0.45rem 0 0; color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.72; }
 
-.post-content { padding-top: clamp(2.5rem, 6vw, 5rem); }
+.post-content { min-width: 0; padding-top: clamp(2.5rem, 6vw, 5rem); }
 .post-content,
 .post-content p,
 .post-content li,
@@ -85,11 +87,11 @@ body:has(.post) .aurora { opacity: 0.05; }
 .post-content > table,
 .post-content > .table-wrapper {
   color: var(--color-text-primary);
-  font-size: clamp(1rem, 0.96rem + 0.22vw, 1.075rem);
-  line-height: 1.82;
+  font-size: var(--reading-font-size);
+  line-height: var(--reading-line-height);
   letter-spacing: -0.008em;
   word-break: keep-all;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 .post-content p { margin: 0 0 1.35em; }
 .post-content p + p { margin-top: 1.45em; }
@@ -112,17 +114,19 @@ body:has(.post) .aurora { opacity: 0.05; }
 .post-content hr { height: 1px; margin: 3.5rem 0; border: 0; background: var(--color-border-subtle); }
 
 .post-content img { display: block; width: auto; max-width: 100%; max-height: min(78vh, 860px); margin: clamp(2rem, 5vw, 3.5rem) auto; border-radius: var(--radius-small); object-fit: contain; background: var(--color-background-soft); }
-.post-content p:has(> img) { width: min(100%, 78rem); max-width: none; margin-inline: 50%; transform: translateX(-50%); }
-.post-image { margin: clamp(2rem, 5vw, 3.5rem) 0; }
+.post-content p:has(> img),
+.post-content > .post-image { width: min(100%, 78rem); max-width: none; margin-inline: 50%; transform: translateX(-50%); }
+.post-image { margin-block: clamp(2rem, 5vw, 3.5rem); }
 .post-image img { margin-bottom: 0; }
 .post-image figcaption, .post-content figcaption { max-width: 62ch; margin: 0.7rem auto 0; color: var(--color-text-muted); font-size: 0.78rem; line-height: 1.55; text-align: center; word-break: keep-all; }
 
-.post-content table { width: 100%; min-width: 34rem; border-collapse: collapse; background: var(--color-surface-elevated); }
+.post-content table { width: max-content; min-width: 100%; border-collapse: collapse; background: var(--color-surface-elevated); }
 .post-content table:not(.footnotes table) { display: block; max-width: 100%; overflow-x: auto; }
+.post-content > .table-wrapper { max-width: 100%; overflow-x: auto; }
 .post-content th, .post-content td { padding: 0.75rem; border: 1px solid var(--color-border-subtle); text-align: left; vertical-align: top; }
 .post-content th { color: var(--color-text-primary); font-weight: 800; }
 .post-content td { color: var(--color-text-secondary); }
-.post-content pre { max-width: 100%; overflow: auto; padding: 1rem; border: 1px solid var(--color-border-subtle); border-radius: var(--radius-small); background: #0d0e15; font-size: 0.86rem; line-height: 1.65; tab-size: 2; }
+.post-content pre { min-width: 0; max-width: 100%; overflow: auto; padding: 1rem; border: 1px solid var(--color-border-subtle); border-radius: var(--radius-small); background: #0d0e15; font-size: 0.86rem; line-height: 1.65; tab-size: 2; }
 .post-content :not(pre) > code { padding: 0.12em 0.34em; border-radius: 4px; background: var(--color-background-soft); color: var(--color-text-primary); font-size: 0.9em; overflow-wrap: anywhere; }
 
 .post-footer { margin-top: 4rem; padding-top: 1.25rem; border-top: 1px solid var(--color-border-subtle); color: var(--color-text-muted); font-size: 0.74rem; text-align: right; }
@@ -130,23 +134,32 @@ body:has(.post) .aurora { opacity: 0.05; }
 
 @media (min-width: 1200px) {
   .post { padding-inline: clamp(4rem, 8vw, 8.5rem); }
-  .post-content p:has(> img) { width: min(calc(100% + 9rem), 78rem); }
+  .post-content p:has(> img),
+  .post-content > .post-image { width: min(calc(100% + 9rem), 78rem); }
 }
 
 @media (max-width: 900px) {
   .post { padding: clamp(1.25rem, 5vw, 2.5rem); border-radius: var(--radius-medium); }
   .post h1 { font-size: clamp(1.85rem, 7.6vw, 3.15rem); }
   .post-content { padding-top: 2.5rem; }
-  .post-content p:has(> img) { width: 100%; margin-inline: 0; transform: none; }
+  .post-content p:has(> img),
+  .post-content > .post-image { width: 100%; margin-inline: 0; transform: none; }
+}
+
+@media (max-width: 560px) {
+  html:has(.post) { min-width: 0; }
+  body:has(.post) .shell {
+    padding-left: max(0.5rem, env(safe-area-inset-left));
+    padding-right: max(0.5rem, env(safe-area-inset-right));
+  }
+  .post { padding-inline: 0.75rem; }
 }
 
 @media (max-width: 430px) {
-  .post { padding-inline: 1rem; }
   .post-utility-row { align-items: flex-start; }
   .post h1 { letter-spacing: -0.025em; }
   .post-reading-stats { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.45rem; }
   .post-stat-pill { width: 100%; justify-content: flex-start; white-space: normal; }
-  .post-content > p, .post-content > ul, .post-content > ol, .post-content > blockquote { font-size: 1rem; line-height: 1.8; }
   .post-content blockquote { margin-inline: 0; }
 }
 
