@@ -113,8 +113,9 @@ body:has(.post) .aurora { opacity: 0.05; }
 .post-content hr { height: 1px; margin: 3.5rem 0; border: 0; background: var(--color-border-subtle); }
 
 .post-content img { display: block; width: auto; max-width: 100%; max-height: min(78vh, 860px); margin: clamp(2rem, 5vw, 3.5rem) auto; border-radius: var(--radius-small); object-fit: contain; background: var(--color-background-soft); }
-.post-content p:has(> img) { width: min(100%, 78rem); max-width: none; margin-inline: 50%; transform: translateX(-50%); }
-.post-image { margin: clamp(2rem, 5vw, 3.5rem) 0; }
+.post-content p:has(> img),
+.post-content > .post-image { width: min(100%, 78rem); max-width: none; margin-inline: 50%; transform: translateX(-50%); }
+.post-image { margin-block: clamp(2rem, 5vw, 3.5rem); }
 .post-image img { margin-bottom: 0; }
 .post-image figcaption, .post-content figcaption { max-width: 62ch; margin: 0.7rem auto 0; color: var(--color-text-muted); font-size: 0.78rem; line-height: 1.55; text-align: center; word-break: keep-all; }
 
@@ -132,14 +133,16 @@ body:has(.post) .aurora { opacity: 0.05; }
 
 @media (min-width: 1200px) {
   .post { padding-inline: clamp(4rem, 8vw, 8.5rem); }
-  .post-content p:has(> img) { width: min(calc(100% + 9rem), 78rem); }
+  .post-content p:has(> img),
+  .post-content > .post-image { width: min(calc(100% + 9rem), 78rem); }
 }
 
 @media (max-width: 900px) {
   .post { padding: clamp(1.25rem, 5vw, 2.5rem); border-radius: var(--radius-medium); }
   .post h1 { font-size: clamp(1.85rem, 7.6vw, 3.15rem); }
   .post-content { padding-top: 2.5rem; }
-  .post-content p:has(> img) { width: 100%; margin-inline: 0; transform: none; }
+  .post-content p:has(> img),
+  .post-content > .post-image { width: 100%; margin-inline: 0; transform: none; }
 }
 
 @media (max-width: 560px) {
