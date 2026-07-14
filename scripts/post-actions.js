@@ -258,6 +258,9 @@
   }
 
   const article = document.querySelector('article.post');
+  const quoteCardKicker = article?.dataset.quoteCardKicker || 'THE LITERARY UNDERGROUND';
+  const quoteCardLabel = article?.dataset.quoteCardLabel || '문하수도 공개 기록';
+  const quoteCardFilenamePrefix = article?.dataset.quoteCardFilenamePrefix || '문하수도-기록';
 
   const normalizeReaderText = (value) => String(value ?? '')
     .normalize('NFKC')
@@ -690,10 +693,10 @@
     context.fillStyle = '#ffb474';
     context.font = '700 25px Poppins, Arial, sans-serif';
     context.letterSpacing = '0px';
-    context.fillText('THE LITERARY UNDERGROUND', 136, 174);
+    context.fillText(quoteCardKicker, 136, 174);
     context.fillStyle = 'rgba(229, 236, 248, 0.72)';
     context.font = '600 22px Poppins, Arial, sans-serif';
-    context.fillText('문하수도의 인용', 136, 214);
+    context.fillText(quoteCardLabel, 136, 214);
 
     context.fillStyle = 'rgba(255, 174, 105, 0.92)';
     context.font = '400 116px "MabinogiClassic", "NanumSquare", serif';
@@ -803,7 +806,7 @@
             .replace(/\s+/g, '-')
             .slice(0, 48) || `quote-${index + 1}`;
 
-          downloadQuoteCard(canvas, `문하수도-인용-${safeTitle}.png`);
+          downloadQuoteCard(canvas, `${quoteCardFilenamePrefix}-${safeTitle}.png`);
           trackPostEvent('quote-card-export', postTitle);
           status.textContent = 'PNG 인용 카드를 저장했습니다.';
           button.textContent = 'PNG 저장됨';

@@ -1,13 +1,12 @@
 ---
 layout: categories
-title: "분야별 서가"
-description: "유세아의 문하수도에 게시된 칼럼을 카테고리별로 모아봅니다."
+identity_key: categories
 permalink: /categories/
 ---
 <section class="category-index glass-panel" aria-labelledby="category-index-heading">
-  <p class="eyebrow">Categories</p>
-  <h2 id="category-index-heading">큰 분야 안에서 모아보기</h2>
-  <p>관심 분야를 선택하면 그 분야에 속한 글만 모아볼 수 있습니다. 한 글에 여러 질문을 연결하는 <a href="{{ '/topics/' | relative_url }}">질문별 탐색</a>과는 분류 기준이 다릅니다.</p>
+  <p class="eyebrow">Service channels</p>
+  <h2 id="category-index-heading">전문 분야별 기록</h2>
+  <p>관심 분야를 선택하면 해당 회선에 등록된 글만 확인할 수 있습니다. 여러 질문을 연결하는 <a href="{{ site.data.site_identity.pages.topics.path | relative_url }}">{{ site.data.site_identity.pages.topics.title }}</a>과는 분류 기준이 다릅니다.</p>
 
   <nav class="category-chip-list" aria-label="카테고리 목록">
     {% assign categories = site.categories | sort %}

@@ -6,9 +6,9 @@ sitemap: false
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{{ site.title | xml_escape }}</title>
+    <title>{{ site.data.site_identity.brand.name | xml_escape }}</title>
     <link>{{ site.url | append: site.baseurl | append: '/' | xml_escape }}</link>
-    <description>{{ site.description | xml_escape }}</description>
+    <description>{{ site.data.site_identity.brand.description | xml_escape }}</description>
     <language>{{ site.lang | default: 'ko-KR' }}</language>
     <atom:link href="{{ '/feed.xml' | absolute_url }}" rel="self" type="application/rss+xml" />
     <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>

@@ -11,18 +11,21 @@
       {% include sidebar.html %}
 
       <main class="content" id="main-content">
+        {% assign identity = site.data.site_identity %}
+        {% assign brand = identity.brand %}
+        {% assign pages = identity.pages %}
         {% if site.posts.size > 0 %}
         {% assign featured_post = site.posts | first %}
         {% assign featured_image = featured_post.image | default: featured_post.image1 %}
         <section class="home-cover" aria-labelledby="home-title">
           <header class="home-hero">
-            <p class="eyebrow">The Literary Underground</p>
-            <h1 id="home-title"><a class="hero-title-link" href="{{ '/' | relative_url }}">유세아의 문하수도</a></h1>
-            <p class="home-deck">게임 산업, 인터넷 문화, 서브컬처, 영화, AI와 사회를 오래 읽고 깊게 비평하는 에세이·칼럼 아카이브.</p>
+            <p class="eyebrow">{{ pages.home.eyebrow }}</p>
+            <h1 id="home-title"><a class="hero-title-link" href="{{ '/' | relative_url }}">{{ brand.name }}</a></h1>
+            <p class="home-deck">{{ brand.home_tagline }}</p>
             <nav class="hero-actions" aria-label="추천 탐색 경로">
-              <a class="hero-action hero-action-primary" href="{{ '/start-here/' | relative_url }}">처음 읽기</a>
-              <a class="hero-action" href="{{ '/timeline/' | relative_url }}">전체 글</a>
-              <a class="hero-action" href="{{ '/topics/' | relative_url }}">질문별 탐색</a>
+              <a class="hero-action hero-action-primary" href="{{ pages.start.path | relative_url }}">{{ pages.start.title }}</a>
+              <a class="hero-action" href="{{ pages.timeline.path | relative_url }}">{{ pages.timeline.title }}</a>
+              <a class="hero-action" href="{{ pages.topics.path | relative_url }}">{{ pages.topics.title }}</a>
             </nav>
           </header>
 
@@ -48,7 +51,7 @@
         <section class="recent-section" aria-labelledby="recent-posts-title">
           <header class="section-heading">
             <div><p class="eyebrow">Recent archive</p><h2 id="recent-posts-title">최근 글</h2></div>
-            <a class="section-heading-link" href="{{ '/timeline/' | relative_url }}">전체 글 보기</a>
+            <a class="section-heading-link" href="{{ pages.timeline.path | relative_url }}">{{ pages.timeline.label }} 보기</a>
           </header>
           <div class="recent-post-list">
             {% for post in site.posts offset: 1 limit: 3 %}
@@ -69,15 +72,15 @@
         {% endif %}
 
         <section class="home-discovery" aria-labelledby="home-discovery-title">
-          <header class="section-heading home-discovery-heading"><div><p class="eyebrow">Find your route</p><h2 id="home-discovery-title">다음 글을 찾는 방법</h2></div></header>
+          <header class="section-heading home-discovery-heading"><div><p class="eyebrow">Service guide</p><h2 id="home-discovery-title">{{ pages.home.discovery_title }}</h2></div></header>
           <div class="home-discovery-layout">
-            <a class="discovery-primary" href="{{ '/start-here/' | relative_url }}">
-              <span>추천 경로</span><strong>처음 읽기</strong><p>관심 질문에 맞춰 편집한 순서로 문하수도의 핵심 글을 읽습니다.</p><em aria-hidden="true">읽기 경로 열기 →</em>
+            <a class="discovery-primary" href="{{ pages.start.path | relative_url }}">
+              <span>{{ pages.home.discovery_primary_label }}</span><strong>{{ pages.start.title }}</strong><p>{{ pages.home.discovery_primary_text }}</p><em aria-hidden="true">접속 경로 열기 →</em>
             </a>
             <nav class="discovery-links" aria-label="다른 탐색 방법">
-              <a href="{{ '/topics/' | relative_url }}"><strong>질문별 탐색</strong><span>분야를 넘나드는 문제의식으로 찾기</span></a>
-              <a href="{{ '/categories/' | relative_url }}"><strong>분야별 서가</strong><span>게임 산업·AI 등 전문 분야로 찾기</span></a>
-              <a href="{{ '/timeline/' | relative_url }}"><strong>전체 글</strong><span>발행 순서와 시간의 흐름으로 찾기</span></a>
+              <a href="{{ pages.topics.path | relative_url }}"><strong>{{ pages.topics.title }}</strong><span>분야를 넘나드는 질문과 연결로 찾기</span></a>
+              <a href="{{ pages.categories.path | relative_url }}"><strong>{{ pages.categories.title }}</strong><span>게임 산업·AI 등 전문 분야로 찾기</span></a>
+              <a href="{{ pages.timeline.path | relative_url }}"><strong>{{ pages.timeline.title }}</strong><span>작성 시각과 공개 순서로 찾기</span></a>
             </nav>
           </div>
         </section>

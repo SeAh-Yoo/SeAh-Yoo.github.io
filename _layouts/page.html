@@ -11,10 +11,12 @@
       {% include sidebar.html %}
 
       <main class="content" id="main-content">
+        {% assign page_copy = site.data.site_identity.pages[page.identity_key] %}
         <header class="hero page-hero glass-panel">
-          <p class="eyebrow">{{ page.eyebrow | default: "The Literary Underground" }}</p>
-          <h1>{{ page.title }}</h1>
-          {% if page.intro %}<p>{{ page.intro }}</p>{% endif %}
+          <p class="eyebrow">{{ page_copy.eyebrow | default: page.eyebrow | default: site.data.site_identity.brand.english_name }}</p>
+          <h1>{{ page_copy.title | default: page.title }}</h1>
+          {% assign page_intro = page_copy.intro | default: page.intro %}
+          {% if page_intro %}<p>{{ page_intro }}</p>{% endif %}
         </header>
 
         {{ content }}

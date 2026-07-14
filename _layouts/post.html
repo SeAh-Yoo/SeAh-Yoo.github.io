@@ -18,14 +18,18 @@
           <a class="post-site-home" href="{{ '/' | relative_url }}">
             <span class="post-site-mark" aria-hidden="true">S</span>
             <span class="post-site-name">
-              <strong>유세아의 문하수도</strong>
-              <small>{{ site.english_title }}</small>
+              <strong>{{ site.data.site_identity.brand.name }}</strong>
+              <small>{{ site.data.site_identity.brand.sidebar_subtitle }}</small>
             </span>
           </a>
-          <span class="post-site-context">게임·AI·서브컬처 비평 아카이브</span>
+          <span class="post-site-context">{{ site.data.site_identity.brand.post_context }}</span>
         </header>
 
-        <article class="post glass-panel" data-analytics-post="{{ page.slug | default: page.title | slugify | escape }}">
+        <article class="post glass-panel"
+                 data-analytics-post="{{ page.slug | default: page.title | slugify | escape }}"
+                 data-quote-card-kicker="{{ site.data.site_identity.brand.quote_card_kicker | escape }}"
+                 data-quote-card-label="{{ site.data.site_identity.brand.quote_card_label | escape }}"
+                 data-quote-card-filename-prefix="{{ site.data.site_identity.brand.quote_card_filename_prefix | escape }}">
           {% assign post_category = page.category | default: page.categories.first | default: "Column" %}
           {% assign post_category_slug = post_category | slugify %}
           <header class="post-header">
@@ -63,7 +67,7 @@
           {% include post-navigation.html %}
 
           <footer class="post-footer" aria-label="글 정보">
-            <p>── 작성 일자: <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %-m월 %-d일 %H:%M" }}</time>{% if page.last_modified_at %} / 수정 일자: <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: "%Y년 %-m월 %-d일 %H:%M" }}</time>{% endif %}. ({{ site.author.name }}).</p>
+            <p>── 작성 일자: <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %-m월 %-d일 %H:%M" }}</time>{% if page.last_modified_at %} / 수정 일자: <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: "%Y년 %-m월 %-d일 %H:%M" }}</time>{% endif %}. ({{ site.data.site_identity.brand.author.name }}).</p>
           </footer>
 
           {% include post-comments.html %}
