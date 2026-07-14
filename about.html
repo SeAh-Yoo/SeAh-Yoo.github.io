@@ -1,27 +1,24 @@
 ---
 layout: page
-title: "관측자"
-eyebrow: "Observer"
-intro: "게임 산업과 인터넷 문화, 서브컬처, 영화와 AI가 사회를 바꾸는 방식을 비평하는 개인 아카이브입니다."
-description: "유세아의 문하수도가 다루는 주제와 쓰는 방식, 읽고 참여하는 방법을 소개합니다."
+identity_key: about
 permalink: /about/
 ---
 <section class="about-section glass-panel" aria-labelledby="about-focus-title">
-  <p class="eyebrow">Focus</p>
-  <h2 id="about-focus-title">다루는 것</h2>
-  <p>문하수도는 산업의 숫자와 사건 자체보다, 그것이 사람들의 취향과 관계, 시장의 관성, 문화의 언어를 어떻게 바꾸는지에 관심을 둡니다.</p>
+  <p class="eyebrow">Service operator</p>
+  <h2 id="about-focus-title">{{ site.data.site_identity.institution.legal_name }}</h2>
+  <p>{{ site.data.site_identity.institution.introduction }}</p>
 </section>
 
 <section class="about-section glass-panel" aria-labelledby="about-method-title">
-  <p class="eyebrow">Method</p>
-  <h2 id="about-method-title">쓰는 방식</h2>
-  <p>글에서는 사실과 해석을 구분하려고 노력합니다. 필요한 경우 원문, 기사, 연구, 게임과 작품을 각주 및 참고 문헌으로 남깁니다. 하나의 글이 결론이라기보다, 계속 갱신되는 대화의 출발점이 되기를 바랍니다.</p>
+  <p class="eyebrow">Editorial policy</p>
+  <h2 id="about-method-title">수집·복구 기준</h2>
+  <p>운영 담당자는 사실과 해석을 구분하고, 필요한 경우 원문·기사·연구·게임과 작품을 근거 자료로 등록합니다. 공개 기록은 확정된 판정보다 계속 검토하고 갱신할 수 있는 비평의 출발점으로 취급합니다.</p>
 </section>
 
 <section class="about-section glass-panel" aria-labelledby="about-reading-title">
-  <p class="eyebrow">Reading</p>
-  <h2 id="about-reading-title">읽는 방법</h2>
-  <p>처음 방문했다면 <a href="{{ '/start-here/' | relative_url }}">관측 시작</a>에서 관심 주제의 읽기 경로를 선택할 수 있습니다. 모든 글은 검색, 카테고리, <a href="{{ '/topics/' | relative_url }}">주제 성좌</a>, 연재와 <a href="{{ '/timeline/' | relative_url }}">시간의 궤적</a>을 통해 다시 찾을 수 있습니다.</p>
+  <p class="eyebrow">Service guide</p>
+  <h2 id="about-reading-title">이용 방법</h2>
+  <p>처음 이용한다면 <a href="{{ site.data.site_identity.pages.start.path | relative_url }}">{{ site.data.site_identity.pages.start.title }}</a>에서 관심 질문에 맞는 경로를 선택할 수 있습니다. 모든 기록은 검색, <a href="{{ site.data.site_identity.pages.categories.path | relative_url }}">{{ site.data.site_identity.pages.categories.title }}</a>, <a href="{{ site.data.site_identity.pages.topics.path | relative_url }}">{{ site.data.site_identity.pages.topics.title }}</a>, 연재와 <a href="{{ site.data.site_identity.pages.timeline.path | relative_url }}">{{ site.data.site_identity.pages.timeline.title }}</a>을 통해 다시 찾을 수 있습니다.</p>
 </section>
 
 <section class="about-section glass-panel" aria-labelledby="about-participation-title">
@@ -32,12 +29,12 @@ permalink: /about/
 
 <section class="about-section glass-panel" aria-labelledby="about-analytics-title">
   <p class="eyebrow">Privacy</p>
-  <h2 id="about-analytics-title">익명 방문 통계</h2>
-  <p>문하수도는 GoatCounter로 익명 방문 흐름과 글 읽기 신호를 집계합니다. 쿠키나 영구 식별자를 만들지 않으며, 수치는 독자 수의 확정값이 아니라 편집을 위한 대략적인 흐름입니다.</p>
+  <h2 id="about-analytics-title">익명 접속 통계</h2>
+  <p>문하수도는 GoatCounter로 익명 접속 흐름과 기록 읽기 신호를 집계합니다. 쿠키나 영구 식별자를 만들지 않으며, 수치는 독자 수의 확정값이 아니라 서비스 운영을 위한 대략적인 흐름입니다.</p>
   <p>원하지 않으면 <a href="#toggle-goatcounter">이 브라우저에서 통계 제외하기</a>를 선택할 수 있습니다. 자세한 방식은 <a href="https://www.goatcounter.com/help/privacy" rel="noopener noreferrer" target="_blank">GoatCounter 개인정보 안내</a>에서 확인할 수 있습니다.</p>
 </section>
 
-<aside class="about-note glass-panel" aria-label="편집 안내">
-  <strong>편집 메모</strong>
-  <p>이 페이지는 소개 문구, 인용 원칙, 번역 범위, 연락 수단을 필요에 맞게 고쳐 쓸 수 있도록 의도적으로 간결하게 두었습니다.</p>
+<aside class="about-note glass-panel" aria-label="서비스 안내">
+  <strong>이용자 안내</strong>
+  <p>{{ site.data.site_identity.institution.citizen_notice }}</p>
 </aside>

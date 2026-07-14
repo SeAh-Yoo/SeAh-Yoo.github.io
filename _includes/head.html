@@ -1,22 +1,26 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-{% assign page_description = page.description | default: site.description %}
+{% assign identity = site.data.site_identity %}
+{% assign brand = identity.brand %}
+{% assign page_copy = identity.pages[page.identity_key] %}
+{% assign resolved_page_title = page_copy.title | default: page.title | default: brand.name %}
+{% assign page_description = page_copy.description | default: page.description | default: brand.description %}
 {% assign canonical_url = page.url | absolute_url %}
-{% assign social_image = page.image | default: page.image1 | default: site.profile_image %}
+{% assign social_image = page.image | default: page.image1 | default: brand.profile_image %}
 {% if page.layout == "post" %}
-  {% capture document_title %}{{ page.title }} | {{ site.title }}{% endcapture %}
+  {% capture document_title %}{{ page.title }} | {{ brand.name }}{% endcapture %}
 {% elsif page.url == "/" %}
-  {% capture document_title %}{{ site.title }} | 게임·서브컬처·인터넷 문화 비평{% endcapture %}
-{% elsif page.title %}
-  {% capture document_title %}{{ page.title }} | {{ site.title }}{% endcapture %}
+  {% capture document_title %}{{ brand.name }} | {{ brand.seo_title_suffix }}{% endcapture %}
+{% elsif resolved_page_title %}
+  {% capture document_title %}{{ resolved_page_title }} | {{ brand.name }}{% endcapture %}
 {% else %}
-  {% capture document_title %}{{ site.title }} | 게임·서브컬처·인터넷 문화 비평{% endcapture %}
+  {% capture document_title %}{{ brand.name }} | {{ brand.seo_title_suffix }}{% endcapture %}
 {% endif %}
 
 <title>{{ document_title | strip | escape }}</title>
 <meta name="description" content="{{ page_description | strip_html | normalize_whitespace | escape }}" />
-<meta name="author" content="{{ site.author.name | escape }}" />
+<meta name="author" content="{{ brand.author.name | escape }}" />
 {% if page.noindex %}
 <meta name="robots" content="noindex, follow" />
 {% else %}
@@ -25,7 +29,7 @@
 <meta name="theme-color" content="#0c0d18" />
 <script src="{{ '/scripts/site-preferences.js' | relative_url }}"></script>
 <link rel="canonical" href="{{ canonical_url }}" />
-<link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }} RSS" href="{{ '/feed.xml' | absolute_url }}" />
+<link rel="alternate" type="application/rss+xml" title="{{ brand.name | escape }} RSS" href="{{ '/feed.xml' | absolute_url }}" />
 {% assign goatcounter_code = site.data.analytics.goatcounterCode %}
 {% if goatcounter_code and goatcounter_code != '' %}
 <meta name="goatcounter-counter-origin" content="https://{{ goatcounter_code | escape }}.goatcounter.com" />
@@ -39,7 +43,7 @@
 {% endif %}
 
 <meta property="og:locale" content="ko_KR" />
-<meta property="og:site_name" content="{{ site.title | escape }}" />
+<meta property="og:site_name" content="{{ brand.name | escape }}" />
 <meta property="og:title" content="{{ document_title | strip | escape }}" />
 <meta property="og:description" content="{{ page_description | strip_html | normalize_whitespace | escape }}" />
 <meta property="og:url" content="{{ canonical_url }}" />
@@ -53,7 +57,7 @@
 {% endif %}
 {% if social_image %}
 <meta property="og:image" content="{{ social_image | absolute_url }}" />
-<meta property="og:image:alt" content="{{ page.title | default: site.title | escape }}" />
+<meta property="og:image:alt" content="{{ resolved_page_title | escape }}" />
 {% endif %}
 
 <meta name="twitter:card" content="{% if social_image %}summary_large_image{% else %}summary{% endif %}" />
@@ -61,7 +65,7 @@
 <meta name="twitter:description" content="{{ page_description | strip_html | normalize_whitespace | escape }}" />
 {% if social_image %}
 <meta name="twitter:image" content="{{ social_image | absolute_url }}" />
-<meta name="twitter:image:alt" content="{{ page.title | default: site.title | escape }}" />
+<meta name="twitter:image:alt" content="{{ resolved_page_title | escape }}" />
 {% endif %}
 
 <script type="application/ld+json">
@@ -88,22 +92,22 @@
       "@type": "BreadcrumbList",
       "@id": {{ canonical_url | append: "#breadcrumb" | jsonify }},
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": {{ site.title | jsonify }}, "item": {{ site.url | append: "/" | jsonify }} },
-        { "@type": "ListItem", "position": 2, "name": "분야별 서가", "item": {{ "/categories/" | absolute_url | jsonify }} },
+        { "@type": "ListItem", "position": 1, "name": {{ brand.name | jsonify }}, "item": {{ site.url | append: "/" | jsonify }} },
+        { "@type": "ListItem", "position": 2, "name": {{ identity.pages.categories.title | jsonify }}, "item": {{ identity.pages.categories.path | absolute_url | jsonify }} },
         { "@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }}, "item": {{ canonical_url | jsonify }} }
       ]
     },
     {
       "@type": "Person",
       "@id": {{ site.url | append: "/#author" | jsonify }},
-      "name": {{ site.author.name | jsonify }},
-      "alternateName": {{ site.author.alternate_name | jsonify }},
+      "name": {{ brand.author.name | jsonify }},
+      "alternateName": {{ brand.author.alternate_name | jsonify }},
       "url": {{ site.url | append: "/" | jsonify }}
     },
     {
       "@type": "Blog",
       "@id": {{ site.url | append: "/#blog" | jsonify }},
-      "name": {{ site.title | jsonify }},
+      "name": {{ brand.name | jsonify }},
       "url": {{ site.url | append: "/" | jsonify }}
     }
   ]
@@ -116,9 +120,9 @@
       "@type": "WebSite",
       "@id": {{ site.url | append: "/#website" | jsonify }},
       "url": {{ site.url | append: "/" | jsonify }},
-      "name": {{ site.title | jsonify }},
-      "alternateName": {{ site.english_title | jsonify }},
-      "description": {{ site.description | jsonify }},
+      "name": {{ brand.name | jsonify }},
+      "alternateName": {{ brand.english_name | jsonify }},
+      "description": {{ brand.description | jsonify }},
       "inLanguage": {{ site.lang | jsonify }},
       "publisher": { "@id": {{ site.url | append: "/#author" | jsonify }} }
     },
@@ -126,9 +130,9 @@
       "@type": "Blog",
       "@id": {{ site.url | append: "/#blog" | jsonify }},
       "url": {{ site.url | append: "/" | jsonify }},
-      "name": {{ site.title | jsonify }},
-      "alternateName": {{ site.english_title | jsonify }},
-      "description": {{ site.description | jsonify }},
+      "name": {{ brand.name | jsonify }},
+      "alternateName": {{ brand.english_name | jsonify }},
+      "description": {{ brand.description | jsonify }},
       "inLanguage": {{ site.lang | jsonify }},
       "author": { "@id": {{ site.url | append: "/#author" | jsonify }} },
       "isPartOf": { "@id": {{ site.url | append: "/#website" | jsonify }} }
@@ -136,8 +140,8 @@
     {
       "@type": "Person",
       "@id": {{ site.url | append: "/#author" | jsonify }},
-      "name": {{ site.author.name | jsonify }},
-      "alternateName": {{ site.author.alternate_name | jsonify }},
+      "name": {{ brand.author.name | jsonify }},
+      "alternateName": {{ brand.author.alternate_name | jsonify }},
       "url": {{ site.url | append: "/" | jsonify }}
     }
   ]

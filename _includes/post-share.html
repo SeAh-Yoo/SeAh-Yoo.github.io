@@ -1,9 +1,9 @@
-{% assign share_image = page.image | default: site.profile_image | absolute_url %}
+{% assign share_image = page.image | default: site.data.site_identity.brand.profile_image | absolute_url %}
 {% capture share_campaign %}post-{{ page.date | date: "%Y-%m-%d" }}-{{ page.slug | default: page.title | slugify }}{% endcapture %}
 <section class="post-actions-bar" data-post-share
          data-share-title="{{ page.title | strip_html | escape }}"
          data-share-url="{{ page.url | absolute_url | escape }}"
-         data-share-description="{{ page.description | default: site.description | strip_html | normalize_whitespace | escape }}"
+         data-share-description="{{ page.description | default: site.data.site_identity.brand.description | strip_html | normalize_whitespace | escape }}"
          data-share-image="{{ share_image | escape }}"
          data-share-campaign="{{ share_campaign | strip | escape }}"
          data-kakao-key="{{ site.kakao_javascript_key | default: '' | escape }}"

@@ -1,9 +1,7 @@
 ---
 layout: page
-title: "읽기의 맥박"
+identity_key: reading_pulse
 permalink: /reading-pulse/
-eyebrow: "Reading pulse"
-intro: "익명으로 집계한 방문과 읽기 신호를, 하루 한 번 정적인 기록으로 남깁니다."
 ---
 
 {% assign pulse = site.data.reading_pulse %}
@@ -11,8 +9,8 @@ intro: "익명으로 집계한 방문과 읽기 신호를, 하루 한 번 정적
 <section class="reading-pulse glass-panel" aria-labelledby="reading-pulse-title">
   <div class="reading-pulse-heading">
     <p class="section-label">ANONYMOUS READING SIGNALS</p>
-    <h2 id="reading-pulse-title">읽기의 흔적</h2>
-    <p>숫자는 정확한 독자 수가 아니라, 이곳에서 발생한 익명 방문과 읽기 행동의 대략적인 흐름입니다.</p>
+    <h2 id="reading-pulse-title">익명 접속 신호</h2>
+    <p>표시값은 개인을 식별하지 않는 공개 집계입니다. 방문, 인기 기록과 읽기 완료 여부의 대략적인 흐름만 제공합니다.</p>
   </div>
 
   {% if pulse and pulse.posts and pulse.posts.size > 0 %}
@@ -24,7 +22,7 @@ intro: "익명으로 집계한 방문과 읽기 신호를, 하루 한 번 정적
       {% assign reading_signal_total = reading_signal_total | plus: post_signals %}
     {% endfor %}
 
-    <dl class="reading-pulse-summary" aria-label="읽기의 맥박 요약">
+    <dl class="reading-pulse-summary" aria-label="접속 현황 요약">
       <div>
         <dt>누적 방문</dt>
         <dd>{{ pulse.site.total | default: 0 }}</dd>

@@ -1,7 +1,8 @@
+{% assign search_copy = site.data.site_identity.search %}
 <section class="sidebar-search" data-site-search data-search-index="{{ '/search.json' | relative_url }}">
-  <button class="sidebar-search-trigger" type="button" data-search-open aria-label="블로그 검색 열기" aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K /">
+  <button class="sidebar-search-trigger" type="button" data-search-open aria-label="{{ search_copy.open_label }}" aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K /">
     <span class="sidebar-search-icon" aria-hidden="true">⌕</span>
-    <span class="sidebar-search-label">검색</span>
+    <span class="sidebar-search-label">{{ search_copy.button_label }}</span>
     <kbd class="sidebar-search-shortcut" aria-hidden="true">Ctrl K</kbd>
   </button>
 
@@ -9,26 +10,26 @@
     <div class="site-search-panel">
       <header class="site-search-header">
         <div>
-          <p class="site-search-kicker">ARCHIVE SEARCH</p>
-          <h2 id="site-search-title">문하수도에서 찾기</h2>
+          <p class="site-search-kicker">{{ search_copy.kicker }}</p>
+          <h2 id="site-search-title">{{ search_copy.title }}</h2>
         </div>
-        <button class="site-search-close" type="button" data-search-close aria-label="검색 창 닫기">×</button>
+        <button class="site-search-close" type="button" data-search-close aria-label="{{ search_copy.close_label }}">×</button>
       </header>
 
       <label class="site-search-input-wrap">
         <span class="site-search-input-icon" aria-hidden="true">⌕</span>
-        <span class="visually-hidden">검색어</span>
-        <input type="search" data-search-input autocomplete="off" spellcheck="false" placeholder="제목, 본문, 카테고리, 연재 검색" />
+        <span class="visually-hidden">{{ search_copy.input_label }}</span>
+        <input type="search" data-search-input autocomplete="off" spellcheck="false" placeholder="{{ search_copy.placeholder }}" />
         <kbd aria-hidden="true">ESC</kbd>
       </label>
 
       <div class="site-search-meta">
-        <p data-search-status role="status" aria-live="polite">검색어를 입력하세요.</p>
-        <span>↑↓ 이동 · Enter 열기</span>
+        <p data-search-status role="status" aria-live="polite">{{ search_copy.initial_status }}</p>
+        <span>↑↓ {{ search_copy.keyboard_hint }}</span>
       </div>
 
       <ol class="site-search-results" data-search-results></ol>
-      <p class="site-search-empty" data-search-empty hidden>일치하는 글을 찾지 못했습니다.</p>
+      <p class="site-search-empty" data-search-empty hidden>{{ search_copy.empty_message }}</p>
     </div>
   </dialog>
 </section>
