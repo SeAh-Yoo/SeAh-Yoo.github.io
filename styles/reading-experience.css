@@ -23,7 +23,7 @@ body:has(.post) .aurora { opacity: 0.05; }
 .post-utility-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .post-category-eyebrow {
   display: inline-flex;
-  min-height: 36px;
+  min-height: var(--tap-target);
   align-items: center;
   color: var(--color-accent-secondary);
   font-size: 0.75rem;
@@ -142,13 +142,20 @@ body:has(.post) .aurora { opacity: 0.05; }
   .post-content p:has(> img) { width: 100%; margin-inline: 0; transform: none; }
 }
 
+@media (max-width: 560px) {
+  html:has(.post) { min-width: 0; }
+  body:has(.post) .shell {
+    padding-left: max(0.5rem, env(safe-area-inset-left));
+    padding-right: max(0.5rem, env(safe-area-inset-right));
+  }
+  .post { padding-inline: 0.75rem; }
+}
+
 @media (max-width: 430px) {
-  .post { padding-inline: 1rem; }
   .post-utility-row { align-items: flex-start; }
   .post h1 { letter-spacing: -0.025em; }
   .post-reading-stats { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.45rem; }
   .post-stat-pill { width: 100%; justify-content: flex-start; white-space: normal; }
-  .post-content > p, .post-content > ul, .post-content > ol, .post-content > blockquote { font-size: 1rem; line-height: 1.8; }
   .post-content blockquote { margin-inline: 0; }
 }
 

@@ -38,7 +38,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 32px;
+  min-height: var(--tap-target);
   padding: 6px 11px;
   border: 1px solid rgba(139, 216, 255, 0.22);
   border-radius: 999px;
@@ -511,7 +511,7 @@
   align-items: center;
   justify-content: center;
   gap: 7px;
-  min-height: 42px;
+  min-height: var(--tap-target);
   padding: 9px 14px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 999px;
