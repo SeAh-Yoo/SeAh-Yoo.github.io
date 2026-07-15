@@ -1,4 +1,4 @@
-{% assign share_image = page.image | default: site.data.site_identity.brand.profile_image | absolute_url %}
+{% assign share_image = page.image | default: page.image1 | default: site.data.site_identity.brand.default_social_image | default: site.data.site_identity.brand.profile_image | absolute_url %}
 {% capture share_campaign %}post-{{ page.date | date: "%Y-%m-%d" }}-{{ page.slug | default: page.title | slugify }}{% endcapture %}
 <section class="post-actions-bar" data-post-share
          data-share-title="{{ page.title | strip_html | escape }}"

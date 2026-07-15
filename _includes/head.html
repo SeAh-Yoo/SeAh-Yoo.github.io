@@ -7,7 +7,7 @@
 {% assign resolved_page_title = page_copy.title | default: page.title | default: brand.name %}
 {% assign page_description = page_copy.description | default: page.description | default: brand.description %}
 {% assign canonical_url = page.url | absolute_url %}
-{% assign social_image = page.image | default: page.image1 | default: brand.profile_image %}
+{% assign social_image = page.image | default: page.image1 | default: brand.default_social_image | default: brand.profile_image %}
 {% if page.layout == "post" %}
   {% capture document_title %}{{ page.title }} | {{ brand.name }}{% endcapture %}
 {% elsif page.url == "/" %}
@@ -28,6 +28,8 @@
 {% endif %}
 <meta name="theme-color" content="#0c0d18" />
 <script src="{{ '/scripts/site-preferences.js' | relative_url }}"></script>
+{% if brand.favicon_image %}<link rel="icon" type="image/png" sizes="512x512" href="{{ brand.favicon_image | relative_url }}" />{% endif %}
+{% if brand.apple_touch_icon %}<link rel="apple-touch-icon" sizes="180x180" href="{{ brand.apple_touch_icon | relative_url }}" />{% endif %}
 <link rel="canonical" href="{{ canonical_url }}" />
 <link rel="alternate" type="application/rss+xml" title="{{ brand.name | escape }} RSS" href="{{ '/feed.xml' | absolute_url }}" />
 {% assign goatcounter_code = site.data.analytics.goatcounterCode %}
@@ -102,7 +104,8 @@
       "@id": {{ site.url | append: "/#author" | jsonify }},
       "name": {{ brand.author.name | jsonify }},
       "alternateName": {{ brand.author.alternate_name | jsonify }},
-      "url": {{ site.url | append: "/" | jsonify }}
+      "url": {{ site.url | append: "/" | jsonify }},
+      "image": {{ brand.profile_image | absolute_url | jsonify }}
     },
     {
       "@type": "Blog",
@@ -142,7 +145,8 @@
       "@id": {{ site.url | append: "/#author" | jsonify }},
       "name": {{ brand.author.name | jsonify }},
       "alternateName": {{ brand.author.alternate_name | jsonify }},
-      "url": {{ site.url | append: "/" | jsonify }}
+      "url": {{ site.url | append: "/" | jsonify }},
+      "image": {{ brand.profile_image | absolute_url | jsonify }}
     }
   ]
 }
