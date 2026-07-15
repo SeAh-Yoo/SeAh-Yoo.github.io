@@ -30,22 +30,22 @@
         <ul>
           <li>
             <a href="{{ pages.start.path | relative_url }}"{% if page.url == pages.start.path %} aria-current="page"{% endif %}>
-              <span class="nav-label">{{ pages.start.label }}</span><small class="nav-metaphor">{{ pages.start.title }}</small>
+              <span class="nav-label">{{ pages.start.label | strip }}</span><small class="nav-metaphor">{{ pages.start.title | strip }}</small>
             </a>
           </li>
           <li>
             <a href="{{ pages.timeline.path | relative_url }}"{% if page.url == pages.timeline.path %} aria-current="page"{% endif %}>
-              <span class="nav-label">{{ pages.timeline.label }}</span><small class="nav-metaphor">{{ pages.timeline.title }}</small>
+              <span class="nav-label">{{ pages.timeline.label | strip }}</span><small class="nav-metaphor">{{ pages.timeline.title | strip }}</small>
             </a>
           </li>
           <li>
             <a href="{{ pages.topics.path | relative_url }}"{% if page.url == pages.topics.path %} aria-current="page"{% endif %}>
-              <span class="nav-label">{{ pages.topics.label }}</span><small class="nav-metaphor">{{ pages.topics.title }}</small>
+              <span class="nav-label">{{ pages.topics.label | strip }}</span><small class="nav-metaphor">{{ pages.topics.title | strip }}</small>
             </a>
           </li>
           <li>
             <a href="{{ pages.about.path | relative_url }}"{% if page.url == pages.about.path %} aria-current="page"{% endif %}>
-              <span class="nav-label">{{ pages.about.label }}</span><small class="nav-metaphor">{{ pages.about.title }}</small>
+              <span class="nav-label">{{ pages.about.label | strip }}</span><small class="nav-metaphor">{{ pages.about.title | strip }}</small>
             </a>
           </li>
         </ul>
@@ -70,9 +70,9 @@
       {% endif %}
 
       <nav class="sidebar-footer-nav" aria-label="{{ identity.navigation.utility_label }}">
-        <a href="{{ pages.categories.path | relative_url }}">{{ pages.categories.label }}</a>
-        <a href="{{ pages.reading_pulse.path | relative_url }}">{{ pages.reading_pulse.label }}</a>
-        <a href="{{ pages.references.path | relative_url }}">{{ pages.references.label }}</a>
+        <a href="{{ pages.categories.path | relative_url }}">{{ pages.categories.label | strip }}</a>
+        <a href="{{ pages.reading_pulse.path | relative_url }}">{{ pages.reading_pulse.label | strip }}</a>
+        <a href="{{ pages.references.path | relative_url }}">{{ pages.references.label | strip }}</a>
         <a href="{{ '/feed.xml' | relative_url }}">{{ identity.navigation.feed_label }}</a>
       </nav>
 

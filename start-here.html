@@ -6,9 +6,9 @@ permalink: /start-here/
 {% assign ordered_posts = site.posts | sort: "start_here_order" %}
 
 <section class="path-intro glass-panel" aria-labelledby="path-intro-title">
-  <p class="eyebrow">Connection routes</p>
-  <h2 id="path-intro-title">관심 분야에서 접속하세요</h2>
-  <p>아래 순서는 최신순이 아니라 처음 이용하는 독자를 위한 권장 접속 순서입니다. 각 회선과 표시 순서는 게시물 Front Matter에서 관리됩니다.</p>
+  <p class="eyebrow">Exploration guide</p>
+  <h2 id="path-intro-title">문하수도 탐색을 시작하세요</h2>
+  <p>아래 순서는 최신순이 아니라 처음 이용하는 독자를 위한 권장 탐색 순서입니다. 각 경로와 표시 순서는 게시물 Front Matter에서 관리됩니다.</p>
 </section>
 
 {% for path in site.data.paths %}
@@ -43,7 +43,7 @@ permalink: /start-here/
       {% endfor %}
     </ol>
     {% else %}
-    <p class="path-empty">이 회선에 공개할 기록을 준비하고 있습니다.</p>
+    <p class="path-empty">이 구역에 추가할 기록을 준비하고 있습니다.</p>
     {% endif %}
   </section>
 {% endfor %}
