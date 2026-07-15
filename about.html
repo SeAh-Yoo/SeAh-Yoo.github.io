@@ -4,16 +4,24 @@ identity_key: about
 permalink: /about/
 ---
 {% assign identity = site.data.site_identity %}
+{% assign brand = identity.brand %}
 {% assign operator = identity.operator %}
 {% assign pages = identity.pages %}
 {% assign about_copy = pages.about %}
 {% assign sections = about_copy.sections %}
 
-<section class="about-section glass-panel" aria-labelledby="about-focus-title">
-  <p class="eyebrow">{{ sections.profile.eyebrow }}</p>
-  <h2 id="about-focus-title">{{ sections.profile.title }}</h2>
-  <p><strong>{{ operator.name }}</strong> · {{ operator.introduction }}</p>
-  <p>{{ operator.site_description }}</p>
+<section class="about-section about-profile-card glass-panel" aria-labelledby="about-focus-title">
+  <div class="about-profile-copy">
+    <p class="eyebrow">{{ sections.profile.eyebrow }}</p>
+    <h2 id="about-focus-title">{{ sections.profile.title }}</h2>
+    <p><strong>{{ operator.name }}</strong> · {{ operator.introduction }}</p>
+    <p>{{ operator.site_description }}</p>
+  </div>
+  {% if brand.profile_image %}
+  <figure class="about-profile-image">
+    <img src="{{ brand.profile_image | relative_url }}" alt="{{ operator.name }} 저자 이미지" width="1254" height="1254" decoding="async" />
+  </figure>
+  {% endif %}
 </section>
 
 <section class="about-section glass-panel" aria-labelledby="about-method-title">
