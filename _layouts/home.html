@@ -14,22 +14,23 @@
         {% assign identity = site.data.site_identity %}
         {% assign brand = identity.brand %}
         {% assign pages = identity.pages %}
+        {% assign home_copy = pages.home %}
         {% if site.posts.size > 0 %}
         {% assign featured_post = site.posts | first %}
         {% assign featured_image = featured_post.image | default: featured_post.image1 %}
         <section class="home-cover" aria-labelledby="home-title">
           <header class="home-hero">
-            <p class="eyebrow">{{ pages.home.eyebrow | strip }}</p>
+            <p class="eyebrow">{{ home_copy.eyebrow | strip }}</p>
             <h1 id="home-title"><a class="hero-title-link" href="{{ '/' | relative_url }}">{{ brand.name }}</a></h1>
             <p class="home-deck">{{ brand.home_tagline }}</p>
-            <nav class="hero-actions" aria-label="{{ pages.home.discovery_primary_label | strip }}">
-              <a class="hero-action hero-action-primary" href="{{ pages.start.path | relative_url }}">{{ pages.start.title }}</a>
-              <a class="hero-action" href="{{ pages.timeline.path | relative_url }}">{{ pages.timeline.title }}</a>
-              <a class="hero-action" href="{{ pages.topics.path | relative_url }}">{{ pages.topics.title }}</a>
+            <nav class="hero-actions" aria-label="{{ home_copy.discovery_primary_label | strip }}">
+              <a class="hero-action hero-action-primary" href="{{ pages.start.path | relative_url }}">{{ pages.start.label }}</a>
+              <a class="hero-action" href="{{ pages.timeline.path | relative_url }}">{{ pages.timeline.label }}</a>
+              <a class="hero-action" href="{{ pages.topics.path | relative_url }}">{{ pages.topics.label }}</a>
             </nav>
           </header>
 
-          <a class="home-featured" href="{{ featured_post.url | relative_url }}" aria-label="최신 칼럼: {{ featured_post.title | escape }}">
+          <a class="home-featured" href="{{ featured_post.url | relative_url }}" aria-label="{{ home_copy.featured_aria_prefix }}: {{ featured_post.title | escape }}">
             <span class="featured-media" aria-hidden="true">
               {% if featured_image %}
               <img src="{{ featured_image | relative_url }}" alt="" loading="eager" decoding="async" fetchpriority="high" />
@@ -38,11 +39,11 @@
               {% endif %}
             </span>
             <span class="featured-copy">
-              <span class="featured-kicker">최신 칼럼</span>
+              <span class="featured-kicker">{{ home_copy.featured_kicker }}</span>
               <span class="meta"><time datetime="{{ featured_post.date | date_to_xmlschema }}">{{ featured_post.date | date: "%Y년 %-m월 %-d일" }}</time><span>{{ featured_post.category | default: "Column" }}</span></span>
               <h2>{{ featured_post.title }}</h2>
               <p>{{ featured_post.description }}</p>
-              <span class="featured-link" aria-hidden="true">글 읽기 <span>→</span></span>
+              <span class="featured-link" aria-hidden="true">{{ home_copy.featured_open_label }} <span>→</span></span>
             </span>
           </a>
         </section>
@@ -50,8 +51,8 @@
         {% if site.posts.size > 1 %}
         <section class="recent-section" aria-labelledby="recent-posts-title">
           <header class="section-heading">
-            <div><p class="eyebrow">Recent archive</p><h2 id="recent-posts-title">최근 글</h2></div>
-            <a class="section-heading-link" href="{{ pages.timeline.path | relative_url }}">{{ pages.timeline.label }} 보기</a>
+            <div><p class="eyebrow">{{ home_copy.recent_eyebrow }}</p><h2 id="recent-posts-title">{{ home_copy.recent_title }}</h2></div>
+            <a class="section-heading-link" href="{{ pages.timeline.path | relative_url }}">{{ home_copy.recent_more_label }}</a>
           </header>
           <div class="recent-post-list">
             {% for post in site.posts offset: 1 limit: 3 %}
@@ -72,20 +73,20 @@
         {% endif %}
 
         <section class="home-discovery" aria-labelledby="home-discovery-title">
-          <header class="section-heading home-discovery-heading"><div><p class="eyebrow">Exploration guide</p><h2 id="home-discovery-title">{{ pages.home.discovery_title }}</h2></div></header>
+          <header class="section-heading home-discovery-heading"><div><p class="eyebrow">{{ home_copy.discovery_eyebrow }}</p><h2 id="home-discovery-title">{{ home_copy.discovery_title }}</h2></div></header>
           <div class="home-discovery-layout">
             <a class="discovery-primary" href="{{ pages.start.path | relative_url }}">
-              <span>{{ pages.home.discovery_primary_label | strip }}</span><strong>{{ pages.start.title | strip }}</strong><p>{{ pages.home.discovery_primary_text | strip }}</p><em aria-hidden="true">탐색 경로 열기 →</em>
+              <span>{{ home_copy.discovery_primary_label | strip }}</span><strong>{{ pages.start.title | strip }}</strong><p>{{ home_copy.discovery_primary_text | strip }}</p><em aria-hidden="true">{{ home_copy.discovery_open_label }} →</em>
             </a>
-            <nav class="discovery-links" aria-label="다른 탐색 방법">
-              <a href="{{ pages.topics.path | relative_url }}"><strong>{{ pages.topics.title }}</strong><span>분야를 넘나드는 질문과 연결로 찾기</span></a>
-              <a href="{{ pages.categories.path | relative_url }}"><strong>{{ pages.categories.title }}</strong><span>게임 산업·AI 등 전문 분야로 찾기</span></a>
-              <a href="{{ pages.timeline.path | relative_url }}"><strong>{{ pages.timeline.title }}</strong><span>작성 시각과 공개 순서로 찾기</span></a>
+            <nav class="discovery-links" aria-label="{{ home_copy.discovery_nav_label }}">
+              <a href="{{ pages.topics.path | relative_url }}"><strong>{{ pages.topics.title }}</strong><span>{{ home_copy.topics_discovery_text }}</span></a>
+              <a href="{{ pages.categories.path | relative_url }}"><strong>{{ pages.categories.title }}</strong><span>{{ home_copy.categories_discovery_text }}</span></a>
+              <a href="{{ pages.timeline.path | relative_url }}"><strong>{{ pages.timeline.title }}</strong><span>{{ home_copy.timeline_discovery_text }}</span></a>
             </nav>
           </div>
         </section>
         {% else %}
-        <section class="empty glass-panel">아직 등록된 칼럼이 없습니다.</section>
+        <section class="empty glass-panel">{{ home_copy.empty_message }}</section>
         {% endif %}
       </main>
     </div>
