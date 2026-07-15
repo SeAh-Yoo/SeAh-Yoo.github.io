@@ -53,11 +53,11 @@ search:
   empty_message: "그런 기록은 존재하지 않습니다."
 
 themes:
-  unit_violet: "오염된 관로"
-  ember_white: "구리빛 공간"
-  azure_form: "깨끗한 구역"
-  sovereign_obsidian: "어두운 통로"
-  neon_shell: "희미한 불빛"
+  unit_violet: "하수관 중심"
+  ember_white: "벽돌길 관로"
+  azure_form: "하수 저장고"
+  sovereign_obsidian: "어둑한 통로"
+  neon_shell: "이끼 배관로"
 
 pages:
   home:
