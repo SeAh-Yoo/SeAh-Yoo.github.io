@@ -1,7 +1,7 @@
 # 유세아의 문하수도
 
 > **하위 문화의 중심을 꿈꾸는 서브컬쳐의 하수도**
-> 게임을 비롯한 서브컬처, 영화, 인터넷, AI 등과 사회에서 수신된 신호를 멋대로 기록하는 이상 공간입니다.
+> 게임을 비롯한 서브컬처, 영화, 인터넷, AI와 사회에서 발견한 질문을 멋대로 기록하는 이상 공간입니다.
 
 **웹사이트:** https://seah-yoo.github.io/
 
@@ -16,7 +16,7 @@
 - 포스트별 고유 URL과 canonical 주소
 - Open Graph, X 카드, `Blog`·`BlogPosting` JSON-LD
 - 자동 `sitemap.xml`과 `robots.txt`
-- GoatCounter 익명 방문·읽기 신호와 정적 공간 현황
+- GoatCounter 익명 방문·읽기 현황과 정적 공간 현황
 - 예상 완독 시간, 스크롤 진행 표시, 핵심 논지와 자동 목차
 - Kramdown 각주 및 참고 문헌과 본문 상호 이동
 - Front Matter 작성 시각 기준 이전 글·다음 글
@@ -30,49 +30,45 @@
 - giscus 댓글과 반응
 - 모바일 사이드바 접힘과 `TOP` 버튼
 
-## 브랜드와 기관 문구 관리
+## 브랜드와 화면 문구 관리
 
-브랜드명, 기관명, 여섯 탐색 메뉴, 페이지 제목·소개·검색 문구와 테마 표시명은 모두 `_data/site_identity.yml`에서 관리합니다. 명칭을 바꿀 때 개별 레이아웃이나 페이지를 찾아 수정하지 말고 이 파일의 해당 값만 변경합니다.
+브랜드명, 운영자 정보, 탐색 메뉴, 페이지 제목·소개·검색 문구와 테마 표시명은 모두 `_data/site_identity.yml`에서 관리합니다. 명칭을 바꿀 때 개별 레이아웃이나 페이지를 찾아 수정하지 말고 이 파일의 해당 값만 변경합니다. 아래 관리 절에는 현재 표시값 표를 복제하지 않고 설정 그룹과 용도만 기록합니다.
 
 주요 그룹은 다음과 같습니다.
 
 - `brand`: 블로그명, 설명, 저자, 프로필과 인용 카드 문구
-- `institution`: 운영자 유세아의 공개 서비스, 기록 목적과 안내문
-- `pages`: 중심 합류점·공간 안내·공간 이력·공간 현황·공간 계통·출처 및 인용의 제목과 설명
+- `operator`: 운영자 유세아의 소개, 공개 목적과 안내문
+- `pages`: 홈과 탐색 페이지의 제목·설명·메뉴명, 소개 페이지의 익명 통계 문구, 공간 현황의 지표명
 - `navigation`, `search`, `themes`: 사이드바, 검색창과 테마 선택기에 표시되는 문구
 
 각 페이지 Front Matter에는 표시 문구 대신 `identity_key`만 둡니다. `_layouts/page.html`과 `_includes/head.html`이 이 키로 화면 제목, 소개, SEO 설명과 소셜 미리보기 문구를 함께 가져옵니다.
 
-### 현재 브랜드·기관 설정
+### 중앙 설정 구조
 
-| 항목 | 설정 키 | 현재 값 |
-| --- | --- | --- |
-| 블로그명 | `brand.name` | 유세아의 문하수도 |
-| 영문명 | `brand.english_name` | The Literary Underground |
-| 사이드바 설명 | `brand.sidebar_subtitle` | 하위 문화의 중심을 꿈꾸는 서브컬쳐의 하수도 |
-| 운영자 | `institution.legal_name` | 유세아 |
-| 영문명 | `institution.short_name` | SeAh Yoo |
-| 대외 서비스 | `institution.public_service` | 개인 기록 공개 열람 서비스 |
-| 공개 목적 | `institution.public_mission` | 게임·서브컬처·영화·인터넷·AI와 사회에서 발견한 질문을 수집·정리·공개합니다. |
-| 숨은 목적 | `institution.concealed_mission` | 쓸데없이 오래 생각한 것과 잊히기 아까운 문화의 잔여물을 남몰래 보존합니다. |
-| 운영자 소개 | `institution.introduction` | 2000년 10월 10일생, 천칭자리, 키 170.8cm, 체중은 비밀. |
-| 홈 상단 표기 | `pages.home.eyebrow` | 주술망 안전공사 공개 기록망 |
+| 설정 그룹 | 관리하는 내용 |
+| --- | --- |
+| `brand` | 블로그명, 설명, 저자와 인용 카드 문구 |
+| `operator` | 운영자 소개, 공개·보존 목적과 이용 안내문 |
+| `navigation` | 사이드바와 보조 탐색 메뉴 문구 |
+| `search` | 검색창 제목, 상태와 도움말 |
+| `themes` | 화면 테마 표시명 |
+| `pages` | 페이지별 메뉴명, 제목, 소개와 화면 지표명 |
 
-현재 운영 주체는 유세아이며, 외부에는 개인 기록 공개 열람 서비스로 안내됩니다. 모든 기록은 작성자의 기억과 취향에 따라 임의로 연결된다는 이용 문구와, 작성한 적 없는 문장이 초안에서 발견될 때의 내부 경고문을 각각 `institution.citizen_notice`, `institution.staff_warning`에서 관리합니다.
+운영자 안내문은 `operator.reader_notice`와 `operator.editor_note`에서 관리합니다. 소개 페이지의 익명 통계 문구는 `pages.about.analytics`, 공간 현황의 화면 문구는 `pages.reading_pulse.dashboard`에서 한꺼번에 바꿀 수 있습니다.
 
 ### 페이지 식별자와 메뉴명
 
-| `identity_key` | 경로 | 일반 레이블 | 페이지 제목 |
-| --- | --- | --- | --- |
-| `home` | `/` | 홈 | 유세아의 문하수도 |
-| `start` | `/start-here/` | 탐색의 시작 | 중심 합류점 |
-| `about` | `/about/` | 이곳은 어디 | 공간 안내 |
-| `timeline` | `/timeline/` | 전체 게시물 | 공간 이력 |
-| `reading_pulse` | `/reading-pulse/` | 공간 이용 현황 | 공간 현황 |
-| `topics` | `/topics/` | 소재별 분류 | 공간 계통 |
-| `references` | `/references/` | 정보 수용실 | 출처 및 인용 |
-| `categories` | `/categories/` | 주제별 분류 | 하수 관로 |
-| `not_found` | `/404.html` | — | 해당 구역으로 진입할 수 없습니다 |
+| `identity_key` | 경로 | 역할 |
+| --- | --- | --- |
+| `home` | `/` | 홈 소개와 추천 탐색 |
+| `start` | `/start-here/` | 처음 읽을 기록 안내 |
+| `about` | `/about/` | 운영자·편집 원칙·이용 안내 |
+| `timeline` | `/timeline/` | 전체 게시물의 작성 이력 |
+| `reading_pulse` | `/reading-pulse/` | 익명 방문과 읽기 현황 |
+| `topics` | `/topics/` | 소재와 질문의 관계 탐색 |
+| `references` | `/references/` | 참고문헌과 출처 목록 |
+| `categories` | `/categories/` | 주제별 게시물 분류 |
+| `not_found` | `/404.html` | 찾을 수 없는 페이지 안내 |
 
 ## 색상 테마와 브라우저 설정
 
@@ -256,7 +252,7 @@ utm_campaign=post-2026-07-07-game-for-girls
 
 ### 정적 「공간 현황」 페이지
 
-[`/reading-pulse/`](https://seah-yoo.github.io/reading-pulse/)는 공개 GoatCounter 카운터를 하루 한 번 읽어 만든 정적 스냅샷입니다. 누적 방문, 최근 30일 글 방문, 75% 읽기와 완독 신호를 글별로 보여 줍니다.
+[`/reading-pulse/`](https://seah-yoo.github.io/reading-pulse/)는 공개 GoatCounter 카운터를 하루 한 번 읽어 만든 정적 스냅샷입니다. 누적 방문, 최근 30일 글 방문, 75% 읽기와 완독 기록을 글별로 보여 줍니다.
 
 - 원본 데이터: `_data/reading_pulse.json`
 - 생성 도구: `scripts/refresh-reading-pulse.mjs`
@@ -385,7 +381,7 @@ Discussion 메타데이터 전송: 사용 안 함
 | `/start-here/` | 중심 합류점: 질문별 입문 읽기 순서 | `start_here`, `start_here_order` |
 | `/about/` | 공간 안내: 작성자 소개와 편집 원칙 | `about.html`의 본문 |
 | `/timeline/` | 공간 이력: 작성 시각순 전체 게시물 | 없음 |
-| `/reading-pulse/` | 공간 현황: 익명 방문·완독 신호 | GoatCounter 공개 집계 |
+| `/reading-pulse/` | 공간 현황: 익명 방문·완독 기록 | GoatCounter 공개 집계 |
 | `/topics/` | 공간 계통: 소재와 키워드로 글 탐색 | `topics` |
 | `/references/` | 출처 및 인용: 참고문헌 통합 목록 | `references` |
 
@@ -681,7 +677,7 @@ assets/images/example-post-image-03.jpg
 ## 외부 서비스 의존성
 
 - GitHub Pages 및 Jekyll: 정적 사이트 호스팅과 빌드
-- GoatCounter: 익명 방문·읽기 신호·공개 카운터 기반 정적 독서 스냅샷
+- GoatCounter: 익명 방문·읽기 현황·공개 카운터 기반 정적 독서 스냅샷
 - giscus 및 GitHub Discussions: 댓글과 반응
 - jsDelivr: 웹폰트와 giscus 사용자 정의 테마 리소스
 - 각 SNS의 공식 공유 URL: 포스트 공유
