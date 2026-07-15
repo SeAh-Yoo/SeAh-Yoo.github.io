@@ -43,9 +43,38 @@
 
 각 페이지 Front Matter에는 표시 문구 대신 `identity_key`만 둡니다. `_layouts/page.html`과 `_includes/head.html`이 이 키로 화면 제목, 소개, SEO 설명과 소셜 미리보기 문구를 함께 가져옵니다.
 
+### 현재 브랜드·기관 설정
+
+| 항목 | 설정 키 | 현재 값 |
+| --- | --- | --- |
+| 블로그명 | `brand.name` | 유세아의 문하수도 |
+| 영문명 | `brand.english_name` | The Literary Underground |
+| 사이드바 기관 표기 | `brand.sidebar_subtitle` | 주술망 안전공사 공개정보서비스 |
+| 기관 정식 명칭 | `institution.legal_name` | 주술망 안전공사 |
+| 기관 약칭 | `institution.short_name` | 안전공사 |
+| 대외 서비스 | `institution.public_service` | 공개정보서비스 |
+| 표면상 임무 | `institution.public_mission` | 통신망 안전관리와 손상 기록 복구 |
+| 실제 임무 | `institution.concealed_mission` | 비정상 신호의 탐지·차단·분류와 제한적 공개 |
+
+현재 기관은 도시 통신망의 장애와 손상 기록을 복구하는 공기업처럼 안내됩니다. 실제 운영망에서는 출처 불명의 신호와 반복 송신 기록을 분류하고, 안전이 확인된 일부만 문하수도에 공개한다는 설정입니다. 시민 안내문과 내부 직원 경고문도 각각 `institution.citizen_notice`, `institution.staff_warning`에서 관리합니다.
+
+### 페이지 식별자와 메뉴명
+
+| `identity_key` | 경로 | 일반 레이블 | 페이지 제목 |
+| --- | --- | --- | --- |
+| `home` | `/` | 홈 | 유세아의 문하수도 |
+| `start` | `/start-here/` | 처음 읽기 | 접속 안내 |
+| `about` | `/about/` | 소개 | 운영 기준 |
+| `timeline` | `/timeline/` | 전체 글 | 송신 이력 |
+| `reading_pulse` | `/reading-pulse/` | 접속 현황 | 접속 현황 |
+| `topics` | `/topics/` | 질문별 보기 | 회선 계통도 |
+| `references` | `/references/` | 원문 보관소 | 원문 보관소 |
+| `categories` | `/categories/` | 분야별 회선 | 분야별 회선 |
+| `not_found` | `/404.html` | — | 신호를 찾을 수 없습니다 |
+
 ## 색상 테마와 브라우저 설정
 
-사이드바의 `색상 테마` 드롭다운에서 원형 강조색 견본과 이름을 확인하며 다섯 가지 테마를 선택할 수 있습니다. 데스크톱에서는 사이드바에 항상 보이고, 모바일에서는 `MENU`를 열면 나타납니다.
+사이드바의 `화면 설정` 드롭다운에서 원형 강조색 견본과 이름을 확인하며 다섯 가지 테마를 선택할 수 있습니다. 데스크톱에서는 사이드바에 항상 보이고, 모바일에서는 `MENU`를 열면 나타납니다.
 
 - `unit-violet` — **자수정 회선**: 기본 남보라 바탕과 보라·민트 강조색
 - `ember-white` — **잔불 중계기**: 적갈색 바탕과 주황·적색 강조색
@@ -340,14 +369,14 @@ Discussion 메타데이터 전송: 사용 안 함
 - PC에서는 스크롤해도 화면 왼쪽에 머무는 스티키 탐색 축
 - 900px 이하에서는 상단의 접이식 메뉴로 전환되며 기본 상태는 닫힘
 - 브랜드, 검색, `MENU`, `TOP` 버튼은 메뉴가 닫힌 상태에서도 유지
-- `MENU`를 열면 Explore 탐색, 최근 글 3개, 보조 링크, 색상 테마와 라이선스가 표시
+- `MENU`를 열면 서비스 탐색, 최근 송신 3개, 보조 서비스, 화면 설정과 라이선스가 표시
 - 메뉴 링크 선택, 바깥 영역 클릭, `Esc` 입력 시 메뉴 닫힘
 - 스크롤 방향에 따라 자동으로 열거나 닫지 않음
 - `prefers-reduced-motion` 환경에서는 모션 최소화
 
 ## 발견과 아카이브 페이지
 
-사이드바의 `Explore` 영역과 보조 링크에서 아래 정적 페이지로 이동할 수 있습니다. 모든 목록은 Jekyll 빌드 시 게시물 Front Matter를 읽어 자동으로 생성됩니다.
+사이드바의 `서비스` 영역과 보조 서비스에서 아래 정적 페이지로 이동할 수 있습니다. 모든 목록은 Jekyll 빌드 시 게시물 Front Matter를 읽어 자동으로 생성됩니다.
 
 | 주소 | 역할 | 작성자가 관리할 값 |
 | --- | --- | --- |
@@ -589,7 +618,7 @@ assets/images/example-post-image-03.jpg
 ├─ _includes/
 │  ├─ head.html                    # SEO, RSS 발견, SNS 카드, JSON-LD, hreflang
 │  ├─ analytics-tracking.html      # 공통 GoatCounter 추적 태그
-│  ├─ sidebar.html                 # 브랜드, 빠른 도구, Explore, 최근 글, 테마 설정
+│  ├─ sidebar.html                 # 브랜드, 빠른 도구, 서비스, 최근 송신, 화면 설정
 │  ├─ site-search.html             # 명령 팔레트 검색 UI
 │  ├─ post-translations.html       # 영어·일본어 번역 버튼
 │  ├─ post-series.html             # 연재 목록
@@ -599,7 +628,7 @@ assets/images/example-post-image-03.jpg
 ├─ _data/
 │  ├─ analytics.json               # GoatCounter 코드와 요약 캐시 설정
 │  ├─ paths.yml                    # 시작 경로의 제목과 소개
-│  ├─ reading_pulse.json           # 공개 카운터 기반 정적 독서 스냅샷
+│  ├─ reading_pulse.json           # 공개 카운터 기반 정적 접속 현황 스냅샷
 │  ├─ site_identity.yml            # 브랜드·기관·메뉴·페이지 문구의 단일 기준
 │  └─ topics.yml                   # 주제 지도 항목과 설명
 ├─ _layouts/
@@ -627,11 +656,11 @@ assets/images/example-post-image-03.jpg
 │  ├─ search.css                   # 검색 버튼과 명령 팔레트
 │  ├─ post-actions.css             # 읽기 보강, 각주, 목차, 연재, 공유, 인쇄, 댓글
 │  ├─ giscus-theme-base.css        # giscus 공통 테마 기반
-│  ├─ giscus-unit-violet.css       # 자수정 관로 댓글 테마
-│  ├─ giscus-ember-white.css       # 잔불 벽돌 댓글 테마
-│  ├─ giscus-azure-form.css        # 청람 수문 댓글 테마
+│  ├─ giscus-unit-violet.css       # 자수정 회선 댓글 테마
+│  ├─ giscus-ember-white.css       # 잔불 중계기 댓글 테마
+│  ├─ giscus-azure-form.css        # 청람 신호 댓글 테마
 │  ├─ giscus-sovereign-obsidian.css # 흑요 교환국 댓글 테마
-│  └─ giscus-neon-shell.css        # 녹광 배수로 댓글 테마
+│  └─ giscus-neon-shell.css        # 녹광 단말기 댓글 테마
 ├─ categories.html
 ├─ start-here.html                 # 접속 안내: 입문 읽기 경로
 ├─ topics.html                     # 회선 계통도
