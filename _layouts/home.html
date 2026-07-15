@@ -19,10 +19,10 @@
         {% assign featured_image = featured_post.image | default: featured_post.image1 %}
         <section class="home-cover" aria-labelledby="home-title">
           <header class="home-hero">
-            <p class="eyebrow">{{ pages.home.eyebrow }}</p>
+            <p class="eyebrow">{{ pages.home.eyebrow | strip }}</p>
             <h1 id="home-title"><a class="hero-title-link" href="{{ '/' | relative_url }}">{{ brand.name }}</a></h1>
             <p class="home-deck">{{ brand.home_tagline }}</p>
-            <nav class="hero-actions" aria-label="추천 탐색 경로">
+            <nav class="hero-actions" aria-label="{{ pages.home.discovery_primary_label | strip }}">
               <a class="hero-action hero-action-primary" href="{{ pages.start.path | relative_url }}">{{ pages.start.title }}</a>
               <a class="hero-action" href="{{ pages.timeline.path | relative_url }}">{{ pages.timeline.title }}</a>
               <a class="hero-action" href="{{ pages.topics.path | relative_url }}">{{ pages.topics.title }}</a>
@@ -75,7 +75,7 @@
           <header class="section-heading home-discovery-heading"><div><p class="eyebrow">Exploration guide</p><h2 id="home-discovery-title">{{ pages.home.discovery_title }}</h2></div></header>
           <div class="home-discovery-layout">
             <a class="discovery-primary" href="{{ pages.start.path | relative_url }}">
-              <span>{{ pages.home.discovery_primary_label }}</span><strong>{{ pages.start.title }}</strong><p>{{ pages.home.discovery_primary_text }}</p><em aria-hidden="true">탐색 경로 열기 →</em>
+              <span>{{ pages.home.discovery_primary_label | strip }}</span><strong>{{ pages.start.title | strip }}</strong><p>{{ pages.home.discovery_primary_text | strip }}</p><em aria-hidden="true">탐색 경로 열기 →</em>
             </a>
             <nav class="discovery-links" aria-label="다른 탐색 방법">
               <a href="{{ pages.topics.path | relative_url }}"><strong>{{ pages.topics.title }}</strong><span>분야를 넘나드는 질문과 연결로 찾기</span></a>

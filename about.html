@@ -3,10 +3,11 @@ layout: page
 identity_key: about
 permalink: /about/
 ---
+{% assign about_copy = site.data.site_identity.pages.about %}
 <section class="about-section glass-panel" aria-labelledby="about-focus-title">
   <p class="eyebrow">Author profile</p>
-  <h2 id="about-focus-title">{{ site.data.site_identity.institution.legal_name }}</h2>
-  <p>{{ site.data.site_identity.institution.introduction }}</p>
+  <h2 id="about-focus-title">{{ site.data.site_identity.operator.name }}</h2>
+  <p>{{ site.data.site_identity.operator.introduction }}</p>
 </section>
 
 <section class="about-section glass-panel" aria-labelledby="about-method-title">
@@ -29,12 +30,12 @@ permalink: /about/
 
 <section class="about-section glass-panel" aria-labelledby="about-analytics-title">
   <p class="eyebrow">Privacy</p>
-  <h2 id="about-analytics-title">익명 이용 통계</h2>
-  <p>문하수도는 GoatCounter로 익명 방문 흐름과 기록 읽기 신호를 집계합니다. 쿠키나 영구 식별자를 만들지 않으며, 수치는 독자 수의 확정값이 아니라 편집을 참고하기 위한 대략적인 흐름입니다.</p>
+  <h2 id="about-analytics-title">{{ about_copy.analytics.title }}</h2>
+  <p>{{ about_copy.analytics.description }}</p>
   <p>원하지 않으면 <a href="#toggle-goatcounter">이 브라우저에서 통계 제외하기</a>를 선택할 수 있습니다. 자세한 방식은 <a href="https://www.goatcounter.com/help/privacy" rel="noopener noreferrer" target="_blank">GoatCounter 개인정보 안내</a>에서 확인할 수 있습니다.</p>
 </section>
 
 <aside class="about-note glass-panel" aria-label="이용 안내">
   <strong>이용자 안내</strong>
-  <p>{{ site.data.site_identity.institution.citizen_notice }}</p>
+  <p>{{ site.data.site_identity.operator.reader_notice }}</p>
 </aside>
