@@ -13,10 +13,10 @@
       <main class="content" id="main-content">
         {% assign page_copy = site.data.site_identity.pages[page.identity_key] %}
         <header class="hero page-hero glass-panel">
-          <p class="eyebrow">{{ page_copy.eyebrow | default: page.eyebrow | default: site.data.site_identity.brand.english_name }}</p>
-          <h1>{{ page_copy.title | default: page.title }}</h1>
+          <p class="eyebrow">{{ page_copy.eyebrow | default: page.eyebrow | default: site.data.site_identity.brand.english_name | strip }}</p>
+          <h1>{{ page_copy.title | default: page.title | strip }}</h1>
           {% assign page_intro = page_copy.intro | default: page.intro %}
-          {% if page_intro %}<p>{{ page_intro }}</p>{% endif %}
+          {% if page_intro %}<p>{{ page_intro | strip }}</p>{% endif %}
         </header>
 
         {{ content }}
