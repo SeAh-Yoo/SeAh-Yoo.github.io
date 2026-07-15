@@ -138,7 +138,7 @@ pages:
 목록은 Jekyll 빌드 시 게시물 Front Matter를 읽어 자동으로 생성됩니다.
 
 | 주소 | 역할 | 컨셉 강조용 보조 명칭 | 작성자가 관리할 값 |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | `/start-here/` | 탐색 페이지 | 중심 합류점 | `start_here`, `start_here_order` |
 | `/about/` | 소개 페이지 | 공간 안내 | `_data/site_identity.yml`의 `operator`, `pages.about` |
 | `/timeline/` | 전체 게시물 | 공간 이력 | 없음 |
