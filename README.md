@@ -1,13 +1,13 @@
 # 유세아의 문하수도
 
-> **주술망 안전공사 공개정보서비스**
-> 게임 산업, 인터넷 문화, 서브컬처, 영화, AI와 사회에서 수신된 신호를 수집·분류·복원하는 유세아의 비평 기록망입니다.
+> **하위 문화의 중심을 꿈꾸는 서브컬쳐의 하수도**
+> 게임을 비롯한 서브컬처, 영화, 인터넷, AI 등과 사회에서 수신된 신호를 멋대로 기록하는 이상 공간입니다.
 
 **웹사이트:** https://seah-yoo.github.io/
 
 ## 소개
 
-이 저장소는 GitHub Pages와 Jekyll로 운영되는 개인 칼럼 블로그입니다. 화면에서는 현실의 통신·안전 공기업처럼 보이는 **주술망 안전공사**의 공개 기록망을 표방하고, 그 아래에 출처가 불분명한 신호와 손상 기록을 다루는 기관형 세계관을 둡니다.
+이 저장소는 GitHub Pages와 Jekyll로 운영되는 유세아의 개인 칼럼 블로그입니다. 화면에서는 게임·서브컬처·영화·인터넷·AI와 사회에서 발견한 질문과 문화의 잔여물이 흘러드는 이상 공간을 표방하며, 공개 가능한 개인 기록을 임의의 계통으로 연결해 제공합니다.
 
 각 글은 `/posts/<slug>/` 형태의 독립적인 정적 HTML 문서로 생성됩니다. 검색 엔진과 소셜 미디어 미리보기 봇이 제목, 설명, 본문, 대표 이미지와 구조화 데이터를 직접 읽을 수 있도록 구성되어 있습니다.
 
@@ -16,14 +16,14 @@
 - 포스트별 고유 URL과 canonical 주소
 - Open Graph, X 카드, `Blog`·`BlogPosting` JSON-LD
 - 자동 `sitemap.xml`과 `robots.txt`
-- GoatCounter 익명 방문·읽기 신호와 정적 접속 현황
+- GoatCounter 익명 방문·읽기 신호와 정적 공간 현황
 - 예상 완독 시간, 스크롤 진행 표시, 핵심 논지와 자동 목차
 - Kramdown 각주 및 참고 문헌과 본문 상호 이동
 - Front Matter 작성 시각 기준 이전 글·다음 글
 - Front Matter 기반 연재 목록
-- 접속 안내, 회선 계통도, 자동 송신 이력
-- 공개 카운터 기반 정적 「접속 현황」 페이지
-- Front Matter 기반 원문 보관소
+- 중심 합류점, 공간 계통, 자동 공간 이력
+- 공개 카운터 기반 정적 「공간 현황」 페이지
+- Front Matter 기반 출처 및 인용
 - 제목·본문·카테고리·주제·연재 전체 검색
 - 영어·일본어 번역 링크
 - SNS 공유, RSS, 인쇄와 PDF 저장, 인용문 PNG 카드
@@ -37,8 +37,8 @@
 주요 그룹은 다음과 같습니다.
 
 - `brand`: 블로그명, 설명, 저자, 프로필과 인용 카드 문구
-- `institution`: 주술망 안전공사의 명칭, 표면상·실제 임무와 안내문
-- `pages`: 접속 안내·운영 기준·송신 이력·접속 현황·회선 계통도·원문 보관소의 제목과 설명
+- `institution`: 운영자 유세아의 공개 서비스, 기록 목적과 안내문
+- `pages`: 중심 합류점·공간 안내·공간 이력·공간 현황·공간 계통·출처 및 인용의 제목과 설명
 - `navigation`, `search`, `themes`: 사이드바, 검색창과 테마 선택기에 표시되는 문구
 
 각 페이지 Front Matter에는 표시 문구 대신 `identity_key`만 둡니다. `_layouts/page.html`과 `_includes/head.html`이 이 키로 화면 제목, 소개, SEO 설명과 소셜 미리보기 문구를 함께 가져옵니다.
@@ -49,38 +49,40 @@
 | --- | --- | --- |
 | 블로그명 | `brand.name` | 유세아의 문하수도 |
 | 영문명 | `brand.english_name` | The Literary Underground |
-| 사이드바 기관 표기 | `brand.sidebar_subtitle` | 주술망 안전공사 공개정보서비스 |
-| 기관 정식 명칭 | `institution.legal_name` | 주술망 안전공사 |
-| 기관 약칭 | `institution.short_name` | 안전공사 |
-| 대외 서비스 | `institution.public_service` | 공개정보서비스 |
-| 표면상 임무 | `institution.public_mission` | 통신망 안전관리와 손상 기록 복구 |
-| 실제 임무 | `institution.concealed_mission` | 비정상 신호의 탐지·차단·분류와 제한적 공개 |
+| 사이드바 설명 | `brand.sidebar_subtitle` | 하위 문화의 중심을 꿈꾸는 서브컬쳐의 하수도 |
+| 운영자 | `institution.legal_name` | 유세아 |
+| 영문명 | `institution.short_name` | SeAh Yoo |
+| 대외 서비스 | `institution.public_service` | 개인 기록 공개 열람 서비스 |
+| 공개 목적 | `institution.public_mission` | 게임·서브컬처·영화·인터넷·AI와 사회에서 발견한 질문을 수집·정리·공개합니다. |
+| 숨은 목적 | `institution.concealed_mission` | 쓸데없이 오래 생각한 것과 잊히기 아까운 문화의 잔여물을 남몰래 보존합니다. |
+| 운영자 소개 | `institution.introduction` | 2000년 10월 10일생, 천칭자리, 키 170.8cm, 체중은 비밀. |
+| 홈 상단 표기 | `pages.home.eyebrow` | 주술망 안전공사 공개 기록망 |
 
-현재 기관은 도시 통신망의 장애와 손상 기록을 복구하는 공기업처럼 안내됩니다. 실제 운영망에서는 출처 불명의 신호와 반복 송신 기록을 분류하고, 안전이 확인된 일부만 문하수도에 공개한다는 설정입니다. 시민 안내문과 내부 직원 경고문도 각각 `institution.citizen_notice`, `institution.staff_warning`에서 관리합니다.
+현재 운영 주체는 유세아이며, 외부에는 개인 기록 공개 열람 서비스로 안내됩니다. 모든 기록은 작성자의 기억과 취향에 따라 임의로 연결된다는 이용 문구와, 작성한 적 없는 문장이 초안에서 발견될 때의 내부 경고문을 각각 `institution.citizen_notice`, `institution.staff_warning`에서 관리합니다.
 
 ### 페이지 식별자와 메뉴명
 
 | `identity_key` | 경로 | 일반 레이블 | 페이지 제목 |
 | --- | --- | --- | --- |
 | `home` | `/` | 홈 | 유세아의 문하수도 |
-| `start` | `/start-here/` | 처음 읽기 | 접속 안내 |
-| `about` | `/about/` | 소개 | 운영 기준 |
-| `timeline` | `/timeline/` | 전체 글 | 송신 이력 |
-| `reading_pulse` | `/reading-pulse/` | 접속 현황 | 접속 현황 |
-| `topics` | `/topics/` | 질문별 보기 | 회선 계통도 |
-| `references` | `/references/` | 원문 보관소 | 원문 보관소 |
-| `categories` | `/categories/` | 분야별 회선 | 분야별 회선 |
-| `not_found` | `/404.html` | — | 신호를 찾을 수 없습니다 |
+| `start` | `/start-here/` | 탐색의 시작 | 중심 합류점 |
+| `about` | `/about/` | 이곳은 어디 | 공간 안내 |
+| `timeline` | `/timeline/` | 전체 게시물 | 공간 이력 |
+| `reading_pulse` | `/reading-pulse/` | 공간 이용 현황 | 공간 현황 |
+| `topics` | `/topics/` | 소재별 분류 | 공간 계통 |
+| `references` | `/references/` | 정보 수용실 | 출처 및 인용 |
+| `categories` | `/categories/` | 주제별 분류 | 하수 관로 |
+| `not_found` | `/404.html` | — | 해당 구역으로 진입할 수 없습니다 |
 
 ## 색상 테마와 브라우저 설정
 
-사이드바의 `화면 설정` 드롭다운에서 원형 강조색 견본과 이름을 확인하며 다섯 가지 테마를 선택할 수 있습니다. 데스크톱에서는 사이드바에 항상 보이고, 모바일에서는 `MENU`를 열면 나타납니다.
+사이드바의 `공간 설정` 드롭다운에서 원형 강조색 견본과 이름을 확인하며 다섯 가지 테마를 선택할 수 있습니다. 데스크톱에서는 사이드바에 항상 보이고, 모바일에서는 `MENU`를 열면 나타납니다.
 
-- `unit-violet` — **자수정 회선**: 기본 남보라 바탕과 보라·민트 강조색
-- `ember-white` — **잔불 중계기**: 적갈색 바탕과 주황·적색 강조색
-- `azure-form` — **청람 신호**: 청색 바탕과 하늘색·연보라 강조색
-- `sovereign-obsidian` — **흑요 교환국**: 흑요색 바탕과 금색·장미색 강조색
-- `neon-shell` — **녹광 단말기**: 녹청색 바탕과 민트·주황 강조색
+- `unit-violet` — **오염된 관로**: 기본 남보라 바탕과 보라·민트 강조색
+- `ember-white` — **구리빛 공간**: 적갈색 바탕과 주황·적색 강조색
+- `azure-form` — **깨끗한 구역**: 청색 바탕과 하늘색·연보라 강조색
+- `sovereign-obsidian` — **어두운 통로**: 흑요색 바탕과 금색·장미색 강조색
+- `neon-shell` — **희미한 불빛**: 녹청색 바탕과 민트·주황 강조색
 
 선택값은 `localStorage`의 `literary-underground:preferences:v1`에 JSON으로 보존됩니다. 기존 `unit-01`, `unit-02`, `kivotos` 값은 각각 `unit-violet`, `ember-white`, `azure-form`으로 자동 이전됩니다. `scripts/site-preferences.js`는 사이트 본문과 브라우저 테마 색상, giscus 사용자 정의 테마를 함께 갱신합니다.
 
@@ -195,7 +197,7 @@ Esc                    검색창 닫기
 - `styles/search.css`
 - `_includes/sidebar.html`
 
-## GoatCounter: 익명 방문과 접속 현황
+## GoatCounter: 익명 방문과 공간 현황
 
 이 사이트는 GoatCounter를 사용합니다. 여기서 숫자는 사람을 식별한 정확한 독자 수가 아니라, 세션 기반으로 집계된 **익명 방문 흐름**입니다. GoatCounter의 공개 카운터 응답에서 `count_unique`는 `count`와 같은 하위호환 필드이므로 별도의 순방문 지표로 표시하지 않습니다.
 
@@ -216,7 +218,7 @@ GoatCounter 사이트 코드와 요약 카운터 캐시 설정은 한 곳에서 
 - 공통 추적 태그는 `_includes/analytics-tracking.html`에 있습니다.
 - 정적 페이지·홈·카테고리·포스트가 같은 설정을 사용하므로 포크하거나 도메인을 바꿀 때 누락될 위험이 적습니다.
 
-### 게시물 카운터와 접속 현황
+### 게시물 카운터와 공간 현황
 
 현재 사이드바는 실시간 요약 숫자를 직접 표시하지 않고, `인기와 읽기` 링크로 정적 [`/reading-pulse/`](https://seah-yoo.github.io/reading-pulse/) 페이지를 엽니다.
 
@@ -235,7 +237,7 @@ GoatCounter 사이트 코드와 요약 카운터 캐시 설정은 한 곳에서 
 | `read-complete--<slug>` | 30초 이상 머문 뒤 읽기 진행이 90%에 도달했을 때 |
 | `quote-card-export--<slug>` | PNG 인용 카드를 만들었을 때 |
 | `share-*--<slug>` | 공유 창·공유 수단·주소 복사·인쇄/PDF를 사용했을 때 |
-| `reference-open--<id>` | 원문 보관소의 외부 참고문헌을 열었을 때 |
+| `reference-open--<id>` | 출처 및 인용의 외부 참고문헌을 열었을 때 |
 | `start-here-select--<path>` | 시작 경로에서 글을 선택했을 때 |
 
 GoatCounter가 아직 준비되지 않은 아주 이른 클릭은 짧은 큐에 보관해 전송을 재시도합니다. 동적으로 만들어지는 인용 카드처럼 초기 자동 바인딩 대상이 아닌 요소도 JavaScript에서 직접 기록합니다.
@@ -252,7 +254,7 @@ utm_campaign=post-2026-07-07-game-for-girls
 
 주소 복사는 읽기 좋은 canonical 주소를 그대로 유지하고, 복사 행동 자체만 이벤트로 기록합니다. 뉴스레터나 직접 작성한 SNS 게시물에도 같은 규칙을 사용하면 유입원을 비교할 수 있습니다.
 
-### 정적 「접속 현황」 페이지
+### 정적 「공간 현황」 페이지
 
 [`/reading-pulse/`](https://seah-yoo.github.io/reading-pulse/)는 공개 GoatCounter 카운터를 하루 한 번 읽어 만든 정적 스냅샷입니다. 누적 방문, 최근 30일 글 방문, 75% 읽기와 완독 신호를 글별로 보여 줍니다.
 
@@ -369,23 +371,23 @@ Discussion 메타데이터 전송: 사용 안 함
 - PC에서는 스크롤해도 화면 왼쪽에 머무는 스티키 탐색 축
 - 900px 이하에서는 상단의 접이식 메뉴로 전환되며 기본 상태는 닫힘
 - 브랜드, 검색, `MENU`, `TOP` 버튼은 메뉴가 닫힌 상태에서도 유지
-- `MENU`를 열면 서비스 탐색, 최근 송신 3개, 보조 서비스, 화면 설정과 라이선스가 표시
+- `MENU`를 열면 탐색기, 최근 기록 3개, 보조 탐색기, 공간 설정과 라이선스가 표시
 - 메뉴 링크 선택, 바깥 영역 클릭, `Esc` 입력 시 메뉴 닫힘
 - 스크롤 방향에 따라 자동으로 열거나 닫지 않음
 - `prefers-reduced-motion` 환경에서는 모션 최소화
 
 ## 발견과 아카이브 페이지
 
-사이드바의 `서비스` 영역과 보조 서비스에서 아래 정적 페이지로 이동할 수 있습니다. 모든 목록은 Jekyll 빌드 시 게시물 Front Matter를 읽어 자동으로 생성됩니다.
+사이드바의 `탐색기` 영역과 보조 탐색기에서 아래 정적 페이지로 이동할 수 있습니다. 모든 목록은 Jekyll 빌드 시 게시물 Front Matter를 읽어 자동으로 생성됩니다.
 
 | 주소 | 역할 | 작성자가 관리할 값 |
 | --- | --- | --- |
-| `/start-here/` | 접속 안내: 질문별 입문 읽기 순서 | `start_here`, `start_here_order` |
-| `/about/` | 운영 기준: 운영자 소개와 편집 원칙 | `about.html`의 본문 |
-| `/timeline/` | 송신 이력: 작성 시각순 전체 기록 | 없음 |
-| `/reading-pulse/` | 접속 현황: 익명 방문·읽기 신호 | GoatCounter 공개 집계 |
-| `/topics/` | 회선 계통도: 여러 질문으로 글 탐색 | `topics` |
-| `/references/` | 원문 보관소: 참고문헌 통합 목록 | `references` |
+| `/start-here/` | 중심 합류점: 질문별 입문 읽기 순서 | `start_here`, `start_here_order` |
+| `/about/` | 공간 안내: 작성자 소개와 편집 원칙 | `about.html`의 본문 |
+| `/timeline/` | 공간 이력: 작성 시각순 전체 게시물 | 없음 |
+| `/reading-pulse/` | 공간 현황: 익명 방문·완독 신호 | GoatCounter 공개 집계 |
+| `/topics/` | 공간 계통: 소재와 키워드로 글 탐색 | `topics` |
+| `/references/` | 출처 및 인용: 참고문헌 통합 목록 | `references` |
 
 ### 시작 경로
 
@@ -398,7 +400,7 @@ start_here_order: 2
 
 `start_here` 값은 `_data/paths.yml`의 `id`와 정확히 같아야 합니다. 같은 경로의 글은 `start_here_order` 오름차순으로 표시됩니다. 경로에 넣지 않을 글은 두 값을 생략하면 됩니다.
 
-### 회선 계통도
+### 공간 계통
 
 `category`가 큰 분류라면 `topics`는 글을 여러 관점으로 연결하는 세분화된 분류입니다. 주제 목록과 설명은 `_data/topics.yml`에 두고, 게시물에서는 사람에게 읽기 쉬운 `label` 값을 그대로 씁니다.
 
@@ -411,9 +413,9 @@ topics:
 
 주제는 2~4개 정도를 권장합니다. 새 주제는 먼저 `_data/topics.yml`에 `label`, `slug`, `description`을 등록한 뒤 같은 `label`을 게시물에 추가합니다. 주제는 검색 색인에도 포함됩니다.
 
-### 원문 보관소와 참고문헌
+### 출처 및 인용
 
-`/references/`는 각 포스트의 `references` 배열을 합쳐 보여줍니다. 동일한 `id`를 쓰면 원문 보관소에는 한 번만 보이고, 그 자료를 인용한 글이 함께 표시됩니다.
+`/references/`는 각 포스트의 `references` 배열을 합쳐 보여줍니다. 동일한 `id`를 쓰면 출처 및 인용 페이지에는 한 번만 보이고, 그 자료를 인용한 글이 함께 표시됩니다.
 
 ```yaml
 references:
@@ -429,14 +431,14 @@ references:
 
 - `id`는 영문·숫자·하이픈으로 만든 안정적인 식별자이며 필수입니다.
 - 같은 자료를 여러 글에서 쓸 때는 서지 정보와 `id`를 동일하게 적습니다.
-- `url`이 있으면 원문 보관소의 제목이 외부 원문 링크가 됩니다.
-- 본문 속 각주와 원문 보관소용 `references`는 함께 쓸 수 있습니다. 전자는 문장 가까이, 후자는 블로그 전체의 서지를 관리합니다.
+- `url`이 있으면 출처 및 인용 페이지의 제목이 외부 원문 링크가 됩니다.
+- 본문 속 각주와 출처 및 인용용 `references`는 함께 쓸 수 있습니다. 전자는 문장 가까이, 후자는 블로그 전체의 서지를 관리합니다.
 
-### 송신 이력과 운영 기준 페이지
+### 공간 이력과 공간 안내 페이지
 
-송신 이력은 모든 포스트를 연도·날짜순으로 자동 배열하므로 별도 메타데이터가 필요 없습니다. 연도별 패널 위에 각 글의 기록 카드를 배치하며, 모바일에서는 같은 정보를 더 촘촘한 세로 흐름으로 보여줍니다.
+공간 이력은 모든 포스트를 연도·날짜순으로 자동 배열하므로 별도 메타데이터가 필요 없습니다. 연도별 패널 위에 각 글의 기록 카드를 배치하며, 모바일에서는 같은 정보를 더 촘촘한 세로 흐름으로 보여줍니다.
 
-운영 기준의 제목·소개·기관 안내문은 `_data/site_identity.yml`에서, 상세한 편집 원칙과 이용 안내 본문은 `about.html`에서 관리합니다.
+공간 안내의 제목·소개·작성자 안내문은 `_data/site_identity.yml`에서, 상세한 편집 원칙과 이용 안내 본문은 `about.html`에서 관리합니다.
 
 ## 글 읽기 보강
 
@@ -570,8 +572,8 @@ image: /assets/images/example-post-cover.png
 - `description`: 검색 결과와 SNS 미리보기 설명
 - `thesis`: 목차 바로 아래에 표시할 선택적인 핵심 논지
 - `start_here`, `start_here_order`: 시작 경로와 해당 경로의 읽기 순서
-- `topics`: 회선 계통도와 검색에 쓰는 세분화된 주제 배열
-- `references`: 원문 보관소에 자동 수집할 참고문헌 배열
+- `topics`: 공간 계통과 검색에 쓰는 세분화된 주제 배열
+- `references`: 출처 및 인용에 자동 수집할 참고문헌 배열
 - `slug`, `permalink`: 포스트 식별자와 공개 URL
 - `image`: 대표 이미지
 - `series`, `series_order`: 선택적인 연재명과 회차
@@ -618,7 +620,7 @@ assets/images/example-post-image-03.jpg
 ├─ _includes/
 │  ├─ head.html                    # SEO, RSS 발견, SNS 카드, JSON-LD, hreflang
 │  ├─ analytics-tracking.html      # 공통 GoatCounter 추적 태그
-│  ├─ sidebar.html                 # 브랜드, 빠른 도구, 서비스, 최근 송신, 화면 설정
+│  ├─ sidebar.html                 # 브랜드, 빠른 도구, 탐색기, 최근 기록, 공간 설정
 │  ├─ site-search.html             # 명령 팔레트 검색 UI
 │  ├─ post-translations.html       # 영어·일본어 번역 버튼
 │  ├─ post-series.html             # 연재 목록
@@ -628,13 +630,13 @@ assets/images/example-post-image-03.jpg
 ├─ _data/
 │  ├─ analytics.json               # GoatCounter 코드와 요약 캐시 설정
 │  ├─ paths.yml                    # 시작 경로의 제목과 소개
-│  ├─ reading_pulse.json           # 공개 카운터 기반 정적 접속 현황 스냅샷
+│  ├─ reading_pulse.json           # 공개 카운터 기반 정적 공간 현황 스냅샷
 │  ├─ site_identity.yml            # 브랜드·기관·메뉴·페이지 문구의 단일 기준
 │  └─ topics.yml                   # 주제 지도 항목과 설명
 ├─ _layouts/
 │  ├─ categories.html
 │  ├─ home.html
-│  ├─ page.html                    # 접속 안내·회선 계통도·원문 보관소·송신 이력·접속 현황·운영 기준 공통 레이아웃
+│  ├─ page.html                    # 중심 합류점·공간 계통·출처 및 인용·공간 이력·공간 현황·공간 안내 공통 레이아웃
 │  └─ post.html                    # 포스트 전체 구성과 읽기 정보·목차 삽입 위치
 ├─ _posts/                         # 포스트 마크다운 원본
 ├─ assets/images/                  # 포스트와 프로필 이미지
@@ -656,18 +658,18 @@ assets/images/example-post-image-03.jpg
 │  ├─ search.css                   # 검색 버튼과 명령 팔레트
 │  ├─ post-actions.css             # 읽기 보강, 각주, 목차, 연재, 공유, 인쇄, 댓글
 │  ├─ giscus-theme-base.css        # giscus 공통 테마 기반
-│  ├─ giscus-unit-violet.css       # 자수정 회선 댓글 테마
-│  ├─ giscus-ember-white.css       # 잔불 중계기 댓글 테마
-│  ├─ giscus-azure-form.css        # 청람 신호 댓글 테마
-│  ├─ giscus-sovereign-obsidian.css # 흑요 교환국 댓글 테마
-│  └─ giscus-neon-shell.css        # 녹광 단말기 댓글 테마
+│  ├─ giscus-unit-violet.css       # 오염된 관로 댓글 테마
+│  ├─ giscus-ember-white.css       # 구리빛 공간 댓글 테마
+│  ├─ giscus-azure-form.css        # 깨끗한 구역 댓글 테마
+│  ├─ giscus-sovereign-obsidian.css # 어두운 통로 댓글 테마
+│  └─ giscus-neon-shell.css        # 희미한 불빛 댓글 테마
 ├─ categories.html
-├─ start-here.html                 # 접속 안내: 입문 읽기 경로
-├─ topics.html                     # 회선 계통도
-├─ timeline.html                   # 송신 이력
-├─ references.html                 # 원문 보관소
-├─ reading-pulse.html              # 접속 현황
-├─ about.html                      # 운영자와 편집 원칙
+├─ start-here.html                 # 중심 합류점: 입문 읽기 경로
+├─ topics.html                     # 공간 계통
+├─ timeline.html                   # 공간 이력
+├─ references.html                 # 출처 및 인용
+├─ reading-pulse.html              # 공간 현황
+├─ about.html                      # 공간 안내와 편집 원칙
 ├─ search.json                     # Jekyll이 생성하는 정적 검색 색인
 ├─ feed.xml                        # RSS 2.0 피드
 ├─ index.html
@@ -684,4 +686,4 @@ assets/images/example-post-image-03.jpg
 - jsDelivr: 웹폰트와 giscus 사용자 정의 테마 리소스
 - 각 SNS의 공식 공유 URL: 포스트 공유
 
-전체 검색, 접속 안내, 회선 계통도, 송신 이력, 원문 보관소, 접속 현황, 예상 완독 시간, 각주 및 참고 문헌, 인용 카드, 목차, 연재, 이전·다음 글, RSS 생성과 인쇄 레이아웃은 별도의 유료 서버 없이 정적으로 동작합니다.
+전체 검색, 중심 합류점, 공간 계통, 공간 이력, 출처 및 인용, 공간 현황, 예상 완독 시간, 각주 및 참고 문헌, 인용 카드, 목차, 연재, 이전·다음 글, RSS 생성과 인쇄 레이아웃은 별도의 유료 서버 없이 정적으로 동작합니다.
