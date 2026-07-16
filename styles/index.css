@@ -148,6 +148,12 @@ a { color: inherit; }
 }
 .sidebar-top-button:hover { border-color: var(--color-border-strong); color: var(--color-text-primary); }
 
+@media (min-width: 901px) {
+  .sidebar-quick-actions .sidebar-search { flex: 0 0 auto; }
+  .sidebar-search-trigger, .sidebar-top-button { width: 2.35rem; min-width: 2.35rem; min-height: 2.35rem; padding: 0.45rem; justify-content: center; }
+  .sidebar-search-label, .sidebar-search-shortcut, .sidebar-top-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+}
+
 .sidebar-collapse-region {
   min-height: 0;
   margin-top: 1rem;

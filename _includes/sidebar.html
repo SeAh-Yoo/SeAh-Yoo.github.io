@@ -2,6 +2,7 @@
 {% assign site_copy = identity.locales[identity.settings.default_language] %}
 {% assign brand = site_copy.brand %}
 {% assign pages = site_copy.pages %}
+{% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
 <aside class="sidebar glass-panel" aria-label="{{ brand.short_name }} {{ site_copy.ui.sidebar_aria_suffix }}" data-mobile-sidebar>
   <div class="sidebar-header">
     <a class="brand" href="{{ identity.links.home | relative_url }}" aria-label="{{ brand.name }} {{ site_copy.ui.home_aria_suffix }}">
@@ -52,17 +53,17 @@
         </ul>
       </nav>
 
-      {% if site.posts.size > 0 %}
+      {% if base_posts.size > 0 %}
       <nav class="archive-nav sidebar-latest" aria-labelledby="archive-heading">
         <div class="archive-header">
           <p class="eyebrow" id="archive-heading">{{ site_copy.navigation.latest_heading }}</p>
         </div>
         <ol class="archive-list">
-          {% for post in site.posts limit: 3 %}
+          {% for post in base_posts limit: 3 %}
           <li>
-            <a href="{{ post.url | relative_url }}"{% if page.url == post.url %} class="active" aria-current="page"{% endif %}>
-              <span class="archive-title">{{ post.title }}</span>
-              <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: site_copy.meta.date_short }}</time>
+            <a href="{{ post.url | relative_url }}" data-post-card data-translation-key="{{ post.translation_key | default: post.slug | escape }}"{% if page.url == post.url %} class="active" aria-current="page"{% endif %}>
+              <span class="archive-title" data-post-field data-post-title>{{ post.title }}</span>
+              <time datetime="{{ post.date | date_to_xmlschema }}" data-post-field data-post-date data-date-style="short">{{ post.date | date: site_copy.meta.date_short }}</time>
             </a>
           </li>
           {% endfor %}
@@ -87,6 +88,19 @@
             <option value="sewage-reservoir">{{ site_copy.themes.sewage_reservoir }}</option>
             <option value="dim-passage">{{ site_copy.themes.dim_passage }}</option>
             <option value="moss-pipeline">{{ site_copy.themes.moss_pipeline }}</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="theme-switcher language-switcher" aria-label="{{ site_copy.navigation.language_label }}">
+        <label class="eyebrow" for="site-language-select">{{ site_copy.navigation.language_label }}</label>
+        <div class="theme-select-control language-select-control">
+          {% assign default_language_option = identity.settings.supported_languages | where: "id", identity.settings.default_language | first %}
+          <span class="language-select-flag" data-language-flag aria-hidden="true">{{ default_language_option.flag }}</span>
+          <select id="site-language-select" data-language-select aria-label="{{ site_copy.navigation.language_label }} {{ site_copy.ui.language_select_suffix }}">
+            {% for language in identity.settings.supported_languages %}
+            <option value="{{ language.id }}">{{ language.flag }} {{ site_copy.languages[language.id] }}</option>
+            {% endfor %}
           </select>
         </div>
       </section>

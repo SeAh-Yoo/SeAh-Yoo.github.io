@@ -1,5 +1,8 @@
 ---
 layout: post
+lang: ko
+translation_key: "ncsoft-trust"
+category_key: "game-industry"
 title: "신뢰 회복의 다리를 부순 고소장"
 subtitle: "엔씨소프트가 아직 사랑받지 못하는 이유"
 date: 2026-04-10 17:30:12 +0900

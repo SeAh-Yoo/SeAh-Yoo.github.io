@@ -26,7 +26,7 @@
 
   const normalize = (value) => String(value ?? '')
     .normalize('NFKC')
-    .toLocaleLowerCase('ko-KR')
+    .toLocaleLowerCase(copy('meta.number_locale', 'ko-KR'))
     .replace(/\s+/g, ' ')
     .trim();
 
@@ -50,6 +50,15 @@
     }
 
     return indexPromise;
+  };
+
+  const loadLocalizedIndex = () => loadIndex().then((items) => (
+    window.siteIdentity?.selectPostTranslations(items) || items
+  ));
+
+  const getCategoryLabel = (item) => {
+    const categories = copy('pages.categories.items', []);
+    return categories.find((category) => category.id === item.categoryKey)?.label || item.category;
   };
 
   const createHighlightedText = (text, tokens) => {
@@ -172,7 +181,8 @@
       heading.append(createHighlightedText(item.title || copy('search.untitled_label'), tokens));
       metadata.className = 'site-search-result-meta';
       const topics = Array.isArray(item.topics) ? item.topics : [];
-      metadata.textContent = [item.category, topics.join(', '), item.series, item.dateLabel].filter(Boolean).join(' · ');
+      const dateLabel = window.siteIdentity?.formatPostDate(item.date, 'short') || item.dateLabel;
+      metadata.textContent = [getCategoryLabel(item), topics.join(', '), item.series, dateLabel].filter(Boolean).join(' · ');
       snippet.className = 'site-search-result-snippet';
       snippet.append(createHighlightedText(makeSnippet(item, tokens), tokens));
 
@@ -205,7 +215,7 @@
     }
 
     try {
-      const items = await loadIndex();
+      const items = await loadLocalizedIndex();
       const matched = items
         .map((item) => ({ item, score: scoreItem(item, tokens) }))
         .filter((entry) => entry.score !== null)
@@ -318,6 +328,17 @@
     if (commandShortcut || slashShortcut) {
       event.preventDefault();
       openDialog();
+    }
+  });
+
+  window.addEventListener('site-preference-change', (event) => {
+    if (event.detail?.key !== 'language') {
+      return;
+    }
+    if (dialog.open && normalize(input.value)) {
+      runSearch();
+    } else if (dialog.open) {
+      status.textContent = copy('search.initial_status');
     }
   });
 })();

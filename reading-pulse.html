@@ -9,6 +9,7 @@ permalink: /reading-pulse/
 {% assign site_copy = identity.locales[identity.settings.default_language] %}
 {% assign page_copy = site_copy.pages.reading_pulse %}
 {% assign dashboard_copy = page_copy.dashboard %}
+{% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
 
 <section class="reading-pulse glass-panel" aria-labelledby="reading-pulse-title">
   <div class="reading-pulse-heading">
@@ -42,16 +43,18 @@ permalink: /reading-pulse/
     </dl>
 
     <p class="reading-pulse-updated">
-      {{ dashboard_copy.updated_label }}: <time datetime="{{ pulse.generated_at | date_to_xmlschema }}">{{ pulse.generated_at | date: site_copy.meta.date_short }}</time>
+      {{ dashboard_copy.updated_label }}: <time datetime="{{ pulse.generated_at | date_to_xmlschema }}" data-date-style="short">{{ pulse.generated_at | date: site_copy.meta.date_short }}</time>
     </p>
 
     {% assign ranked_posts = pulse.posts | sort: "month" | reverse %}
     <div class="reading-pulse-list" aria-label="{{ dashboard_copy.post_list_label }}">
       {% for post in ranked_posts %}
-        <article class="reading-pulse-item">
+        {% assign matching_posts = base_posts | where: "url", post.path %}
+        {% assign matching_post = matching_posts | first %}
+        <article class="reading-pulse-item" data-post-card data-translation-key="{{ matching_post.translation_key | default: matching_post.slug | default: post.path | escape }}">
           <div class="reading-pulse-item-heading">
             <p class="eyebrow">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</p>
-            <h3><a href="{{ post.path | relative_url }}">{{ post.title }}</a></h3>
+            <h3><a href="{{ post.path | relative_url }}" data-post-link><span data-post-field data-post-title>{{ post.title }}</span></a></h3>
           </div>
 
           <dl class="reading-pulse-metrics">

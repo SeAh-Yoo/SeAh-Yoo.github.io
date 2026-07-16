@@ -7,16 +7,21 @@ sitemap: false
 {% assign site_copy = identity.locales[identity.settings.default_language] %}
 [
 {% for post in site.posts %}
+  {% assign post_image = post.image | default: post.image1 %}
   {
+    "lang": {{ post.lang | default: identity.settings.default_language | jsonify }},
+    "translationKey": {{ post.translation_key | default: post.slug | jsonify }},
     "title": {{ post.title | jsonify }},
     "url": {{ post.url | relative_url | jsonify }},
     "date": {{ post.date | date_to_xmlschema | jsonify }},
     "dateLabel": {{ post.date | date: site_copy.meta.date_short | jsonify }},
     "category": {{ post.category | default: post.categories.first | default: site_copy.ui.default_category | jsonify }},
+    "categoryKey": {{ post.category_key | default: "" | jsonify }},
     "topics": {{ post.topics | jsonify }},
     "series": {{ post.series | default: "" | jsonify }},
     "description": {{ post.description | default: post.excerpt | strip_html | strip_newlines | normalize_whitespace | jsonify }},
-    "content": {{ post.content | markdownify | strip_html | strip_newlines | normalize_whitespace | jsonify }}
+    "content": {{ post.content | markdownify | strip_html | strip_newlines | normalize_whitespace | jsonify }},
+    "image": {% if post_image %}{{ post_image | relative_url | jsonify }}{% else %}""{% endif %}
   }{% unless forloop.last %},{% endunless %}
 {% endfor %}
 ]

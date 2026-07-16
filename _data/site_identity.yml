@@ -2,9 +2,12 @@ settings:
   default_language: "ko"
   preference_storage_key: "literary-underground:preferences:v1"
   supported_languages:
-    - "ko"
-    - "en"
-    - "ja"
+    - id: "ko"
+      flag: "🇰🇷"
+    - id: "en"
+      flag: "🇺🇸"
+    - id: "ja"
+      flag: "🇯🇵"
 
 # Used by every layout and include for internal and external destinations.
 links:
@@ -22,7 +25,7 @@ assets:
   profile_image: "/assets/images/profile.jpg"
   default_social_image: "/assets/images/default-social.jpg"
 
-# All visible Korean interface copy lives below this key. Phase two adds en and ja siblings.
+# All visible interface copy lives below this key, grouped by language.
 locales:
   ko:
     meta:
@@ -32,6 +35,12 @@ locales:
       date_short: "%Y년 %-m월 %-d일"
       date_month_day: "%m월 %-d일"
       date_long: "%Y년 %-m월 %-d일 %H:%M"
+
+    # Used by the sidebar language selector and post translation navigation.
+    languages:
+      ko: "한국어"
+      en: "English"
+      ja: "日本語"
 
     # Used by _includes/head.html, _includes/sidebar.html, and every layout.
     brand:
@@ -77,6 +86,7 @@ locales:
       post_count_suffix: "posts"
       read_more_label: "읽으러 가기"
       theme_select_suffix: "선택"
+      language_select_suffix: "선택"
       license_suffix: "입니다."
 
     # Used by _includes/sidebar.html.
@@ -87,6 +97,7 @@ locales:
       categories_label: "주제별 분류"
       feed_label: "RSS"
       theme_label: "공간 설정"
+      language_label: "인터페이스 언어"
       license_label: "글·이미지·디자인은 별도 표기가 없는 한"
       license_link_label: "CC0 1.0"
 
@@ -147,11 +158,11 @@ locales:
       modified_at_label: "수정 일자"
       translations:
         aria_label: "이 글의 번역"
-        label: "Translate"
-        english_label: "English"
-        japanese_label: "日本語"
-        english_unavailable: "영어 번역 준비 중"
-        japanese_unavailable: "일본어 번역 준비 중"
+        label: "번역"
+        unavailable:
+          ko: "한국어 원문 준비 중"
+          en: "영어 번역 준비 중"
+          ja: "일본어 번역 준비 중"
       series:
         kicker: "SERIES"
         list_label: "연재 목록 보기"
@@ -461,10 +472,10 @@ locales:
         items:
           - id: "game-industry"
             source_label: "Game Industry"
-            label: "Game Industry"
+            label: "게임 산업"
           - id: "ai-industry"
             source_label: "AI Industry"
-            label: "AI Industry"
+            label: "AI 산업"
         notes:
           enabled: true
           items:
@@ -490,3 +501,953 @@ locales:
               body: "모든 기록은 작성자의 기억과 취향에 따라 임의로 연결됩니다. 길을 잃었다면 중심 합류점으로 돌아가십시오."
             - title: "관리인의 메모"
               body: "기억에 없는 문장이 발견되면 날짜와 위치를 적어 둡니다. 대개는 나중에 이유를 알게 됩니다."
+
+  en:
+    meta:
+      html_lang: "en-US"
+      og_locale: "en_US"
+      number_locale: "en-US"
+      date_short: "%B %-d, %Y"
+      date_month_day: "%B %-d"
+      date_long: "%B %-d, %Y %H:%M"
+
+    # Used by the sidebar language selector and post translation navigation.
+    languages:
+      ko: "한국어"
+      en: "English"
+      ja: "日本語"
+
+    # Used by _includes/head.html, _includes/sidebar.html, and every layout.
+    brand:
+      name: "SeAh Yoo's Literary Underground"
+      short_name: "Literary Underground"
+      english_name: "The Literary Underground"
+      sidebar_subtitle: "The Literary Underground"
+      slogan: "A cultural sewer dreaming of becoming the center of subculture"
+      seo_title_suffix: "Games, Subculture, and Internet Criticism"
+      description: "SeAh Yoo's personal criticism blog about games, subculture, film, internet culture, AI, and society."
+      home_tagline: "An unreal space where questions and residue found in games, subculture, film, the internet, AI, and society flow together."
+      post_context: "Personal criticism on games, subculture, film, the internet, and AI"
+      quote_card_kicker: "THE LITERARY UNDERGROUND"
+      quote_card_label: "Literary Underground Record"
+      quote_card_filename_prefix: "literary-underground-record"
+      author:
+        name: "SeAh Yoo"
+        alternate_name: "유세아"
+
+    # Used by about.html and the shared page-note cards.
+    operator:
+      name: "SeAh Yoo"
+      alternate_name: "유세아"
+      role: "Space keeper"
+      site_description: "A personal space for keeping unusual records"
+      editorial_purpose: "I collect questions found in games, subculture, film, the internet, AI, and society, then record them in the order that thought continues."
+      editorial_method: "I distinguish fact from interpretation and leave original texts, articles, research, games, and works as sources when needed. Each post is treated as the beginning of criticism that can be reviewed and revised, not as a final verdict."
+      preservation_note: "I quietly preserve thoughts held for too long and cultural residue too valuable to forget."
+      introduction: "Born October 10, 2000. Libra. 170.8 cm tall. Weight classified."
+
+    # Used by layouts, sidebar controls, and shared dynamic labels.
+    ui:
+      skip_link: "Skip to main content"
+      sidebar_aria_suffix: "navigation"
+      home_aria_suffix: "home"
+      quick_tools_label: "Quick tools"
+      scroll_top_label: "Back to the top of the page"
+      top_button_label: "TOP"
+      menu_button_label: "MENU"
+      menu_open_label: "Open navigation menu"
+      menu_close_label: "Close navigation menu"
+      default_category: "Column"
+      post_count_suffix: " posts"
+      read_more_label: "Read the post"
+      theme_select_suffix: "selection"
+      language_select_suffix: "selection"
+      license_suffix: "."
+
+    # Used by _includes/sidebar.html.
+    navigation:
+      primary_heading: "Explore"
+      latest_heading: "Latest records"
+      utility_label: "Secondary navigation"
+      categories_label: "Browse by category"
+      feed_label: "RSS"
+      theme_label: "Space theme"
+      language_label: "Interface language"
+      license_label: "Unless otherwise noted, text, images, and design are released under"
+      license_link_label: "CC0 1.0"
+
+    # Used by _includes/site-search.html and scripts/site-search.js.
+    search:
+      open_label: "Open record search"
+      button_label: "Search"
+      shortcut_label: "Ctrl K"
+      kicker: "SEARCH"
+      title: "Search posts"
+      close_label: "Close search"
+      input_label: "Search query"
+      placeholder: "Search titles, text, fields, topics, and series"
+      initial_status: "Enter a search query."
+      keyboard_hint: "Move through results · Enter to open"
+      empty_message: "No such record exists."
+      loading_message: "Loading the search index…"
+      no_match_message: "No matching posts were found."
+      untitled_label: "Untitled post"
+      # Variables: {count}
+      result_count_message: "Found {count} posts."
+      no_results_message: "No search results."
+      load_error_message: "The search index could not be loaded. Please try again shortly."
+      unavailable_message: "Search is unavailable."
+
+    # Used by _includes/sidebar.html and scripts/site-preferences.js.
+    themes:
+      sewer_center: "Sewer Center"
+      brick_road_pipeline: "Brick Road Pipeline"
+      sewage_reservoir: "Sewage Reservoir"
+      dim_passage: "Dim Passage"
+      moss_pipeline: "Moss Pipeline"
+
+    # Used by scripts/index.js and the reading-pulse page.
+    analytics:
+      summary_label: "Anonymous visit count"
+      counter_aria_label: "Visit count"
+      # Variables: {cache_minutes}
+      cache_message: "Showing the visit count for {cache_minutes} minutes."
+      loading_message: "Loading the visit count."
+      unavailable_message: "The visit count could not be loaded."
+      # Variables: {summary_label}
+      loaded_message: "This is the {summary_label}."
+      count_suffix: " visits"
+      cannot_display: "Unavailable"
+
+    # Used by _layouts/post.html, post includes, and scripts/post-actions.js.
+    post:
+      site_bar_label: "Site information"
+      reading_info_label: "Reading information"
+      published_label: "Published"
+      reading_time_loading: "Calculating estimated reading time"
+      view_count_label: "Total visits"
+      loading_label: "Loading"
+      thesis_label: "Core argument"
+      footer_label: "Post information"
+      written_at_label: "Written"
+      modified_at_label: "Updated"
+      translations:
+        aria_label: "Translations of this post"
+        label: "Translate"
+        unavailable:
+          ko: "Korean original coming soon"
+          en: "English translation coming soon"
+          ja: "Japanese translation coming soon"
+      series:
+        kicker: "SERIES"
+        list_label: "View series list"
+        # Variable: the rendered episode number is placed immediately before this suffix.
+        episode_suffix: ""
+        current_label: "Current post"
+      navigation:
+        kicker: "NEXT OBSERVATION"
+        title: "Continue reading"
+        aria_label: "Previous and next posts by publication time"
+        previous_label: "← Previous post"
+        next_label: "Next post →"
+      comments:
+        kicker: "DISCUSSION"
+        title: "Comments and reactions"
+        description: "Sign in with a GitHub account to leave comments and reactions."
+      share:
+        tools_label: "Post tools"
+        open_label: "Share"
+        feed_label: "Feed"
+        feed_title: "Subscribe to the RSS feed"
+        print_label: "Print / PDF"
+        print_title: "Save as a PDF from your browser's print dialog"
+        kicker: "SHARE"
+        title: "Share this post"
+        close_label: "Close sharing dialog"
+        kakao_label: "KakaoTalk"
+        telegram_label: "Telegram"
+        line_label: "LINE"
+        x_label: "X"
+        threads_label: "Threads"
+        facebook_label: "Facebook"
+        copy_label: "Copy address"
+        kakao_button_label: "Read post"
+        kakao_sdk_error: "The Kakao SDK could not be loaded."
+        kakao_copy_message: "The address was copied. Paste it into a KakaoTalk chat."
+        copy_message: "The webpage address was copied."
+        error_message: "Sharing could not be started. Please try again shortly."
+      endnotes:
+        kicker: "NOTES"
+        title: "Notes and references"
+        help: "Select a note number in the article to jump here. Select a reference number or back arrow to return to where you were reading."
+        # Variables: {number}
+        reference_link_label: "Go to note or reference {number}"
+        # Variables: {number}
+        reference_item_label: "Note or reference {number}"
+        # Variables: {number}
+        backlink_label: "Return to note {number} in the article"
+      reading:
+        # Variables: {minutes}
+        time_label: "Estimated reading time: {minutes} min"
+      quote_card:
+        truncated_notice: "Long quotations are shown only in part on the card."
+        create_label: "Create quote card"
+        create_aria_label: "Create a PNG quote card from this quotation"
+        creating_label: "Creating card…"
+        saved_message: "The PNG quote card was saved."
+        saved_label: "PNG saved"
+        error_message: "The quote card could not be created. Please try again shortly."
+        retry_label: "Try again"
+      headings:
+        # Variables: {heading}
+        copy_link_label: "Copy the link to “{heading}”"
+        copy_link_title: "Copy this section link"
+      toc:
+        title: "Contents"
+        # Variables: {count}
+        count_label: "{count} sections"
+
+    pages:
+      home:
+        path: "/"
+        title: "SeAh Yoo's Literary Underground"
+        label: "Home"
+        eyebrow: "THE LITERARY UNDERGROUND"
+        description: "SeAh Yoo's personal criticism space for recording questions and cultural residue found in games, subculture, film, internet culture, AI, and society."
+        featured_aria_prefix: "Latest record"
+        featured_kicker: "Recently discovered record"
+        featured_open_label: "Open record"
+        recent_eyebrow: "RECENTLY FOUND"
+        recent_title: "Latest records"
+        recent_more_label: "View all posts"
+        discovery_eyebrow: "WAYS THROUGH"
+        discovery_title: "How to find the next record"
+        discovery_primary_label: "Recommended route"
+        discovery_primary_text: "Start with a question that interests you and follow the Literary Underground's key records in order."
+        discovery_open_label: "Explore the passage"
+        discovery_nav_label: "Other ways to explore"
+        topics_discovery_text: "Find paths where questions and materials meet"
+        categories_discovery_text: "Follow pipelines grouped by broad category"
+        timeline_discovery_text: "Browse by the time each record first appeared"
+        empty_message: "No records have been left in this space yet."
+        notes:
+          enabled: true
+          items:
+            - title: "Notice at the entrance"
+              body: "Every record is connected at the author's discretion, guided by memory and taste. If you get lost, return to the central junction."
+            - title: "Keeper's memo"
+              body: "If you find a sentence you do not remember, note its date and location. The reason usually becomes clear later."
+
+      start:
+        path: "/start-here/"
+        label: "Start here"
+        title: "Central Junction"
+        eyebrow: "MANHOLE ACCESS POINT"
+        intro: "A guide to key records and routes so first-time visitors do not lose their way."
+        description: "Question-led introductory reading orders and key routes for first-time visitors to the Literary Underground."
+        guide_eyebrow: "Exploration guide"
+        guide_title: "Begin exploring the Literary Underground"
+        guide_description: "This is not a newest-first list but a recommended route for first-time readers. Each route and display order is managed in post Front Matter."
+        # Variable: the rendered post count is placed immediately before this suffix.
+        post_count_suffix: " posts"
+        empty_message: "Records for this section are being prepared."
+        paths:
+          - id: "game-industry"
+            title: "A route through the game industry"
+            description: "Follow market structures, player culture, and the ways game companies gain or lose trust."
+            prompt: "For readers who want to see the choices and relationships behind industry numbers"
+          - id: "ai-society"
+            title: "A route through AI and society"
+            description: "Look at changes in institutions, labor, and daily life that move more slowly than technical performance."
+            prompt: "For readers who want to consider the speed of technology alongside the speed of society"
+        notes:
+          enabled: true
+          items:
+            - title: "Notice at the entrance"
+              body: "Every record is connected at the author's discretion, guided by memory and taste. If you get lost, return to the central junction."
+            - title: "Keeper's memo"
+              body: "If you find a sentence you do not remember, note its date and location. The reason usually becomes clear later."
+
+      about:
+        path: "/about/"
+        label: "About this space"
+        title: "Where you are"
+        eyebrow: "WHERE YOU ARE"
+        intro: "Meet the keeper and learn the standards used to leave records in the Literary Underground."
+        description: "About the author, subjects, editorial principles, and anonymous visitor statistics of the Literary Underground."
+        profile_image_alt_suffix: "author portrait"
+        profile_separator: "·"
+        sections:
+          profile:
+            eyebrow: "THE KEEPER"
+            title: "Keeper of this space"
+          editorial:
+            eyebrow: "NOTES ON KEEPING"
+            title: "Records and editing"
+          navigation:
+            eyebrow: "WAYS THROUGH"
+            title: "How to explore this space"
+            intro: "If this is your first visit, the fastest route is to choose a question at the Central Junction."
+            start_suffix: " is a good place to begin."
+            paths_prefix: "Every record can be found again through search and these exploration menus:"
+            series_label: "Series"
+          participation:
+            eyebrow: "OPEN DOOR"
+            title: "Use and participation"
+            description: "Unless otherwise noted, text, images, and design are released under CC0 1.0. Share comments and corrections beneath each post, or follow the RSS feed for new writing."
+          privacy:
+            eyebrow: "VISITOR TRACES"
+            title: "About visitor traces"
+            description: "The Literary Underground uses GoatCounter to aggregate anonymous visit flows and reading progress. It creates no cookies or permanent identifiers, and the numbers are approximate traces used to maintain the space rather than definitive reader counts."
+            opt_out_prefix: "If you prefer, choose"
+            opt_out_label: "exclude this browser from statistics"
+            opt_out_suffix: ". Details are available in"
+            privacy_label: "GoatCounter's privacy guide"
+            privacy_suffix: "."
+        notes:
+          enabled: true
+          items:
+            - title: "Notice at the entrance"
+              body: "Every record is connected at the author's discretion, guided by memory and taste. If you get lost, return to the central junction."
+            - title: "Keeper's memo"
+              body: "If you find a sentence you do not remember, note its date and location. The reason usually becomes clear later."
+
+      timeline:
+        path: "/timeline/"
+        label: "All posts"
+        title: "Space History"
+        eyebrow: "WRITTEN TRACES"
+        intro: "Unfold every record left in the Literary Underground in the order it first appeared."
+        description: "A complete post list for browsing every public Literary Underground record by its original publication time and date."
+        section_eyebrow: "Record history"
+        section_title: "History of the records left here"
+        section_description: "All posts are grouped by year according to their original publication time. New public records are added automatically without separate editing."
+        list_label: "Space history"
+        era_label: "Records"
+        notes:
+          enabled: true
+          items:
+            - title: "Notice at the entrance"
+              body: "Every record is connected at the author's discretion, guided by memory and taste. If you get lost, return to the central junction."
+            - title: "Keeper's memo"
+              body: "If you find a sentence you do not remember, note its date and location. The reason usually becomes clear later."
+
+      reading_pulse:
+        path: "/reading-pulse/"
+        label: "Visitor activity"
+        title: "Footprints Left Behind"
+        eyebrow: "VISITOR TRACES"
+        intro: "Anonymous traces of visits and post reading across this space."
+        description: "A visitor statistics page showing anonymous visits, popular posts, and completion activity in the Literary Underground."
+        dashboard:
+          eyebrow: "SIGNS OF PASSAGE"
+          title: "Traces left in the space"
+          intro: "These public aggregates do not identify individuals. They show only approximate flows of visits, popular posts, and reading completion."
+          summary_label: "Visitor trace summary"
+          total_visits_label: "Total visits"
+          recent_visits_label: "Visits in the last 30 days"
+          reading_total_label: "Records read"
+          post_list_label: "Traces by record"
+          post_recent_label: "Visits in the last 30 days"
+          post_total_label: "Total visits"
+          read_75_label: "Read 75%"
+          completion_label: "Read to the end"
+          updated_label: "Last updated"
+          pending_eyebrow: "SNAPSHOT PENDING"
+          pending_title: "Preparing the first record."
+          pending_description: "Once the first public statistics snapshot is ready, reading flows by post will appear here."
+          note: "This record is refreshed once a day from GoatCounter's public counter. Some visits may not be counted because of ad blockers or network conditions."
+        notes:
+          enabled: true
+          items:
+            - title: "Notice at the entrance"
+              body: "Every record is connected at the author's discretion, guided by memory and taste. If you get lost, return to the central junction."
+            - title: "Keeper's memo"
+              body: "If you find a sentence you do not remember, note its date and location. The reason usually becomes clear later."
+
+      topics:
+        path: "/topics/"
+        label: "Browse by material"
+        title: "Space Lineage"
+        eyebrow: "PATHS AND JUNCTIONS"
+        intro: "See where different records meet through shared questions and materials."
+        description: "A map for exploring public Literary Underground posts through connections among questions, materials, and keywords."
+        section_eyebrow: "Material index"
+        section_title: "Connections between materials and records"
+        section_prefix: "One record can connect to several questions or materials. Browse the specialist category list on"
+        section_suffix: ", or use this page to continue reading across fields through a shared concern."
+        list_label: "Material list"
+        # Variable: the rendered post count is placed immediately before this suffix.
+        post_count_suffix: " posts"
+        empty_message: "Writing for this topic is being prepared."
+        items:
+          - id: "women-oriented-games"
+            label: "Games for women"
+            description: "Women players, women-oriented narratives, and the game market"
+          - id: "game-culture"
+            label: "Game culture"
+            description: "Player experience, communities, and cultural language"
+          - id: "market-inertia"
+            label: "Market inertia"
+            description: "Why companies and markets repeat familiar choices"
+          - id: "technology-diffusion"
+            label: "Technology diffusion"
+            description: "The time between invention and broad social adoption"
+          - id: "ai-and-society"
+            label: "AI and society"
+            description: "How artificial intelligence changes institutions, labor, and daily life"
+          - id: "player-trust"
+            label: "Player trust"
+            description: "How trust grows and collapses between game companies and players"
+        notes:
+          enabled: true
+          items:
+            - title: "Notice at the entrance"
+              body: "Every record is connected at the author's discretion, guided by memory and taste. If you get lost, return to the central junction."
+            - title: "Keeper's memo"
+              body: "If you find a sentence you do not remember, note its date and location. The reason usually becomes clear later."
+
+      references:
+        path: "/references/"
+        label: "Sources and citations"
+        title: "Collected Source Archive"
+        eyebrow: "COLLECTED SOURCES"
+        intro: "Books, articles, papers, videos, and web originals collected while writing each record."
+        description: "A source list gathering books, reports, articles, papers, videos, and web originals cited in the Literary Underground."
+        section_eyebrow: "Source storage"
+        section_title: "Sources used in posts"
+        section_description: "The references list in each post is collected automatically. A source with the same id is stored once and shown together with every post that cites it."
+        library_label: "Original source list"
+        default_type: "Source"
+        cited_in_label: "Cited in"
+        empty_message: "No original sources have been registered yet. Add references to a post's Front Matter and they will be collected here automatically."
+        notes:
+          enabled: true
+          items:
+            - title: "Notice at the entrance"
+              body: "Every record is connected at the author's discretion, guided by memory and taste. If you get lost, return to the central junction."
+            - title: "Keeper's memo"
+              body: "If you find a sentence you do not remember, note its date and location. The reason usually becomes clear later."
+
+      categories:
+        path: "/categories/"
+        label: "Browse by category"
+        title: "Sewer Pipelines"
+        eyebrow: "BRANCHING PASSAGES"
+        intro: "Records in the Literary Underground divided into broad subject passages."
+        description: "A category page grouping public Literary Underground posts under broad subjects such as the game industry and AI and society."
+        section_eyebrow: "Topic branches"
+        section_title: "Browse records by category"
+        section_prefix: "Choose a category to see only its registered posts. Connections among questions and materials are available on"
+        section_suffix: "."
+        list_label: "Category list"
+        # Variable: the rendered post count is placed immediately before this suffix.
+        post_count_suffix: " posts"
+        read_more_label: "Read the post"
+        items:
+          - id: "game-industry"
+            source_label: "Game Industry"
+            label: "Game Industry"
+          - id: "ai-industry"
+            source_label: "AI Industry"
+            label: "AI Industry"
+        notes:
+          enabled: true
+          items:
+            - title: "Notice at the entrance"
+              body: "Every record is connected at the author's discretion, guided by memory and taste. If you get lost, return to the central junction."
+            - title: "Keeper's memo"
+              body: "If you find a sentence you do not remember, note its date and location. The reason usually becomes clear later."
+
+      not_found:
+        path: "/404.html"
+        title: "This area cannot be entered"
+        eyebrow: "404 | CLOSED PASSAGE"
+        intro: "This passage is blocked or never existed. Turn back and look for another route."
+        description: "The requested page could not be found. Use Literary Underground search or a major exploration page."
+        section_eyebrow: "Restricted area"
+        section_title: "Explore another area"
+        home_label: "Literary Underground home"
+        section_prefix: " will take you back. You can also find records through:"
+        notes:
+          enabled: true
+          items:
+            - title: "Notice at the entrance"
+              body: "Every record is connected at the author's discretion, guided by memory and taste. If you get lost, return to the central junction."
+            - title: "Keeper's memo"
+              body: "If you find a sentence you do not remember, note its date and location. The reason usually becomes clear later."
+
+  ja:
+    meta:
+      html_lang: "ja-JP"
+      og_locale: "ja_JP"
+      number_locale: "ja-JP"
+      date_short: "%Y年%-m月%-d日"
+      date_month_day: "%-m月%-d日"
+      date_long: "%Y年%-m月%-d日 %H:%M"
+
+    # Used by the sidebar language selector and post translation navigation.
+    languages:
+      ko: "한국어"
+      en: "English"
+      ja: "日本語"
+
+    # Used by _includes/head.html, _includes/sidebar.html, and every layout.
+    brand:
+      name: "ユ・セアの文学下水道"
+      short_name: "文学下水道"
+      english_name: "The Literary Underground"
+      sidebar_subtitle: "The Literary Underground"
+      slogan: "サブカルチャーの中心を夢見る文化の下水道"
+      seo_title_suffix: "ゲーム・サブカルチャー・インターネット文化批評"
+      description: "ゲーム、サブカルチャー、映画、インターネット文化、AIと社会を扱うユ・セアの個人批評ブログ。"
+      home_tagline: "ゲームをはじめ、サブカルチャー、映画、インターネット、AIと社会から見つけた問いと残滓が流れ込む異空間。"
+      post_context: "ゲーム・サブカルチャー・映画・インターネット・AIについての個人批評記録"
+      quote_card_kicker: "THE LITERARY UNDERGROUND"
+      quote_card_label: "文学下水道の記録"
+      quote_card_filename_prefix: "文学下水道-記録"
+      author:
+        name: "ユ・セア"
+        alternate_name: "SeAh Yoo"
+
+    # Used by about.html and the shared page-note cards.
+    operator:
+      name: "ユ・セア"
+      alternate_name: "SeAh Yoo"
+      role: "空間管理人"
+      site_description: "個人が管理する異常記録空間"
+      editorial_purpose: "ゲーム、サブカルチャー、映画、インターネット、AIと社会から見つけた問いを集め、思考が続く順に記録します。"
+      editorial_method: "事実と解釈を区別し、必要に応じて原文、記事、研究、ゲームや作品を根拠資料として残します。各投稿は確定した判定ではなく、継続して検討・更新できる批評の出発点として扱います。"
+      preservation_note: "長く考えすぎたことと、忘れるには惜しい文化の残滓をひそかに保存します。"
+      introduction: "2000年10月10日生まれ。天秤座。身長170.8cm。体重は秘密。"
+
+    # Used by layouts, sidebar controls, and shared dynamic labels.
+    ui:
+      skip_link: "本文へ移動"
+      sidebar_aria_suffix: "ナビゲーション"
+      home_aria_suffix: "ホーム"
+      quick_tools_label: "クイックツール"
+      scroll_top_label: "ページ上部へ移動"
+      top_button_label: "TOP"
+      menu_button_label: "MENU"
+      menu_open_label: "ナビゲーションメニューを開く"
+      menu_close_label: "ナビゲーションメニューを閉じる"
+      default_category: "コラム"
+      post_count_suffix: "件"
+      read_more_label: "記事を読む"
+      theme_select_suffix: "選択"
+      language_select_suffix: "選択"
+      license_suffix: "です。"
+
+    # Used by _includes/sidebar.html.
+    navigation:
+      primary_heading: "探索"
+      latest_heading: "最新の記録"
+      utility_label: "補助ナビゲーション"
+      categories_label: "カテゴリー別"
+      feed_label: "RSS"
+      theme_label: "空間テーマ"
+      language_label: "表示言語"
+      license_label: "別途表記がない文章・画像・デザインは"
+      license_link_label: "CC0 1.0"
+
+    # Used by _includes/site-search.html and scripts/site-search.js.
+    search:
+      open_label: "記録検索を開く"
+      button_label: "検索"
+      shortcut_label: "Ctrl K"
+      kicker: "SEARCH"
+      title: "投稿を検索"
+      close_label: "検索を閉じる"
+      input_label: "検索語"
+      placeholder: "タイトル、本文、分野、トピック、連載を検索"
+      initial_status: "検索語を入力してください。"
+      keyboard_hint: "候補を移動 · Enterで開く"
+      empty_message: "該当する記録はありません。"
+      loading_message: "検索インデックスを読み込み中…"
+      no_match_message: "一致する投稿が見つかりませんでした。"
+      untitled_label: "無題の投稿"
+      # Variables: {count}
+      result_count_message: "{count}件の投稿が見つかりました。"
+      no_results_message: "検索結果はありません。"
+      load_error_message: "検索インデックスを読み込めませんでした。しばらくしてからもう一度お試しください。"
+      unavailable_message: "検索を利用できません。"
+
+    # Used by _includes/sidebar.html and scripts/site-preferences.js.
+    themes:
+      sewer_center: "下水管中央"
+      brick_road_pipeline: "レンガ道管路"
+      sewage_reservoir: "下水貯水槽"
+      dim_passage: "薄暗い通路"
+      moss_pipeline: "苔の配管路"
+
+    # Used by scripts/index.js and the reading-pulse page.
+    analytics:
+      summary_label: "匿名訪問集計"
+      counter_aria_label: "訪問数"
+      # Variables: {cache_minutes}
+      cache_message: "訪問集計を{cache_minutes}分間表示します。"
+      loading_message: "訪問集計を読み込み中です。"
+      unavailable_message: "訪問集計を読み込めませんでした。"
+      # Variables: {summary_label}
+      loaded_message: "{summary_label}です。"
+      count_suffix: "回"
+      cannot_display: "表示できません"
+
+    # Used by _layouts/post.html, post includes, and scripts/post-actions.js.
+    post:
+      site_bar_label: "サイト案内"
+      reading_info_label: "読書情報"
+      published_label: "公開日"
+      reading_time_loading: "推定読了時間を計算中"
+      view_count_label: "累計訪問"
+      loading_label: "読み込み中"
+      thesis_label: "主な論旨"
+      footer_label: "投稿情報"
+      written_at_label: "作成日時"
+      modified_at_label: "更新日時"
+      translations:
+        aria_label: "この記事の翻訳"
+        label: "翻訳"
+        unavailable:
+          ko: "韓国語原文を準備中"
+          en: "英語翻訳を準備中"
+          ja: "日本語翻訳を準備中"
+      series:
+        kicker: "SERIES"
+        list_label: "連載一覧を見る"
+        # Variable: the rendered episode number is placed immediately before this suffix.
+        episode_suffix: "話"
+        current_label: "現在の記事"
+      navigation:
+        kicker: "NEXT OBSERVATION"
+        title: "続けて読む"
+        aria_label: "公開日時順の前後の記事"
+        previous_label: "← 前の記事"
+        next_label: "次の記事 →"
+      comments:
+        kicker: "DISCUSSION"
+        title: "コメントとリアクション"
+        description: "GitHubアカウントでログインすると、コメントやリアクションを残せます。"
+      share:
+        tools_label: "記事ツール"
+        open_label: "共有"
+        feed_label: "フィード"
+        feed_title: "RSSフィードを購読"
+        print_label: "印刷 / PDF"
+        print_title: "ブラウザーの印刷画面からPDFとして保存できます"
+        kicker: "SHARE"
+        title: "この記事を共有"
+        close_label: "共有画面を閉じる"
+        kakao_label: "カカオトーク"
+        telegram_label: "Telegram"
+        line_label: "LINE"
+        x_label: "X"
+        threads_label: "Threads"
+        facebook_label: "Facebook"
+        copy_label: "URLをコピー"
+        kakao_button_label: "記事を読む"
+        kakao_sdk_error: "Kakao SDKを読み込めませんでした。"
+        kakao_copy_message: "URLをコピーしました。カカオトークのチャットに貼り付けてください。"
+        copy_message: "ページのURLをコピーしました。"
+        error_message: "共有機能を実行できませんでした。しばらくしてからもう一度お試しください。"
+      endnotes:
+        kicker: "NOTES"
+        title: "脚注と参考文献"
+        help: "本文の脚注番号を選ぶとここへ移動します。参考文献番号または戻る矢印を選ぶと、読んでいた位置へ戻ります。"
+        # Variables: {number}
+        reference_link_label: "脚注・参考文献{number}へ移動"
+        # Variables: {number}
+        reference_item_label: "脚注・参考文献{number}"
+        # Variables: {number}
+        backlink_label: "本文の脚注{number}へ戻る"
+      reading:
+        # Variables: {minutes}
+        time_label: "推定読了時間：{minutes}分"
+      quote_card:
+        truncated_notice: "長い引用文はカード内で一部のみ表示されます。"
+        create_label: "引用カードを作成"
+        create_aria_label: "この引用文からPNG引用カードを作成"
+        creating_label: "カードを作成中…"
+        saved_message: "PNG引用カードを保存しました。"
+        saved_label: "PNG保存済み"
+        error_message: "引用カードを作成できませんでした。しばらくしてからもう一度お試しください。"
+        retry_label: "もう一度試す"
+      headings:
+        # Variables: {heading}
+        copy_link_label: "「{heading}」へのリンクをコピー"
+        copy_link_title: "この見出しのリンクをコピー"
+      toc:
+        title: "目次"
+        # Variables: {count}
+        count_label: "{count}項目"
+
+    pages:
+      home:
+        path: "/"
+        title: "ユ・セアの文学下水道"
+        label: "ホーム"
+        eyebrow: "THE LITERARY UNDERGROUND"
+        description: "ゲーム、サブカルチャー、映画、インターネット文化、AIと社会から見つけた問いと文化の残滓を記録するユ・セアの個人批評空間。"
+        featured_aria_prefix: "最新の記録"
+        featured_kicker: "最近発見された記録"
+        featured_open_label: "記録を開く"
+        recent_eyebrow: "RECENTLY FOUND"
+        recent_title: "最新の記録"
+        recent_more_label: "すべての投稿を見る"
+        discovery_eyebrow: "WAYS THROUGH"
+        discovery_title: "次の記録を探す方法"
+        discovery_primary_label: "おすすめの探索経路"
+        discovery_primary_text: "関心のある問いから、文学下水道の主な記録を順にたどります。"
+        discovery_open_label: "通路を見てみる"
+        discovery_nav_label: "ほかの探索方法"
+        topics_discovery_text: "問いと素材が交わる経路から探す"
+        categories_discovery_text: "大きなカテゴリー別の管路をたどる"
+        timeline_discovery_text: "記録が最初に現れた時刻順に探す"
+        empty_message: "この空間にはまだ記録がありません。"
+        notes:
+          enabled: true
+          items:
+            - title: "入口に残した案内"
+              body: "すべての記録は、書き手の記憶と好みによって任意につながっています。道に迷ったら中央合流点へ戻ってください。"
+            - title: "管理人のメモ"
+              body: "覚えのない文章を見つけたら、日付と場所を記録します。たいてい理由は後から分かります。"
+
+      start:
+        path: "/start-here/"
+        label: "初めて読む"
+        title: "中央合流点"
+        eyebrow: "MANHOLE ACCESS POINT"
+        intro: "初めて来た人が迷わないよう、主な記録と探索経路を案内します。"
+        description: "文学下水道を初めて利用する読者のための、問い別の入門読書順と主な探索経路です。"
+        guide_eyebrow: "Exploration guide"
+        guide_title: "文学下水道の探索を始めましょう"
+        guide_description: "以下は新着順ではなく、初めての読者におすすめする探索順です。各経路と表示順は投稿のFront Matterで管理されます。"
+        # Variable: the rendered post count is placed immediately before this suffix.
+        post_count_suffix: "件"
+        empty_message: "この区域に追加する記録を準備しています。"
+        paths:
+          - id: "game-industry"
+            title: "ゲーム産業を読む道"
+            description: "市場構造、プレイヤー文化、ゲーム会社が信頼を得たり失ったりする仕組みをたどります。"
+            prompt: "産業の数字の背後にある選択と関係を読みたい方へ"
+          - id: "ai-society"
+            title: "AIと社会を読む道"
+            description: "技術性能より遅く動く制度、労働、暮らしの変化を見ていきます。"
+            prompt: "技術の速度と社会の速度を一緒に考えたい方へ"
+        notes:
+          enabled: true
+          items:
+            - title: "入口に残した案内"
+              body: "すべての記録は、書き手の記憶と好みによって任意につながっています。道に迷ったら中央合流点へ戻ってください。"
+            - title: "管理人のメモ"
+              body: "覚えのない文章を見つけたら、日付と場所を記録します。たいてい理由は後から分かります。"
+
+      about:
+        path: "/about/"
+        label: "空間案内"
+        title: "ここはどこ"
+        eyebrow: "WHERE YOU ARE"
+        intro: "この場所の管理人と、文学下水道に記録を残す基準を案内します。"
+        description: "文学下水道の書き手、扱うテーマ、編集原則、匿名訪問統計の方式を説明します。"
+        profile_image_alt_suffix: "著者画像"
+        profile_separator: "・"
+        sections:
+          profile:
+            eyebrow: "THE KEEPER"
+            title: "この場所の管理人"
+          editorial:
+            eyebrow: "NOTES ON KEEPING"
+            title: "記録と編集"
+          navigation:
+            eyebrow: "WAYS THROUGH"
+            title: "空間の歩き方"
+            intro: "初めての訪問なら、中央合流点で関心のある問いを選ぶのが最短です。"
+            start_suffix: "から始められます。"
+            paths_prefix: "すべての記録は検索と次の探索メニューから再び見つけられます："
+            series_label: "連載"
+          participation:
+            eyebrow: "OPEN DOOR"
+            title: "利用と参加"
+            description: "別途表記がない文章・画像・デザインはCC0 1.0で提供します。意見や補足は各記事のコメントで共有でき、RSSフィードで新着記事を受け取れます。"
+          privacy:
+            eyebrow: "VISITOR TRACES"
+            title: "訪問の痕跡について"
+            description: "文学下水道ではGoatCounterを使い、匿名の訪問経路と記事の読書状況を集計します。Cookieや永続的な識別子は作らず、数値は読者数の確定値ではなく、空間を整える際に参照するおおよその痕跡です。"
+            opt_out_prefix: "希望しない場合は"
+            opt_out_label: "このブラウザーを統計から除外"
+            opt_out_suffix: "を選べます。詳しい方式は"
+            privacy_label: "GoatCounterのプライバシー案内"
+            privacy_suffix: "で確認できます。"
+        notes:
+          enabled: true
+          items:
+            - title: "入口に残した案内"
+              body: "すべての記録は、書き手の記憶と好みによって任意につながっています。道に迷ったら中央合流点へ戻ってください。"
+            - title: "管理人のメモ"
+              body: "覚えのない文章を見つけたら、日付と場所を記録します。たいてい理由は後から分かります。"
+
+      timeline:
+        path: "/timeline/"
+        label: "すべての投稿"
+        title: "空間履歴"
+        eyebrow: "WRITTEN TRACES"
+        intro: "文学下水道にこれまで残された記録を、最初に現れた時刻順に広げます。"
+        description: "文学下水道で公開されたすべての記事を、初回公開日時順に探索する一覧です。"
+        section_eyebrow: "Record history"
+        section_title: "残された記録の履歴"
+        section_description: "すべての投稿を初回公開時刻に基づいて年別に並べます。新しい記録が公開されると、自動でこの履歴に追加されます。"
+        list_label: "空間履歴"
+        era_label: "Records"
+        notes:
+          enabled: true
+          items:
+            - title: "入口に残した案内"
+              body: "すべての記録は、書き手の記憶と好みによって任意につながっています。道に迷ったら中央合流点へ戻ってください。"
+            - title: "管理人のメモ"
+              body: "覚えのない文章を見つけたら、日付と場所を記録します。たいてい理由は後から分かります。"
+
+      reading_pulse:
+        path: "/reading-pulse/"
+        label: "訪問状況"
+        title: "残された足跡"
+        eyebrow: "VISITOR TRACES"
+        intro: "この空間を通り過ぎた訪問と記事読書の痕跡を匿名で表示します。"
+        description: "文学下水道の匿名訪問数、人気記事、読了状況を示す訪問統計ページです。"
+        dashboard:
+          eyebrow: "SIGNS OF PASSAGE"
+          title: "空間に残った痕跡"
+          intro: "表示値は個人を特定しない公開集計です。訪問、人気記事、読了の大まかな流れだけを示します。"
+          summary_label: "訪問痕跡の要約"
+          total_visits_label: "累計訪問"
+          recent_visits_label: "直近30日の訪問"
+          reading_total_label: "読まれた記録"
+          post_list_label: "記録別の痕跡"
+          post_recent_label: "直近30日の訪問"
+          post_total_label: "累計訪問"
+          read_75_label: "75%読了"
+          completion_label: "最後まで読了"
+          updated_label: "最終集計"
+          pending_eyebrow: "SNAPSHOT PENDING"
+          pending_title: "最初の記録を準備しています。"
+          pending_description: "公開統計の最初のスナップショットが作成されると、記事別の読書状況がここに表示されます。"
+          note: "この記録はGoatCounterの公開カウンターをもとに1日1回更新されます。広告ブロッカーやネットワーク環境により、一部の訪問が集計されない場合があります。"
+        notes:
+          enabled: true
+          items:
+            - title: "入口に残した案内"
+              body: "すべての記録は、書き手の記憶と好みによって任意につながっています。道に迷ったら中央合流点へ戻ってください。"
+            - title: "管理人のメモ"
+              body: "覚えのない文章を見つけたら、日付と場所を記録します。たいてい理由は後から分かります。"
+
+      topics:
+        path: "/topics/"
+        label: "素材別"
+        title: "空間系統"
+        eyebrow: "PATHS AND JUNCTIONS"
+        intro: "異なる記録が同じ問いと素材を通じて交わる地点を示します。"
+        description: "文学下水道で公開された記事を、問い、素材、キーワードのつながりから探索する系統図です。"
+        section_eyebrow: "Material index"
+        section_title: "素材と記録のつながり"
+        section_prefix: "一つの記録は複数の問いや素材につながります。専門カテゴリー別の一覧は"
+        section_suffix: "で確認し、ここでは異なる分野の記事を同じ問題意識で続けて読めます。"
+        list_label: "素材一覧"
+        # Variable: the rendered post count is placed immediately before this suffix.
+        post_count_suffix: "件"
+        empty_message: "このトピックの記事を準備しています。"
+        items:
+          - id: "women-oriented-games"
+            label: "女性向けゲーム"
+            description: "女性プレイヤー、女性向け物語、ゲーム市場の関係"
+          - id: "game-culture"
+            label: "ゲーム文化"
+            description: "プレイヤーの体験、コミュニティ、文化的言語"
+          - id: "market-inertia"
+            label: "市場の慣性"
+            description: "企業と市場が慣れた選択を繰り返す構造"
+          - id: "technology-diffusion"
+            label: "技術普及"
+            description: "発明から社会全体への普及までにかかる時間"
+          - id: "ai-and-society"
+            label: "AIと社会"
+            description: "人工知能が制度、労働、暮らしにもたらす変化"
+          - id: "player-trust"
+            label: "プレイヤーの信頼"
+            description: "ゲーム会社とプレイヤーの間で築かれ、崩れる信頼"
+        notes:
+          enabled: true
+          items:
+            - title: "入口に残した案内"
+              body: "すべての記録は、書き手の記憶と好みによって任意につながっています。道に迷ったら中央合流点へ戻ってください。"
+            - title: "管理人のメモ"
+              body: "覚えのない文章を見つけたら、日付と場所を記録します。たいてい理由は後から分かります。"
+
+      references:
+        path: "/references/"
+        label: "出典と引用"
+        title: "収集資料保管庫"
+        eyebrow: "COLLECTED SOURCES"
+        intro: "各記録を書く際に集めた本、記事、論文、動画、ウェブ原文を整理します。"
+        description: "文学下水道で引用した本、報告書、記事、論文、動画、ウェブ原文をまとめた出典一覧です。"
+        section_eyebrow: "Source storage"
+        section_title: "投稿で使用した出典"
+        section_description: "各投稿のreferences一覧を自動収集します。同じidの資料は一度だけ登録し、その資料を引用した投稿も一緒に表示します。"
+        library_label: "原資料一覧"
+        default_type: "Source"
+        cited_in_label: "引用した記事"
+        empty_message: "登録された原資料はまだありません。投稿のFront Matterにreferencesを追加すると、ここへ自動で収集されます。"
+        notes:
+          enabled: true
+          items:
+            - title: "入口に残した案内"
+              body: "すべての記録は、書き手の記憶と好みによって任意につながっています。道に迷ったら中央合流点へ戻ってください。"
+            - title: "管理人のメモ"
+              body: "覚えのない文章を見つけたら、日付と場所を記録します。たいてい理由は後から分かります。"
+
+      categories:
+        path: "/categories/"
+        label: "カテゴリー別"
+        title: "下水管路"
+        eyebrow: "BRANCHING PASSAGES"
+        intro: "文学下水道の記録を大きなカテゴリー別の通路に分けて案内します。"
+        description: "文学下水道で公開された投稿を、ゲーム産業やAIと社会など大きなカテゴリー別にまとめたページです。"
+        section_eyebrow: "Topic branches"
+        section_title: "カテゴリー別に記録を見る"
+        section_prefix: "カテゴリーを選ぶと、その分類に登録された投稿だけを確認できます。問いと素材のつながりは"
+        section_suffix: "で確認できます。"
+        list_label: "カテゴリー一覧"
+        # Variable: the rendered post count is placed immediately before this suffix.
+        post_count_suffix: "件"
+        read_more_label: "記事を読む"
+        items:
+          - id: "game-industry"
+            source_label: "Game Industry"
+            label: "ゲーム産業"
+          - id: "ai-industry"
+            source_label: "AI Industry"
+            label: "AI産業"
+        notes:
+          enabled: true
+          items:
+            - title: "入口に残した案内"
+              body: "すべての記録は、書き手の記憶と好みによって任意につながっています。道に迷ったら中央合流点へ戻ってください。"
+            - title: "管理人のメモ"
+              body: "覚えのない文章を見つけたら、日付と場所を記録します。たいてい理由は後から分かります。"
+
+      not_found:
+        path: "/404.html"
+        title: "この区域には入れません"
+        eyebrow: "404 | CLOSED PASSAGE"
+        intro: "この通路は塞がれているか、最初から存在しません。戻って別の道を探してください。"
+        description: "指定されたページが見つかりません。文学下水道の検索または主な探索ページをご利用ください。"
+        section_eyebrow: "Restricted area"
+        section_title: "別の区域を探索"
+        home_label: "文学下水道ホーム"
+        section_prefix: "へ戻れます。次の経路からも記録を探せます："
+        notes:
+          enabled: true
+          items:
+            - title: "入口に残した案内"
+              body: "すべての記録は、書き手の記憶と好みによって任意につながっています。道に迷ったら中央合流点へ戻ってください。"
+            - title: "管理人のメモ"
+              body: "覚えのない文章を見つけたら、日付と場所を記録します。たいてい理由は後から分かります。"
