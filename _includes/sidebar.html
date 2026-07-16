@@ -7,8 +7,8 @@
   <div class="sidebar-header">
     <a class="brand" href="{{ identity.links.home | relative_url }}" aria-label="{{ brand.name }} {{ site_copy.ui.home_aria_suffix }}">
       <span class="brand-mark" aria-hidden="true">
-        {% if identity.assets.favicon_image %}
-        <img src="{{ identity.assets.favicon_image | relative_url }}" alt="" />
+        {% if identity.assets.brand_emblem %}
+        <img src="{{ identity.assets.brand_emblem | relative_url }}" alt="" width="512" height="512" />
         {% else %}
         <span>S</span>
         {% endif %}
