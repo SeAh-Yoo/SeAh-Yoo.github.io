@@ -33,12 +33,13 @@
 - Front Matter 기반 레퍼런스(각주 및 참고자료) 페이지
 - 제목·본문·카테고리·주제·연재 전체 검색
 - SNS 공유, RSS, 인쇄와 PDF 저장, 인용문 PNG 카드
-- 한국어·영어·일본어 번역 포스트 링크
-- 5종류의 색상 변경 테마 (giscus 테마 호환, 선택한 테마는 브라우저의 localStorage에 저장)
-- [작업 예정] 한국어·영어·일본어 메뉴 기능 (선택한 언어는 브라우저의 localStorage에 저장)
+- 국기 아이콘으로 선택하는 한국어·영어·일본어 인터페이스
+- 언어별 포스트 자동 선택과 번역본이 없을 때 한국어 원문 대체 출력
+- 5종류의 색상 변경 테마 (giscus 테마 호환, 선택한 테마와 언어는 브라우저의 localStorage에 저장)
+- 언어별 포스트 링크와 `hreflang` 메타데이터 자동 생성
 - giscus 댓글과 반응
 - 데스크톱 스티키 사이드바와 모바일 접이식 메뉴
-- `_data/site_identity.yml` 기반 블로그 콘셉트와 세계관 문구 관리
+- `_data/site_identity.yml` 기반 전체 인터페이스 문구·링크·페이지 메모 관리
 
 ## 디자인 원칙
 
@@ -108,8 +109,7 @@ kakao_javascript_key: "본인의_Kakao_JavaScript_키"
 ```json
 {
   "goatcounterCode": "본인의-GoatCounter-코드",
-  "summaryCacheMinutes": 20,
-  "summaryLabel": "익명 방문 집계"
+  "summaryCacheMinutes": 20
 }
 ```
 
@@ -136,8 +136,7 @@ kakao_javascript_key: "본인의_Kakao_JavaScript_키"
 ```json
 {
   "goatcounterCode": "",
-  "summaryCacheMinutes": 20,
-  "summaryLabel": "익명 방문 집계"
+  "summaryCacheMinutes": 20
 }
 ```
 
@@ -145,36 +144,61 @@ kakao_javascript_key: "본인의_Kakao_JavaScript_키"
 
 ## 브랜드와 화면 문구 관리
 
-브랜드명, 공간 관리인 정보, 홈 화면, 탐색 메뉴, 페이지 제목·소개, 검색 문구, 방문 현황 지표와 테마 표시명은 `_data/site_identity.yml`에서 관리합니다.
+포스트의 제목·부제·본문·출처처럼 글 자체에 속한 내용을 제외한 인터페이스 문구는 `_data/site_identity.yml`에서 관리합니다. 브랜드와 관리인 정보, 내부·외부 링크, 이미지 경로, 탐색 메뉴, 모든 정적 페이지의 제목·소개·목록, 검색·분석·포스트 도구 문구, 테마와 언어 표시명이 여기에 포함됩니다.
 
-레이아웃과 페이지 파일에는 가능한 한 표시 문구를 직접 적지 않습니다.
+레이아웃, include, 정적 페이지와 JavaScript에는 표시 문구를 직접 적지 않고 중앙 설정의 키를 읽습니다. 텍스트 안에 값을 삽입하는 `{count}`, `{minutes}` 같은 변수는 해당 문구 바로 윗줄의 `# Variables:` 주석에 기록합니다. 화면에 쓰는 경로나 외부 URL도 `links` 또는 `assets`에서 관리합니다.
 
-`_layouts/home.html`, `about.html`, `_layouts/page.html`, `_includes/sidebar.html`과 `_includes/head.html`은 중앙 설정의 값을 조합해 화면과 SEO 메타데이터를 생성합니다.
+기본 빌드는 `settings.default_language`인 한국어 문구로 정적 HTML을 만들고, `scripts/site-preferences.js`가 사용자가 고른 언어의 같은 키를 적용합니다.
 
 ### 중앙 설정 구조
 
 | 설정 그룹 | 관리하는 내용 |
 | --- | --- |
-| `brand` | 블로그명, 슬로건, SEO 설명, 홈 태그라인, 저자와 인용 카드 문구 |
-| `operator` | 공간 관리인 소개, 기록 목적·방법, 보존 메모와 안내문 |
-| `navigation` | 사이드바와 보조 탐색 메뉴 문구 |
-| `search` | 검색창 제목, 상태와 도움말 |
-| `themes` | 화면 테마 표시명 |
-| `pages.home` | 홈 대표 글, 최근 기록과 탐색 영역 문구 |
-| `pages.about` | 공간 안내의 섹션 제목과 익명 통계 문구 |
-| `pages.reading_pulse.dashboard` | 방문 현황의 지표명과 설명 |
-| 그 밖의 `pages` 항목 | 페이지별 메뉴명, 공간형 보조 명칭, 제목, 소개와 SEO 설명 |
+| `settings` | 기본 언어, 지원 언어와 국기, 브라우저 저장 키 |
+| `links` | 홈·피드·검색 색인·라이선스·분석 안내 경로 |
+| `assets` | 파비콘·프로필·기본 소셜 이미지 경로 |
+| `locales.ko`, `locales.en`, `locales.ja` | 한국어·영어·일본어 인터페이스 사전 |
+| `locales.<언어>.brand` | 블로그명, 슬로건, SEO 설명, 홈 태그라인, 저자와 인용 카드 문구 |
+| `locales.<언어>.operator` | 공간 관리인 소개, 기록 목적·방법, 보존 메모와 안내문 |
+| `locales.<언어>.ui`, `locales.<언어>.navigation` | 공통 버튼, 접근성 레이블과 탐색 메뉴 문구 |
+| `locales.<언어>.search`, `locales.<언어>.analytics`, `locales.<언어>.post` | 검색·방문 현황·포스트 도구의 동적 문구 |
+| `locales.<언어>.themes` | 화면 테마 표시명 |
+| `locales.<언어>.pages` | 9개 정적 페이지의 메뉴명, 제목, 소개, SEO 설명, 목록과 하단 메모 |
+
+세 언어의 키 구조는 동일하게 유지합니다. 새 문구 키를 추가할 때는 `ko`, `en`, `ja`에 같은 위치로 모두 추가해야 언어 전환 시 빠진 문구가 생기지 않습니다.
+
+### 페이지별 하단 메모
+
+포스트를 제외한 모든 정적 페이지에는 같은 모양의 하단 메모 두 칸이 있습니다. 각 언어의 `pages.<identity_key>.notes`에서 페이지별로 내용을 다르게 적을 수 있습니다.
+
+```yaml
+locales:
+  ko:
+    pages:
+      about:
+        notes:
+          enabled: true
+          items:
+            - title: "입구에 남긴 안내"
+              body: "페이지에 표시할 첫 번째 메모"
+            - title: "관리인의 메모"
+              body: "페이지에 표시할 두 번째 메모"
+```
+
+메모 전체를 숨기려면 `enabled: false`로 바꾸고, 한 칸만 쓰려면 필요하지 않은 `items` 항목을 제거합니다. 같은 페이지의 영어·일본어 메모는 각각 `locales.en.pages`, `locales.ja.pages`의 같은 위치에서 관리합니다.
 
 ### 메뉴명 위계
 
 사이드바는 각 페이지의 `label`을 큰 기능명으로, `title`을 작은 공간형 보조 명칭으로 표시합니다.
 
 ```yaml
-pages:
-  timeline:
-    label: "전체 게시물"
-    title: "공간 이력"
-    eyebrow: "WRITTEN TRACES"
+locales:
+  ko:
+    pages:
+      timeline:
+        label: "전체 게시물"
+        title: "공간 이력"
+        eyebrow: "WRITTEN TRACES"
 ```
 
 작은 모바일 화면에서는 보조 명칭이 숨겨질 수 있으므로 `label`만 읽어도 기능을 이해할 수 있어야 합니다.
@@ -195,6 +219,19 @@ pages:
 | `categories` | `/categories/` | 주제별 분류 | 하수 관로 |
 | `not_found` | `/404.html` | 찾을 수 없는 페이지 | 막힌 통로 |
 
+## 인터페이스 언어
+
+사이드바의 국기 선택 메뉴에서 한국어(`ko`), 영어(`en`), 일본어(`ja`) 인터페이스를 선택합니다. 선택한 언어와 테마는 `localStorage`의 `literary-underground:preferences:v1`에 함께 저장되며, 다음 방문과 같은 사이트의 다른 페이지에도 적용됩니다.
+
+언어를 바꾸면 다음 요소가 즉시 갱신됩니다.
+
+- 탐색 메뉴, 페이지 소개, 하단 메모, 검색창과 포스트 도구
+- 날짜 형식, 브라우저 제목, SEO·소셜 설명 메타데이터
+- 테마·언어 선택기의 접근성 레이블과 giscus 언어
+- 포스트 목록, 검색 결과와 현재 포스트의 언어별 문서
+
+포스트는 같은 `translation_key`를 가진 문서 중 선택한 언어를 우선합니다. 해당 언어의 번역 문서가 없으면 `settings.default_language`인 한국어 문서를 출력합니다. 이 대체 규칙은 홈, 사이드바, 탐색·분류·히스토리 페이지, 검색 결과와 포스트 직접 방문에 동일하게 적용됩니다.
+
 ## 색상 테마
 
 사이드바의 테마 변경 메뉴 (`공간 설정`)에서 다섯 가지 테마를 선택할 수 있습니다.
@@ -207,9 +244,9 @@ pages:
 - `dim-passage` — **어둑한 통로**: 흑요색 바탕과 금색·장미색 강조색
 - `moss-pipeline` — **이끼 배관로**: 녹청색 바탕과 민트·주황 강조색
 
-선택값은 `localStorage`의 `literary-underground:preferences:v1`에 저장됩니다.
+선택값은 인터페이스 언어와 함께 `localStorage`의 `literary-underground:preferences:v1`에 저장됩니다.
 
-`scripts/site-preferences.js`는 사이트 본문, 브라우저 테마 색상과 giscus 사용자 정의 테마를 함께 갱신합니다.
+`scripts/site-preferences.js`는 사이트 문구·포스트 언어, 브라우저 테마 색상과 giscus 언어·사용자 정의 테마를 함께 갱신합니다.
 
 ## 발견과 아카이브
 
@@ -220,7 +257,7 @@ pages:
 | 주소 | 역할 | 콘셉트 강조용 보조 명칭 | 작성자가 관리할 값 |
 | --- | --- | --- | --- |
 | `/start-here/` | 탐색 페이지 | 중심 합류점 | `start_here`, `start_here_order` |
-| `/about/` | 소개 페이지 | 공간 안내 | `_data/site_identity.yml`의 `operator`, `pages.about` |
+| `/about/` | 소개 페이지 | 공간 안내 | `_data/site_identity.yml`의 `locales.<언어>.operator`, `locales.<언어>.pages.about` |
 | `/timeline/` | 전체 게시물 | 공간 이력 | 없음 |
 | `/reading-pulse/` | 방문자 현황 | 남겨진 발자국 | GoatCounter 공개 집계 |
 | `/topics/` | 소재별 분류 | 공간 계통 | `topics` |
@@ -229,18 +266,18 @@ pages:
 
 ### 탐색 페이지
 
-`_data/paths.yml`에 입문 경로의 제목과 설명을 정하고, 각 포스트에 아래 값을 추가합니다.
+`_data/site_identity.yml`의 `locales.<언어>.pages.start.paths`에 입문 경로의 제목과 설명을 정하고, 각 포스트에 아래 값을 추가합니다.
 
 ```yaml
 start_here: "game-industry"
 start_here_order: 2
 ```
 
-`start_here` 값은 `_data/paths.yml`의 `id`와 정확히 같아야 합니다. 같은 경로의 글은 `start_here_order` 오름차순으로 표시됩니다.
+`start_here` 값은 기본 언어의 `pages.start.paths`에 있는 `id`와 정확히 같아야 합니다. 같은 `id`를 영어·일본어 사전에도 등록하고, 언어마다 `title`, `description`, `prompt`를 작성합니다. 같은 경로의 글은 `start_here_order` 오름차순으로 표시됩니다.
 
 ### 소재별 분류 페이지
 
-`category`가 큰 전문 분야라면 `topics`는 글을 여러 질문과 소재로 연결하는 세분화된 분류입니다. 주제 목록과 설명은 `_data/topics.yml`에서 관리합니다.
+`category_key`가 큰 전문 분야의 안정적인 식별자라면 `topics`는 글을 여러 질문과 소재로 연결하는 세분화된 분류입니다. 주제 목록과 설명은 `_data/site_identity.yml`의 `locales.<언어>.pages.topics.items`에서 관리합니다.
 
 ```yaml
 topics:
@@ -249,7 +286,7 @@ topics:
   - "시장 관성"
 ```
 
-주제는 2~4개 정도를 권장합니다. 새 주제는 먼저 `_data/topics.yml`에 `label`, `slug`, `description`을 등록한 뒤 같은 `label`을 게시물에 추가합니다.
+주제는 2~4개 정도를 권장합니다. 새 주제는 먼저 세 언어의 `pages.topics.items`에 같은 `id`와 언어별 `label`, `description`을 등록한 뒤 기본 언어의 `label`을 게시물에 추가합니다.
 
 ### 각주 모아보기 및 출처, 레퍼런스 페이지
 
@@ -276,8 +313,8 @@ references:
 
 검색은 사이드바 상단의 빠른 도구 영역에서 `TOP` 버튼과 나란히 제공됩니다.
 
-- 데스크톱: 검색 버튼과 단축키 안내 표시
-- 모바일: 돋보기 버튼만 표시
+- 데스크톱: 검색과 `↑ TOP`을 작은 정사각형 아이콘 버튼으로 표시
+- 모바일: 터치 영역을 유지한 아이콘 버튼으로 표시
 - 현재 페이지를 떠나지 않는 명령 팔레트형 검색창
 - 제목, 본문, 설명, 카테고리, 주제와 연재명 검색
 - 제목 일치도를 가장 높게 평가하고 최신 작성 시각을 보조 기준으로 사용
@@ -291,7 +328,7 @@ Enter                  선택한 글 열기
 Esc                    검색창 닫기
 ```
 
-검색 색인은 Jekyll 빌드 시 `/search.json`으로 정적으로 생성됩니다.
+검색 색인은 Jekyll 빌드 시 `/search.json`으로 정적으로 생성됩니다. 모든 언어의 포스트가 색인에 들어가며, 검색 결과에는 같은 `translation_key` 그룹에서 현재 언어의 문서를 우선하고 없으면 한국어 문서를 한 번만 표시합니다.
 
 ## 익명 방문과 읽기 현황
 
@@ -301,8 +338,7 @@ Esc                    검색창 닫기
 // _data/analytics.json
 {
   "goatcounterCode": "seah-yoo",
-  "summaryCacheMinutes": 20,
-  "summaryLabel": "익명 방문 집계"
+  "summaryCacheMinutes": 20
 }
 ```
 
@@ -390,14 +426,26 @@ Markdown 인용문 아래에는 `인용 카드 만들기` 버튼이 자동으로
 
 ### 번역 링크
 
-포스트 상단에는 영어와 일본어 번역 버튼이 표시됩니다. 번역본이 있으면 원문 Front Matter에 주소를 추가합니다.
+포스트 상단에는 지원 언어별 번역 버튼이 자동으로 표시됩니다. 원문 Front Matter에 번역 주소를 직접 적지 않고, 각 언어를 별도의 포스트 파일로 만들며 같은 `translation_key`를 사용합니다.
 
 ```yaml
-translation_en: /en/posts/example-post/
-translation_ja: /ja/posts/example-post/
+# 한국어 원문
+lang: ko
+translation_key: "example-post"
+permalink: /posts/example-post/
+
+# 영어 번역 파일
+lang: en
+translation_key: "example-post"
+permalink: /en/posts/example-post/
+
+# 일본어 번역 파일
+lang: ja
+translation_key: "example-post"
+permalink: /ja/posts/example-post/
 ```
 
-등록 시 번역 버튼과 `hreflang` 메타데이터가 함께 활성화됩니다.
+같은 `translation_key`가 연결된 문서를 기준으로 번역 버튼, 언어별 `hreflang`과 `x-default` 메타데이터가 함께 생성됩니다. 선택한 인터페이스 언어의 번역본이 없으면 한국어 원문으로 이동하고, 해당 번역 버튼은 준비 중 상태로 표시됩니다.
 
 ### 공유, RSS, 인쇄와 PDF
 
@@ -419,7 +467,7 @@ translation_ja: /ja/posts/example-post/
 - Discussion 카테고리: `Announcements`
 - 연결 방식: pathname
 - 선택한 사이트 테마와 연동
-- 한국어 UI
+- 선택한 인터페이스 언어와 연동
 - 댓글 영역 가까이 내려왔을 때 지연 로딩
 
 ## 반응형 사이드바
@@ -444,6 +492,9 @@ _posts/YYYY-MM-DD-slug.md
 ```yaml
 ---
 layout: post
+lang: ko
+translation_key: "example-post"
+category_key: "game-industry"
 title: "글 제목"
 subtitle: "부제목"
 date: 2026-06-22 14:30:00 +0900
@@ -468,11 +519,12 @@ image: /assets/images/example-post-cover.png
 # 선택 사항
 # series: "연재명"
 # series_order: 1
-# translation_en: /en/posts/example-post/
-# translation_ja: /ja/posts/example-post/
 ---
 ```
 
+- `lang`: 포스트 문서의 언어. `ko`, `en`, `ja` 중 하나
+- `translation_key`: 원문과 번역본을 연결하는 공통 식별자
+- `category_key`: 언어가 바뀌어도 유지되는 큰 전문 분야 식별자. `site_identity.yml`의 `locales.<언어>.pages.categories.items[].id`와 일치
 - `date`: 작성 시각 및 이전·다음 글 정렬의 유일한 기준
 - `last_modified_at`: 화면과 구조화 데이터에 표시할 마지막 수정 시각
 - `category`: 큰 전문 분야
@@ -482,11 +534,12 @@ image: /assets/images/example-post-cover.png
 - `topics`: 공간 계통과 검색에 쓰는 세분화된 소재 배열
 - `references`: 수집물 보관함에 자동 수집할 출처 배열
 - `series`, `series_order`: 선택적인 연재명과 회차
-- `translation_en`, `translation_ja`: 선택적인 번역본 주소
 
 제목과 부제목은 Front Matter에서 자동 출력되므로 본문에 다시 적지 않습니다. `_config.yml`의 `kramdown.hard_wrap`이 활성화되어 있어 본문에서 한 번 줄을 바꾸면 화면에도 줄바꿈으로 반영됩니다.
 
 이미지는 `assets/images` 폴더에 저장하며, 마크다운 이미지의 대체 텍스트는 화면에서 캡션으로도 사용됩니다.
+
+번역본을 추가할 때는 원문을 복사한 새 Markdown 파일에서 `lang`, 제목·부제·설명·본문과 `permalink`를 번역 언어에 맞게 바꾸고 `translation_key`, `category_key`는 원문과 같게 유지합니다. 원문과 번역본의 `date`를 같게 두면 목록 정렬도 일치합니다.
 
 ## 프로젝트 구조
 
@@ -499,18 +552,17 @@ image: /assets/images/example-post-cover.png
 │  ├─ head.html                    # SEO, SNS 카드, JSON-LD, hreflang
 │  ├─ analytics-tracking.html      # GoatCounter 추적 태그
 │  ├─ sidebar.html                 # 브랜드와 탐색 메뉴
+│  ├─ page-notes.html              # 정적 페이지의 선택형 하단 메모
 │  ├─ site-search.html             # 검색 UI
-│  ├─ post-translations.html       # 번역 버튼
+│  ├─ post-translations.html       # translation_key 기반 번역 버튼
 │  ├─ post-series.html             # 연재 목록
 │  ├─ post-navigation.html         # 이전·다음 글
 │  ├─ post-share.html              # 공유, RSS, 인쇄·PDF
 │  └─ post-comments.html           # giscus 댓글
 ├─ _data/
 │  ├─ analytics.json               # GoatCounter 설정
-│  ├─ paths.yml                    # 탐색 페이지의 경로 정보
 │  ├─ reading_pulse.json           # 방문자 현황 스냅샷
-│  ├─ site_identity.yml            # 브랜드·관리인·메뉴·페이지 문구
-│  └─ topics.yml                   # 소재별 분류의 소재(태그)와 설명
+│  └─ site_identity.yml            # KO/EN/JA 인터페이스 문구·링크·페이지 데이터
 ├─ _layouts/
 │  ├─ categories.html
 │  ├─ home.html                    # 홈 편집 화면과 중앙화된 홈 카피
@@ -521,8 +573,8 @@ image: /assets/images/example-post-cover.png
 ├─ scripts/
 │  ├─ index.js
 │  ├─ sidebar-collapse.js
-│  ├─ site-search.js
-│  ├─ site-preferences.js
+│  ├─ site-search.js               # 언어별 검색 결과와 한국어 대체 출력
+│  ├─ site-preferences.js          # 테마·언어 저장과 인터페이스 전환
 │  ├─ post-actions.js
 │  └─ refresh-reading-pulse.mjs
 ├─ styles/
@@ -552,7 +604,7 @@ image: /assets/images/example-post-cover.png
 
 ### 화면 설정 저장
 
-사용자가 선택한 화면 테마를 기억하기 위해 브라우저의 로컬 저장소(localStorage)에 테마 설정값을 저장합니다.
+사용자가 선택한 화면 테마와 인터페이스 언어를 기억하기 위해 브라우저의 로컬 저장소(localStorage)에 두 설정값을 함께 저장합니다.
 
 이 정보에는 이름, 연락처 또는 사용자를 식별하기 위한 정보가 포함되지 않으며, 방문자가 브라우저의 사이트 데이터를 삭제하면 함께 제거됩니다.
 
