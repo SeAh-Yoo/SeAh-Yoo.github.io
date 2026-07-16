@@ -291,7 +291,7 @@ body.is-search-open {
 @media (max-width: 900px) {
   .sidebar-search {
     justify-content: flex-end;
-    margin-top: 7px;
+    margin-top: 0;
   }
 
   .sidebar-search-trigger {
