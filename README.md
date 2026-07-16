@@ -201,11 +201,11 @@ pages:
 
 테마는 색상 분위기만 바꾸며 타이포그래피, 간격과 레이아웃은 바꾸지 않습니다.
 
-- `unit-violet` — **하수관 중심**: 남보라 바탕과 보라·민트 강조색
-- `ember-white` — **벽돌길 관로**: 적갈색 바탕과 주황·적색 강조색
-- `azure-form` — **하수 저장고**: 청색 바탕과 하늘색·연보라 강조색
-- `sovereign-obsidian` — **어둑한 통로**: 흑요색 바탕과 금색·장미색 강조색
-- `neon-shell` — **이끼 배관로**: 녹청색 바탕과 민트·주황 강조색
+- `sewer-center` — **하수관 중심**: 남보라 바탕과 보라·민트 강조색
+- `brick-road-pipeline` — **벽돌길 관로**: 적갈색 바탕과 주황·적색 강조색
+- `sewage-reservoir` — **하수 저장고**: 청색 바탕과 하늘색·연보라 강조색
+- `dim-passage` — **어둑한 통로**: 흑요색 바탕과 금색·장미색 강조색
+- `moss-pipeline` — **이끼 배관로**: 녹청색 바탕과 민트·주황 강조색
 
 선택값은 `localStorage`의 `literary-underground:preferences:v1`에 저장됩니다.
 
