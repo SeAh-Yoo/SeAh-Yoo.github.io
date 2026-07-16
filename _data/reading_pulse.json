@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-15T05:42:53.712Z",
+  "generated_at": "2026-07-16T05:56:33.691Z",
   "site": {
-    "total": 236
+    "total": 250
   },
   "posts": [
     {
       "slug": "2026-ncsoft-trust",
       "title": "신뢰 회복의 다리를 부순 고소장",
       "path": "/posts/2026-ncsoft-trust/",
-      "month": 16,
+      "month": 17,
       "total": 16,
       "read75": 3,
       "readComplete": 1
@@ -18,7 +18,7 @@
       "slug": "2026-ai-spread",
       "title": "발명은 순간, 변혁은 세대의 업보",
       "path": "/posts/2026-ai-spread/",
-      "month": 19,
+      "month": 20,
       "total": 19,
       "read75": 0,
       "readComplete": 0
@@ -27,8 +27,8 @@
       "slug": "2026-game-for-girls",
       "title": "세상의 반은 여자, 게이머의 반은?",
       "path": "/posts/game-for-girls/",
-      "month": 25,
-      "total": 23,
+      "month": 26,
+      "total": 25,
       "read75": 10,
       "readComplete": 8
     }
