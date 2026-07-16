@@ -5,7 +5,9 @@ permalink: /reading-pulse/
 ---
 
 {% assign pulse = site.data.reading_pulse %}
-{% assign page_copy = site.data.site_identity.pages.reading_pulse %}
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign page_copy = site_copy.pages.reading_pulse %}
 {% assign dashboard_copy = page_copy.dashboard %}
 
 <section class="reading-pulse glass-panel" aria-labelledby="reading-pulse-title">
@@ -40,7 +42,7 @@ permalink: /reading-pulse/
     </dl>
 
     <p class="reading-pulse-updated">
-      마지막 집계: <time datetime="{{ pulse.generated_at | date_to_xmlschema }}">{{ pulse.generated_at | date: "%Y년 %-m월 %-d일" }}</time>
+      {{ dashboard_copy.updated_label }}: <time datetime="{{ pulse.generated_at | date_to_xmlschema }}">{{ pulse.generated_at | date: site_copy.meta.date_short }}</time>
     </p>
 
     {% assign ranked_posts = pulse.posts | sort: "month" | reverse %}
@@ -75,13 +77,13 @@ permalink: /reading-pulse/
     </div>
   {% else %}
     <div class="reading-pulse-empty" role="status">
-      <p class="section-label">SNAPSHOT PENDING</p>
-      <h2>첫 번째 기록을 준비하고 있습니다.</h2>
-      <p>공개 통계의 첫 스냅샷이 만들어지면, 이곳에 글별 읽기 흐름이 나타납니다.</p>
+      <p class="section-label">{{ dashboard_copy.pending_eyebrow }}</p>
+      <h2>{{ dashboard_copy.pending_title }}</h2>
+      <p>{{ dashboard_copy.pending_description }}</p>
     </div>
   {% endif %}
 
   <p class="reading-pulse-note">
-    이 기록은 GoatCounter의 공개 카운터를 바탕으로 하루 한 번 갱신됩니다. 광고 차단기나 네트워크 환경에 따라 일부 방문은 집계되지 않을 수 있습니다.
+    {{ dashboard_copy.note }}
   </p>
 </section>

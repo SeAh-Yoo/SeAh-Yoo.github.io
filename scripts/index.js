@@ -1,4 +1,6 @@
 const legacyPost = location.hash.match(/^#\/post\/([a-z0-9-]+)$/i);
+const copy = (path, fallback = '') => window.siteIdentity?.get(path, fallback) ?? fallback;
+const formatCopy = (path, variables, fallback = '') => window.siteIdentity?.format(path, variables, fallback) ?? fallback;
 
 if (legacyPost) {
   location.replace(`/posts/${legacyPost[1]}/`);
@@ -57,7 +59,7 @@ const SUMMARY_CACHE_MINUTES = Math.min(
 );
 const SUMMARY_CACHE_KEY = 'literary-underground:goatcounter-summary:v2';
 const SUMMARY_CACHE_DURATION = SUMMARY_CACHE_MINUTES * 60 * 1000;
-const SUMMARY_LABEL = analyticsLabelMeta?.content || '익명 방문 집계';
+const SUMMARY_LABEL = analyticsLabelMeta?.content || copy('analytics.summary_label');
 const analyticsEventQueue = [];
 let analyticsRetryId = 0;
 
@@ -110,7 +112,7 @@ const parseGoatCounterCount = (value) => {
   return Number.isFinite(parsed) ? parsed : 0;
 };
 
-const formatCounterCount = (value) => new Intl.NumberFormat('ko-KR').format(
+const formatCounterCount = (value) => new Intl.NumberFormat(copy('meta.number_locale', 'ko-KR')).format(
   Math.max(0, Math.trunc(value)),
 );
 
@@ -185,7 +187,7 @@ const setColoredCounter = (container, selector, value) => {
   });
 
   element.replaceChildren(fragment);
-  element.setAttribute('aria-label', `${element.getAttribute('aria-label')?.replace(/\s+[^\s]+$/, '') || '방문 수'} ${displayValue}`);
+  element.setAttribute('aria-label', `${element.getAttribute('aria-label')?.replace(/\s+[^\s]+$/, '') || copy('analytics.counter_aria_label')} ${displayValue}`);
 };
 
 const setSummaryStatus = (container, message) => {
@@ -204,11 +206,11 @@ const updateSiteVisitorCounter = async (container) => {
   const cached = readSummaryCache();
 
   if (cached) {
-    renderSiteVisitorCounter(container, cached, `방문 집계를 ${SUMMARY_CACHE_MINUTES}분 동안 표시합니다.`);
+    renderSiteVisitorCounter(container, cached, formatCopy('analytics.cache_message', { cache_minutes: SUMMARY_CACHE_MINUTES }));
     return;
   }
 
-  setSummaryStatus(container, '방문 집계를 불러오는 중입니다.');
+  setSummaryStatus(container, copy('analytics.loading_message'));
 
   const [weekResult, monthResult, totalResult] = await Promise.allSettled([
     fetchGoatCounterCount('TOTAL', { start: 'week' }),
@@ -226,12 +228,12 @@ const updateSiteVisitorCounter = async (container) => {
   const summary = { week, month, total, updatedAt: Date.now() };
 
   if (week === null && month === null && total === null) {
-    renderSiteVisitorCounter(container, summary, '방문 집계를 불러오지 못했습니다.');
+    renderSiteVisitorCounter(container, summary, copy('analytics.unavailable_message'));
     return;
   }
 
   writeSummaryCache(summary);
-  renderSiteVisitorCounter(container, summary, `${SUMMARY_LABEL}입니다.`);
+  renderSiteVisitorCounter(container, summary, formatCopy('analytics.loaded_message', { summary_label: SUMMARY_LABEL }));
 };
 
 const initSiteVisitorCounter = () => {
@@ -251,7 +253,7 @@ const initSiteVisitorCounter = () => {
     updateSiteVisitorCounter(counter).catch((error) => {
       console.warn(error);
       counter.setAttribute('aria-busy', 'false');
-      setSummaryStatus(counter, '방문 집계를 불러오지 못했습니다.');
+      setSummaryStatus(counter, copy('analytics.unavailable_message'));
     });
   };
 
@@ -282,9 +284,9 @@ const updatePostViewCounter = async () => {
     const count = await fetchGoatCounterCount(trackedPath);
 
     setCounterText(counter, '[data-goatcounter-post-count]', formatCounterCount(count));
-    setCounterText(counter, '[data-goatcounter-post-note]', '회');
+    setCounterText(counter, '[data-goatcounter-post-note]', copy('analytics.count_suffix'));
   } catch (error) {
-    setCounterText(counter, '[data-goatcounter-post-count]', '표시할 수 없음');
+    setCounterText(counter, '[data-goatcounter-post-count]', copy('analytics.cannot_display'));
     setCounterText(counter, '[data-goatcounter-post-note]', '');
     console.warn(error);
   } finally {

@@ -1,24 +1,27 @@
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign page_copy = site_copy.pages[page.identity_key] %}
 <!doctype html>
-<html lang="{{ site.lang | default: 'ko-KR' }}">
+<html lang="{{ site_copy.meta.html_lang }}">
   <head>
     {% include head.html %}
   </head>
   <body>
-    <a class="skip-link" href="#main-content">본문으로 바로가기</a>
+    <a class="skip-link" href="#main-content">{{ site_copy.ui.skip_link }}</a>
     <div class="aurora aurora-one" aria-hidden="true"></div>
     <div class="aurora aurora-two" aria-hidden="true"></div>
     <div class="shell">
       {% include sidebar.html %}
 
       <main class="content" id="main-content">
-        {% assign page_copy = site.data.site_identity.pages[page.identity_key] %}
         <header class="hero glass-panel">
           <p class="eyebrow">{{ page_copy.eyebrow | strip }}</p>
           <h1>{{ page_copy.title | strip }}</h1>
-          <p>{{ page_copy.intro | strip }} 질문과 소재의 연결 관계는 <a href="{{ site.data.site_identity.pages.topics.path | relative_url }}">{{ site.data.site_identity.pages.topics.title | strip }}</a> 페이지에서 확인할 수 있습니다.</p>
+          <p>{{ page_copy.intro | strip }}</p>
         </header>
 
         {{ content }}
+        {% include page-notes.html notes=page_copy.notes %}
       </main>
     </div>
     {% include analytics-tracking.html %}

@@ -1,20 +1,21 @@
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign brand = site_copy.brand %}
+{% assign pages = site_copy.pages %}
+{% assign home_copy = pages.home %}
 <!doctype html>
-<html lang="{{ site.lang | default: 'ko-KR' }}">
+<html lang="{{ site_copy.meta.html_lang }}">
   <head>
     {% include head.html %}
   </head>
   <body>
-    <a class="skip-link" href="#main-content">본문으로 바로가기</a>
+    <a class="skip-link" href="#main-content">{{ site_copy.ui.skip_link }}</a>
     <div class="aurora aurora-one" aria-hidden="true"></div>
     <div class="aurora aurora-two" aria-hidden="true"></div>
     <div class="shell">
       {% include sidebar.html %}
 
       <main class="content" id="main-content">
-        {% assign identity = site.data.site_identity %}
-        {% assign brand = identity.brand %}
-        {% assign pages = identity.pages %}
-        {% assign home_copy = pages.home %}
         {% if site.posts.size > 0 %}
         {% assign featured_post = site.posts | first %}
         {% assign featured_image = featured_post.image | default: featured_post.image1 %}
@@ -35,12 +36,12 @@
               {% if featured_image %}
               <img src="{{ featured_image | relative_url }}" alt="" loading="eager" decoding="async" fetchpriority="high" />
               {% else %}
-              <span class="featured-fallback"><span>{{ featured_post.category | default: "Column" }}</span><strong>{{ featured_post.title | slice: 0, 1 }}</strong></span>
+              <span class="featured-fallback"><span>{{ featured_post.category | default: site_copy.ui.default_category }}</span><strong>{{ featured_post.title | slice: 0, 1 }}</strong></span>
               {% endif %}
             </span>
             <span class="featured-copy">
               <span class="featured-kicker">{{ home_copy.featured_kicker }}</span>
-              <span class="meta"><time datetime="{{ featured_post.date | date_to_xmlschema }}">{{ featured_post.date | date: "%Y년 %-m월 %-d일" }}</time><span>{{ featured_post.category | default: "Column" }}</span></span>
+              <span class="meta"><time datetime="{{ featured_post.date | date_to_xmlschema }}">{{ featured_post.date | date: site_copy.meta.date_short }}</time><span>{{ featured_post.category | default: site_copy.ui.default_category }}</span></span>
               <h2>{{ featured_post.title }}</h2>
               <p>{{ featured_post.description }}</p>
               <span class="featured-link" aria-hidden="true">{{ home_copy.featured_open_label }} <span>→</span></span>
@@ -62,7 +63,7 @@
                 {% if card_image %}<img src="{{ card_image | relative_url }}" alt="" loading="lazy" decoding="async" />{% else %}<span>{{ post.title | slice: 0, 1 }}</span>{% endif %}
               </span>
               <span class="recent-copy">
-                <span class="meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %-m월 %-d일" }}</time><span>{{ post.category | default: "Column" }}</span></span>
+                <span class="meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: site_copy.meta.date_short }}</time><span>{{ post.category | default: site_copy.ui.default_category }}</span></span>
                 <h3>{{ post.title }}</h3>
                 <p>{{ post.description }}</p>
               </span>
@@ -88,6 +89,7 @@
         {% else %}
         <section class="empty glass-panel">{{ home_copy.empty_message }}</section>
         {% endif %}
+        {% include page-notes.html notes=home_copy.notes %}
       </main>
     </div>
     {% include analytics-tracking.html %}

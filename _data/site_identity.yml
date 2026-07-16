@@ -1,174 +1,492 @@
-brand:
-  name: "유세아의 문하수도"
-  short_name: "문하수도"
-  english_name: "The Literary Underground"
-  sidebar_subtitle: "The Literary Underground"
-  slogan: "하위 문화의 중심을 꿈꾸는 서브컬처의 하수도"
-  seo_title_suffix: "게임·서브컬처·인터넷 문화 비평"
-  description: "게임·서브컬처·영화·인터넷 문화·AI와 사회를 다루는 유세아의 개인 비평 블로그."
-  home_tagline: "게임을 비롯한 서브컬처, 영화, 인터넷, AI와 사회에서 발견한 질문과 잔여물이 흘러드는 이상 공간."
-  post_context: "게임·서브컬처·영화·인터넷·AI에 관한 개인 비평 기록"
+settings:
+  default_language: "ko"
+  preference_storage_key: "literary-underground:preferences:v1"
+  supported_languages:
+    - "ko"
+    - "en"
+    - "ja"
+
+# Used by every layout and include for internal and external destinations.
+links:
+  home: "/"
+  feed: "/feed.xml"
+  search_index: "/search.json"
+  license: "https://creativecommons.org/publicdomain/zero/1.0/deed.ko"
+  analytics_privacy: "https://www.goatcounter.com/help/privacy"
+  analytics_opt_out: "#toggle-goatcounter"
+
+# Used by _includes/head.html, _includes/sidebar.html, and post quote cards.
+assets:
   favicon_image: "/assets/images/favicon.png"
   apple_touch_icon: "/assets/images/apple-touch-icon.png"
   profile_image: "/assets/images/profile.jpg"
   default_social_image: "/assets/images/default-social.jpg"
-  quote_card_kicker: "THE LITERARY UNDERGROUND"
-  quote_card_label: "문하수도 기록"
-  quote_card_filename_prefix: "문하수도-기록"
-  author:
-    name: "유세아"
-    alternate_name: "SeAh Yoo"
 
-operator:
-  name: "유세아"
-  alternate_name: "SeAh Yoo"
-  role: "공간 관리인"
-  site_description: "개인이 관리하는 이상 기록 공간"
-  editorial_purpose: "게임·서브컬처·영화·인터넷·AI와 사회에서 발견한 질문을 수집하고, 생각이 이어지는 순서대로 기록합니다."
-  editorial_method: "사실과 해석을 구분하고, 필요한 경우 원문·기사·연구·게임과 작품을 근거 자료로 남깁니다. 각 게시물은 확정된 판정보다 계속 검토하고 갱신할 수 있는 비평의 출발점으로 취급합니다."
-  preservation_note: "쓸데없이 오래 생각한 것과 잊히기 아까운 문화의 잔여물을 남몰래 보존합니다."
-  introduction: "2000년 10월 10일생, 천칭자리, 키 170.8cm, 체중은 비밀."
-  reader_notice: "모든 기록은 작성자의 기억과 취향에 따라 임의로 연결됩니다. 길을 잃었다면 중심 합류점으로 돌아가십시오."
-  editor_note: "기억에 없는 문장이 발견되면 날짜와 위치를 적어 둡니다. 대개는 나중에 이유를 알게 됩니다."
+# All visible Korean interface copy lives below this key. Phase two adds en and ja siblings.
+locales:
+  ko:
+    meta:
+      html_lang: "ko-KR"
+      og_locale: "ko_KR"
+      number_locale: "ko-KR"
+      date_short: "%Y년 %-m월 %-d일"
+      date_month_day: "%m월 %-d일"
+      date_long: "%Y년 %-m월 %-d일 %H:%M"
 
-navigation:
-  primary_heading: "탐색기"
-  latest_heading: "최근 기록"
-  utility_label: "보조 탐색기"
-  categories_label: "주제별 분류"
-  feed_label: "RSS"
-  theme_label: "공간 설정"
-  license_label: "글·이미지·디자인은 별도 표기가 없는 한"
+    # Used by _includes/head.html, _includes/sidebar.html, and every layout.
+    brand:
+      name: "유세아의 문하수도"
+      short_name: "문하수도"
+      english_name: "The Literary Underground"
+      sidebar_subtitle: "The Literary Underground"
+      slogan: "하위 문화의 중심을 꿈꾸는 서브컬처의 하수도"
+      seo_title_suffix: "게임·서브컬처·인터넷 문화 비평"
+      description: "게임·서브컬처·영화·인터넷 문화·AI와 사회를 다루는 유세아의 개인 비평 블로그."
+      home_tagline: "게임을 비롯한 서브컬처, 영화, 인터넷, AI와 사회에서 발견한 질문과 잔여물이 흘러드는 이상 공간."
+      post_context: "게임·서브컬처·영화·인터넷·AI에 관한 개인 비평 기록"
+      quote_card_kicker: "THE LITERARY UNDERGROUND"
+      quote_card_label: "문하수도 기록"
+      quote_card_filename_prefix: "문하수도-기록"
+      author:
+        name: "유세아"
+        alternate_name: "SeAh Yoo"
 
-search:
-  open_label: "기록 검색 열기"
-  button_label: "검색"
-  kicker: "SEARCH"
-  title: "게시물 검색"
-  close_label: "검색 창 닫기"
-  input_label: "검색어"
-  placeholder: "제목, 본문, 분야, 주제, 연재 검색"
-  initial_status: "검색어를 입력하세요."
-  keyboard_hint: "목록 이동 · Enter 열기"
-  empty_message: "그런 기록은 존재하지 않습니다."
+    # Used by about.html and the shared page-note cards.
+    operator:
+      name: "유세아"
+      alternate_name: "SeAh Yoo"
+      role: "공간 관리인"
+      site_description: "개인이 관리하는 이상 기록 공간"
+      editorial_purpose: "게임·서브컬처·영화·인터넷·AI와 사회에서 발견한 질문을 수집하고, 생각이 이어지는 순서대로 기록합니다."
+      editorial_method: "사실과 해석을 구분하고, 필요한 경우 원문·기사·연구·게임과 작품을 근거 자료로 남깁니다. 각 게시물은 확정된 판정보다 계속 검토하고 갱신할 수 있는 비평의 출발점으로 취급합니다."
+      preservation_note: "쓸데없이 오래 생각한 것과 잊히기 아까운 문화의 잔여물을 남몰래 보존합니다."
+      introduction: "2000년 10월 10일생, 천칭자리, 키 170.8cm, 체중은 비밀."
 
-themes:
-  sewer_center: "하수관 중심"
-  brick_road_pipeline: "벽돌길 관로"
-  sewage_reservoir: "하수 저장고"
-  dim_passage: "어둑한 통로"
-  moss_pipeline: "이끼 배관로"
+    # Used by layouts, sidebar controls, and shared dynamic labels.
+    ui:
+      skip_link: "본문으로 바로가기"
+      sidebar_aria_suffix: "탐색"
+      home_aria_suffix: "홈"
+      quick_tools_label: "빠른 도구"
+      scroll_top_label: "페이지 맨 위로 이동"
+      top_button_label: "TOP"
+      menu_button_label: "MENU"
+      menu_open_label: "탐색 메뉴 열기"
+      menu_close_label: "탐색 메뉴 닫기"
+      default_category: "Column"
+      post_count_suffix: "posts"
+      read_more_label: "읽으러 가기"
+      theme_select_suffix: "선택"
+      license_suffix: "입니다."
 
-pages:
-  home:
-    title: "유세아의 문하수도"
-    label: "홈"
-    eyebrow: "THE LITERARY UNDERGROUND"
-    description: "게임·서브컬처·영화·인터넷 문화·AI와 사회에서 발견한 질문과 문화의 잔여물을 기록하는 유세아의 개인 비평 공간."
-    featured_aria_prefix: "최근 기록"
-    featured_kicker: "최근 발견된 기록"
-    featured_open_label: "기록 열기"
-    recent_eyebrow: "RECENTLY FOUND"
-    recent_title: "최근 기록"
-    recent_more_label: "전체 게시물 보기"
-    discovery_eyebrow: "WAYS THROUGH"
-    discovery_title: "다음 기록을 찾는 방법"
-    discovery_primary_label: "추천 탐색 경로"
-    discovery_primary_text: "관심 있는 질문부터 문하수도의 주요 기록을 순서대로 살펴봅니다."
-    discovery_open_label: "통로 살펴보기"
-    discovery_nav_label: "다른 탐색 방법"
-    topics_discovery_text: "질문과 소재가 만나는 경로로 찾기"
-    categories_discovery_text: "큰 주제별 관로를 따라 찾기"
-    timeline_discovery_text: "처음 남겨진 시각순으로 찾기"
-    empty_message: "아직 이 공간에 남겨진 기록이 없습니다."
-  start:
-    path: "/start-here/"
-    label: "처음 읽기"
-    title: "중심 합류점"
-    eyebrow: "MANHOLE ACCESS POINT"
-    intro: "처음 들어온 사람이 길을 잃지 않도록 주요 기록과 탐색 경로를 안내합니다."
-    description: "문하수도를 처음 이용하는 독자를 위한 질문별 입문 읽기 순서와 핵심 탐색 경로입니다."
-  about:
-    path: "/about/"
-    label: "공간 안내"
-    title: "이곳은 어디"
-    eyebrow: "WHERE YOU ARE"
-    intro: "이곳을 관리하는 사람과 문하수도에 기록을 남기는 기준을 안내합니다."
-    description: "문하수도의 작성자, 취급 주제, 편집 원칙과 익명 방문 통계 방식을 설명합니다."
-    sections:
-      profile:
-        eyebrow: "THE KEEPER"
-        title: "이곳의 관리인"
-      editorial:
-        eyebrow: "NOTES ON KEEPING"
-        title: "기록과 편집"
-      navigation:
-        eyebrow: "WAYS THROUGH"
-        title: "공간을 둘러보는 법"
-        intro: "처음 방문했다면 중심 합류점에서 관심 있는 질문을 고르는 것이 가장 빠릅니다."
-      participation:
-        eyebrow: "OPEN DOOR"
-        title: "이용과 참여"
-        description: "별도 표기가 없는 글·이미지·디자인은 CC0 1.0으로 제공합니다. 글에 관한 의견과 보완은 각 글의 댓글에서 나눌 수 있으며, RSS 피드로 새 글을 받아볼 수 있습니다."
-      privacy:
-        eyebrow: "VISITOR TRACES"
-      reader_notice:
-        title: "입구에 남긴 안내"
-      editor_note:
-        title: "관리인의 메모"
+    # Used by _includes/sidebar.html.
+    navigation:
+      primary_heading: "탐색기"
+      latest_heading: "최근 기록"
+      utility_label: "보조 탐색기"
+      categories_label: "주제별 분류"
+      feed_label: "RSS"
+      theme_label: "공간 설정"
+      license_label: "글·이미지·디자인은 별도 표기가 없는 한"
+      license_link_label: "CC0 1.0"
+
+    # Used by _includes/site-search.html and scripts/site-search.js.
+    search:
+      open_label: "기록 검색 열기"
+      button_label: "검색"
+      shortcut_label: "Ctrl K"
+      kicker: "SEARCH"
+      title: "게시물 검색"
+      close_label: "검색 창 닫기"
+      input_label: "검색어"
+      placeholder: "제목, 본문, 분야, 주제, 연재 검색"
+      initial_status: "검색어를 입력하세요."
+      keyboard_hint: "목록 이동 · Enter 열기"
+      empty_message: "그런 기록은 존재하지 않습니다."
+      loading_message: "검색 색인을 불러오는 중…"
+      no_match_message: "일치하는 글을 찾지 못했습니다."
+      untitled_label: "제목 없는 글"
+      # Variables: {count}
+      result_count_message: "{count}개의 글을 찾았습니다."
+      no_results_message: "검색 결과가 없습니다."
+      load_error_message: "검색 색인을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."
+      unavailable_message: "검색을 사용할 수 없습니다."
+
+    # Used by _includes/sidebar.html and scripts/site-preferences.js.
+    themes:
+      sewer_center: "하수관 중심"
+      brick_road_pipeline: "벽돌길 관로"
+      sewage_reservoir: "하수 저장고"
+      dim_passage: "어둑한 통로"
+      moss_pipeline: "이끼 배관로"
+
+    # Used by scripts/index.js and the reading-pulse page.
     analytics:
-      title: "방문 흔적에 관하여"
-      description: "문하수도는 GoatCounter로 익명 방문 흐름과 게시물 읽기 현황을 집계합니다. 쿠키나 영구 식별자를 만들지 않으며, 수치는 독자 수의 확정값이 아니라 공간을 정리할 때 참고하는 대략적인 흔적입니다."
-  timeline:
-    path: "/timeline/"
-    label: "전체 게시물"
-    title: "공간 이력"
-    eyebrow: "WRITTEN TRACES"
-    intro: "문하수도에 지금까지 남겨진 기록을 처음 나타난 시각순으로 펼쳐 봅니다."
-    description: "문하수도에 공개된 모든 글을 작성 시각과 날짜 순서로 탐색하는 전체 게시물 목록입니다."
-  reading_pulse:
-    path: "/reading-pulse/"
-    label: "방문자 현황"
-    title: "남겨진 발자국"
-    eyebrow: "VISITOR TRACES"
-    intro: "이 공간을 지나간 방문과 게시물 읽기의 흔적을 익명으로 보여줍니다."
-    description: "문하수도의 익명 방문 수, 인기 게시물과 완독 현황을 보여주는 방문자 통계 페이지입니다."
-    dashboard:
-      eyebrow: "SIGNS OF PASSAGE"
-      title: "공간에 남은 흔적"
-      intro: "표시값은 개인을 식별하지 않는 공개 집계입니다. 방문, 인기 게시물과 읽기 완료 여부의 대략적인 흐름만 제공합니다."
-      summary_label: "방문 흔적 요약"
-      total_visits_label: "누적 방문"
-      recent_visits_label: "최근 30일 방문"
-      reading_total_label: "읽힌 기록"
-      post_list_label: "기록별 흔적"
-      post_recent_label: "최근 30일 방문"
-      post_total_label: "누적 방문"
-      read_75_label: "75% 읽기"
-      completion_label: "끝까지 읽음"
-  topics:
-    path: "/topics/"
-    label: "소재별 분류"
-    title: "공간 계통"
-    eyebrow: "PATHS AND JUNCTIONS"
-    intro: "서로 다른 기록이 같은 질문과 소재를 통해 만나는 지점을 보여줍니다."
-    description: "문하수도에 공개된 글을 질문, 소재와 키워드의 연결 관계로 탐색하는 계통도입니다."
-  references:
-    path: "/references/"
-    label: "출처 및 인용"
-    title: "수집물 보관함"
-    eyebrow: "COLLECTED SOURCES"
-    intro: "각 기록을 쓰며 모아 둔 책, 기사, 논문, 영상과 웹 원문을 정리합니다."
-    description: "문하수도에 인용된 책, 보고서, 기사, 논문, 영상과 웹 원문을 모아보는 출처 목록입니다."
-  categories:
-    path: "/categories/"
-    label: "주제별 분류"
-    title: "하수 관로"
-    eyebrow: "BRANCHING PASSAGES"
-    intro: "문하수도에 남은 기록을 큰 주제별 통로로 나누어 안내합니다."
-    description: "문하수도에 공개된 게시물을 게임 산업, AI와 사회 등 큰 주제별로 모아보는 분류 페이지입니다."
-  not_found:
-    title: "해당 구역으로 진입할 수 없습니다"
-    eyebrow: "404 | CLOSED PASSAGE"
-    intro: "이 통로는 막혔거나 처음부터 존재하지 않았습니다. 뒤로 돌아가 다른 길을 찾아보세요."
-    description: "요청한 페이지를 찾을 수 없습니다. 문하수도 검색 또는 주요 탐색 페이지를 이용해 주세요."
+      summary_label: "익명 방문 집계"
+      counter_aria_label: "방문 수"
+      # Variables: {cache_minutes}
+      cache_message: "방문 집계를 {cache_minutes}분 동안 표시합니다."
+      loading_message: "방문 집계를 불러오는 중입니다."
+      unavailable_message: "방문 집계를 불러오지 못했습니다."
+      # Variables: {summary_label}
+      loaded_message: "{summary_label}입니다."
+      count_suffix: "회"
+      cannot_display: "표시할 수 없음"
+
+    # Used by _layouts/post.html, post includes, and scripts/post-actions.js.
+    post:
+      site_bar_label: "사이트 안내"
+      reading_info_label: "글 읽기 정보"
+      published_label: "게시 일자"
+      reading_time_loading: "예상 완독 시간 계산 중"
+      view_count_label: "누적 방문"
+      loading_label: "불러오는 중"
+      thesis_label: "핵심 논지"
+      footer_label: "글 정보"
+      written_at_label: "작성 일자"
+      modified_at_label: "수정 일자"
+      translations:
+        aria_label: "이 글의 번역"
+        label: "Translate"
+        english_label: "English"
+        japanese_label: "日本語"
+        english_unavailable: "영어 번역 준비 중"
+        japanese_unavailable: "일본어 번역 준비 중"
+      series:
+        kicker: "SERIES"
+        list_label: "연재 목록 보기"
+        # Variable: the rendered episode number is placed immediately before this suffix.
+        episode_suffix: "편"
+        current_label: "현재 글"
+      navigation:
+        kicker: "NEXT OBSERVATION"
+        title: "이어 읽기"
+        aria_label: "작성 시간순 이전 글과 다음 글"
+        previous_label: "← 이전 글"
+        next_label: "다음 글 →"
+      comments:
+        kicker: "DISCUSSION"
+        title: "댓글과 반응"
+        description: "GitHub 계정으로 로그인하면 댓글과 반응을 남길 수 있습니다."
+      share:
+        tools_label: "글 도구"
+        open_label: "공유"
+        feed_label: "피드"
+        feed_title: "RSS 피드 구독"
+        print_label: "인쇄 / PDF"
+        print_title: "브라우저 인쇄 창에서 PDF로 저장할 수 있습니다"
+        kicker: "SHARE"
+        title: "이 글 공유하기"
+        close_label: "공유 창 닫기"
+        kakao_label: "카카오톡"
+        telegram_label: "텔레그램"
+        line_label: "LINE"
+        x_label: "X"
+        threads_label: "Threads"
+        facebook_label: "Facebook"
+        copy_label: "주소 복사"
+        kakao_button_label: "글 읽기"
+        kakao_sdk_error: "카카오 SDK를 불러오지 못했습니다."
+        kakao_copy_message: "주소를 복사했습니다. 카카오톡 채팅방에 붙여 넣어 주세요."
+        copy_message: "웹페이지 주소를 복사했습니다."
+        error_message: "공유 기능을 실행하지 못했습니다. 잠시 후 다시 시도해 주세요."
+      endnotes:
+        kicker: "NOTES"
+        title: "각주 및 참고 문헌"
+        help: "본문의 각주 번호를 선택하면 이곳으로 이동합니다. 참고 문헌 번호 또는 돌아가기 화살표를 선택하면 읽던 위치로 돌아갑니다."
+        # Variables: {number}
+        reference_link_label: "각주 및 참고 문헌 {number}으로 이동"
+        # Variables: {number}
+        reference_item_label: "각주 및 참고 문헌 {number}"
+        # Variables: {number}
+        backlink_label: "본문의 각주 {number} 위치로 돌아가기"
+      reading:
+        # Variables: {minutes}
+        time_label: "예상 완독 시간: {minutes}분"
+      quote_card:
+        truncated_notice: "긴 인용문은 카드 안에서 일부만 표시됩니다."
+        create_label: "인용 카드 만들기"
+        create_aria_label: "이 인용문으로 PNG 인용 카드 만들기"
+        creating_label: "카드 만드는 중…"
+        saved_message: "PNG 인용 카드를 저장했습니다."
+        saved_label: "PNG 저장됨"
+        error_message: "인용 카드를 만들지 못했습니다. 잠시 후 다시 시도해 주세요."
+        retry_label: "다시 시도하기"
+      headings:
+        # Variables: {heading}
+        copy_link_label: "「{heading}」 위치 링크 복사"
+        copy_link_title: "이 소제목 링크 복사"
+      toc:
+        title: "목차"
+        # Variables: {count}
+        count_label: "{count}개 항목"
+
+    pages:
+      home:
+        path: "/"
+        title: "유세아의 문하수도"
+        label: "홈"
+        eyebrow: "THE LITERARY UNDERGROUND"
+        description: "게임·서브컬처·영화·인터넷 문화·AI와 사회에서 발견한 질문과 문화의 잔여물을 기록하는 유세아의 개인 비평 공간."
+        featured_aria_prefix: "최근 기록"
+        featured_kicker: "최근 발견된 기록"
+        featured_open_label: "기록 열기"
+        recent_eyebrow: "RECENTLY FOUND"
+        recent_title: "최근 기록"
+        recent_more_label: "전체 게시물 보기"
+        discovery_eyebrow: "WAYS THROUGH"
+        discovery_title: "다음 기록을 찾는 방법"
+        discovery_primary_label: "추천 탐색 경로"
+        discovery_primary_text: "관심 있는 질문부터 문하수도의 주요 기록을 순서대로 살펴봅니다."
+        discovery_open_label: "통로 살펴보기"
+        discovery_nav_label: "다른 탐색 방법"
+        topics_discovery_text: "질문과 소재가 만나는 경로로 찾기"
+        categories_discovery_text: "큰 주제별 관로를 따라 찾기"
+        timeline_discovery_text: "처음 남겨진 시각순으로 찾기"
+        empty_message: "아직 이 공간에 남겨진 기록이 없습니다."
+        notes:
+          enabled: true
+          items:
+            - title: "입구에 남긴 안내"
+              body: "모든 기록은 작성자의 기억과 취향에 따라 임의로 연결됩니다. 길을 잃었다면 중심 합류점으로 돌아가십시오."
+            - title: "관리인의 메모"
+              body: "기억에 없는 문장이 발견되면 날짜와 위치를 적어 둡니다. 대개는 나중에 이유를 알게 됩니다."
+
+      start:
+        path: "/start-here/"
+        label: "처음 읽기"
+        title: "중심 합류점"
+        eyebrow: "MANHOLE ACCESS POINT"
+        intro: "처음 들어온 사람이 길을 잃지 않도록 주요 기록과 탐색 경로를 안내합니다."
+        description: "문하수도를 처음 이용하는 독자를 위한 질문별 입문 읽기 순서와 핵심 탐색 경로입니다."
+        guide_eyebrow: "Exploration guide"
+        guide_title: "문하수도 탐색을 시작하세요"
+        guide_description: "아래 순서는 최신순이 아니라 처음 이용하는 독자를 위한 권장 탐색 순서입니다. 각 경로와 표시 순서는 게시물 Front Matter에서 관리됩니다."
+        # Variable: the rendered post count is placed immediately before this suffix.
+        post_count_suffix: " posts"
+        empty_message: "이 구역에 추가할 기록을 준비하고 있습니다."
+        paths:
+          - id: "game-industry"
+            title: "게임 산업을 읽는 길"
+            description: "시장 구조, 이용자 문화, 게임사가 신뢰를 얻거나 잃는 방식을 따라 읽습니다."
+            prompt: "산업의 숫자 뒤에 있는 선택과 관계를 읽고 싶다면"
+          - id: "ai-society"
+            title: "AI와 사회를 읽는 길"
+            description: "기술의 성능보다 늦게 움직이는 제도, 노동, 생활의 변화를 살펴봅니다."
+            prompt: "기술의 속도와 사회의 속도를 함께 생각하고 싶다면"
+        notes:
+          enabled: true
+          items:
+            - title: "입구에 남긴 안내"
+              body: "모든 기록은 작성자의 기억과 취향에 따라 임의로 연결됩니다. 길을 잃었다면 중심 합류점으로 돌아가십시오."
+            - title: "관리인의 메모"
+              body: "기억에 없는 문장이 발견되면 날짜와 위치를 적어 둡니다. 대개는 나중에 이유를 알게 됩니다."
+
+      about:
+        path: "/about/"
+        label: "공간 안내"
+        title: "이곳은 어디"
+        eyebrow: "WHERE YOU ARE"
+        intro: "이곳을 관리하는 사람과 문하수도에 기록을 남기는 기준을 안내합니다."
+        description: "문하수도의 작성자, 취급 주제, 편집 원칙과 익명 방문 통계 방식을 설명합니다."
+        profile_image_alt_suffix: "저자 이미지"
+        profile_separator: "·"
+        sections:
+          profile:
+            eyebrow: "THE KEEPER"
+            title: "이곳의 관리인"
+          editorial:
+            eyebrow: "NOTES ON KEEPING"
+            title: "기록과 편집"
+          navigation:
+            eyebrow: "WAYS THROUGH"
+            title: "공간을 둘러보는 법"
+            intro: "처음 방문했다면 중심 합류점에서 관심 있는 질문을 고르는 것이 가장 빠릅니다."
+            start_suffix: "에서 시작할 수 있습니다."
+            paths_prefix: "모든 기록은 검색과 다음 탐색 메뉴에서 다시 찾을 수 있습니다:"
+            series_label: "연재"
+          participation:
+            eyebrow: "OPEN DOOR"
+            title: "이용과 참여"
+            description: "별도 표기가 없는 글·이미지·디자인은 CC0 1.0으로 제공합니다. 글에 관한 의견과 보완은 각 글의 댓글에서 나눌 수 있으며, RSS 피드로 새 글을 받아볼 수 있습니다."
+          privacy:
+            eyebrow: "VISITOR TRACES"
+            title: "방문 흔적에 관하여"
+            description: "문하수도는 GoatCounter로 익명 방문 흐름과 게시물 읽기 현황을 집계합니다. 쿠키나 영구 식별자를 만들지 않으며, 수치는 독자 수의 확정값이 아니라 공간을 정리할 때 참고하는 대략적인 흔적입니다."
+            opt_out_prefix: "원하지 않으면"
+            opt_out_label: "이 브라우저에서 통계 제외하기"
+            opt_out_suffix: "를 선택할 수 있습니다. 자세한 방식은"
+            privacy_label: "GoatCounter 개인정보 안내"
+            privacy_suffix: "에서 확인할 수 있습니다."
+        notes:
+          enabled: true
+          items:
+            - title: "입구에 남긴 안내"
+              body: "모든 기록은 작성자의 기억과 취향에 따라 임의로 연결됩니다. 길을 잃었다면 중심 합류점으로 돌아가십시오."
+            - title: "관리인의 메모"
+              body: "기억에 없는 문장이 발견되면 날짜와 위치를 적어 둡니다. 대개는 나중에 이유를 알게 됩니다."
+
+      timeline:
+        path: "/timeline/"
+        label: "전체 게시물"
+        title: "공간 이력"
+        eyebrow: "WRITTEN TRACES"
+        intro: "문하수도에 지금까지 남겨진 기록을 처음 나타난 시각순으로 펼쳐 봅니다."
+        description: "문하수도에 공개된 모든 글을 작성 시각과 날짜 순서로 탐색하는 전체 게시물 목록입니다."
+        section_eyebrow: "Record history"
+        section_title: "남겨진 기록의 이력"
+        section_description: "모든 게시물을 최초 작성 시각에 따라 연도별로 정렬합니다. 새 기록이 공개되면 별도 편집 없이 이 이력에 자동으로 추가됩니다."
+        list_label: "공간 이력"
+        era_label: "Records"
+        notes:
+          enabled: true
+          items:
+            - title: "입구에 남긴 안내"
+              body: "모든 기록은 작성자의 기억과 취향에 따라 임의로 연결됩니다. 길을 잃었다면 중심 합류점으로 돌아가십시오."
+            - title: "관리인의 메모"
+              body: "기억에 없는 문장이 발견되면 날짜와 위치를 적어 둡니다. 대개는 나중에 이유를 알게 됩니다."
+
+      reading_pulse:
+        path: "/reading-pulse/"
+        label: "방문자 현황"
+        title: "남겨진 발자국"
+        eyebrow: "VISITOR TRACES"
+        intro: "이 공간을 지나간 방문과 게시물 읽기의 흔적을 익명으로 보여줍니다."
+        description: "문하수도의 익명 방문 수, 인기 게시물과 완독 현황을 보여주는 방문자 통계 페이지입니다."
+        dashboard:
+          eyebrow: "SIGNS OF PASSAGE"
+          title: "공간에 남은 흔적"
+          intro: "표시값은 개인을 식별하지 않는 공개 집계입니다. 방문, 인기 게시물과 읽기 완료 여부의 대략적인 흐름만 제공합니다."
+          summary_label: "방문 흔적 요약"
+          total_visits_label: "누적 방문"
+          recent_visits_label: "최근 30일 방문"
+          reading_total_label: "읽힌 기록"
+          post_list_label: "기록별 흔적"
+          post_recent_label: "최근 30일 방문"
+          post_total_label: "누적 방문"
+          read_75_label: "75% 읽기"
+          completion_label: "끝까지 읽음"
+          updated_label: "마지막 집계"
+          pending_eyebrow: "SNAPSHOT PENDING"
+          pending_title: "첫 번째 기록을 준비하고 있습니다."
+          pending_description: "공개 통계의 첫 스냅샷이 만들어지면, 이곳에 글별 읽기 흐름이 나타납니다."
+          note: "이 기록은 GoatCounter의 공개 카운터를 바탕으로 하루 한 번 갱신됩니다. 광고 차단기나 네트워크 환경에 따라 일부 방문은 집계되지 않을 수 있습니다."
+        notes:
+          enabled: true
+          items:
+            - title: "입구에 남긴 안내"
+              body: "모든 기록은 작성자의 기억과 취향에 따라 임의로 연결됩니다. 길을 잃었다면 중심 합류점으로 돌아가십시오."
+            - title: "관리인의 메모"
+              body: "기억에 없는 문장이 발견되면 날짜와 위치를 적어 둡니다. 대개는 나중에 이유를 알게 됩니다."
+
+      topics:
+        path: "/topics/"
+        label: "소재별 분류"
+        title: "공간 계통"
+        eyebrow: "PATHS AND JUNCTIONS"
+        intro: "서로 다른 기록이 같은 질문과 소재를 통해 만나는 지점을 보여줍니다."
+        description: "문하수도에 공개된 글을 질문, 소재와 키워드의 연결 관계로 탐색하는 계통도입니다."
+        section_eyebrow: "Material index"
+        section_title: "소재와 기록의 연결"
+        section_prefix: "한 기록은 여러 질문이나 소재와 연결될 수 있습니다. 전문 주제별 목록은"
+        section_suffix: "페이지에서 확인하고, 이곳에서는 서로 다른 분야의 글을 같은 문제의식으로 이어 읽을 수 있습니다."
+        list_label: "소재 목록"
+        # Variable: the rendered post count is placed immediately before this suffix.
+        post_count_suffix: " posts"
+        empty_message: "이 주제의 글을 준비하고 있습니다."
+        items:
+          - id: "women-oriented-games"
+            label: "여성향 게임"
+            description: "여성 이용자, 여성향 서사와 게임 시장의 관계"
+          - id: "game-culture"
+            label: "게임 문화"
+            description: "게이머의 경험, 커뮤니티와 문화적 언어"
+          - id: "market-inertia"
+            label: "시장 관성"
+            description: "기업과 시장이 익숙한 선택을 반복하는 구조"
+          - id: "technology-diffusion"
+            label: "기술 확산"
+            description: "발명과 사회적 보편화 사이에 걸리는 시간"
+          - id: "ai-and-society"
+            label: "AI와 사회"
+            description: "인공지능이 제도, 노동과 생활에 미치는 변화"
+          - id: "player-trust"
+            label: "이용자 신뢰"
+            description: "게임사와 이용자 사이에서 쌓이고 무너지는 신뢰"
+        notes:
+          enabled: true
+          items:
+            - title: "입구에 남긴 안내"
+              body: "모든 기록은 작성자의 기억과 취향에 따라 임의로 연결됩니다. 길을 잃었다면 중심 합류점으로 돌아가십시오."
+            - title: "관리인의 메모"
+              body: "기억에 없는 문장이 발견되면 날짜와 위치를 적어 둡니다. 대개는 나중에 이유를 알게 됩니다."
+
+      references:
+        path: "/references/"
+        label: "출처 및 인용"
+        title: "수집물 보관함"
+        eyebrow: "COLLECTED SOURCES"
+        intro: "각 기록을 쓰며 모아 둔 책, 기사, 논문, 영상과 웹 원문을 정리합니다."
+        description: "문하수도에 인용된 책, 보고서, 기사, 논문, 영상과 웹 원문을 모아보는 출처 목록입니다."
+        section_eyebrow: "Source storage"
+        section_title: "게시물에 사용한 출처"
+        section_description: "각 게시물의 references 목록을 자동으로 수집합니다. 같은 id의 자료는 한 번만 등록하고, 해당 자료를 인용한 게시물을 함께 표시합니다."
+        library_label: "원문 자료 목록"
+        default_type: "Source"
+        cited_in_label: "인용된 글"
+        empty_message: "아직 등록된 원문 자료가 없습니다. 게시물 Front Matter에 references를 추가하면 이곳에 자동으로 수집됩니다."
+        notes:
+          enabled: true
+          items:
+            - title: "입구에 남긴 안내"
+              body: "모든 기록은 작성자의 기억과 취향에 따라 임의로 연결됩니다. 길을 잃었다면 중심 합류점으로 돌아가십시오."
+            - title: "관리인의 메모"
+              body: "기억에 없는 문장이 발견되면 날짜와 위치를 적어 둡니다. 대개는 나중에 이유를 알게 됩니다."
+
+      categories:
+        path: "/categories/"
+        label: "주제별 분류"
+        title: "하수 관로"
+        eyebrow: "BRANCHING PASSAGES"
+        intro: "문하수도에 남은 기록을 큰 주제별 통로로 나누어 안내합니다."
+        description: "문하수도에 공개된 게시물을 게임 산업, AI와 사회 등 큰 주제별로 모아보는 분류 페이지입니다."
+        section_eyebrow: "Topic branches"
+        section_title: "주제별 기록 모아보기"
+        section_prefix: "관심 주제를 선택하면 해당 분류에 등록된 게시물만 확인할 수 있습니다. 질문과 소재의 연결 관계는"
+        section_suffix: "페이지에서 확인할 수 있습니다."
+        list_label: "카테고리 목록"
+        # Variable: the rendered post count is placed immediately before this suffix.
+        post_count_suffix: " posts"
+        read_more_label: "읽으러 가기"
+        items:
+          - id: "game-industry"
+            source_label: "Game Industry"
+            label: "Game Industry"
+          - id: "ai-industry"
+            source_label: "AI Industry"
+            label: "AI Industry"
+        notes:
+          enabled: true
+          items:
+            - title: "입구에 남긴 안내"
+              body: "모든 기록은 작성자의 기억과 취향에 따라 임의로 연결됩니다. 길을 잃었다면 중심 합류점으로 돌아가십시오."
+            - title: "관리인의 메모"
+              body: "기억에 없는 문장이 발견되면 날짜와 위치를 적어 둡니다. 대개는 나중에 이유를 알게 됩니다."
+
+      not_found:
+        path: "/404.html"
+        title: "해당 구역으로 진입할 수 없습니다"
+        eyebrow: "404 | CLOSED PASSAGE"
+        intro: "이 통로는 막혔거나 처음부터 존재하지 않았습니다. 뒤로 돌아가 다른 길을 찾아보세요."
+        description: "요청한 페이지를 찾을 수 없습니다. 문하수도 검색 또는 주요 탐색 페이지를 이용해 주세요."
+        section_eyebrow: "Restricted area"
+        section_title: "다른 구역 탐색하기"
+        home_label: "문하수도 홈"
+        section_prefix: "으로 돌아갈 수 있습니다. 다음 경로에서도 기록을 찾을 수 있습니다:"
+        notes:
+          enabled: true
+          items:
+            - title: "입구에 남긴 안내"
+              body: "모든 기록은 작성자의 기억과 취향에 따라 임의로 연결됩니다. 길을 잃었다면 중심 합류점으로 돌아가십시오."
+            - title: "관리인의 메모"
+              body: "기억에 없는 문장이 발견되면 날짜와 위치를 적어 둡니다. 대개는 나중에 이유를 알게 됩니다."

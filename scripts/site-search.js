@@ -1,4 +1,6 @@
 (() => {
+  const copy = (path, fallback = '') => window.siteIdentity?.get(path, fallback) ?? fallback;
+  const formatCopy = (path, variables, fallback = '') => window.siteIdentity?.format(path, variables, fallback) ?? fallback;
   const root = document.querySelector('[data-site-search]');
 
   if (!root) {
@@ -32,7 +34,7 @@
 
   const loadIndex = () => {
     if (!indexPromise) {
-      status.textContent = '검색 색인을 불러오는 중…';
+      status.textContent = copy('search.loading_message');
       indexPromise = fetch(indexUrl, { credentials: 'same-origin', cache: 'no-cache' })
         .then((response) => {
           if (!response.ok) {
@@ -152,7 +154,7 @@
   const renderResults = (items, tokens) => {
     resultsList.replaceChildren();
     selectedIndex = -1;
-    empty.textContent = '일치하는 글을 찾지 못했습니다.';
+    empty.textContent = copy('search.no_match_message');
 
     items.forEach((item, index) => {
       const listItem = document.createElement('li');
@@ -167,7 +169,7 @@
       link.addEventListener('mouseenter', () => selectResult(index));
       link.addEventListener('click', () => closeDialog());
 
-      heading.append(createHighlightedText(item.title || '제목 없는 글', tokens));
+      heading.append(createHighlightedText(item.title || copy('search.untitled_label'), tokens));
       metadata.className = 'site-search-result-meta';
       const topics = Array.isArray(item.topics) ? item.topics : [];
       metadata.textContent = [item.category, topics.join(', '), item.series, item.dateLabel].filter(Boolean).join(' · ');
@@ -182,10 +184,10 @@
     empty.hidden = items.length > 0;
 
     if (items.length) {
-      status.textContent = `${items.length}개의 글을 찾았습니다.`;
+      status.textContent = formatCopy('search.result_count_message', { count: items.length });
       selectResult(0);
     } else {
-      status.textContent = '검색 결과가 없습니다.';
+      status.textContent = copy('search.no_results_message');
     }
   };
 
@@ -197,7 +199,7 @@
       resultsList.replaceChildren();
       selectedIndex = -1;
       empty.hidden = true;
-      status.textContent = '검색어를 입력하세요.';
+      status.textContent = copy('search.initial_status');
       input.removeAttribute('aria-activedescendant');
       return;
     }
@@ -221,8 +223,8 @@
       console.warn(error);
       resultsList.replaceChildren();
       empty.hidden = false;
-      empty.textContent = '검색 색인을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.';
-      status.textContent = '검색을 사용할 수 없습니다.';
+      empty.textContent = copy('search.load_error_message');
+      status.textContent = copy('search.unavailable_message');
     }
   };
 
@@ -242,12 +244,12 @@
         if (normalize(input.value)) {
           runSearch();
         } else {
-          status.textContent = '검색어를 입력하세요.';
+          status.textContent = copy('search.initial_status');
         }
       })
       .catch((error) => {
         console.warn(error);
-        status.textContent = '검색을 사용할 수 없습니다.';
+        status.textContent = copy('search.unavailable_message');
       });
   };
 

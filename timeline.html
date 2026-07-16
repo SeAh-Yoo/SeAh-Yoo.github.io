@@ -3,14 +3,17 @@ layout: page
 identity_key: timeline
 permalink: /timeline/
 ---
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign page_copy = site_copy.pages.timeline %}
 <section class="timeline-intro glass-panel" aria-labelledby="timeline-intro-title">
-  <p class="eyebrow">Record history</p>
-  <h2 id="timeline-intro-title">남겨진 기록의 이력</h2>
-  <p>모든 게시물을 최초 작성 시각에 따라 연도별로 정렬합니다. 새 기록이 공개되면 별도 편집 없이 이 이력에 자동으로 추가됩니다.</p>
+  <p class="eyebrow">{{ page_copy.section_eyebrow }}</p>
+  <h2 id="timeline-intro-title">{{ page_copy.section_title }}</h2>
+  <p>{{ page_copy.section_description }}</p>
 </section>
 
 {% assign current_year = "" %}
-<div class="timeline" aria-label="공간 이력">
+<div class="timeline" aria-label="{{ page_copy.list_label }}">
   {% for post in site.posts %}
     {% assign post_year = post.date | date: "%Y" %}
     {% if post_year != current_year %}
@@ -18,17 +21,17 @@ permalink: /timeline/
       {% assign current_year = post_year %}
       <section class="timeline-era glass-panel" aria-labelledby="timeline-{{ post_year }}">
         <header class="timeline-era-header">
-          <p class="eyebrow">Records</p>
+          <p class="eyebrow">{{ page_copy.era_label }}</p>
           <h2 id="timeline-{{ post_year }}">{{ post_year }}</h2>
         </header>
         <ol class="timeline-list">
     {% endif %}
           <li>
             <a class="timeline-card" href="{{ post.url | relative_url }}">
-              <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%m월 %-d일" }}</time>
+              <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: site_copy.meta.date_month_day }}</time>
               <span class="timeline-card-dot" aria-hidden="true"></span>
               <span>
-                <small>{{ post.category | default: "Column" }}</small>
+                <small>{{ post.category | default: site_copy.ui.default_category }}</small>
                 <strong>{{ post.title }}</strong>
                 <em>{{ post.description }}</em>
               </span>

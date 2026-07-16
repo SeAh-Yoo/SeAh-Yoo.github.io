@@ -4,9 +4,10 @@ identity_key: about
 permalink: /about/
 ---
 {% assign identity = site.data.site_identity %}
-{% assign brand = identity.brand %}
-{% assign operator = identity.operator %}
-{% assign pages = identity.pages %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign brand = site_copy.brand %}
+{% assign operator = site_copy.operator %}
+{% assign pages = site_copy.pages %}
 {% assign about_copy = pages.about %}
 {% assign sections = about_copy.sections %}
 
@@ -14,12 +15,12 @@ permalink: /about/
   <div class="about-profile-copy">
     <p class="eyebrow">{{ sections.profile.eyebrow }}</p>
     <h2 id="about-focus-title">{{ sections.profile.title }}</h2>
-    <p><strong>{{ operator.name }}</strong> · {{ operator.introduction }}</p>
+    <p><strong>{{ operator.name }}</strong> {{ about_copy.profile_separator }} {{ operator.introduction }}</p>
     <p>{{ operator.site_description }}</p>
   </div>
-  {% if brand.profile_image %}
+  {% if identity.assets.profile_image %}
   <figure class="about-profile-image">
-    <img src="{{ brand.profile_image | relative_url }}" alt="{{ operator.name }} 저자 이미지" width="1254" height="1254" decoding="async" />
+    <img src="{{ identity.assets.profile_image | relative_url }}" alt="{{ operator.name }} {{ about_copy.profile_image_alt_suffix }}" width="1254" height="1254" decoding="async" />
   </figure>
   {% endif %}
 </section>
@@ -35,8 +36,8 @@ permalink: /about/
 <section class="about-section glass-panel" aria-labelledby="about-reading-title">
   <p class="eyebrow">{{ sections.navigation.eyebrow }}</p>
   <h2 id="about-reading-title">{{ sections.navigation.title }}</h2>
-  <p>{{ sections.navigation.intro }} <a href="{{ pages.start.path | relative_url }}">{{ pages.start.title }}</a>에서 시작할 수 있습니다.</p>
-  <p>모든 기록은 검색과 다음 탐색 메뉴에서 다시 찾을 수 있습니다: <a href="{{ pages.categories.path | relative_url }}">{{ pages.categories.label }}</a> · <a href="{{ pages.topics.path | relative_url }}">{{ pages.topics.label }}</a> · 연재 · <a href="{{ pages.timeline.path | relative_url }}">{{ pages.timeline.label }}</a>.</p>
+  <p>{{ sections.navigation.intro }} <a href="{{ pages.start.path | relative_url }}">{{ pages.start.title }}</a>{{ sections.navigation.start_suffix }}</p>
+  <p>{{ sections.navigation.paths_prefix }} <a href="{{ pages.categories.path | relative_url }}">{{ pages.categories.label }}</a> · <a href="{{ pages.topics.path | relative_url }}">{{ pages.topics.label }}</a> · {{ sections.navigation.series_label }} · <a href="{{ pages.timeline.path | relative_url }}">{{ pages.timeline.label }}</a>.</p>
 </section>
 
 <section class="about-section glass-panel" aria-labelledby="about-participation-title">
@@ -47,17 +48,7 @@ permalink: /about/
 
 <section class="about-section glass-panel" aria-labelledby="about-analytics-title">
   <p class="eyebrow">{{ sections.privacy.eyebrow }}</p>
-  <h2 id="about-analytics-title">{{ about_copy.analytics.title }}</h2>
-  <p>{{ about_copy.analytics.description }}</p>
-  <p>원하지 않으면 <a href="#toggle-goatcounter">이 브라우저에서 통계 제외하기</a>를 선택할 수 있습니다. 자세한 방식은 <a href="https://www.goatcounter.com/help/privacy" rel="noopener noreferrer" target="_blank">GoatCounter 개인정보 안내</a>에서 확인할 수 있습니다.</p>
+  <h2 id="about-analytics-title">{{ sections.privacy.title }}</h2>
+  <p>{{ sections.privacy.description }}</p>
+  <p>{{ sections.privacy.opt_out_prefix }} <a href="{{ identity.links.analytics_opt_out }}">{{ sections.privacy.opt_out_label }}</a>{{ sections.privacy.opt_out_suffix }} <a href="{{ identity.links.analytics_privacy }}" rel="noopener noreferrer" target="_blank">{{ sections.privacy.privacy_label }}</a>{{ sections.privacy.privacy_suffix }}</p>
 </section>
-
-<aside class="about-note glass-panel" aria-label="{{ sections.reader_notice.title }}">
-  <strong>{{ sections.reader_notice.title }}</strong>
-  <p>{{ operator.reader_notice }}</p>
-</aside>
-
-<aside class="about-note glass-panel" aria-label="{{ sections.editor_note.title }}">
-  <strong>{{ sections.editor_note.title }}</strong>
-  <p>{{ operator.editor_note }}</p>
-</aside>

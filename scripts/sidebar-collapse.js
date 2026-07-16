@@ -1,4 +1,5 @@
 (() => {
+  const copy = (path, fallback = '') => window.siteIdentity?.get(path, fallback) ?? fallback;
   const sidebar = document.querySelector('[data-mobile-sidebar]');
 
   if (!sidebar) {
@@ -24,8 +25,8 @@
   menuButton.setAttribute('aria-controls', regionId);
   menuButton.setAttribute('data-sidebar-menu', '');
   menuButton.setAttribute('aria-expanded', 'false');
-  menuButton.setAttribute('aria-label', '탐색 메뉴 열기');
-  menuButton.innerHTML = '<span class="sidebar-menu-icon" aria-hidden="true">☰</span><span class="sidebar-top-label">MENU</span>';
+  menuButton.setAttribute('aria-label', copy('ui.menu_open_label'));
+  menuButton.innerHTML = `<span class="sidebar-menu-icon" aria-hidden="true">☰</span><span class="sidebar-top-label">${copy('ui.menu_button_label')}</span>`;
   quickActions.insertBefore(menuButton, topButton);
 
   const setExpanded = (expanded, options = {}) => {
@@ -38,7 +39,7 @@
     collapseRegion.inert = isMobile && !shouldExpand;
     menuButton.hidden = !isMobile;
     menuButton.setAttribute('aria-expanded', String(isMobile && shouldExpand));
-    menuButton.setAttribute('aria-label', shouldExpand ? '탐색 메뉴 닫기' : '탐색 메뉴 열기');
+    menuButton.setAttribute('aria-label', shouldExpand ? copy('ui.menu_close_label') : copy('ui.menu_open_label'));
 
     const icon = menuButton.querySelector('.sidebar-menu-icon');
     if (icon) {
