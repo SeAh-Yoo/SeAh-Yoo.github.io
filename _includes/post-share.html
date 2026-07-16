@@ -1,66 +1,69 @@
-{% assign share_image = page.image | default: page.image1 | default: site.data.site_identity.brand.default_social_image | default: site.data.site_identity.brand.profile_image | absolute_url %}
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign share_copy = site_copy.post.share %}
+{% assign share_image = page.image | default: page.image1 | default: identity.assets.default_social_image | default: identity.assets.profile_image | absolute_url %}
 {% capture share_campaign %}post-{{ page.date | date: "%Y-%m-%d" }}-{{ page.slug | default: page.title | slugify }}{% endcapture %}
 <section class="post-actions-bar" data-post-share
          data-share-title="{{ page.title | strip_html | escape }}"
          data-share-url="{{ page.url | absolute_url | escape }}"
-         data-share-description="{{ page.description | default: site.data.site_identity.brand.description | strip_html | normalize_whitespace | escape }}"
+         data-share-description="{{ page.description | default: site_copy.brand.description | strip_html | normalize_whitespace | escape }}"
          data-share-image="{{ share_image | escape }}"
          data-share-campaign="{{ share_campaign | strip | escape }}"
          data-kakao-key="{{ site.kakao_javascript_key | default: '' | escape }}"
-         aria-label="글 도구">
+         aria-label="{{ share_copy.tools_label }}">
   <button class="post-action-button post-share-trigger" type="button" data-share-open aria-haspopup="dialog">
     <span class="post-action-icon" aria-hidden="true">↗</span>
-    <span>공유</span>
+    <span>{{ share_copy.open_label }}</span>
   </button>
 
-  <a class="post-action-button post-rss-button" href="{{ '/feed.xml' | relative_url }}" type="application/rss+xml" title="RSS 피드 구독">
+  <a class="post-action-button post-rss-button" href="{{ identity.links.feed | relative_url }}" type="application/rss+xml" title="{{ share_copy.feed_title }}">
     <span class="post-action-icon post-rss-icon" aria-hidden="true">RSS</span>
-    <span>피드</span>
+    <span>{{ share_copy.feed_label }}</span>
   </a>
 
-  <button class="post-action-button post-print-button" type="button" data-print-post title="브라우저 인쇄 창에서 PDF로 저장할 수 있습니다">
+  <button class="post-action-button post-print-button" type="button" data-print-post title="{{ share_copy.print_title }}">
     <span class="post-action-icon" aria-hidden="true">⎙</span>
-    <span>인쇄 / PDF</span>
+    <span>{{ share_copy.print_label }}</span>
   </button>
 
   <dialog class="post-share-dialog" data-share-dialog aria-labelledby="post-share-title">
     <div class="post-share-dialog-panel">
       <header class="post-share-dialog-header">
         <div>
-          <p class="post-share-kicker">SHARE</p>
-          <h2 id="post-share-title">이 글 공유하기</h2>
+          <p class="post-share-kicker">{{ share_copy.kicker }}</p>
+          <h2 id="post-share-title">{{ share_copy.title }}</h2>
         </div>
-        <button class="post-share-close" type="button" data-share-close aria-label="공유 창 닫기">×</button>
+        <button class="post-share-close" type="button" data-share-close aria-label="{{ share_copy.close_label }}">×</button>
       </header>
 
       <div class="post-share-grid">
         <button class="post-share-service share-kakao" type="button" data-share-service="kakao">
           <span class="share-service-mark" aria-hidden="true">K</span>
-          <span>카카오톡</span>
+          <span>{{ share_copy.kakao_label }}</span>
         </button>
         <button class="post-share-service share-telegram" type="button" data-share-service="telegram">
           <span class="share-service-mark" aria-hidden="true">TG</span>
-          <span>텔레그램</span>
+          <span>{{ share_copy.telegram_label }}</span>
         </button>
         <button class="post-share-service share-line" type="button" data-share-service="line">
           <span class="share-service-mark" aria-hidden="true">L</span>
-          <span>LINE</span>
+          <span>{{ share_copy.line_label }}</span>
         </button>
         <button class="post-share-service share-x" type="button" data-share-service="x">
           <span class="share-service-mark" aria-hidden="true">X</span>
-          <span>X</span>
+          <span>{{ share_copy.x_label }}</span>
         </button>
         <button class="post-share-service share-threads" type="button" data-share-service="threads">
           <span class="share-service-mark" aria-hidden="true">@</span>
-          <span>Threads</span>
+          <span>{{ share_copy.threads_label }}</span>
         </button>
         <button class="post-share-service share-facebook" type="button" data-share-service="facebook">
           <span class="share-service-mark" aria-hidden="true">f</span>
-          <span>Facebook</span>
+          <span>{{ share_copy.facebook_label }}</span>
         </button>
         <button class="post-share-service share-copy" type="button" data-share-service="copy">
           <span class="share-service-mark" aria-hidden="true">⧉</span>
-          <span>주소 복사</span>
+          <span>{{ share_copy.copy_label }}</span>
         </button>
       </div>
 

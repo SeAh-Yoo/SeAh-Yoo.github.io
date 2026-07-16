@@ -1,13 +1,16 @@
-<nav class="post-translations" aria-label="이 글의 번역">
-  <span class="post-translations-label" aria-hidden="true">Translate</span>
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign translations_copy = site_copy.post.translations %}
+<nav class="post-translations" aria-label="{{ translations_copy.aria_label }}">
+  <span class="post-translations-label" aria-hidden="true">{{ translations_copy.label }}</span>
   {% if page.translation_en %}
-  <a class="post-translation-button is-available" href="{{ page.translation_en | escape }}" hreflang="en" lang="en">English</a>
+  <a class="post-translation-button is-available" href="{{ page.translation_en | escape }}" hreflang="en" lang="en">{{ translations_copy.english_label }}</a>
   {% else %}
-  <span class="post-translation-button is-unavailable" aria-disabled="true" title="영어 번역 준비 중" lang="en">English</span>
+  <span class="post-translation-button is-unavailable" aria-disabled="true" title="{{ translations_copy.english_unavailable }}" lang="en">{{ translations_copy.english_label }}</span>
   {% endif %}
   {% if page.translation_ja %}
-  <a class="post-translation-button is-available" href="{{ page.translation_ja | escape }}" hreflang="ja" lang="ja">日本語</a>
+  <a class="post-translation-button is-available" href="{{ page.translation_ja | escape }}" hreflang="ja" lang="ja">{{ translations_copy.japanese_label }}</a>
   {% else %}
-  <span class="post-translation-button is-unavailable" aria-disabled="true" title="일본어 번역 준비 중" lang="ja">日本語</span>
+  <span class="post-translation-button is-unavailable" aria-disabled="true" title="{{ translations_copy.japanese_unavailable }}" lang="ja">{{ translations_copy.japanese_label }}</span>
   {% endif %}
 </nav>

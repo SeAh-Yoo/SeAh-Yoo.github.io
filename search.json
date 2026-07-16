@@ -3,14 +3,16 @@ layout: null
 permalink: /search.json
 sitemap: false
 ---
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
 [
 {% for post in site.posts %}
   {
     "title": {{ post.title | jsonify }},
     "url": {{ post.url | relative_url | jsonify }},
     "date": {{ post.date | date_to_xmlschema | jsonify }},
-    "dateLabel": {{ post.date | date: "%Y년 %-m월 %-d일" | jsonify }},
-    "category": {{ post.category | default: post.categories.first | default: "Column" | jsonify }},
+    "dateLabel": {{ post.date | date: site_copy.meta.date_short | jsonify }},
+    "category": {{ post.category | default: post.categories.first | default: site_copy.ui.default_category | jsonify }},
     "topics": {{ post.topics | jsonify }},
     "series": {{ post.series | default: "" | jsonify }},
     "description": {{ post.description | default: post.excerpt | strip_html | strip_newlines | normalize_whitespace | jsonify }},

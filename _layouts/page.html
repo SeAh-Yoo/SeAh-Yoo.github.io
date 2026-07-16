@@ -1,25 +1,28 @@
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign page_copy = site_copy.pages[page.identity_key] %}
 <!doctype html>
-<html lang="{{ site.lang | default: 'ko-KR' }}">
+<html lang="{{ site_copy.meta.html_lang }}">
   <head>
     {% include head.html %}
   </head>
   <body>
-    <a class="skip-link" href="#main-content">본문으로 바로가기</a>
+    <a class="skip-link" href="#main-content">{{ site_copy.ui.skip_link }}</a>
     <div class="aurora aurora-one" aria-hidden="true"></div>
     <div class="aurora aurora-two" aria-hidden="true"></div>
     <div class="shell">
       {% include sidebar.html %}
 
       <main class="content" id="main-content">
-        {% assign page_copy = site.data.site_identity.pages[page.identity_key] %}
         <header class="hero page-hero glass-panel">
-          <p class="eyebrow">{{ page_copy.eyebrow | default: page.eyebrow | default: site.data.site_identity.brand.english_name | strip }}</p>
+          <p class="eyebrow">{{ page_copy.eyebrow | default: page.eyebrow | default: site_copy.brand.english_name | strip }}</p>
           <h1>{{ page_copy.title | default: page.title | strip }}</h1>
           {% assign page_intro = page_copy.intro | default: page.intro %}
           {% if page_intro %}<p>{{ page_intro | strip }}</p>{% endif %}
         </header>
 
         {{ content }}
+        {% include page-notes.html notes=page_copy.notes %}
       </main>
     </div>
     {% include analytics-tracking.html %}

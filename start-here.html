@@ -3,22 +3,25 @@ layout: page
 identity_key: start
 permalink: /start-here/
 ---
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign page_copy = site_copy.pages.start %}
 {% assign ordered_posts = site.posts | sort: "start_here_order" %}
 
 <section class="path-intro glass-panel" aria-labelledby="path-intro-title">
-  <p class="eyebrow">Exploration guide</p>
-  <h2 id="path-intro-title">문하수도 탐색을 시작하세요</h2>
-  <p>아래 순서는 최신순이 아니라 처음 이용하는 독자를 위한 권장 탐색 순서입니다. 각 경로와 표시 순서는 게시물 Front Matter에서 관리됩니다.</p>
+  <p class="eyebrow">{{ page_copy.guide_eyebrow }}</p>
+  <h2 id="path-intro-title">{{ page_copy.guide_title }}</h2>
+  <p>{{ page_copy.guide_description }}</p>
 </section>
 
-{% for path in site.data.paths %}
+{% for path in page_copy.paths %}
   {% assign path_post_count = 0 %}
   {% for post in ordered_posts %}
     {% if post.start_here == path.id %}{% assign path_post_count = path_post_count | plus: 1 %}{% endif %}
   {% endfor %}
   <section class="path-section" aria-labelledby="path-{{ path.id }}">
     <div class="path-section-heading">
-      <p class="eyebrow">{{ path_post_count }} posts</p>
+      <p class="eyebrow">{{ path_post_count }}{{ page_copy.post_count_suffix }}</p>
       <h2 id="path-{{ path.id }}">{{ path.title }}</h2>
       <p>{{ path.description }}</p>
       <small>{{ path.prompt }}</small>
@@ -33,7 +36,7 @@ permalink: /start-here/
              data-analytics-title="{{ path.title | escape }} · {{ post.title | escape }}">
             <span class="path-card-order" aria-hidden="true">{{ post.start_here_order | default: forloop.index }}</span>
             <span>
-              <span class="meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %-m월 %-d일" }}</time><span>{{ post.category | default: "Column" }}</span></span>
+              <span class="meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: site_copy.meta.date_short }}</time><span>{{ post.category | default: site_copy.ui.default_category }}</span></span>
               <strong>{{ post.title }}</strong>
               <small>{{ post.description }}</small>
             </span>
@@ -43,7 +46,7 @@ permalink: /start-here/
       {% endfor %}
     </ol>
     {% else %}
-    <p class="path-empty">이 구역에 추가할 기록을 준비하고 있습니다.</p>
+    <p class="path-empty">{{ page_copy.empty_message }}</p>
     {% endif %}
   </section>
 {% endfor %}

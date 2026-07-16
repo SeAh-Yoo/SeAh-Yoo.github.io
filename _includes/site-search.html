@@ -1,9 +1,11 @@
-{% assign search_copy = site.data.site_identity.search %}
-<section class="sidebar-search" data-site-search data-search-index="{{ '/search.json' | relative_url }}">
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign search_copy = site_copy.search %}
+<section class="sidebar-search" data-site-search data-search-index="{{ identity.links.search_index | relative_url }}">
   <button class="sidebar-search-trigger" type="button" data-search-open aria-label="{{ search_copy.open_label }}" aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K /">
     <span class="sidebar-search-icon" aria-hidden="true">⌕</span>
     <span class="sidebar-search-label">{{ search_copy.button_label }}</span>
-    <kbd class="sidebar-search-shortcut" aria-hidden="true">Ctrl K</kbd>
+    <kbd class="sidebar-search-shortcut" aria-hidden="true">{{ search_copy.shortcut_label }}</kbd>
   </button>
 
   <dialog class="site-search-dialog" data-search-dialog aria-labelledby="site-search-title">

@@ -1,5 +1,8 @@
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign post_copy = site_copy.post %}
 <!doctype html>
-<html lang="{{ site.lang | default: 'ko-KR' }}">
+<html lang="{{ site_copy.meta.html_lang }}">
   <head>
     {% include head.html %}
   </head>
@@ -7,52 +10,52 @@
     <div class="post-reading-progress" data-reading-progress aria-hidden="true">
       <span class="post-reading-progress-bar" data-reading-progress-bar></span>
     </div>
-    <a class="skip-link" href="#main-content">본문으로 바로가기</a>
+    <a class="skip-link" href="#main-content">{{ site_copy.ui.skip_link }}</a>
     <div class="aurora aurora-one" aria-hidden="true"></div>
     <div class="aurora aurora-two" aria-hidden="true"></div>
     <div class="shell">
       {% include sidebar.html %}
 
       <main class="content" id="main-content">
-        <header class="post-site-bar glass-panel" aria-label="사이트 안내">
-          <a class="post-site-home" href="{{ '/' | relative_url }}">
+        <header class="post-site-bar glass-panel" aria-label="{{ post_copy.site_bar_label }}">
+          <a class="post-site-home" href="{{ identity.links.home | relative_url }}">
             <span class="post-site-mark" aria-hidden="true">S</span>
             <span class="post-site-name">
-              <strong>{{ site.data.site_identity.brand.name }}</strong>
-              <small>{{ site.data.site_identity.brand.sidebar_subtitle }}</small>
+              <strong>{{ site_copy.brand.name }}</strong>
+              <small>{{ site_copy.brand.sidebar_subtitle }}</small>
             </span>
           </a>
-          <span class="post-site-context">{{ site.data.site_identity.brand.post_context }}</span>
+          <span class="post-site-context">{{ site_copy.brand.post_context }}</span>
         </header>
 
         <article class="post glass-panel"
                  data-analytics-post="{{ page.slug | default: page.title | slugify | escape }}"
-                 data-quote-card-kicker="{{ site.data.site_identity.brand.quote_card_kicker | escape }}"
-                 data-quote-card-label="{{ site.data.site_identity.brand.quote_card_label | escape }}"
-                 data-quote-card-filename-prefix="{{ site.data.site_identity.brand.quote_card_filename_prefix | escape }}">
-          {% assign post_category = page.category | default: page.categories.first | default: "Column" %}
+                 data-quote-card-kicker="{{ site_copy.brand.quote_card_kicker | escape }}"
+                 data-quote-card-label="{{ site_copy.brand.quote_card_label | escape }}"
+                 data-quote-card-filename-prefix="{{ site_copy.brand.quote_card_filename_prefix | escape }}">
+          {% assign post_category = page.category | default: page.categories.first | default: site_copy.ui.default_category %}
           {% assign post_category_slug = post_category | slugify %}
           <header class="post-header">
             <div class="post-utility-row">
-              <a class="post-category-eyebrow" href="{{ '/categories/#' | append: post_category_slug | relative_url }}">{{ post_category }}</a>
+              <a class="post-category-eyebrow" href="{{ site_copy.pages.categories.path | append: '#' | append: post_category_slug | relative_url }}">{{ post_category }}</a>
               {% include post-translations.html %}
             </div>
 
             <h1>{{ page.title }}</h1>
             {% if page.subtitle %}<p class="post-subtitle">{{ page.subtitle }}</p>{% endif %}
 
-            <div class="post-reading-stats" aria-label="글 읽기 정보">
-              <time class="post-stat-pill post-published" datetime="{{ page.date | date_to_xmlschema }}">게시 일자: {{ page.date | date: "%Y년 %-m월 %-d일" }}</time>
-              <span class="post-stat-pill post-reading-time" data-post-reading-meta data-reading-time>예상 완독 시간 계산 중</span>
+            <div class="post-reading-stats" aria-label="{{ post_copy.reading_info_label }}">
+              <time class="post-stat-pill post-published" datetime="{{ page.date | date_to_xmlschema }}">{{ post_copy.published_label }}: {{ page.date | date: site_copy.meta.date_short }}</time>
+              <span class="post-stat-pill post-reading-time" data-post-reading-meta data-reading-time>{{ post_copy.reading_time_loading }}</span>
               <div class="post-stat-pill post-view-counter" data-goatcounter-post-view aria-live="polite" aria-busy="true">
-                누적 방문: <span data-goatcounter-post-count>불러오는 중</span><span class="post-view-counter-note" data-goatcounter-post-note></span>
+                {{ post_copy.view_count_label }}: <span data-goatcounter-post-count>{{ post_copy.loading_label }}</span><span class="post-view-counter-note" data-goatcounter-post-note></span>
               </div>
             </div>
 
             <div class="post-toc-mount" data-post-toc-mount></div>
             {% if page.thesis %}
-            <aside class="post-thesis" aria-label="핵심 논지">
-              <p class="post-thesis-label">핵심 논지</p>
+            <aside class="post-thesis" aria-label="{{ post_copy.thesis_label }}">
+              <p class="post-thesis-label">{{ post_copy.thesis_label }}</p>
               <p>{{ page.thesis | strip_html | escape }}</p>
             </aside>
             {% endif %}
@@ -66,8 +69,8 @@
           {% include post-share.html %}
           {% include post-navigation.html %}
 
-          <footer class="post-footer" aria-label="글 정보">
-            <p>── 작성 일자: <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y년 %-m월 %-d일 %H:%M" }}</time>{% if page.last_modified_at %} / 수정 일자: <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: "%Y년 %-m월 %-d일 %H:%M" }}</time>{% endif %}. ({{ site.data.site_identity.brand.author.name }}).</p>
+          <footer class="post-footer" aria-label="{{ post_copy.footer_label }}">
+            <p>── {{ post_copy.written_at_label }}: <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: site_copy.meta.date_long }}</time>{% if page.last_modified_at %} / {{ post_copy.modified_at_label }}: <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: site_copy.meta.date_long }}</time>{% endif %}. ({{ site_copy.brand.author.name }}).</p>
           </footer>
 
           {% include post-comments.html %}

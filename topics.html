@@ -3,26 +3,29 @@ layout: page
 identity_key: topics
 permalink: /topics/
 ---
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign page_copy = site_copy.pages.topics %}
 <section class="topic-intro glass-panel" aria-labelledby="topic-intro-title">
-  <p class="eyebrow">Material index</p>
-  <h2 id="topic-intro-title">소재와 기록의 연결</h2>
-  <p>한 기록은 여러 질문이나 소재와 연결될 수 있습니다. 전문 주제별 목록은 <a href="{{ site.data.site_identity.pages.categories.path | relative_url }}">{{ site.data.site_identity.pages.categories.title }}</a> 페이지에서 확인하고, 이곳에서는 서로 다른 분야의 글을 같은 문제의식으로 이어 읽을 수 있습니다.</p>
-  <nav class="topic-chip-list" aria-label="소재 목록">
-    {% for topic in site.data.topics %}
-    <a class="topic-chip" href="#{{ topic.slug }}">{{ topic.label }}</a>
+  <p class="eyebrow">{{ page_copy.section_eyebrow }}</p>
+  <h2 id="topic-intro-title">{{ page_copy.section_title }}</h2>
+  <p>{{ page_copy.section_prefix }} <a href="{{ site_copy.pages.categories.path | relative_url }}">{{ site_copy.pages.categories.title }}</a> {{ page_copy.section_suffix }}</p>
+  <nav class="topic-chip-list" aria-label="{{ page_copy.list_label }}">
+    {% for topic in page_copy.items %}
+    <a class="topic-chip" href="#{{ topic.id }}">{{ topic.label }}</a>
     {% endfor %}
   </nav>
 </section>
 
-{% for topic in site.data.topics %}
+{% for topic in page_copy.items %}
   {% assign topic_post_count = 0 %}
   {% for post in site.posts %}
     {% if post.topics contains topic.label %}{% assign topic_post_count = topic_post_count | plus: 1 %}{% endif %}
   {% endfor %}
-  <section class="topic-section" id="{{ topic.slug }}" aria-labelledby="topic-{{ topic.slug }}">
+  <section class="topic-section" id="{{ topic.id }}" aria-labelledby="topic-{{ topic.id }}">
     <div class="topic-section-heading">
-      <p class="eyebrow">{{ topic_post_count }} posts</p>
-      <h2 id="topic-{{ topic.slug }}">{{ topic.label }}</h2>
+      <p class="eyebrow">{{ topic_post_count }}{{ page_copy.post_count_suffix }}</p>
+      <h2 id="topic-{{ topic.id }}">{{ topic.label }}</h2>
       <p>{{ topic.description }}</p>
     </div>
     {% if topic_post_count > 0 %}
@@ -30,7 +33,7 @@ permalink: /topics/
       {% for post in site.posts %}
         {% if post.topics contains topic.label %}
         <a class="card glass-panel" href="{{ post.url | relative_url }}">
-          <div class="meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %-m월 %-d일" }}</time><span>{{ post.category | default: "Column" }}</span></div>
+          <div class="meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: site_copy.meta.date_short }}</time><span>{{ post.category | default: site_copy.ui.default_category }}</span></div>
           <h3>{{ post.title }}</h3>
           <p>{{ post.description }}</p>
         </a>
@@ -38,7 +41,7 @@ permalink: /topics/
       {% endfor %}
     </div>
     {% else %}
-    <p class="topic-empty">이 주제의 글을 준비하고 있습니다.</p>
+    <p class="topic-empty">{{ page_copy.empty_message }}</p>
     {% endif %}
   </section>
 {% endfor %}

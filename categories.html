@@ -3,40 +3,40 @@ layout: categories
 identity_key: categories
 permalink: /categories/
 ---
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign page_copy = site_copy.pages.categories %}
 <section class="category-index glass-panel" aria-labelledby="category-index-heading">
-  <p class="eyebrow">Topic branches</p>
-  <h2 id="category-index-heading">주제별 기록 모아보기</h2>
-  <p>관심 주제를 선택하면 해당 분류에 등록된 게시물만 확인할 수 있습니다. 질문과 소재의 연결 관계는 <a href="{{ site.data.site_identity.pages.topics.path | relative_url }}">{{ site.data.site_identity.pages.topics.title }}</a> 페이지에서 확인할 수 있습니다.</p>
+  <p class="eyebrow">{{ page_copy.section_eyebrow }}</p>
+  <h2 id="category-index-heading">{{ page_copy.section_title }}</h2>
+  <p>{{ page_copy.section_prefix }} <a href="{{ site_copy.pages.topics.path | relative_url }}">{{ site_copy.pages.topics.title }}</a> {{ page_copy.section_suffix }}</p>
 
-  <nav class="category-chip-list" aria-label="카테고리 목록">
-    {% assign categories = site.categories | sort %}
-    {% for category in categories %}
-      {% assign category_name = category[0] %}
-      {% assign category_posts = category[1] %}
-      <a class="category-chip" href="#{{ category_name | slugify }}">{{ category_name }} <span>{{ category_posts | size }}</span></a>
+  <nav class="category-chip-list" aria-label="{{ page_copy.list_label }}">
+    {% for category in page_copy.items %}
+      {% assign category_posts = site.posts | where: "category", category.source_label %}
+      <a class="category-chip" href="#{{ category.id }}">{{ category.label }} <span>{{ category_posts | size }}</span></a>
     {% endfor %}
   </nav>
 </section>
 
-{% assign categories = site.categories | sort %}
-{% for category in categories %}
-  {% assign category_name = category[0] %}
-  {% assign category_posts = category[1] %}
-  <section class="category-section" id="{{ category_name | slugify }}" aria-labelledby="category-{{ category_name | slugify }}">
+{% for category in page_copy.items %}
+  {% assign category_posts = site.posts | where: "category", category.source_label %}
+  <section class="category-section" id="{{ category.id }}" aria-labelledby="category-{{ category.id }}">
     <div class="category-section-heading">
-      <p class="eyebrow">{{ category_posts | size }} posts</p>
-      <h2 id="category-{{ category_name | slugify }}">{{ category_name }}</h2>
+      {% assign category_count = category_posts | size %}
+      <p class="eyebrow">{{ category_count }}{{ page_copy.post_count_suffix }}</p>
+      <h2 id="category-{{ category.id }}">{{ category.label }}</h2>
     </div>
     <div class="view">
       {% for post in category_posts %}
       <a class="card glass-panel" href="{{ post.url | relative_url }}">
         <div class="meta">
-          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y년 %-m월 %-d일" }}</time>
-          <span>{{ post.category | default: category_name }}</span>
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: site_copy.meta.date_short }}</time>
+          <span>{{ category.label }}</span>
         </div>
         <h3>{{ post.title }}</h3>
         <p>{{ post.description }}</p>
-        <span class="read-more" aria-hidden="true">읽으러 가기</span>
+        <span class="read-more" aria-hidden="true">{{ page_copy.read_more_label }}</span>
       </a>
       {% endfor %}
     </div>

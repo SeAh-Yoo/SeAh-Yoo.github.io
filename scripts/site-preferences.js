@@ -1,5 +1,35 @@
 (() => {
-  const STORAGE_KEY = 'literary-underground:preferences:v1';
+  const identityElement = document.getElementById('site-identity-data');
+  let identity = {};
+
+  try {
+    identity = JSON.parse(identityElement?.textContent || '{}');
+  } catch (error) {
+    console.warn(error);
+  }
+
+  const defaultLanguage = identity.settings?.default_language || 'ko';
+  const getCopy = (path, fallback = '') => {
+    const value = String(path || '').split('.').filter(Boolean).reduce(
+      (current, key) => current?.[key],
+      identity.locales?.[defaultLanguage],
+    );
+
+    return value ?? fallback;
+  };
+  const formatCopy = (path, variables = {}, fallback = '') => Object.entries(variables).reduce(
+    (message, [key, value]) => String(message).replaceAll(`{${key}}`, String(value)),
+    getCopy(path, fallback),
+  );
+
+  window.siteIdentity = Object.freeze({
+    data: identity,
+    language: defaultLanguage,
+    get: getCopy,
+    format: formatCopy,
+  });
+
+  const STORAGE_KEY = identity.settings?.preference_storage_key || 'literary-underground:preferences:v1';
   const DEFAULTS = Object.freeze({ theme: 'sewer-center' });
   const THEMES = Object.freeze(['sewer-center', 'brick-road-pipeline', 'sewage-reservoir', 'dim-passage', 'moss-pipeline']);
   const THEME_COLORS = Object.freeze({

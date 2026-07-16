@@ -1,4 +1,6 @@
 (() => {
+  const copy = (path, fallback = '') => window.siteIdentity?.get(path, fallback) ?? fallback;
+  const formatCopy = (path, variables, fallback = '') => window.siteIdentity?.format(path, variables, fallback) ?? fallback;
   const copyText = async (text) => {
     if (navigator.clipboard && window.isSecureContext) {
       await navigator.clipboard.writeText(text);
@@ -57,7 +59,7 @@
           script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js';
           script.crossOrigin = 'anonymous';
           script.onload = () => resolve(window.Kakao);
-          script.onerror = () => reject(new Error('카카오 SDK를 불러오지 못했습니다.'));
+          script.onerror = () => reject(new Error(copy('post.share.kakao_sdk_error')));
           document.head.appendChild(script);
         });
       }
@@ -157,7 +159,7 @@
             },
             buttons: [
               {
-                title: '글 읽기',
+                title: copy('post.share.kakao_button_label'),
                 link: {
                   mobileWebUrl: trackedUrl,
                   webUrl: trackedUrl,
@@ -187,7 +189,7 @@
 
       await copyText(url);
       trackPostEvent('share-copy', title);
-      setStatus('주소를 복사했습니다. 카카오톡 채팅방에 붙여 넣어 주세요.');
+      setStatus(copy('post.share.kakao_copy_message'));
     };
 
     const shareHandlers = {
@@ -210,7 +212,7 @@
       copy: async () => {
         await copyText(url);
         trackPostEvent('share-copy', title);
-        setStatus('웹페이지 주소를 복사했습니다.');
+        setStatus(copy('post.share.copy_message'));
       },
     };
 
@@ -251,16 +253,16 @@
           }
         } catch (error) {
           console.warn(error);
-          setStatus('공유 기능을 실행하지 못했습니다. 잠시 후 다시 시도해 주세요.');
+          setStatus(copy('post.share.error_message'));
         }
       });
     });
   }
 
   const article = document.querySelector('article.post');
-  const quoteCardKicker = article?.dataset.quoteCardKicker || 'THE LITERARY UNDERGROUND';
-  const quoteCardLabel = article?.dataset.quoteCardLabel || '문하수도 공개 기록';
-  const quoteCardFilenamePrefix = article?.dataset.quoteCardFilenamePrefix || '문하수도-기록';
+  const quoteCardKicker = article?.dataset.quoteCardKicker || copy('brand.quote_card_kicker');
+  const quoteCardLabel = article?.dataset.quoteCardLabel || copy('brand.quote_card_label');
+  const quoteCardFilenamePrefix = article?.dataset.quoteCardFilenamePrefix || copy('brand.quote_card_filename_prefix');
 
   const normalizeReaderText = (value) => String(value ?? '')
     .normalize('NFKC')
@@ -349,14 +351,14 @@
       heading = document.createElement('h2');
       heading.className = 'post-endnotes-heading';
       heading.id = 'post-endnotes';
-      heading.textContent = '각주 및 참고 문헌';
+      heading.textContent = copy('post.endnotes.title');
       heading.tabIndex = -1;
 
       header.className = 'post-endnotes-header';
       eyebrow.className = 'post-endnotes-eyebrow';
-      eyebrow.textContent = 'NOTES';
+      eyebrow.textContent = copy('post.endnotes.kicker');
       help.className = 'post-endnotes-help';
-      help.textContent = '본문의 각주 번호를 선택하면 이곳으로 이동합니다. 참고 문헌 번호 또는 돌아가기 화살표를 선택하면 읽던 위치로 돌아갑니다.';
+      help.textContent = copy('post.endnotes.help');
       header.append(eyebrow, heading, help);
       footnotes.prepend(header);
     }
@@ -418,15 +420,15 @@
       const number = getEndnoteNumber(link, index);
 
       link.classList.add('post-endnote-reference');
-      link.setAttribute('aria-label', `각주 및 참고 문헌 ${number}으로 이동`);
-      link.setAttribute('title', `각주 및 참고 문헌 ${number}으로 이동`);
+      link.setAttribute('aria-label', formatCopy('post.endnotes.reference_link_label', { number }));
+      link.setAttribute('title', formatCopy('post.endnotes.reference_link_label', { number }));
       link.setAttribute('role', 'doc-noteref');
       link.addEventListener('click', focusHashTarget);
     });
 
     footnotes.querySelectorAll('li').forEach((item, index) => {
       item.setAttribute('role', 'doc-endnote');
-      item.setAttribute('aria-label', `각주 및 참고 문헌 ${index + 1}`);
+      item.setAttribute('aria-label', formatCopy('post.endnotes.reference_item_label', { number: index + 1 }));
       item.tabIndex = -1;
 
       const backlink = item.querySelector('a.reversefootnote');
@@ -437,8 +439,8 @@
         numberLink.className = 'post-endnote-number-link';
         numberLink.href = backlink.getAttribute('href');
         numberLink.textContent = String(index + 1);
-        numberLink.setAttribute('aria-label', `본문의 각주 ${index + 1} 위치로 돌아가기`);
-        numberLink.setAttribute('title', `본문의 각주 ${index + 1} 위치로 돌아가기`);
+        numberLink.setAttribute('aria-label', formatCopy('post.endnotes.backlink_label', { number: index + 1 }));
+        numberLink.setAttribute('title', formatCopy('post.endnotes.backlink_label', { number: index + 1 }));
         numberLink.setAttribute('role', 'doc-backlink');
         numberLink.addEventListener('click', focusHashTarget);
         item.prepend(numberLink);
@@ -449,8 +451,8 @@
       const number = getEndnoteNumber(link, index);
 
       link.classList.add('post-endnote-backlink');
-      link.setAttribute('aria-label', `본문의 각주 ${number} 위치로 돌아가기`);
-      link.setAttribute('title', `본문의 각주 ${number} 위치로 돌아가기`);
+      link.setAttribute('aria-label', formatCopy('post.endnotes.backlink_label', { number }));
+      link.setAttribute('title', formatCopy('post.endnotes.backlink_label', { number }));
       link.setAttribute('role', 'doc-backlink');
       link.addEventListener('click', focusHashTarget);
     });
@@ -461,7 +463,7 @@
 
     if (readingTime) {
       const minutes = estimateReadingMinutes(getReadingText(root));
-      const label = `예상 완독 시간: ${minutes}분`;
+      const label = formatCopy('post.reading.time_label', { minutes });
 
       readingTime.textContent = label;
       readingTime.setAttribute('aria-label', label);
@@ -716,7 +718,7 @@
     if (quoteLayout.truncated) {
       context.font = '600 20px Poppins, Arial, sans-serif';
       context.fillStyle = 'rgba(229, 236, 248, 0.58)';
-      context.fillText('긴 인용문은 카드 안에서 일부만 표시됩니다.', 158, 1012);
+      context.fillText(copy('post.quote_card.truncated_notice'), 158, 1012);
     }
 
     context.beginPath();
@@ -775,14 +777,14 @@
       const controls = document.createElement('div');
       const button = document.createElement('button');
       const status = document.createElement('span');
-      const originalLabel = '인용 카드 만들기';
+      const originalLabel = copy('post.quote_card.create_label');
 
       wrapper.className = 'post-quote-card';
       controls.className = 'quote-card-actions';
       button.className = 'quote-card-button';
       button.type = 'button';
       button.textContent = originalLabel;
-      button.setAttribute('aria-label', '이 인용문으로 PNG 인용 카드 만들기');
+      button.setAttribute('aria-label', copy('post.quote_card.create_aria_label'));
       status.className = 'quote-card-status';
       status.setAttribute('role', 'status');
       status.setAttribute('aria-live', 'polite');
@@ -793,7 +795,7 @@
 
       button.addEventListener('click', async () => {
         button.disabled = true;
-        button.textContent = '카드 만드는 중…';
+        button.textContent = copy('post.quote_card.creating_label');
 
         try {
           if (document.fonts?.load) {
@@ -808,12 +810,12 @@
 
           downloadQuoteCard(canvas, `${quoteCardFilenamePrefix}-${safeTitle}.png`);
           trackPostEvent('quote-card-export', postTitle);
-          status.textContent = 'PNG 인용 카드를 저장했습니다.';
-          button.textContent = 'PNG 저장됨';
+          status.textContent = copy('post.quote_card.saved_message');
+          button.textContent = copy('post.quote_card.saved_label');
         } catch (error) {
           console.warn(error);
-          status.textContent = '인용 카드를 만들지 못했습니다. 잠시 후 다시 시도해 주세요.';
-          button.textContent = '다시 시도하기';
+          status.textContent = copy('post.quote_card.error_message');
+          button.textContent = copy('post.quote_card.retry_label');
         }
 
         window.setTimeout(() => {
@@ -855,7 +857,7 @@
       const usedIds = new Set(Array.from(document.querySelectorAll('[id]')).map((element) => element.id));
       const slugify = (value) => String(value)
         .normalize('NFKC')
-        .toLocaleLowerCase('ko-KR')
+        .toLocaleLowerCase(copy('meta.number_locale', 'ko-KR'))
         .replace(/["'’]/g, '')
         .replace(/[^a-z0-9가-힣ぁ-んァ-ヶ一-龯]+/gi, '-')
         .replace(/^-+|-+$/g, '') || 'section';
@@ -883,8 +885,8 @@
         anchorButton.type = 'button';
         anchorButton.className = 'post-heading-link';
         anchorButton.textContent = '#';
-        anchorButton.setAttribute('aria-label', `「${headingText}」 위치 링크 복사`);
-        anchorButton.title = '이 소제목 링크 복사';
+        anchorButton.setAttribute('aria-label', formatCopy('post.headings.copy_link_label', { heading: headingText }));
+        anchorButton.title = copy('post.headings.copy_link_title');
         anchorButton.addEventListener('click', async () => {
           const targetUrl = new URL(window.location.href);
           targetUrl.hash = heading.id;
@@ -911,8 +913,8 @@
 
       details.className = 'post-toc';
       details.open = !window.matchMedia('(max-width: 900px)').matches;
-      summaryTitle.textContent = '목차';
-      summaryCount.textContent = `${headings.length}개 항목`;
+      summaryTitle.textContent = copy('post.toc.title');
+      summaryCount.textContent = formatCopy('post.toc.count_label', { count: headings.length });
       summary.append(summaryTitle, summaryCount);
 
       const tocLinks = headings.map((heading) => {
