@@ -38,7 +38,7 @@
 - [작업 예정] 한국어·영어·일본어 메뉴 기능 (선택한 언어는 브라우저의 localStorage에 저장)
 - giscus 댓글과 반응
 - 데스크톱 스티키 사이드바와 모바일 접이식 메뉴
-- 블로그의 콘셉트 및 세계관 덧붙이기  (`/_data/site_identity.yml`에 작성)
+- `_data/site_identity.yml` 기반 블로그 콘셉트와 세계관 문구 관리
 
 ## 디자인 원칙
 
@@ -51,7 +51,7 @@
 - 중요한 요소만 강하게 보이고 나머지는 조용히 물러서게 디자인.
 - 본문 폭, 글자 크기, 행간과 정보 위계는 모든 색상 테마에서 동일.
 - 본문은 모든 테마에서 가급적 중립적인 색상으로 긴 글을 읽을 때 피로가 생기지 않게 제한.
-- 큰 메뉴명은 기능을 명확히 설명하고, 작은 보조 명칭은 공간 은유(블로그 콘셉트)을 담당.
+- 큰 메뉴명은 기능을 명확히 설명하고, 작은 보조 명칭은 블로그 콘셉트를 반영한 공간 은유를 담당.
 - 리퀴드 글래스는 외곽에, 본문은 차분하게 디자인.
 - 유리 효과 자체보다는 경계, 반사, 층위, 부드러운 깊이감으로 표현.
 - 배경에는 은은한 오로라와 색 번짐 사용.
@@ -60,8 +60,88 @@
 - 모바일은 축소판이 아니라 별도의 읽기 환경임을 명심.
 - 사이드바가 독서를 방해하지 않도록 디자인.
 - 접근성을 장식보다 우선.
-- 모든 디자인 토큰은 중앙(`styles/design-system.css`)에서 관리.
-- 모든 블로그 콘셉트과 관련된 문구를 중앙(`_data/site_identity.yml`)에서 관리.
+- 모든 디자인 토큰은 `styles/design-system.css`에서 중앙 관리.
+- 브랜드, 화면 문구와 블로그 콘셉트 관련 문구는 `_data/site_identity.yml`에서 중앙 관리.
+
+## 포크 후 반드시 변경할 항목
+
+이 저장소는 배포용 빈 테마가 아니라 실제 운영 중인 블로그를 포함합니다. 포크하여 사용할 경우 아래의 사이트 소유권, 외부 서비스 계정, 분석 정보와 저장소 연결값을 자신의 환경에 맞게 교체해야 합니다.
+
+### Google Search Console 사이트 소유권 인증
+
+저장소 루트의 `google27564fde5057ccbe.html`은 현재 블로그의 Google Search Console 사이트 소유권 인증 파일입니다.
+
+포크한 저장소에서는 기존 인증 파일을 삭제한 뒤 자신의 Google Search Console에서 새 HTML 인증 파일을 발급받아 저장소 루트에 추가해야 합니다.
+
+`_config.yml`에도 기존 인증 파일명이 등록되어 있으므로 함께 삭제하거나 새 파일명으로 교체합니다.
+
+```yaml
+defaults:
+  - scope:
+      path: "본인의-google-인증파일.html"
+    values:
+      sitemap: false
+```
+
+이 설정은 인증 파일이 `sitemap.xml`에 포함되지 않도록 합니다. Google Search Console을 사용하지 않는 경우 인증 파일과 관련된 `_config.yml` 설정을 모두 삭제할 수 있습니다.
+
+### 카카오톡 공유 API
+
+포스트 공유 창에는 카카오톡 공유 기능이 구현되어 있습니다. 기본 상태에서는 Kakao JavaScript 키가 설정되지 않아 브라우저의 시스템 공유 기능을 사용하며, 시스템 공유를 사용할 수 없는 환경에서는 글 주소를 복사합니다.
+
+Kakao SDK 기반 공유를 활성화하려면 자신의 Kakao Developers 애플리케이션에서 발급한 JavaScript 키를 `_config.yml`에 추가합니다.
+
+```yaml
+kakao_javascript_key: "본인의_Kakao_JavaScript_키"
+```
+
+카카오 개발자 설정에도 실제 블로그 주소를 허용된 웹 도메인으로 등록해야 합니다. 키는 포스트의 HTML에 포함되는 공개 JavaScript 키이므로 REST API 키나 Admin 키를 입력하지 않습니다.
+
+설정이 완료되면 사용자가 카카오톡 공유 버튼을 눌렀을 때 Kakao JavaScript SDK를 지연 로딩하여 제목, 설명, 대표 이미지와 포스트 주소를 포함한 피드형 공유 메시지를 생성합니다.
+
+### GoatCounter 방문 통계
+
+이 블로그는 GoatCounter를 이용해 방문 횟수와 읽기·공유 이벤트를 익명 집계합니다.
+
+현재 계정 코드는 `_data/analytics.json`에서 관리합니다.
+
+```json
+{
+  "goatcounterCode": "본인의-GoatCounter-코드",
+  "summaryCacheMinutes": 20,
+  "summaryLabel": "익명 방문 집계"
+}
+```
+
+`goatcounterCode`에는 `https://<code>.goatcounter.com`에서 `<code>`에 해당하는 값을 입력합니다. 기존 `seah-yoo` 값은 반드시 자신의 계정 코드로 교체해야 합니다.
+
+이 설정은 다음 기능에 함께 사용됩니다.
+
+* 페이지와 포스트 방문 기록
+* 포스트별 누적 방문 수
+* 주간·월간·전체 방문 현황
+* 75% 읽기와 완독 이벤트
+* 공유, 주소 복사, 인쇄·PDF 및 인용 카드 이벤트
+* `/reading-pulse/` 정적 방문 현황 페이지
+* GitHub Actions를 통한 일일 통계 스냅샷 갱신
+
+`/reading-pulse/`와 포스트별 공개 카운터는 GoatCounter의 공개 `/counter/*.json` 응답을 사용하며 별도의 API 비밀키를 저장하지 않습니다. 해당 기능을 사용하려면 자신의 GoatCounter 사이트에서 공개 카운터 응답을 사용할 수 있어야 합니다.
+
+포크 직후에는 기존 블로그 통계가 들어 있는 `_data/reading_pulse.json`을 삭제하거나 초기화해야 합니다.
+
+`.github/workflows/refresh-reading-pulse.yml`은 매일 통계를 갱신한 뒤 `_data/reading_pulse.json`의 변경 내용을 자동 커밋합니다. 이 기능을 사용하려면 포크한 저장소에서 GitHub Actions의 콘텐츠 쓰기 권한을 허용해야 합니다.
+
+자동 통계 페이지를 사용하지 않을 경우 해당 워크플로를 비활성화하거나 삭제할 수 있습니다. GoatCounter 추적을 모두 끄려면 다음처럼 코드를 비워 둡니다.
+
+```json
+{
+  "goatcounterCode": "",
+  "summaryCacheMinutes": 20,
+  "summaryLabel": "익명 방문 집계"
+}
+```
+
+`scripts/refresh-reading-pulse.mjs`의 요청 User-Agent에는 기존 블로그 이름과 주소가 포함되어 있으므로 포크 사용자는 자신의 프로젝트명과 사이트 주소로 교체하는 것을 권장합니다.
 
 ## 브랜드와 화면 문구 관리
 
@@ -212,6 +292,8 @@ Esc                    검색창 닫기
 ```
 
 검색 색인은 Jekyll 빌드 시 `/search.json`으로 정적으로 생성됩니다.
+
+## 익명 방문과 읽기 현황
 
 ### 공통 설정
 
@@ -425,10 +507,10 @@ image: /assets/images/example-post-cover.png
 │  └─ post-comments.html           # giscus 댓글
 ├─ _data/
 │  ├─ analytics.json               # GoatCounter 설정
-│  ├─ paths.yml                    # 중심 합류점 경로
-│  ├─ reading_pulse.json           # 남겨진 발자국 스냅샷
+│  ├─ paths.yml                    # 탐색 페이지의 경로 정보
+│  ├─ reading_pulse.json           # 방문자 현황 스냅샷
 │  ├─ site_identity.yml            # 브랜드·관리인·메뉴·페이지 문구
-│  └─ topics.yml                   # 공간 계통의 소재와 설명
+│  └─ topics.yml                   # 소재별 분류의 소재(태그)와 설명
 ├─ _layouts/
 │  ├─ categories.html
 │  ├─ home.html                    # 홈 편집 화면과 중앙화된 홈 카피
