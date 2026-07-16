@@ -4,10 +4,13 @@ settings:
   supported_languages:
     - id: "ko"
       flag: "🇰🇷"
+      icon: "/assets/images/language-ko.svg"
     - id: "en"
       flag: "🇺🇸"
+      icon: "/assets/images/language-en.svg"
     - id: "ja"
       flag: "🇯🇵"
+      icon: "/assets/images/language-ja.svg"
 
 # Used by every layout and include for internal and external destinations.
 links:
