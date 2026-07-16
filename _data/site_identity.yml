@@ -23,13 +23,15 @@ links:
 
 # Used by _includes/sidebar.html as the visible brand emblem.
 assets:
-  brand_emblem: "/assets/images/cyberpunk-manhole-emblem.png"
+  brand_emblem: "/assets/images/manhole-dive-favicon.svg"
+  # Used by _includes/head.html as the scalable browser-tab icon.
+  favicon_svg_image: "/assets/images/manhole-dive-favicon.svg"
   # Used by _includes/head.html for standard browser-tab icons.
-  favicon_image: "/assets/images/cyberpunk-manhole-favicon-32.png"
+  favicon_image: "/assets/images/manhole-dive-favicon-32.png"
   # Used by _includes/head.html for high-density browser and device icons.
-  favicon_large_image: "/assets/images/cyberpunk-manhole-icon-192.png"
+  favicon_large_image: "/assets/images/manhole-dive-icon-192.png"
   # Used by _includes/head.html for iOS home-screen bookmarks.
-  apple_touch_icon: "/assets/images/cyberpunk-manhole-apple-touch-180.png"
+  apple_touch_icon: "/assets/images/manhole-dive-apple-touch-180.png"
   # Used by _includes/head.html and post quote cards as fallback imagery.
   profile_image: "/assets/images/profile.jpg"
   # Used by _includes/head.html as the default social preview image.
