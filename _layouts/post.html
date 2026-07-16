@@ -1,6 +1,8 @@
 {% assign identity = site.data.site_identity %}
 {% assign site_copy = identity.locales[identity.settings.default_language] %}
 {% assign post_copy = site_copy.post %}
+{% assign translation_key = page.translation_key | default: page.slug %}
+{% assign post_translations = site.posts | where: "translation_key", translation_key %}
 <!doctype html>
 <html lang="{{ site_copy.meta.html_lang }}">
   <head>
@@ -28,7 +30,7 @@
           <span class="post-site-context">{{ site_copy.brand.post_context }}</span>
         </header>
 
-        <article class="post glass-panel"
+        <article class="post glass-panel" data-post-card data-translation-key="{{ translation_key | escape }}"
                  data-analytics-post="{{ page.slug | default: page.title | slugify | escape }}"
                  data-quote-card-kicker="{{ site_copy.brand.quote_card_kicker | escape }}"
                  data-quote-card-label="{{ site_copy.brand.quote_card_label | escape }}"
@@ -37,15 +39,15 @@
           {% assign post_category_slug = post_category | slugify %}
           <header class="post-header">
             <div class="post-utility-row">
-              <a class="post-category-eyebrow" href="{{ site_copy.pages.categories.path | append: '#' | append: post_category_slug | relative_url }}">{{ post_category }}</a>
+              <a class="post-category-eyebrow" href="{{ site_copy.pages.categories.path | append: '#' | append: post_category_slug | relative_url }}" data-post-field data-post-category>{{ post_category }}</a>
               {% include post-translations.html %}
             </div>
 
-            <h1>{{ page.title }}</h1>
-            {% if page.subtitle %}<p class="post-subtitle">{{ page.subtitle }}</p>{% endif %}
+            <h1 data-post-field data-post-title>{{ page.title }}</h1>
+            {% if page.subtitle %}<p class="post-subtitle" data-post-field>{{ page.subtitle }}</p>{% endif %}
 
             <div class="post-reading-stats" aria-label="{{ post_copy.reading_info_label }}">
-              <time class="post-stat-pill post-published" datetime="{{ page.date | date_to_xmlschema }}">{{ post_copy.published_label }}: {{ page.date | date: site_copy.meta.date_short }}</time>
+              <span class="post-stat-pill post-published">{{ post_copy.published_label }}: <time datetime="{{ page.date | date_to_xmlschema }}" data-post-field data-post-date data-date-style="short">{{ page.date | date: site_copy.meta.date_short }}</time></span>
               <span class="post-stat-pill post-reading-time" data-post-reading-meta data-reading-time>{{ post_copy.reading_time_loading }}</span>
               <div class="post-stat-pill post-view-counter" data-goatcounter-post-view aria-live="polite" aria-busy="true">
                 {{ post_copy.view_count_label }}: <span data-goatcounter-post-count>{{ post_copy.loading_label }}</span><span class="post-view-counter-note" data-goatcounter-post-note></span>
@@ -56,7 +58,7 @@
             {% if page.thesis %}
             <aside class="post-thesis" aria-label="{{ post_copy.thesis_label }}">
               <p class="post-thesis-label">{{ post_copy.thesis_label }}</p>
-              <p>{{ page.thesis | strip_html | escape }}</p>
+              <p data-post-field>{{ page.thesis | strip_html | escape }}</p>
             </aside>
             {% endif %}
           </header>
@@ -70,13 +72,24 @@
           {% include post-navigation.html %}
 
           <footer class="post-footer" aria-label="{{ post_copy.footer_label }}">
-            <p>── {{ post_copy.written_at_label }}: <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: site_copy.meta.date_long }}</time>{% if page.last_modified_at %} / {{ post_copy.modified_at_label }}: <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: site_copy.meta.date_long }}</time>{% endif %}. ({{ site_copy.brand.author.name }}).</p>
+            <p>── {{ post_copy.written_at_label }}: <time datetime="{{ page.date | date_to_xmlschema }}" data-date-style="long">{{ page.date | date: site_copy.meta.date_long }}</time>{% if page.last_modified_at %} / {{ post_copy.modified_at_label }}: <time datetime="{{ page.last_modified_at | date_to_xmlschema }}" data-date-style="long">{{ page.last_modified_at | date: site_copy.meta.date_long }}</time>{% endif %}. ({{ site_copy.brand.author.name }}).</p>
           </footer>
 
           {% include post-comments.html %}
         </article>
       </main>
     </div>
+    <script id="post-translation-data" type="application/json">
+      {
+        "key": {{ translation_key | jsonify }},
+        "currentLanguage": {{ page.lang | default: identity.settings.default_language | jsonify }},
+        "urls": {
+          {% for translated_post in post_translations %}
+          {{ translated_post.lang | default: identity.settings.default_language | jsonify }}: {{ translated_post.url | relative_url | jsonify }}{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        }
+      }
+    </script>
     {% include analytics-tracking.html %}
     <script src="{{ '/scripts/index.js' | relative_url }}"></script>
     <script src="{{ '/scripts/post-actions.js' | relative_url }}"></script>

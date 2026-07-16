@@ -6,7 +6,8 @@ permalink: /start-here/
 {% assign identity = site.data.site_identity %}
 {% assign site_copy = identity.locales[identity.settings.default_language] %}
 {% assign page_copy = site_copy.pages.start %}
-{% assign ordered_posts = site.posts | sort: "start_here_order" %}
+{% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
+{% assign ordered_posts = base_posts | sort: "start_here_order" %}
 
 <section class="path-intro glass-panel" aria-labelledby="path-intro-title">
   <p class="eyebrow">{{ page_copy.guide_eyebrow }}</p>
@@ -31,14 +32,14 @@ permalink: /start-here/
       {% for post in ordered_posts %}
         {% if post.start_here == path.id %}
         <li>
-          <a class="path-card glass-panel" href="{{ post.url | relative_url }}"
+          <a class="path-card glass-panel" href="{{ post.url | relative_url }}" data-post-card data-translation-key="{{ post.translation_key | default: post.slug | escape }}"
              data-analytics-event="start-here-select--{{ path.id | slugify }}"
              data-analytics-title="{{ path.title | escape }} · {{ post.title | escape }}">
             <span class="path-card-order" aria-hidden="true">{{ post.start_here_order | default: forloop.index }}</span>
             <span>
-              <span class="meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: site_copy.meta.date_short }}</time><span>{{ post.category | default: site_copy.ui.default_category }}</span></span>
-              <strong>{{ post.title }}</strong>
-              <small>{{ post.description }}</small>
+              <span class="meta"><time datetime="{{ post.date | date_to_xmlschema }}" data-post-field data-post-date data-date-style="short">{{ post.date | date: site_copy.meta.date_short }}</time><span data-post-field data-post-category>{{ post.category | default: site_copy.ui.default_category }}</span></span>
+              <strong data-post-field data-post-title>{{ post.title }}</strong>
+              <small data-post-field data-post-description>{{ post.description }}</small>
             </span>
           </a>
         </li>

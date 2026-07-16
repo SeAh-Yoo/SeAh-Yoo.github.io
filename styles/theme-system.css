@@ -135,6 +135,8 @@
 }
 .theme-select-control:focus-within { border-color: var(--color-focus); box-shadow: 0 0 0 3px var(--color-accent-soft); }
 .theme-select-swatch { width: 1rem; aspect-ratio: 1; border: 1px solid rgba(255,255,255,0.34); border-radius: 50%; background: linear-gradient(135deg, var(--color-accent) 0 55%, var(--color-accent-secondary) 55%); }
+.language-select-flag { display: inline-grid; width: 1.15rem; place-items: center; font-size: 0.9rem; line-height: 1; }
+.language-select-control { grid-template-columns: 1.15rem minmax(0, 1fr); }
 .theme-select-control select {
   min-width: 0;
   width: 100%;

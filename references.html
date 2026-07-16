@@ -8,6 +8,7 @@ permalink: /references/
 {% assign identity = site.data.site_identity %}
 {% assign site_copy = identity.locales[identity.settings.default_language] %}
 {% assign page_copy = site_copy.pages.references %}
+{% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
 
 <section class="reference-intro glass-panel" aria-labelledby="reference-intro-title">
   <p class="eyebrow">{{ page_copy.section_eyebrow }}</p>
@@ -17,7 +18,7 @@ permalink: /references/
 
 <section class="reference-library" aria-label="{{ page_copy.library_label }}">
   <ol class="reference-list">
-  {% for post in site.posts %}
+  {% for post in base_posts %}
     {% for reference in post.references %}
       {% capture reference_marker %}|{{ reference.id }}|{% endcapture %}
       {% unless seen_references contains reference_marker %}
@@ -25,24 +26,24 @@ permalink: /references/
         {% assign reference_count = reference_count | plus: 1 %}
         <li class="reference-item glass-panel" id="{{ reference.id | slugify }}">
           <div class="reference-item-main">
-            <p class="eyebrow">{{ reference.type | default: page_copy.default_type }}</p>
+            <p class="eyebrow" data-post-field>{{ reference.type | default: page_copy.default_type }}</p>
             <h2>
-              {% if reference.url %}<a href="{{ reference.url | escape }}" rel="noopener noreferrer" target="_blank" data-analytics-event="reference-open--{{ reference.id | slugify }}" data-analytics-title="{{ reference.title | escape }}">{{ reference.title }}</a>{% else %}{{ reference.title }}{% endif %}
+              {% if reference.url %}<a href="{{ reference.url | escape }}" rel="noopener noreferrer" target="_blank" data-post-field data-analytics-event="reference-open--{{ reference.id | slugify }}" data-analytics-title="{{ reference.title | escape }}">{{ reference.title }}</a>{% else %}<span data-post-field>{{ reference.title }}</span>{% endif %}
             </h2>
-            <p class="reference-citation">
+            <p class="reference-citation" data-post-field>
               {% if reference.author %}<span>{{ reference.author }}</span>{% endif %}
               {% if reference.publisher %}<span>{{ reference.publisher }}</span>{% endif %}
               {% if reference.year %}<span>{{ reference.year }}</span>{% endif %}
             </p>
-            {% if reference.note %}<p class="reference-note">{{ reference.note }}</p>{% endif %}
+            {% if reference.note %}<p class="reference-note" data-post-field>{{ reference.note }}</p>{% endif %}
           </div>
           <div class="reference-cited-in">
             <p>{{ page_copy.cited_in_label }}</p>
             <ul>
-              {% for cited_post in site.posts %}
+              {% for cited_post in base_posts %}
                 {% for cited_reference in cited_post.references %}
                   {% if cited_reference.id == reference.id %}
-                  <li><a href="{{ cited_post.url | relative_url }}">{{ cited_post.title }}</a></li>
+                  <li><a href="{{ cited_post.url | relative_url }}" data-post-card data-translation-key="{{ cited_post.translation_key | default: cited_post.slug | escape }}"><span data-post-field data-post-title>{{ cited_post.title }}</span></a></li>
                   {% endif %}
                 {% endfor %}
               {% endfor %}

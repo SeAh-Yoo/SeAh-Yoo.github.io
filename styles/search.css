@@ -74,6 +74,22 @@
   box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.08);
 }
 
+@media (min-width: 901px) {
+  .sidebar-quick-actions .sidebar-search-trigger {
+    width: 2.35rem;
+    min-width: 2.35rem;
+    min-height: 2.35rem;
+    padding: 0.45rem;
+    justify-content: center;
+  }
+
+  .sidebar-quick-actions .sidebar-search-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    flex-basis: 1.2rem;
+  }
+}
+
 .site-search-dialog {
   width: min(720px, calc(100vw - 28px));
   max-height: min(760px, calc(100vh - 32px));

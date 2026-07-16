@@ -260,9 +260,9 @@
   }
 
   const article = document.querySelector('article.post');
-  const quoteCardKicker = article?.dataset.quoteCardKicker || copy('brand.quote_card_kicker');
-  const quoteCardLabel = article?.dataset.quoteCardLabel || copy('brand.quote_card_label');
-  const quoteCardFilenamePrefix = article?.dataset.quoteCardFilenamePrefix || copy('brand.quote_card_filename_prefix');
+  const quoteCardKicker = copy('brand.quote_card_kicker', article?.dataset.quoteCardKicker || '');
+  const quoteCardLabel = copy('brand.quote_card_label', article?.dataset.quoteCardLabel || '');
+  const quoteCardFilenamePrefix = copy('brand.quote_card_filename_prefix', article?.dataset.quoteCardFilenamePrefix || '');
 
   const normalizeReaderText = (value) => String(value ?? '')
     .normalize('NFKC')

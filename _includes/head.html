@@ -3,6 +3,8 @@
 
 {% assign identity = site.data.site_identity %}
 {% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign page_language = page.lang | default: identity.settings.default_language %}
+{% assign page_language_copy = identity.locales[page_language] | default: site_copy %}
 {% assign brand = site_copy.brand %}
 {% assign page_copy = site_copy.pages[page.identity_key] %}
 {% assign resolved_page_title = page_copy.title | default: page.title | default: brand.name %}
@@ -41,12 +43,16 @@
 <meta name="goatcounter-summary-label" content="{{ site_copy.analytics.summary_label | escape }}" />
 {% endif %}
 {% if page.layout == "post" %}
-<link rel="alternate" hreflang="ko" href="{{ canonical_url }}" />
-{% if page.translation_en %}<link rel="alternate" hreflang="en" href="{{ page.translation_en | absolute_url }}" />{% endif %}
-{% if page.translation_ja %}<link rel="alternate" hreflang="ja" href="{{ page.translation_ja | absolute_url }}" />{% endif %}
+{% assign translation_key = page.translation_key | default: page.slug %}
+{% assign post_translations = site.posts | where: "translation_key", translation_key %}
+{% for translated_post in post_translations %}<link rel="alternate" hreflang="{{ translated_post.lang | default: identity.settings.default_language }}" href="{{ translated_post.url | absolute_url }}" />
+{% endfor %}
+{% assign korean_translations = post_translations | where: "lang", identity.settings.default_language %}
+{% assign korean_translation = korean_translations | first %}
+{% if korean_translation %}<link rel="alternate" hreflang="x-default" href="{{ korean_translation.url | absolute_url }}" />{% endif %}
 {% endif %}
 
-<meta property="og:locale" content="{{ site_copy.meta.og_locale }}" />
+<meta property="og:locale" content="{{ page_language_copy.meta.og_locale }}" />
 <meta property="og:site_name" content="{{ brand.name | escape }}" />
 <meta property="og:title" content="{{ document_title | strip | escape }}" />
 <meta property="og:description" content="{{ page_description | strip_html | normalize_whitespace | escape }}" />
@@ -90,7 +96,7 @@
       "author": { "@id": {{ site.url | append: "/#author" | jsonify }} },
       "publisher": { "@id": {{ site.url | append: "/#author" | jsonify }} },
       "isPartOf": { "@id": {{ site.url | append: "/#blog" | jsonify }} },
-      "inLanguage": {{ site_copy.meta.html_lang | jsonify }}
+      "inLanguage": {{ page_language_copy.meta.html_lang | jsonify }}
     },
     {
       "@type": "BreadcrumbList",

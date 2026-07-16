@@ -6,6 +6,7 @@ permalink: /categories/
 {% assign identity = site.data.site_identity %}
 {% assign site_copy = identity.locales[identity.settings.default_language] %}
 {% assign page_copy = site_copy.pages.categories %}
+{% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
 <section class="category-index glass-panel" aria-labelledby="category-index-heading">
   <p class="eyebrow">{{ page_copy.section_eyebrow }}</p>
   <h2 id="category-index-heading">{{ page_copy.section_title }}</h2>
@@ -13,14 +14,14 @@ permalink: /categories/
 
   <nav class="category-chip-list" aria-label="{{ page_copy.list_label }}">
     {% for category in page_copy.items %}
-      {% assign category_posts = site.posts | where: "category", category.source_label %}
+      {% assign category_posts = base_posts | where: "category_key", category.id %}
       <a class="category-chip" href="#{{ category.id }}">{{ category.label }} <span>{{ category_posts | size }}</span></a>
     {% endfor %}
   </nav>
 </section>
 
 {% for category in page_copy.items %}
-  {% assign category_posts = site.posts | where: "category", category.source_label %}
+  {% assign category_posts = base_posts | where: "category_key", category.id %}
   <section class="category-section" id="{{ category.id }}" aria-labelledby="category-{{ category.id }}">
     <div class="category-section-heading">
       {% assign category_count = category_posts | size %}
@@ -29,13 +30,13 @@ permalink: /categories/
     </div>
     <div class="view">
       {% for post in category_posts %}
-      <a class="card glass-panel" href="{{ post.url | relative_url }}">
+      <a class="card glass-panel" href="{{ post.url | relative_url }}" data-post-card data-translation-key="{{ post.translation_key | default: post.slug | escape }}">
         <div class="meta">
-          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: site_copy.meta.date_short }}</time>
-          <span>{{ category.label }}</span>
+          <time datetime="{{ post.date | date_to_xmlschema }}" data-post-field data-post-date data-date-style="short">{{ post.date | date: site_copy.meta.date_short }}</time>
+          <span data-post-field data-post-category>{{ category.label }}</span>
         </div>
-        <h3>{{ post.title }}</h3>
-        <p>{{ post.description }}</p>
+        <h3 data-post-field data-post-title>{{ post.title }}</h3>
+        <p data-post-field data-post-description>{{ post.description }}</p>
         <span class="read-more" aria-hidden="true">{{ page_copy.read_more_label }}</span>
       </a>
       {% endfor %}

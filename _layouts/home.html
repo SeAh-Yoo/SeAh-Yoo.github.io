@@ -3,6 +3,7 @@
 {% assign brand = site_copy.brand %}
 {% assign pages = site_copy.pages %}
 {% assign home_copy = pages.home %}
+{% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
 <!doctype html>
 <html lang="{{ site_copy.meta.html_lang }}">
   <head>
@@ -16,8 +17,8 @@
       {% include sidebar.html %}
 
       <main class="content" id="main-content">
-        {% if site.posts.size > 0 %}
-        {% assign featured_post = site.posts | first %}
+        {% if base_posts.size > 0 %}
+        {% assign featured_post = base_posts | first %}
         {% assign featured_image = featured_post.image | default: featured_post.image1 %}
         <section class="home-cover" aria-labelledby="home-title">
           <header class="home-hero">
@@ -31,41 +32,41 @@
             </nav>
           </header>
 
-          <a class="home-featured" href="{{ featured_post.url | relative_url }}" aria-label="{{ home_copy.featured_aria_prefix }}: {{ featured_post.title | escape }}">
+          <a class="home-featured" href="{{ featured_post.url | relative_url }}" aria-label="{{ home_copy.featured_aria_prefix }}: {{ featured_post.title | escape }}" data-post-card data-translation-key="{{ featured_post.translation_key | default: featured_post.slug | escape }}" data-post-aria-prefix="{{ home_copy.featured_aria_prefix | escape }}">
             <span class="featured-media" aria-hidden="true">
               {% if featured_image %}
-              <img src="{{ featured_image | relative_url }}" alt="" loading="eager" decoding="async" fetchpriority="high" />
+              <img src="{{ featured_image | relative_url }}" alt="" loading="eager" decoding="async" fetchpriority="high" data-post-image />
               {% else %}
-              <span class="featured-fallback"><span>{{ featured_post.category | default: site_copy.ui.default_category }}</span><strong>{{ featured_post.title | slice: 0, 1 }}</strong></span>
+              <span class="featured-fallback"><span data-post-field data-post-category>{{ featured_post.category | default: site_copy.ui.default_category }}</span><strong data-post-field data-post-initial>{{ featured_post.title | slice: 0, 1 }}</strong></span>
               {% endif %}
             </span>
             <span class="featured-copy">
               <span class="featured-kicker">{{ home_copy.featured_kicker }}</span>
-              <span class="meta"><time datetime="{{ featured_post.date | date_to_xmlschema }}">{{ featured_post.date | date: site_copy.meta.date_short }}</time><span>{{ featured_post.category | default: site_copy.ui.default_category }}</span></span>
-              <h2>{{ featured_post.title }}</h2>
-              <p>{{ featured_post.description }}</p>
+              <span class="meta"><time datetime="{{ featured_post.date | date_to_xmlschema }}" data-post-field data-post-date data-date-style="short">{{ featured_post.date | date: site_copy.meta.date_short }}</time><span data-post-field data-post-category>{{ featured_post.category | default: site_copy.ui.default_category }}</span></span>
+              <h2 data-post-field data-post-title>{{ featured_post.title }}</h2>
+              <p data-post-field data-post-description>{{ featured_post.description }}</p>
               <span class="featured-link" aria-hidden="true">{{ home_copy.featured_open_label }} <span>→</span></span>
             </span>
           </a>
         </section>
 
-        {% if site.posts.size > 1 %}
+        {% if base_posts.size > 1 %}
         <section class="recent-section" aria-labelledby="recent-posts-title">
           <header class="section-heading">
             <div><p class="eyebrow">{{ home_copy.recent_eyebrow }}</p><h2 id="recent-posts-title">{{ home_copy.recent_title }}</h2></div>
             <a class="section-heading-link" href="{{ pages.timeline.path | relative_url }}">{{ home_copy.recent_more_label }}</a>
           </header>
           <div class="recent-post-list">
-            {% for post in site.posts offset: 1 limit: 3 %}
+            {% for post in base_posts offset: 1 limit: 3 %}
             {% assign card_image = post.image | default: post.image1 %}
-            <a class="recent-post" href="{{ post.url | relative_url }}">
+            <a class="recent-post" href="{{ post.url | relative_url }}" data-post-card data-translation-key="{{ post.translation_key | default: post.slug | escape }}">
               <span class="recent-media" aria-hidden="true">
-                {% if card_image %}<img src="{{ card_image | relative_url }}" alt="" loading="lazy" decoding="async" />{% else %}<span>{{ post.title | slice: 0, 1 }}</span>{% endif %}
+                {% if card_image %}<img src="{{ card_image | relative_url }}" alt="" loading="lazy" decoding="async" data-post-image />{% else %}<span data-post-field data-post-initial>{{ post.title | slice: 0, 1 }}</span>{% endif %}
               </span>
               <span class="recent-copy">
-                <span class="meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: site_copy.meta.date_short }}</time><span>{{ post.category | default: site_copy.ui.default_category }}</span></span>
-                <h3>{{ post.title }}</h3>
-                <p>{{ post.description }}</p>
+                <span class="meta"><time datetime="{{ post.date | date_to_xmlschema }}" data-post-field data-post-date data-date-style="short">{{ post.date | date: site_copy.meta.date_short }}</time><span data-post-field data-post-category>{{ post.category | default: site_copy.ui.default_category }}</span></span>
+                <h3 data-post-field data-post-title>{{ post.title }}</h3>
+                <p data-post-field data-post-description>{{ post.description }}</p>
               </span>
             </a>
             {% endfor %}

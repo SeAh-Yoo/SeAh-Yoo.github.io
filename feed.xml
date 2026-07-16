@@ -5,6 +5,7 @@ sitemap: false
 ---
 {% assign identity = site.data.site_identity %}
 {% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
@@ -14,7 +15,7 @@ sitemap: false
     <language>{{ site_copy.meta.html_lang }}</language>
     <atom:link href="{{ identity.links.feed | absolute_url }}" rel="self" type="application/rss+xml" />
     <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
-    {% for post in site.posts limit: 20 %}
+    {% for post in base_posts limit: 20 %}
     <item>
       <title>{{ post.title | xml_escape }}</title>
       <link>{{ post.url | absolute_url | xml_escape }}</link>

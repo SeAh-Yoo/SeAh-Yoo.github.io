@@ -1,5 +1,8 @@
 ---
 layout: post
+lang: ko
+translation_key: "game-for-girls"
+category_key: "game-industry"
 title: "세상의 반은 여자, 게이머의 반은?"
 subtitle: "여성 게이머는 많은데, 왜 게임시장은 여전히 남성을 중심으로 움직일까"
 date: 2026-07-07 07:35:24 +0900
