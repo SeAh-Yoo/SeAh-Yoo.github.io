@@ -21,6 +21,15 @@
       <button class="sidebar-top-button" type="button" data-scroll-top aria-label="{{ site_copy.ui.scroll_top_label }}">
         <span aria-hidden="true">↑</span><span class="sidebar-top-label">{{ site_copy.ui.top_button_label }}</span>
       </button>
+      {% assign default_language_option = identity.settings.supported_languages | where: "id", identity.settings.default_language | first %}
+      <div class="sidebar-language-quick-control" title="{{ site_copy.navigation.language_label }}">
+        <span class="language-select-flag" data-language-flag aria-hidden="true">{{ default_language_option.flag }}</span>
+        <select id="site-language-select" data-language-select aria-label="{{ site_copy.navigation.language_label }} {{ site_copy.ui.language_select_suffix }}">
+          {% for language in identity.settings.supported_languages %}
+          <option value="{{ language.id }}">{{ language.flag }} {{ site_copy.languages[language.id] }}</option>
+          {% endfor %}
+        </select>
+      </div>
     </div>
 
   </div>
@@ -88,19 +97,6 @@
             <option value="sewage-reservoir">{{ site_copy.themes.sewage_reservoir }}</option>
             <option value="dim-passage">{{ site_copy.themes.dim_passage }}</option>
             <option value="moss-pipeline">{{ site_copy.themes.moss_pipeline }}</option>
-          </select>
-        </div>
-      </section>
-
-      <section class="theme-switcher language-switcher" aria-label="{{ site_copy.navigation.language_label }}">
-        <label class="eyebrow" for="site-language-select">{{ site_copy.navigation.language_label }}</label>
-        <div class="theme-select-control language-select-control">
-          {% assign default_language_option = identity.settings.supported_languages | where: "id", identity.settings.default_language | first %}
-          <span class="language-select-flag" data-language-flag aria-hidden="true">{{ default_language_option.flag }}</span>
-          <select id="site-language-select" data-language-select aria-label="{{ site_copy.navigation.language_label }} {{ site_copy.ui.language_select_suffix }}">
-            {% for language in identity.settings.supported_languages %}
-            <option value="{{ language.id }}">{{ language.flag }} {{ site_copy.languages[language.id] }}</option>
-            {% endfor %}
           </select>
         </div>
       </section>
