@@ -32,7 +32,7 @@
 @media (max-width: 390px) {
   .sidebar { padding-inline: 0.6rem; }
   .brand { grid-template-columns: 38px minmax(0, 1fr); gap: 0.55rem; }
-  .brand-mark { width: 38px; border-radius: 10px; }
+  .brand-mark { width: 38px; }
   .brand strong { font-size: 0.9rem; }
   .sidebar-quick-actions { gap: 0.25rem; }
 }

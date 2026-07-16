@@ -365,6 +365,12 @@
     document.querySelectorAll('[data-language-flag]').forEach((element) => {
       element.textContent = selectedOption?.flag || '';
     });
+    document.querySelectorAll('[data-language-flag-image]').forEach((element) => {
+      const icon = selectedOption?.icon;
+      if (icon) {
+        element.setAttribute('src', icon);
+      }
+    });
   };
 
   const set = (key, value) => {
