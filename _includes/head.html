@@ -35,6 +35,7 @@
 {% if identity.assets.favicon_image %}<link rel="icon" type="image/png" sizes="32x32" href="{{ identity.assets.favicon_image | relative_url }}" />{% endif %}
 {% if identity.assets.favicon_large_image %}<link rel="icon" type="image/png" sizes="192x192" href="{{ identity.assets.favicon_large_image | relative_url }}" />{% endif %}
 {% if identity.assets.apple_touch_icon %}<link rel="apple-touch-icon" sizes="180x180" href="{{ identity.assets.apple_touch_icon | relative_url }}" />{% endif %}
+<link rel="icon" type="image/svg+xml" sizes="any" href="{{ '/assets/images/manhole-dive-favicon.svg' | relative_url }}" />
 <link rel="canonical" href="{{ canonical_url }}" />
 <link rel="alternate" type="application/rss+xml" title="{{ brand.name | escape }} {{ site_copy.navigation.feed_label }}" href="{{ identity.links.feed | absolute_url }}" />
 {% assign goatcounter_code = site.data.analytics.goatcounterCode %}
