@@ -1,33 +1,27 @@
 (() => {
   const STORAGE_KEY = 'literary-underground:preferences:v1';
-  const DEFAULTS = Object.freeze({ theme: 'unit-violet' });
-  const THEMES = Object.freeze(['unit-violet', 'ember-white', 'azure-form', 'sovereign-obsidian', 'neon-shell']);
-  const LEGACY_THEMES = Object.freeze({
-    'unit-01': 'unit-violet',
-    'unit-02': 'ember-white',
-    kivotos: 'azure-form',
-  });
+  const DEFAULTS = Object.freeze({ theme: 'sewer-center' });
+  const THEMES = Object.freeze(['sewer-center', 'brick-road-pipeline', 'sewage-reservoir', 'dim-passage', 'moss-pipeline']);
   const THEME_COLORS = Object.freeze({
-    'unit-violet': '#0c0d18',
-    'ember-white': '#15110f',
-    'azure-form': '#07131d',
-    'sovereign-obsidian': '#0d0c0e',
-    'neon-shell': '#071312',
+    'sewer-center': '#0c0d18',
+    'brick-road-pipeline': '#15110f',
+    'sewage-reservoir': '#07131d',
+    'dim-passage': '#0d0c0e',
+    'moss-pipeline': '#071312',
   });
   const GISCUS_THEMES = Object.freeze({
-    'unit-violet': 'giscus-unit-violet.css',
-    'ember-white': 'giscus-ember-white.css',
-    'azure-form': 'giscus-azure-form.css',
-    'sovereign-obsidian': 'giscus-sovereign-obsidian.css',
-    'neon-shell': 'giscus-neon-shell.css',
+    'sewer-center': 'giscus-sewer-center.css',
+    'brick-road-pipeline': 'giscus-brick-road-pipeline.css',
+    'sewage-reservoir': 'giscus-sewage-reservoir.css',
+    'dim-passage': 'giscus-dim-passage.css',
+    'moss-pipeline': 'giscus-moss-pipeline.css',
   });
   const GISCUS_BASE = 'https://cdn.jsdelivr.net/gh/SeAh-Yoo/SeAh-Yoo.github.io@main/styles/';
 
   const normalize = (value = {}) => {
-    const migratedTheme = LEGACY_THEMES[value.theme] || value.theme;
     return {
       ...value,
-      theme: THEMES.includes(migratedTheme) ? migratedTheme : DEFAULTS.theme,
+      theme: THEMES.includes(value.theme) ? value.theme : DEFAULTS.theme,
     };
   };
 
