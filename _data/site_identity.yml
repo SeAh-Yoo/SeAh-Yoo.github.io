@@ -277,14 +277,14 @@ locales:
 
       start:
         path: "/start-here/"
-        label: "처음 읽기"
-        title: "중심 합류점"
-        eyebrow: "MANHOLE ACCESS POINT"
-        intro: "처음 들어온 사람이 길을 잃지 않도록 주요 기록과 탐색 경로를 안내합니다."
+        label: "안내소"
+        title: "탐색 시작점"
+        eyebrow: "안내소 | HOMEGROUND IN MANHOLE ACCESS POINT"
+        intro: "첫 방문객이 길을 잃지 않도록 주요 기록과 탐색 경로를 안내합니다.<br />이 길이 당신들의 마지막 여정이 되지 않기를 빕니다."
         description: "문하수도를 처음 이용하는 독자를 위한 질문별 입문 읽기 순서와 핵심 탐색 경로입니다."
         guide_eyebrow: "Exploration guide"
-        guide_title: "문하수도 탐색을 시작하세요"
-        guide_description: "아래 순서는 최신순이 아니라 처음 이용하는 독자를 위한 권장 탐색 순서입니다. 각 경로와 표시 순서는 게시물 Front Matter에서 관리됩니다."
+        guide_title: "문하수도 구조 안내"
+        guide_description: "다음 제시된 게시물들은 최신순이 아니라 처음 이용하는 독자를 위한 권장 탐색 순서입니다.<br />원하는 주제별 게시물을 따로 찾아서 읽을 수 있습니다."
         # Variable: the rendered post count is placed immediately before this suffix.
         post_count_suffix: " posts"
         empty_message: "이 구역에 추가할 기록을 준비하고 있습니다."
