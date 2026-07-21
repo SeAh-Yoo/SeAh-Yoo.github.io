@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-20T06:27:42.068Z",
+  "generated_at": "2026-07-21T06:07:33.004Z",
   "site": {
-    "total": 271
+    "total": 276
   },
   "posts": [
     {
@@ -18,7 +18,7 @@
       "slug": "2026-ai-spread",
       "title": "발명은 순간, 변혁은 세대의 업보",
       "path": "/posts/2026-ai-spread/",
-      "month": 20,
+      "month": 21,
       "total": 20,
       "read75": 0,
       "readComplete": 0
@@ -27,7 +27,7 @@
       "slug": "2026-game-for-girls",
       "title": "세상의 반은 여자, 게이머의 반은?",
       "path": "/posts/game-for-girls/",
-      "month": 27,
+      "month": 28,
       "total": 27,
       "read75": 10,
       "readComplete": 8
