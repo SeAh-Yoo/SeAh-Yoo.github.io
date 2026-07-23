@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-22T06:06:08.041Z",
+  "generated_at": "2026-07-23T06:11:31.454Z",
   "site": {
-    "total": 280
+    "total": 283
   },
   "posts": [
     {
       "slug": "2026-ncsoft-trust",
       "title": "신뢰 회복의 다리를 부순 고소장",
       "path": "/posts/2026-ncsoft-trust/",
-      "month": 17,
+      "month": 16,
       "total": 17,
       "read75": 3,
       "readComplete": 1
@@ -18,7 +18,7 @@
       "slug": "2026-ai-spread",
       "title": "발명은 순간, 변혁은 세대의 업보",
       "path": "/posts/2026-ai-spread/",
-      "month": 21,
+      "month": 18,
       "total": 21,
       "read75": 0,
       "readComplete": 0
