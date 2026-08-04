@@ -1,0 +1,179 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign page_language = page.lang | default: identity.settings.default_language %}
+{% assign page_language_copy = identity.locales[page_language] | default: site_copy %}
+{% assign brand = site_copy.brand %}
+{% assign page_copy = site_copy.pages[page.identity_key] %}
+{% assign resolved_page_title = page_copy.title | default: page.title | default: brand.name %}
+{% assign page_description = page_copy.description | default: page.description | default: brand.description %}
+{% assign canonical_url = page.url | absolute_url %}
+{% assign social_image = page.image | default: page.image1 | default: identity.assets.default_social_image | default: identity.assets.profile_image %}
+{% if page.layout == "post" %}
+  {% capture document_title %}{{ page.title }} | {{ brand.name }}{% endcapture %}
+{% elsif page.url == "/" %}
+  {% capture document_title %}{{ brand.name }} | {{ brand.seo_title_suffix }}{% endcapture %}
+{% elsif resolved_page_title %}
+  {% capture document_title %}{{ resolved_page_title }} | {{ brand.name }}{% endcapture %}
+{% else %}
+  {% capture document_title %}{{ brand.name }} | {{ brand.seo_title_suffix }}{% endcapture %}
+{% endif %}
+
+<title>{{ document_title | strip | escape }}</title>
+<meta name="description" content="{{ page_description | strip_html | normalize_whitespace | escape }}" />
+<meta name="author" content="{{ brand.author.name | escape }}" />
+{% if page.noindex %}
+<meta name="robots" content="noindex, follow" />
+{% else %}
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+{% endif %}
+<meta name="theme-color" content="#0c0d18" />
+<script id="site-identity-data" type="application/json">{{ identity | jsonify }}</script>
+<script src="{{ '/scripts/site-preferences.js' | relative_url }}"></script>
+{% if identity.assets.favicon_image %}<link rel="icon" type="image/png" sizes="32x32" href="{{ identity.assets.favicon_image | relative_url }}" />{% endif %}
+{% if identity.assets.favicon_large_image %}<link rel="icon" type="image/png" sizes="192x192" href="{{ identity.assets.favicon_large_image | relative_url }}" />{% endif %}
+{% if identity.assets.favicon_svg_image %}<link rel="icon" type="image/svg+xml" sizes="any" href="{{ identity.assets.favicon_svg_image | relative_url }}" />{% endif %}
+{% if identity.assets.apple_touch_icon %}<link rel="apple-touch-icon" sizes="180x180" href="{{ identity.assets.apple_touch_icon | relative_url }}" />{% endif %}
+<link rel="canonical" href="{{ canonical_url }}" />
+<link rel="alternate" type="application/rss+xml" title="{{ brand.name | escape }} {{ site_copy.navigation.feed_label }}" href="{{ identity.links.feed | absolute_url }}" />
+{% assign goatcounter_code = site.data.analytics.goatcounterCode %}
+{% if goatcounter_code and goatcounter_code != '' %}
+<meta name="goatcounter-counter-origin" content="https://{{ goatcounter_code | escape }}.goatcounter.com" />
+<meta name="goatcounter-summary-cache-minutes" content="{{ site.data.analytics.summaryCacheMinutes | default: 20 }}" />
+<meta name="goatcounter-summary-label" content="{{ site_copy.analytics.summary_label | escape }}" />
+{% endif %}
+{% if page.layout == "post" %}
+{% assign translation_key = page.translation_key | default: page.slug %}
+{% assign post_translations = site.posts | where: "translation_key", translation_key %}
+{% for translated_post in post_translations %}<link rel="alternate" hreflang="{{ translated_post.lang | default: identity.settings.default_language }}" href="{{ translated_post.url | absolute_url }}" />
+{% endfor %}
+{% assign korean_translations = post_translations | where: "lang", identity.settings.default_language %}
+{% assign korean_translation = korean_translations | first %}
+{% if korean_translation %}<link rel="alternate" hreflang="x-default" href="{{ korean_translation.url | absolute_url }}" />{% endif %}
+{% endif %}
+
+<meta property="og:locale" content="{{ page_language_copy.meta.og_locale }}" />
+<meta property="og:site_name" content="{{ brand.name | escape }}" />
+<meta property="og:title" content="{{ document_title | strip | escape }}" />
+<meta property="og:description" content="{{ page_description | strip_html | normalize_whitespace | escape }}" />
+<meta property="og:url" content="{{ canonical_url }}" />
+{% if page.layout == "post" %}
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
+{% if page.last_modified_at %}<meta property="article:modified_time" content="{{ page.last_modified_at | date_to_xmlschema }}" />{% endif %}
+<meta property="article:author" content="{{ site.url | append: '/' }}" />
+{% else %}
+<meta property="og:type" content="website" />
+{% endif %}
+{% if social_image %}
+<meta property="og:image" content="{{ social_image | absolute_url }}" />
+<meta property="og:image:alt" content="{{ resolved_page_title | escape }}" />
+{% endif %}
+
+<meta name="twitter:card" content="{% if social_image %}summary_large_image{% else %}summary{% endif %}" />
+<meta name="twitter:title" content="{{ document_title | strip | escape }}" />
+<meta name="twitter:description" content="{{ page_description | strip_html | normalize_whitespace | escape }}" />
+{% if social_image %}
+<meta name="twitter:image" content="{{ social_image | absolute_url }}" />
+<meta name="twitter:image:alt" content="{{ resolved_page_title | escape }}" />
+{% endif %}
+
+<script type="application/ld+json">
+{% if page.layout == "post" %}
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": {{ canonical_url | append: "#article" | jsonify }},
+      "url": {{ canonical_url | jsonify }},
+      "mainEntityOfPage": { "@type": "WebPage", "@id": {{ canonical_url | jsonify }} },
+      "headline": {{ page.title | jsonify }},
+      "description": {{ page_description | strip_html | normalize_whitespace | jsonify }},
+      "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+      "dateModified": {{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
+      {% if social_image %}"image": [{{ social_image | absolute_url | jsonify }}],{% endif %}
+      "author": { "@id": {{ site.url | append: "/#author" | jsonify }} },
+      "publisher": { "@id": {{ site.url | append: "/#author" | jsonify }} },
+      "isPartOf": { "@id": {{ site.url | append: "/#blog" | jsonify }} },
+      "inLanguage": {{ page_language_copy.meta.html_lang | jsonify }}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": {{ canonical_url | append: "#breadcrumb" | jsonify }},
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": {{ brand.name | jsonify }}, "item": {{ site.url | append: "/" | jsonify }} },
+        { "@type": "ListItem", "position": 2, "name": {{ site_copy.pages.categories.title | jsonify }}, "item": {{ site_copy.pages.categories.path | absolute_url | jsonify }} },
+        { "@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }}, "item": {{ canonical_url | jsonify }} }
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": {{ site.url | append: "/#author" | jsonify }},
+      "name": {{ brand.author.name | jsonify }},
+      "alternateName": {{ brand.author.alternate_name | jsonify }},
+      "url": {{ site.url | append: "/" | jsonify }},
+      "image": {{ identity.assets.profile_image | absolute_url | jsonify }}
+    },
+    {
+      "@type": "Blog",
+      "@id": {{ site.url | append: "/#blog" | jsonify }},
+      "name": {{ brand.name | jsonify }},
+      "url": {{ site.url | append: "/" | jsonify }}
+    }
+  ]
+}
+{% else %}
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": {{ site.url | append: "/#website" | jsonify }},
+      "url": {{ site.url | append: "/" | jsonify }},
+      "name": {{ brand.name | jsonify }},
+      "alternateName": {{ brand.english_name | jsonify }},
+      "description": {{ brand.description | jsonify }},
+      "inLanguage": {{ site_copy.meta.html_lang | jsonify }},
+      "publisher": { "@id": {{ site.url | append: "/#author" | jsonify }} }
+    },
+    {
+      "@type": "Blog",
+      "@id": {{ site.url | append: "/#blog" | jsonify }},
+      "url": {{ site.url | append: "/" | jsonify }},
+      "name": {{ brand.name | jsonify }},
+      "alternateName": {{ brand.english_name | jsonify }},
+      "description": {{ brand.description | jsonify }},
+      "inLanguage": {{ site_copy.meta.html_lang | jsonify }},
+      "author": { "@id": {{ site.url | append: "/#author" | jsonify }} },
+      "isPartOf": { "@id": {{ site.url | append: "/#website" | jsonify }} }
+    },
+    {
+      "@type": "Person",
+      "@id": {{ site.url | append: "/#author" | jsonify }},
+      "name": {{ brand.author.name | jsonify }},
+      "alternateName": {{ brand.author.alternate_name | jsonify }},
+      "url": {{ site.url | append: "/" | jsonify }},
+      "image": {{ identity.assets.profile_image | absolute_url | jsonify }}
+    }
+  ]
+}
+{% endif %}
+</script>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nyannnnng/GyeonggiTitleWoff/stylesheet.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css" />
+<link rel="stylesheet" href="{{ '/styles/design-system.css' | relative_url }}" />
+<link rel="stylesheet" href="{{ '/styles/theme-system.css' | relative_url }}" />
+<link rel="stylesheet" href="{{ '/styles/index.css' | relative_url }}" />
+<link rel="stylesheet" href="{{ '/styles/sidebar-collapse.css' | relative_url }}" />
+<link rel="stylesheet" href="{{ '/styles/counter.css' | relative_url }}" />
+<link rel="stylesheet" href="{{ '/styles/search.css' | relative_url }}" />
+{% if page.layout == "post" %}<link rel="stylesheet" href="{{ '/styles/post-actions.css' | relative_url }}" />{% endif %}
+<link rel="stylesheet" href="{{ '/styles/reading-experience.css' | relative_url }}" />
+<link rel="stylesheet" href="{{ '/styles/home-editorial.css' | relative_url }}" />
+<script defer src="{{ '/scripts/sidebar-collapse.js' | relative_url }}"></script>
+<script defer src="{{ '/scripts/site-search.js' | relative_url }}"></script>

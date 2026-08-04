@@ -1,0 +1,15 @@
+url: "https://seah-yoo.github.io"
+baseurl: ""
+lang: "ko-KR"
+timezone: "Asia/Seoul"
+
+permalink: /posts/:slug/
+markdown: kramdown
+kramdown:
+  hard_wrap: true
+
+defaults:
+  - scope:
+      path: "google27564fde5057ccbe.html"
+    values:
+      sitemap: false

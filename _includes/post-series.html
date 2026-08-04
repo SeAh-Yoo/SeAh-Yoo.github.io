@@ -1,0 +1,52 @@
+{% if page.series %}
+  {% assign identity = site.data.site_identity %}
+  {% assign site_copy = identity.locales[identity.settings.default_language] %}
+  {% assign series_copy = site_copy.post.series %}
+  {% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
+  {% assign series_posts = base_posts | where: "series", page.series %}
+  {% if page.series_order %}
+    {% assign series_posts = series_posts | sort: "series_order" %}
+  {% else %}
+    {% assign series_posts = series_posts | sort: "date" %}
+  {% endif %}
+  {% assign series_count = series_posts | size %}
+  {% assign current_series_index = 0 %}
+  {% for series_post in series_posts %}
+    {% if series_post.url == page.url %}
+      {% assign current_series_index = forloop.index %}
+    {% endif %}
+  {% endfor %}
+
+  <section class="post-series" aria-labelledby="post-series-title">
+    <div class="post-series-heading">
+      <div>
+        <p class="post-series-kicker">{{ series_copy.kicker }}</p>
+        <h2 id="post-series-title">{{ page.series }}</h2>
+      </div>
+      <span class="post-series-progress">{{ current_series_index }} / {{ series_count }}</span>
+    </div>
+
+    <details class="post-series-list"{% if series_count <= 4 %} open{% endif %}>
+      <summary>{{ series_copy.list_label }}</summary>
+      <ol>
+        {% for series_post in series_posts %}
+        {% assign episode_number = series_post.series_order | default: forloop.index %}
+        <li{% if series_post.url == page.url %} class="is-current"{% endif %}>
+          {% if series_post.url == page.url %}
+          <span aria-current="page">
+            <small>{{ episode_number }}{{ series_copy.episode_suffix }}</small>
+            <strong>{{ series_post.title }}</strong>
+            <em>{{ series_copy.current_label }}</em>
+          </span>
+          {% else %}
+          <a href="{{ series_post.url | relative_url }}" data-post-card data-translation-key="{{ series_post.translation_key | default: series_post.slug | escape }}">
+            <small>{{ episode_number }}{{ series_copy.episode_suffix }}</small>
+            <strong data-post-field data-post-title>{{ series_post.title }}</strong>
+          </a>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ol>
+    </details>
+  </section>
+{% endif %}

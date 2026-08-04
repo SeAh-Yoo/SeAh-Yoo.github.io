@@ -1,0 +1,29 @@
+---
+layout: null
+permalink: /feed.xml
+sitemap: false
+---
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ site_copy.brand.name | xml_escape }}</title>
+    <link>{{ site.url | append: site.baseurl | append: '/' | xml_escape }}</link>
+    <description>{{ site_copy.brand.description | xml_escape }}</description>
+    <language>{{ site_copy.meta.html_lang }}</language>
+    <atom:link href="{{ identity.links.feed | absolute_url }}" rel="self" type="application/rss+xml" />
+    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
+    {% for post in base_posts limit: 20 %}
+    <item>
+      <title>{{ post.title | xml_escape }}</title>
+      <link>{{ post.url | absolute_url | xml_escape }}</link>
+      <guid isPermaLink="true">{{ post.url | absolute_url | xml_escape }}</guid>
+      <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
+      {% if post.category %}<category>{{ post.category | xml_escape }}</category>{% endif %}
+      <description>{{ post.description | default: post.excerpt | strip_html | strip_newlines | normalize_whitespace | xml_escape }}</description>
+    </item>
+    {% endfor %}
+  </channel>
+</rss>

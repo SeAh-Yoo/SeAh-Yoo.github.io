@@ -1,0 +1,48 @@
+---
+layout: page
+identity_key: topics
+permalink: /topics/
+---
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign page_copy = site_copy.pages.topics %}
+{% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
+<section class="topic-intro glass-panel" aria-labelledby="topic-intro-title">
+  <p class="eyebrow">{{ page_copy.section_eyebrow }}</p>
+  <h2 id="topic-intro-title">{{ page_copy.section_title }}</h2>
+  <p>{{ page_copy.section_prefix }} <a href="{{ site_copy.pages.categories.path | relative_url }}">{{ site_copy.pages.categories.title }}</a> {{ page_copy.section_suffix }}</p>
+  <nav class="topic-chip-list" aria-label="{{ page_copy.list_label }}">
+    {% for topic in page_copy.items %}
+    <a class="topic-chip" href="#{{ topic.id }}">{{ topic.label }}</a>
+    {% endfor %}
+  </nav>
+</section>
+
+{% for topic in page_copy.items %}
+  {% assign topic_post_count = 0 %}
+  {% for post in base_posts %}
+    {% if post.topics contains topic.label %}{% assign topic_post_count = topic_post_count | plus: 1 %}{% endif %}
+  {% endfor %}
+  <section class="topic-section" id="{{ topic.id }}" aria-labelledby="topic-{{ topic.id }}">
+    <div class="topic-section-heading">
+      <p class="eyebrow">{{ topic_post_count }}{{ page_copy.post_count_suffix }}</p>
+      <h2 id="topic-{{ topic.id }}">{{ topic.label }}</h2>
+      <p>{{ topic.description }}</p>
+    </div>
+    {% if topic_post_count > 0 %}
+    <div class="card-grid">
+      {% for post in base_posts %}
+        {% if post.topics contains topic.label %}
+        <a class="card glass-panel" href="{{ post.url | relative_url }}" data-post-card data-translation-key="{{ post.translation_key | default: post.slug | escape }}">
+          <div class="meta"><time datetime="{{ post.date | date_to_xmlschema }}" data-post-field data-post-date data-date-style="short">{{ post.date | date: site_copy.meta.date_short }}</time><span data-post-field data-post-category>{{ post.category | default: site_copy.ui.default_category }}</span></div>
+          <h3 data-post-field data-post-title>{{ post.title }}</h3>
+          <p data-post-field data-post-description>{{ post.description }}</p>
+        </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="topic-empty">{{ page_copy.empty_message }}</p>
+    {% endif %}
+  </section>
+{% endfor %}

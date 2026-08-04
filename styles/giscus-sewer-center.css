@@ -1,0 +1,12 @@
+@import url("https://cdn.jsdelivr.net/gh/SeAh-Yoo/SeAh-Yoo.github.io@main/styles/giscus-theme-base.css");
+
+main {
+  --color-btn-primary-bg: #67d8c3;
+  --color-btn-primary-border: #8ee5d4;
+  --color-btn-primary-hover-bg: #7de0cd;
+  --color-btn-primary-hover-border: #a4eadc;
+  --color-btn-primary-selected-bg: #55c4af;
+  --color-accent-fg: #76dfcb;
+  --color-accent-emphasis: #67d8c3;
+  --color-attention-fg: #a88dff;
+}

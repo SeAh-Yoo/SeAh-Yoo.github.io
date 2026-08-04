@@ -1,0 +1,111 @@
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign brand = site_copy.brand %}
+{% assign pages = site_copy.pages %}
+{% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
+<aside class="sidebar glass-panel" aria-label="{{ brand.short_name }} {{ site_copy.ui.sidebar_aria_suffix }}" data-mobile-sidebar>
+  <div class="sidebar-header">
+    <a class="brand" href="{{ identity.links.home | relative_url }}" aria-label="{{ brand.name }} {{ site_copy.ui.home_aria_suffix }}">
+      <span class="brand-mark" aria-hidden="true">
+        {% if identity.assets.brand_emblem %}
+        <img src="{{ identity.assets.brand_emblem | relative_url }}" alt="" width="64" height="64" />
+        {% else %}
+        <span>S</span>
+        {% endif %}
+      </span>
+      <span class="brand-copy"><strong>{{ brand.name }}</strong><small>{{ brand.sidebar_subtitle }}</small></span>
+    </a>
+
+    <div class="sidebar-quick-actions" role="group" aria-label="{{ site_copy.ui.quick_tools_label }}">
+      {% include site-search.html %}
+      <button class="sidebar-top-button" type="button" data-scroll-top aria-label="{{ site_copy.ui.scroll_top_label }}">
+        <span aria-hidden="true">↑</span><span class="sidebar-top-label">{{ site_copy.ui.top_button_label }}</span>
+      </button>
+      {% assign default_language_option = identity.settings.supported_languages | where: "id", identity.settings.default_language | first %}
+      <div class="sidebar-language-quick-control" title="{{ site_copy.navigation.language_label }}">
+        <span class="language-select-flag" data-language-flag aria-hidden="true">{{ default_language_option.flag }}</span>
+        <img class="language-select-flag-image" data-language-flag-image src="{{ default_language_option.icon | relative_url }}" alt="" aria-hidden="true" />
+        <select id="site-language-select" data-language-select aria-label="{{ site_copy.navigation.language_label }} {{ site_copy.ui.language_select_suffix }}">
+          {% for language in identity.settings.supported_languages %}
+          <option value="{{ language.id }}">{{ language.flag }} {{ site_copy.languages[language.id] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sidebar-collapse-region" data-sidebar-collapse-region>
+    <div class="sidebar-collapse-inner">
+      <nav class="explore-nav primary-nav" aria-labelledby="explore-heading">
+        <p class="eyebrow" id="explore-heading">{{ site_copy.navigation.primary_heading }}</p>
+        <ul>
+          <li>
+            <a href="{{ pages.start.path | relative_url }}"{% if page.url == pages.start.path %} aria-current="page"{% endif %}>
+              <span class="nav-label">{{ pages.start.label | strip }}</span><small class="nav-metaphor">{{ pages.start.title | strip }}</small>
+            </a>
+          </li>
+          <li>
+            <a href="{{ pages.timeline.path | relative_url }}"{% if page.url == pages.timeline.path %} aria-current="page"{% endif %}>
+              <span class="nav-label">{{ pages.timeline.label | strip }}</span><small class="nav-metaphor">{{ pages.timeline.title | strip }}</small>
+            </a>
+          </li>
+          <li>
+            <a href="{{ pages.topics.path | relative_url }}"{% if page.url == pages.topics.path %} aria-current="page"{% endif %}>
+              <span class="nav-label">{{ pages.topics.label | strip }}</span><small class="nav-metaphor">{{ pages.topics.title | strip }}</small>
+            </a>
+          </li>
+          <li>
+            <a href="{{ pages.about.path | relative_url }}"{% if page.url == pages.about.path %} aria-current="page"{% endif %}>
+              <span class="nav-label">{{ pages.about.label | strip }}</span><small class="nav-metaphor">{{ pages.about.title | strip }}</small>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      {% if base_posts.size > 0 %}
+      <nav class="archive-nav sidebar-latest" aria-labelledby="archive-heading">
+        <div class="archive-header">
+          <p class="eyebrow" id="archive-heading">{{ site_copy.navigation.latest_heading }}</p>
+        </div>
+        <ol class="archive-list">
+          {% for post in base_posts limit: 3 %}
+          <li>
+            <a href="{{ post.url | relative_url }}" data-post-card data-translation-key="{{ post.translation_key | default: post.slug | escape }}"{% if page.url == post.url %} class="active" aria-current="page"{% endif %}>
+              <span class="archive-title" data-post-field data-post-title>{{ post.title }}</span>
+              <time datetime="{{ post.date | date_to_xmlschema }}" data-post-field data-post-date data-date-style="short">{{ post.date | date: site_copy.meta.date_short }}</time>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+      </nav>
+      {% endif %}
+
+      <nav class="sidebar-footer-nav" aria-label="{{ site_copy.navigation.utility_label }}">
+        <a href="{{ pages.categories.path | relative_url }}">{{ pages.categories.label | strip }}</a>
+        <a href="{{ pages.reading_pulse.path | relative_url }}">{{ pages.reading_pulse.label | strip }}</a>
+        <a href="{{ pages.references.path | relative_url }}">{{ pages.references.label | strip }}</a>
+        <a href="{{ identity.links.feed | relative_url }}">{{ site_copy.navigation.feed_label }}</a>
+      </nav>
+
+      <section class="theme-switcher" aria-label="{{ site_copy.navigation.theme_label }}">
+        <label class="eyebrow" for="site-theme-select">{{ site_copy.navigation.theme_label }}</label>
+        <div class="theme-select-control">
+          <span class="theme-select-swatch" aria-hidden="true"></span>
+          <select id="site-theme-select" data-theme-select aria-label="{{ site_copy.navigation.theme_label }} {{ site_copy.ui.theme_select_suffix }}">
+            <option value="sewer-center">{{ site_copy.themes.sewer_center }}</option>
+            <option value="brick-road-pipeline">{{ site_copy.themes.brick_road_pipeline }}</option>
+            <option value="sewage-reservoir">{{ site_copy.themes.sewage_reservoir }}</option>
+            <option value="dim-passage">{{ site_copy.themes.dim_passage }}</option>
+            <option value="moss-pipeline">{{ site_copy.themes.moss_pipeline }}</option>
+          </select>
+        </div>
+      </section>
+
+      <p class="license-note sidebar-license">
+        {{ site_copy.navigation.license_label }}
+        <a href="{{ identity.links.license }}" rel="license noopener" target="_blank">{{ site_copy.navigation.license_link_label }}</a>{{ site_copy.ui.license_suffix }}
+      </p>
+    </div>
+  </div>
+</aside>

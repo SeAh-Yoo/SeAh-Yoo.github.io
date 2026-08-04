@@ -1,0 +1,53 @@
+---
+layout: page
+identity_key: start
+permalink: /start-here/
+---
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign page_copy = site_copy.pages.start %}
+{% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
+{% assign ordered_posts = base_posts | sort: "start_here_order" %}
+
+<section class="path-intro glass-panel" aria-labelledby="path-intro-title">
+  <p class="eyebrow">{{ page_copy.guide_eyebrow }}</p>
+  <h2 id="path-intro-title">{{ page_copy.guide_title }}</h2>
+  <p>{{ page_copy.guide_description }}</p>
+</section>
+
+{% for path in page_copy.paths %}
+  {% assign path_post_count = 0 %}
+  {% for post in ordered_posts %}
+    {% if post.start_here == path.id %}{% assign path_post_count = path_post_count | plus: 1 %}{% endif %}
+  {% endfor %}
+  <section class="path-section" aria-labelledby="path-{{ path.id }}">
+    <div class="path-section-heading">
+      <p class="eyebrow">{{ path_post_count }}{{ page_copy.post_count_suffix }}</p>
+      <h2 id="path-{{ path.id }}">{{ path.title }}</h2>
+      <p>{{ path.description }}</p>
+      <small>{{ path.prompt }}</small>
+    </div>
+    {% if path_post_count > 0 %}
+    <ol class="path-list">
+      {% for post in ordered_posts %}
+        {% if post.start_here == path.id %}
+        <li>
+          <a class="path-card glass-panel" href="{{ post.url | relative_url }}" data-post-card data-translation-key="{{ post.translation_key | default: post.slug | escape }}"
+             data-analytics-event="start-here-select--{{ path.id | slugify }}"
+             data-analytics-title="{{ path.title | escape }} · {{ post.title | escape }}">
+            <span class="path-card-order" aria-hidden="true">{{ post.start_here_order | default: forloop.index }}</span>
+            <span>
+              <span class="meta"><time datetime="{{ post.date | date_to_xmlschema }}" data-post-field data-post-date data-date-style="short">{{ post.date | date: site_copy.meta.date_short }}</time><span data-post-field data-post-category>{{ post.category | default: site_copy.ui.default_category }}</span></span>
+              <strong data-post-field data-post-title>{{ post.title }}</strong>
+              <small data-post-field data-post-description>{{ post.description }}</small>
+            </span>
+          </a>
+        </li>
+        {% endif %}
+      {% endfor %}
+    </ol>
+    {% else %}
+    <p class="path-empty">{{ page_copy.empty_message }}</p>
+    {% endif %}
+  </section>
+{% endfor %}

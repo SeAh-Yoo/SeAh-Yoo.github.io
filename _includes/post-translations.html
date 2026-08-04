@@ -1,0 +1,17 @@
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign translations_copy = site_copy.post.translations %}
+{% assign translation_key = page.translation_key | default: page.slug %}
+{% assign post_translations = site.posts | where: "translation_key", translation_key %}
+<nav class="post-translations" aria-label="{{ translations_copy.aria_label }}">
+  <span class="post-translations-label" aria-hidden="true">{{ translations_copy.label }}</span>
+  {% for language in identity.settings.supported_languages %}
+    {% assign language_posts = post_translations | where: "lang", language.id %}
+    {% assign translated_post = language_posts | first %}
+    {% if translated_post %}
+    <a class="post-translation-button is-available" href="{{ translated_post.url | relative_url }}" hreflang="{{ language.id }}" lang="{{ language.id }}"{% if translated_post.url == page.url %} aria-current="page"{% endif %}>{{ site_copy.languages[language.id] }}</a>
+    {% else %}
+    <span class="post-translation-button is-unavailable" aria-disabled="true" title="{{ translations_copy.unavailable[language.id] }}" lang="{{ language.id }}">{{ site_copy.languages[language.id] }}</span>
+    {% endif %}
+  {% endfor %}
+</nav>

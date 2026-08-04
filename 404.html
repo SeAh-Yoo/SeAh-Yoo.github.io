@@ -1,0 +1,16 @@
+---
+layout: page
+identity_key: not_found
+permalink: /404.html
+noindex: true
+sitemap: false
+---
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign page_copy = site_copy.pages.not_found %}
+
+<section class="about-section glass-panel" aria-labelledby="not-found-title">
+  <p class="eyebrow">{{ page_copy.section_eyebrow }}</p>
+  <h2 id="not-found-title">{{ page_copy.section_title }}</h2>
+  <p><a href="{{ identity.links.home | relative_url }}">{{ page_copy.home_label }}</a>{{ page_copy.section_prefix }} <a href="{{ site_copy.pages.start.path | relative_url }}">{{ site_copy.pages.start.title }}</a> · <a href="{{ site_copy.pages.timeline.path | relative_url }}">{{ site_copy.pages.timeline.title }}</a>.</p>
+</section>
