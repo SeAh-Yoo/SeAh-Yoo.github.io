@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-05T06:02:34.583Z",
+  "generated_at": "2026-08-06T06:06:26.132Z",
   "site": {
     "total": 314
   },
@@ -9,7 +9,7 @@
       "slug": "2026-ncsoft-trust",
       "title": "신뢰 회복의 다리를 부순 고소장",
       "path": "/posts/2026-ncsoft-trust/",
-      "month": 9,
+      "month": 8,
       "total": 17,
       "read75": 3,
       "readComplete": 1
@@ -27,7 +27,7 @@
       "slug": "2026-game-for-girls",
       "title": "세상의 반은 여자, 게이머의 반은?",
       "path": "/posts/game-for-girls/",
-      "month": 28,
+      "month": 27,
       "total": 28,
       "read75": 10,
       "readComplete": 8
