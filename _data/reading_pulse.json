@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-15T03:56:12.515Z",
+  "generated_at": "2026-08-16T04:02:01.433Z",
   "site": {
     "total": 314
   },
@@ -27,7 +27,7 @@
       "slug": "2026-game-for-girls",
       "title": "세상의 반은 여자, 게이머의 반은?",
       "path": "/posts/game-for-girls/",
-      "month": 2,
+      "month": 1,
       "total": 28,
       "read75": 10,
       "readComplete": 8
