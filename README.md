@@ -187,6 +187,10 @@ locales:
 
 메모 전체를 숨기려면 `enabled: false`로 바꾸고, 한 칸만 쓰려면 필요하지 않은 `items` 항목을 제거합니다. 같은 페이지의 영어·일본어 메모는 각각 `locales.en.pages`, `locales.ja.pages`의 같은 위치에서 관리합니다.
 
+위키는 `locales.<언어>.pages.wiki.notes`에서 관리합니다. 위키 목록(`/wiki/`)과
+모든 개별 위키 문서 하단에 같은 메모를 표시합니다. 다른 페이지와 마찬가지로
+`enabled: false` 또는 `items: []`로 숨길 수 있습니다.
+
 ### 메뉴명 위계
 
 사이드바는 각 페이지의 `label`을 큰 기능명으로, `title`을 작은 공간형 보조 명칭으로 표시합니다.

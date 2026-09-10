@@ -263,6 +263,13 @@ locales:
 
     pages:
       wiki:
+        notes:
+          enabled: true
+          items:
+            - title: "위키 안내"
+              body: "개념과 인물, 사물에 대한 개인적인 정의를 기록합니다. 각 항목은 계속 수정될 수 있습니다."
+            - title: "항목 연결"
+              body: "본문에 다른 항목의 이름이나 별칭을 적으면 해당 위키로 자동 연결됩니다."
         path: "/wiki/"
         eyebrow: "PERSONAL WIKI"
         label: "개인 위키"
@@ -762,6 +769,13 @@ locales:
 
     pages:
       wiki:
+        notes:
+          enabled: true
+          items:
+            - title: "About this wiki"
+              body: "A collection of personal definitions of concepts, people, and things. Entries may be revised over time."
+            - title: "Connecting entries"
+              body: "Mention another entry by its title or alias in the text to link to it automatically."
         path: "/wiki/"
         eyebrow: "PERSONAL WIKI"
         label: "Personal wiki"
@@ -1261,6 +1275,13 @@ locales:
 
     pages:
       wiki:
+        notes:
+          enabled: true
+          items:
+            - title: "ウィキについて"
+              body: "概念や人物、事物に対する個人的な定義を記録します。各項目は随時更新されます。"
+            - title: "項目のリンク"
+              body: "本文に別の項目の名前や別名を書くと、そのウィキに自動でリンクします。"
         path: "/wiki/"
         eyebrow: "PERSONAL WIKI"
         label: "個人ウィキ"
