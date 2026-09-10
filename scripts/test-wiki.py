@@ -3,6 +3,7 @@
 Run after `jekyll build --safe`. Uses Python's standard library and installed Jekyll.
 """
 import json
+import re
 from html.parser import HTMLParser
 from pathlib import Path
 import shutil
@@ -79,7 +80,10 @@ def main():
         (source / '_wiki').mkdir()
         build(source, dest)
         assert check_site(dest) == []
-        assert '아직 작성된 위키 항목이 없습니다.' in (dest / 'wiki/index.html').read_text(encoding='utf-8')
+        empty_html = (dest / 'wiki/index.html').read_text(encoding='utf-8')
+        identity = json.loads(re.search(r'<script id="site-identity-data" type="application/json">(.*?)</script>', empty_html, re.S).group(1))
+        empty_message = identity['locales'][identity['settings']['default_language']]['wiki']['empty']
+        assert f'<p>{empty_message}</p>' in empty_html
         print('PASS: zero posts and zero wiki entries')
 
         titles = ['가방', '까치', '나무', '다리', '따옴표', '라디오', '마음', '바다', '빠름', '사전', '쌍', '아침', '자전거', '짜임', '차', '카드', '타자', '파도', '하늘', 'Alpha', '2번', 'Ω']
