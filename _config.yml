@@ -6,9 +6,21 @@ timezone: "Asia/Seoul"
 permalink: /posts/:slug/
 markdown: kramdown
 kramdown:
+  input: GFM
   hard_wrap: true
 
+collections:
+  wiki:
+    output: true
+    permalink: /wiki/:name/
+
 defaults:
+  - scope:
+      path: ""
+      type: wiki
+    values:
+      layout: wiki
+      lang: ko
   - scope:
       path: "google27564fde5057ccbe.html"
     values:

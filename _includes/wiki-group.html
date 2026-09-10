@@ -1,0 +1,17 @@
+{%- comment -%}Group Hangul syllables and compatibility consonants without a custom plugin.
+Double consonants share their basic consonant's section.{%- endcomment -%}
+{%- assign wiki_first = include.entry.sort_title | default: include.entry.title | strip | slice: 0, 1 | upcase -%}
+{%- if wiki_first >= '가' and wiki_first <= '힣' -%}
+  {%- assign wiki_starts = '가,나,다,라,마,바,사,아,자,차,카,타,파,하' | split: ',' -%}
+  {%- assign wiki_letters = 'ㄱ,ㄴ,ㄷ,ㄹ,ㅁ,ㅂ,ㅅ,ㅇ,ㅈ,ㅊ,ㅋ,ㅌ,ㅍ,ㅎ' | split: ',' -%}
+  {%- assign wiki_group = 'ㄱ' -%}
+  {%- for wiki_start in wiki_starts -%}
+    {%- if wiki_first >= wiki_start -%}{%- assign wiki_group = wiki_letters[forloop.index0] -%}{%- endif -%}
+  {%- endfor -%}
+  {{- wiki_group -}}
+{%- elsif wiki_first >= 'A' and wiki_first <= 'Z' -%}A–Z
+{%- else -%}
+  {%- assign wiki_letters = 'ㄱ,ㄴ,ㄷ,ㄹ,ㅁ,ㅂ,ㅅ,ㅇ,ㅈ,ㅊ,ㅋ,ㅌ,ㅍ,ㅎ' | split: ',' -%}
+  {%- assign wiki_first = wiki_first | replace: 'ㄲ', 'ㄱ' | replace: 'ㄸ', 'ㄷ' | replace: 'ㅃ', 'ㅂ' | replace: 'ㅆ', 'ㅅ' | replace: 'ㅉ', 'ㅈ' -%}
+  {%- if wiki_letters contains wiki_first -%}{{- wiki_first -}}{%- else -%}0–9 / 기타{%- endif -%}
+{%- endif -%}

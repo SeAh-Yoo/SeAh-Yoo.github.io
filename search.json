@@ -9,6 +9,7 @@ sitemap: false
 {% for post in site.posts %}
   {% assign post_image = post.image | default: post.image1 %}
   {
+    "type": "post",
     "lang": {{ post.lang | default: identity.settings.default_language | jsonify }},
     "translationKey": {{ post.translation_key | default: post.slug | jsonify }},
     "title": {{ post.title | jsonify }},
@@ -23,5 +24,19 @@ sitemap: false
     "content": {{ post.content | markdownify | strip_html | strip_newlines | normalize_whitespace | jsonify }},
     "image": {% if post_image %}{{ post_image | relative_url | jsonify }}{% else %}""{% endif %}
   }{% unless forloop.last %},{% endunless %}
+{% endfor %}
+{% for entry in site.wiki %}
+  {% if site.posts.size > 0 or forloop.first == false %},{% endif %}
+  {
+    "type": "wiki",
+    "lang": {{ entry.lang | default: identity.settings.default_language | jsonify }},
+    "translationKey": {{ entry.url | prepend: 'wiki:' | jsonify }},
+    "title": {{ entry.title | jsonify }},
+    "url": {{ entry.url | relative_url | jsonify }},
+    "aliases": {{ entry.aliases | jsonify }},
+    "date": {% if entry.last_modified_at %}{{ entry.last_modified_at | date_to_xmlschema | jsonify }}{% else %}""{% endif %},
+    "description": {{ entry.description | default: '' | strip_html | normalize_whitespace | jsonify }},
+    "content": {{ entry.content | markdownify | strip_html | normalize_whitespace | jsonify }}
+  }
 {% endfor %}
 ]

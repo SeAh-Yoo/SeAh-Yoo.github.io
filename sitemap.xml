@@ -6,7 +6,8 @@ permalink: /sitemap.xml
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   {% assign sitemap_pages = site.pages | where_exp: "page", "page.sitemap != false" | where_exp: "page", "page.url != '/sitemap.xml'" | where_exp: "page", "page.url != '/robots.txt'" | sort: "url" %}
   {% assign sitemap_posts = site.posts | where_exp: "post", "post.sitemap != false" %}
-  {% assign sitemap_documents = sitemap_pages | concat: sitemap_posts | sort: "url" %}
+  {% assign sitemap_wiki = site.wiki | where_exp: "entry", "entry.sitemap != false" %}
+  {% assign sitemap_documents = sitemap_pages | concat: sitemap_posts | concat: sitemap_wiki | sort: "url" %}
   {% for document in sitemap_documents %}
   <url>
     <loc>{{ document.url | absolute_url | xml_escape }}</loc>

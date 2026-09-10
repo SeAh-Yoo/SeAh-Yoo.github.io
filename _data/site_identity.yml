@@ -119,10 +119,10 @@ locales:
       button_label: "검색"
       shortcut_label: "Ctrl K"
       kicker: "SEARCH"
-      title: "게시물 검색"
+      title: "게시물·위키 검색"
       close_label: "검색 창 닫기"
       input_label: "검색어"
-      placeholder: "제목, 본문, 분야, 주제, 연재 검색"
+      placeholder: "제목, 별칭, 본문, 분야, 주제, 연재 검색"
       initial_status: "검색어를 입력하세요."
       keyboard_hint: "목록 이동 · Enter 열기"
       empty_message: "그런 기록은 존재하지 않습니다."
@@ -130,7 +130,7 @@ locales:
       no_match_message: "일치하는 글을 찾지 못했습니다."
       untitled_label: "제목 없는 글"
       # Variables: {count}
-      result_count_message: "{count}개의 글을 찾았습니다."
+      result_count_message: "{count}개의 항목을 찾았습니다."
       no_results_message: "검색 결과가 없습니다."
       load_error_message: "검색 색인을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."
       unavailable_message: "검색을 사용할 수 없습니다."
@@ -244,7 +244,31 @@ locales:
         # Variables: {count}
         count_label: "{count}개 항목"
 
+    wiki:
+      all_entries: "개인 위키 전체 보기"
+      updated: "수정일"
+      contents: "문서 목차"
+      summary: "간략 설명"
+      details: "세부 설명"
+      backlinks: "이 항목을 언급한 위키"
+      backlinks_loading: "연결된 위키를 확인하는 중…"
+      backlinks_found: "이 페이지로 연결되는 항목입니다."
+      backlinks_empty: "아직 이 항목을 언급한 다른 위키가 없습니다."
+      backlinks_error: "연결 목록을 불러오지 못했습니다. 새로고침해 주세요."
+      backlinks_noscript: "자동 역링크를 보려면 JavaScript를 켜 주세요."
+      alphabet: "가나다순 목차"
+      empty: "아직 작성된 위키 항목이 없습니다."
+      result_wiki: "위키"
+      result_post: "게시물"
+
     pages:
+      wiki:
+        path: "/wiki/"
+        eyebrow: "PERSONAL WIKI"
+        label: "개인 위키"
+        title: "개념과 정의"
+        intro: "개념과 인물, 사물에 대한 나의 정의를 적고 서로 연결합니다."
+        description: "개념과 인물, 사물에 대한 나의 정의를 적고 서로 연결합니다."
       home:
         path: "/"
         title: "유세아의 문하수도"
@@ -594,10 +618,10 @@ locales:
       button_label: "Search"
       shortcut_label: "Ctrl K"
       kicker: "SEARCH"
-      title: "Search posts"
+      title: "Search posts and wiki"
       close_label: "Close search"
       input_label: "Search query"
-      placeholder: "Search titles, text, fields, topics, and series"
+      placeholder: "Search titles, aliases, text, fields, topics, and series"
       initial_status: "Enter a search query."
       keyboard_hint: "Move through results · Enter to open"
       empty_message: "No such record exists."
@@ -605,7 +629,7 @@ locales:
       no_match_message: "No matching posts were found."
       untitled_label: "Untitled post"
       # Variables: {count}
-      result_count_message: "Found {count} posts."
+      result_count_message: "Found {count} entries."
       no_results_message: "No search results."
       load_error_message: "The search index could not be loaded. Please try again shortly."
       unavailable_message: "Search is unavailable."
@@ -719,7 +743,31 @@ locales:
         # Variables: {count}
         count_label: "{count} sections"
 
+    wiki:
+      all_entries: "Browse the personal wiki"
+      updated: "Updated"
+      contents: "On this page"
+      summary: "Brief definition"
+      details: "Further detail"
+      backlinks: "Wiki entries linking here"
+      backlinks_loading: "Finding connected entries…"
+      backlinks_found: "These entries link to this page."
+      backlinks_empty: "No other wiki entries link here yet."
+      backlinks_error: "Could not load links. Please refresh this page."
+      backlinks_noscript: "Enable JavaScript to see automatic backlinks."
+      alphabet: "Alphabetical contents"
+      empty: "No wiki entries yet."
+      result_wiki: "Wiki"
+      result_post: "Post"
+
     pages:
+      wiki:
+        path: "/wiki/"
+        eyebrow: "PERSONAL WIKI"
+        label: "Personal wiki"
+        title: "Concepts and definitions"
+        intro: "My definitions of concepts, people, and things, connected to one another."
+        description: "My definitions of concepts, people, and things, connected to one another."
       home:
         path: "/"
         title: "SeAh Yoo's Literary Underground"
@@ -1069,10 +1117,10 @@ locales:
       button_label: "検索"
       shortcut_label: "Ctrl K"
       kicker: "SEARCH"
-      title: "投稿を検索"
+      title: "投稿・ウィキを検索"
       close_label: "検索を閉じる"
       input_label: "検索語"
-      placeholder: "タイトル、本文、分野、トピック、連載を検索"
+      placeholder: "タイトル、別名、本文、分野、トピック、連載を検索"
       initial_status: "検索語を入力してください。"
       keyboard_hint: "候補を移動 · Enterで開く"
       empty_message: "該当する記録はありません。"
@@ -1080,7 +1128,7 @@ locales:
       no_match_message: "一致する投稿が見つかりませんでした。"
       untitled_label: "無題の投稿"
       # Variables: {count}
-      result_count_message: "{count}件の投稿が見つかりました。"
+      result_count_message: "{count}件の項目が見つかりました。"
       no_results_message: "検索結果はありません。"
       load_error_message: "検索インデックスを読み込めませんでした。しばらくしてからもう一度お試しください。"
       unavailable_message: "検索を利用できません。"
@@ -1194,7 +1242,31 @@ locales:
         # Variables: {count}
         count_label: "{count}項目"
 
+    wiki:
+      all_entries: "個人ウィキの一覧へ"
+      updated: "更新日"
+      contents: "このページの目次"
+      summary: "簡単な説明"
+      details: "詳しい説明"
+      backlinks: "この項目にリンクしているウィキ"
+      backlinks_loading: "関連するウィキを確認中…"
+      backlinks_found: "このページにリンクしている項目です。"
+      backlinks_empty: "この項目にリンクしているウィキはまだありません。"
+      backlinks_error: "リンクを読み込めませんでした。ページを再読み込みしてください。"
+      backlinks_noscript: "自動バックリンクを見るにはJavaScriptを有効にしてください。"
+      alphabet: "五十音・ハングル順の目次"
+      empty: "ウィキの項目はまだありません。"
+      result_wiki: "ウィキ"
+      result_post: "投稿"
+
     pages:
+      wiki:
+        path: "/wiki/"
+        eyebrow: "PERSONAL WIKI"
+        label: "個人ウィキ"
+        title: "概念と定義"
+        intro: "概念や人物、事物に対する自分の定義を書き、互いにつなぎます。"
+        description: "概念や人物、事物に対する自分の定義を書き、互いにつなぎます。"
       home:
         path: "/"
         title: "ユ・セアの文学下水道"

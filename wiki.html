@@ -1,0 +1,49 @@
+---
+layout: page
+identity_key: wiki
+permalink: /wiki/
+---
+{% assign site_copy = site.data.site_identity.locales[site.data.site_identity.settings.default_language] %}
+{% assign wiki_copy = site_copy.wiki %}
+{% assign wiki_groups = 'ㄱ,ㄴ,ㄷ,ㄹ,ㅁ,ㅂ,ㅅ,ㅇ,ㅈ,ㅊ,ㅋ,ㅌ,ㅍ,ㅎ,A–Z,0–9 / 기타' | split: ',' %}
+{% capture wiki_sections %}
+  {% for group in wiki_groups %}
+    {% assign group_index = forloop.index %}
+    {% capture group_entries %}
+      {% assign wiki_entries = site.wiki | sort: 'title' %}
+      {% for entry in wiki_entries %}
+        {% capture entry_group %}{% include wiki-group.html entry=entry %}{% endcapture %}
+        {% assign entry_group = entry_group | strip %}
+        {% if entry_group == group %}
+        <li class="wiki-index-entry" data-wiki-entry data-sort-title="{{ entry.sort_title | default: entry.title | escape }}">
+          <h3><a href="{{ entry.url | relative_url }}" data-no-interface-translation>{{ entry.title | escape }}</a></h3>
+          {% if entry.description %}<p><a class="wiki-summary-link" href="{{ entry.url | relative_url }}#wiki-summary" data-no-interface-translation>{{ entry.description | escape }}</a></p>{% endif %}
+          {% assign entry_html = entry.content | markdownify %}
+          {% capture entry_sections %}{% include wiki-headings.html html=entry_html url=entry.url %}{% include wiki-details.html entry=entry %}{% endcapture %}
+          {% assign entry_sections = entry_sections | strip %}
+          {% if entry_sections != '' %}<details><summary>{{ wiki_copy.details }}</summary><ul>{{ entry_sections }}</ul></details>{% endif %}
+        </li>
+        {% endif %}
+      {% endfor %}
+    {% endcapture %}
+    {% assign group_entries = group_entries | strip %}
+    {% if group_entries != '' %}
+    <section class="wiki-group" aria-labelledby="wiki-group-{{ group_index }}" data-wiki-group data-group-label="{{ group }}">
+      <h2 id="wiki-group-{{ group_index }}">{{ group }}</h2>
+      <ul class="wiki-entry-list">{{ group_entries }}</ul>
+    </section>
+    {% endif %}
+  {% endfor %}
+{% endcapture %}
+<div class="glass-panel wiki-index" data-wiki-directory>
+  {% assign wiki_sections = wiki_sections | strip %}
+  {% if wiki_sections != '' %}
+  <nav class="wiki-alphabet" aria-label="{{ wiki_copy.alphabet }}">
+    {% for group in wiki_groups %}
+      {% capture group_marker %}data-group-label="{{ group }}"{% endcapture %}
+      {% if wiki_sections contains group_marker %}<a href="#wiki-group-{{ forloop.index }}">{{ group }}</a>{% endif %}
+    {% endfor %}
+  </nav>
+  {{ wiki_sections }}
+  {% else %}<p>{{ wiki_copy.empty }}</p>{% endif %}
+</div>

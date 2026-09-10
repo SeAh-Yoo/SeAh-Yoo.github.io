@@ -1,0 +1,9 @@
+{%- for wiki_detail in include.entry.details -%}
+  {%- assign wiki_detail_first = wiki_detail.target | slice: 0, 1 -%}
+  {%- if wiki_detail_first == '#' -%}
+    {%- assign wiki_detail_url = include.entry.url | append: wiki_detail.target -%}
+  {%- else -%}
+    {%- assign wiki_detail_url = wiki_detail.target -%}
+  {%- endif -%}
+  <li><a href="{{ wiki_detail_url | relative_url | escape }}" data-no-interface-translation>{{ wiki_detail.title | escape }}</a></li>
+{%- endfor -%}

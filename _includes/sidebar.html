@@ -60,6 +60,11 @@
               <span class="nav-label">{{ pages.about.label | strip }}</span><small class="nav-metaphor">{{ pages.about.title | strip }}</small>
             </a>
           </li>
+          <li>
+            <a href="{{ pages.wiki.path | relative_url }}"{% if page.identity_key == 'wiki' %} aria-current="page"{% endif %}>
+              <span class="nav-label">{{ pages.wiki.label | strip }}</span><small class="nav-metaphor">{{ pages.wiki.title | strip }}</small>
+            </a>
+          </li>
         </ul>
       </nav>
 

@@ -1,0 +1,60 @@
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign wiki_copy = site_copy.wiki %}
+<!doctype html>
+<html lang="{{ site_copy.meta.html_lang }}">
+  <head>{% include head.html %}</head>
+  <body data-wiki-document>
+    <a class="skip-link" href="#main-content">{{ site_copy.ui.skip_link }}</a>
+    <div class="aurora aurora-one" aria-hidden="true"></div>
+    <div class="aurora aurora-two" aria-hidden="true"></div>
+    <div class="shell">
+      {% include sidebar.html %}
+      <main class="content" id="main-content">
+        <article class="post glass-panel wiki-article" lang="{{ page.lang }}">
+          <header class="post-header">
+            <a class="post-category-eyebrow" href="{{ '/wiki/' | relative_url }}">{{ wiki_copy.all_entries }}</a>
+            <h1 data-no-interface-translation>{{ page.title | escape }}</h1>
+            {% if page.aliases.size > 0 %}<p class="wiki-aliases" data-no-interface-translation>{{ page.aliases | join: ' · ' | escape }}</p>{% endif %}
+            {% if page.last_modified_at %}<p class="wiki-updated">{{ wiki_copy.updated }} <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: '%Y-%m-%d' }}</time></p>{% endif %}
+            {% capture wiki_toc %}{% include wiki-headings.html html=content url=page.url %}{% endcapture %}
+            {% assign wiki_toc = wiki_toc | strip %}
+            {% if page.description or wiki_toc != '' or page.details.size > 0 %}
+            <nav class="wiki-toc" aria-label="{{ wiki_copy.contents }}">
+              <p class="eyebrow">{{ wiki_copy.contents }}</p>
+              <ul>
+                {% if page.description %}<li><a href="#wiki-summary">{{ wiki_copy.summary }}</a></li>{% endif %}
+                {{ wiki_toc }}
+                {% include wiki-details.html entry=page %}
+              </ul>
+            </nav>
+            {% endif %}
+          </header>
+          <div class="post-content">
+            {% if page.description %}
+            <section class="wiki-summary" aria-labelledby="wiki-summary">
+              <h2 id="wiki-summary">{{ wiki_copy.summary }}</h2>
+              <p data-no-interface-translation>{{ page.description | escape }}</p>
+            </section>
+            {% endif %}
+            {{ content }}
+            {% if page.details.size > 0 %}
+            <aside class="wiki-detail-pages" aria-label="{{ wiki_copy.details }}">
+              <h2 id="wiki-detail-pages">{{ wiki_copy.details }}</h2>
+              <ul>{% include wiki-details.html entry=page %}</ul>
+            </aside>
+            {% endif %}
+          </div>
+          <aside class="wiki-backlinks" aria-labelledby="wiki-backlinks-title" data-wiki-backlinks data-wiki-index="{{ '/wiki-index.json' | relative_url }}">
+            <h2 id="wiki-backlinks-title">{{ wiki_copy.backlinks }}</h2>
+            <p data-backlinks-status role="status" hidden>{{ wiki_copy.backlinks_loading }}</p>
+            <ul data-backlinks-list data-no-interface-translation></ul>
+            <noscript><p>{{ wiki_copy.backlinks_noscript }}</p></noscript>
+          </aside>
+        </article>
+      </main>
+    </div>
+    {% include analytics-tracking.html %}
+    <script src="{{ '/scripts/index.js' | relative_url }}"></script>
+  </body>
+</html>

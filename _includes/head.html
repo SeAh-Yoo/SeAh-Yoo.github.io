@@ -177,3 +177,7 @@
 <link rel="stylesheet" href="{{ '/styles/home-editorial.css' | relative_url }}" />
 <script defer src="{{ '/scripts/sidebar-collapse.js' | relative_url }}"></script>
 <script defer src="{{ '/scripts/site-search.js' | relative_url }}"></script>
+{% if page.layout == 'wiki' or page.identity_key == 'wiki' %}
+<link rel="stylesheet" href="{{ '/styles/wiki.css' | relative_url }}" />
+<script defer src="{{ '/scripts/wiki.js' | relative_url }}"></script>
+{% endif %}

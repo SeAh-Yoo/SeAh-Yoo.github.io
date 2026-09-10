@@ -57,6 +57,7 @@
   ));
 
   const getCategoryLabel = (item) => {
+    if (item.type === 'wiki') return '';
     const categories = copy('pages.categories.items', []);
     return categories.find((category) => category.id === item.categoryKey)?.label || item.category;
   };
@@ -110,13 +111,14 @@
 
   const scoreItem = (item, tokens) => {
     const title = normalize(item.title);
+    const aliases = Array.isArray(item.aliases) ? item.aliases.map(normalize) : [];
     const category = normalize(item.category);
     const topics = Array.isArray(item.topics) ? item.topics.map(normalize).filter(Boolean) : [];
     const topicText = topics.join(' ');
     const series = normalize(item.series);
     const description = normalize(item.description);
     const content = normalize(item.content);
-    const combined = `${title} ${category} ${topicText} ${series} ${description} ${content}`;
+    const combined = `${title} ${aliases.join(' ')} ${category} ${topicText} ${series} ${description} ${content}`;
 
     if (!tokens.every((token) => combined.includes(token))) {
       return null;
@@ -126,6 +128,8 @@
 
     tokens.forEach((token) => {
       if (title === token) score += 240;
+      if (aliases.some((alias) => alias === token)) score += 240;
+      else if (aliases.some((alias) => alias.includes(token))) score += 90;
       if (title.startsWith(token)) score += 120;
       if (title.includes(token)) score += 90;
       if (series.includes(token)) score += 48;
@@ -182,7 +186,8 @@
       metadata.className = 'site-search-result-meta';
       const topics = Array.isArray(item.topics) ? item.topics : [];
       const dateLabel = window.siteIdentity?.formatPostDate(item.date, 'short') || item.dateLabel;
-      metadata.textContent = [getCategoryLabel(item), topics.join(', '), item.series, dateLabel].filter(Boolean).join(' · ');
+      const typeLabel = copy(item.type === 'wiki' ? 'wiki.result_wiki' : 'wiki.result_post');
+      metadata.textContent = [typeLabel, getCategoryLabel(item), topics.join(', '), item.series, dateLabel].filter(Boolean).join(' · ');
       snippet.className = 'site-search-result-snippet';
       snippet.append(createHighlightedText(makeSnippet(item, tokens), tokens));
 
@@ -223,7 +228,8 @@
           if (b.score !== a.score) {
             return b.score - a.score;
           }
-          return new Date(b.item.date) - new Date(a.item.date);
+          const dateDifference = (Date.parse(b.item.date) || 0) - (Date.parse(a.item.date) || 0);
+          return dateDifference || String(a.item.title).localeCompare(String(b.item.title), 'ko');
         })
         .slice(0, 12)
         .map((entry) => entry.item);

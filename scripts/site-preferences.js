@@ -193,9 +193,10 @@
     const htmlLanguage = getNestedValue(language, 'meta.html_lang') || language;
     document.documentElement.lang = htmlLanguage;
     document.documentElement.dataset.language = language;
-    document.title = translateText(originalDocumentTitle, language);
+    const preserveWikiContent = document.body.hasAttribute('data-wiki-document');
+    document.title = preserveWikiContent ? originalDocumentTitle : translateText(originalDocumentTitle, language);
     originalMetaContent.forEach((content, element) => {
-      element.content = translateText(content, language);
+      element.content = preserveWikiContent ? content : translateText(content, language);
     });
     localizeTextNodes(language);
     localizeAttributes(language);
