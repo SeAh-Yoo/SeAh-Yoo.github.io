@@ -5,7 +5,7 @@ sitemap: false
 ---
 [
 {% for entry in site.wiki %}
-  {% capture entry_html %}{{ entry.content | markdownify }}{% include wiki-details.html entry=entry %}{% endcapture %}
-  {"title": {{ entry.title | jsonify }}, "url": {{ entry.url | relative_url | jsonify }}, "html": {{ entry_html | jsonify }}}{% unless forloop.last %},{% endunless %}
+  {% capture entry_html %}{% if entry.description %}<p>{{ entry.description | escape }}</p>{% endif %}{{ entry.content | markdownify }}{% include wiki-details.html entry=entry %}{% endcapture %}
+  {"title": {{ entry.title | jsonify }}, "aliases": {{ entry.aliases | jsonify }}, "url": {{ entry.url | relative_url | jsonify }}, "html": {{ entry_html | jsonify }}}{% unless forloop.last %},{% endunless %}
 {% endfor %}
 ]

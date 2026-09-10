@@ -66,11 +66,8 @@ def build(source, destination, base=''):
 def main():
     actual = ROOT / '_site'
     index = check_site(actual)
-    guide = (actual / 'wiki/wiki-guide/index.html').read_text(encoding='utf-8')
-    assert '<del>이렇게 작성하면 취소선이 됩니다.</del>' in guide
-    assert 'href="/wiki/wiki-guide/#markdown"' in guide
     assert all('{{' not in entry['html'] for entry in index), 'Unrendered Liquid in backlink index'
-    print('PASS: real site, search, sitemap, heading/summary/detail links, strikethrough')
+    print('PASS: real site, search, sitemap, heading/summary/detail links')
 
     with tempfile.TemporaryDirectory(prefix='jekyll-wiki-test-') as temp:
         source, dest = Path(temp) / 'source', Path(temp) / 'site'
@@ -93,6 +90,7 @@ def main():
             (source / '_wiki' / f'entry-{i}.md').write_text(f'---\ntitle: {title}\n{metadata}---\n{body}', encoding='utf-8')
         build(source, dest, '/preview')
         assert len(check_site(dest, '/preview')) == len(titles)
+        assert '<del>농담</del>' in (dest / 'wiki/entry-0/index.html').read_text(encoding='utf-8')
         directory = (dest / 'wiki/index.html').read_text(encoding='utf-8')
         assert Page(directory).groups == list('ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ') + ['A–Z', '0–9 / 기타']
         assert 'href="/preview/wiki/entry-0/#child"' in directory

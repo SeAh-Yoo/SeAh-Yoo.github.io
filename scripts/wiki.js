@@ -16,19 +16,16 @@
   const updateStatus = () => { status.textContent = copy(statusKey); };
   window.addEventListener('site-preference-change', updateStatus);
 
-  // Normalize percent-encoded Korean URLs, trailing slashes and index.html.
-  const pageKey = (url) => {
-    let path = url.pathname;
-    try { path = decodeURIComponent(path); } catch { /* Keep malformed escapes literal. */ }
-    return url.origin + path.replace(/\/index\.html$/, '/').replace(/\/$/, '');
-  };
+  const { pageKey, createCatalog, apply } = window.wikiAutolinks;
   const currentKey = pageKey(new URL(location.href));
-  fetch(root.dataset.wikiIndex, { credentials: 'same-origin' })
+  fetch(root.dataset.wikiIndex, { credentials: 'same-origin', cache: 'no-cache' })
     .then((response) => {
       if (!response.ok) throw new Error(`Wiki index request failed: ${response.status}`);
       return response.json();
     })
     .then((entries) => {
+      const catalog = createCatalog(entries, location.href);
+      apply(document.querySelector('.wiki-article .post-content'), catalog, location.href);
       const seen = new Set();
       const backlinks = entries.filter((entry) => {
         const source = new URL(entry.url, location.href);
@@ -37,6 +34,7 @@
         // A template parses links without loading images or executing the indexed HTML.
         const template = document.createElement('template');
         template.innerHTML = entry.html;
+        apply(template.content, catalog, source.href);
         const pointsHere = Array.from(template.content.querySelectorAll('a[href]')).some((link) => {
           try { return pageKey(new URL(link.getAttribute('href'), source)) === currentKey; }
           catch { return false; }
