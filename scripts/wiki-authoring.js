@@ -35,7 +35,7 @@
         const icon = doc.createElement('img');
         icon.src = `${assetRoot}${platform.id}.svg`;
         icon.alt = '';
-        icon.width = 64;
+        icon.width = 24;
         icon.height = 24;
         const text = doc.createElement('span');
         text.className = 'platform-badge-text';

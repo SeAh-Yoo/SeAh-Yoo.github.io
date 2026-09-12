@@ -1,5 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="24" viewBox="0 0 64 24" role="img" aria-label="Twitch">
-  <title>Twitch</title>
-  <rect x=".5" y=".5" width="63" height="23" rx="4" fill="#171925" stroke="#d6b9ff"/>
-  <text x="32" y="16" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#d6b9ff">Twitch</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Twitch / 트위치">
+  <title>Twitch / 트위치</title>
+  <g transform="translate(-5.58721 -5.65116) scale(0.0639535)">
+    <path fill="#a943ff" fill-rule="evenodd" d="M103,104H447V448H103Z"/>
+    <path fill="#000" fill-rule="evenodd" d="M405,125 199,125 146,178 146,373 210,373 211,427 264,374 309,373 405,276Z M209,147 211,145 383,145 385,147 385,266 341,310 297,310 259,348 258,310 209,309Z M331,185 331,249 350,248 351,185Z M271,185 271,249 291,249 291,185Z"/>
+    <path fill="#fff" fill-rule="evenodd" d="M211,147 211,308 259,308 260,345 297,308 340,308 383,265 383,147Z M330,183 352,184 351,250 329,249Z M271,183 291,183 293,185 292,250 269,249 269,185Z"/>
+  </g>
 </svg>
