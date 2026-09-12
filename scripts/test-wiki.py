@@ -3,6 +3,7 @@
 Run after `jekyll build --safe`. Uses Python's standard library and installed Jekyll.
 """
 import json
+import os
 import re
 from html.parser import HTMLParser
 from pathlib import Path
@@ -60,6 +61,8 @@ def check_site(site, base=''):
 
 def build(source, destination, base=''):
     command = [shutil.which('jekyll') or 'jekyll', 'build', '--safe', '--source', str(source), '--destination', str(destination), '--baseurl', base]
+    if os.environ.get('JEKYLL_VERSION'):
+        command.insert(1, '_' + os.environ['JEKYLL_VERSION'] + '_')
     result = subprocess.run(command, cwd=ROOT, capture_output=True, encoding='utf-8', errors='replace')
     assert result.returncode == 0, result.stdout + result.stderr
 

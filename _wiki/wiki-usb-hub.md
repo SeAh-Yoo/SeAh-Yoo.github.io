@@ -2,6 +2,7 @@
 title: 유전원 USB 허브
 description: 전원 외장 USB 허브, 전원 USB 허브, 외부 전원 USB 허브 등으로 검색되는 제품군. 별도의 외부 전원 장치가 있는 USB 허브.
 aliases: [USB Hub, Hub, 허브]
+date: 2026-09-10
 last_modified_at: 2026-09-10
 ---
 

@@ -2,6 +2,7 @@
 title: 팰월드
 description: 포켓몬스터에서는 하지 못했던 비교적 다크한 내용까지 다루는 차세대 몬스터 수집형 게임.
 aliases: [Palworld]
+date: 2026-09-10
 last_modified_at: 2026-09-10
 details:
 ---

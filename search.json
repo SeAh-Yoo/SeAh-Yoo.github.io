@@ -34,7 +34,7 @@ sitemap: false
     "title": {{ entry.title | jsonify }},
     "url": {{ entry.url | relative_url | jsonify }},
     "aliases": {{ entry.aliases | jsonify }},
-    "date": {% if entry.last_modified_at %}{{ entry.last_modified_at | date_to_xmlschema | jsonify }}{% else %}""{% endif %},
+    "date": {% if entry.date and entry.date != site.time %}{{ entry.date | date_to_xmlschema | jsonify }}{% else %}""{% endif %},
     "description": {{ entry.description | default: '' | strip_html | normalize_whitespace | jsonify }},
     "content": {{ entry.content | markdownify | strip_html | normalize_whitespace | jsonify }}
   }

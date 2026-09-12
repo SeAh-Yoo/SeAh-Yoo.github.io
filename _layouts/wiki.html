@@ -16,7 +16,14 @@
             <a class="post-category-eyebrow" href="{{ '/wiki/' | relative_url }}">{{ wiki_copy.all_entries }}</a>
             <h1 data-no-interface-translation>{{ page.title | escape }}</h1>
             {% if page.aliases.size > 0 %}<p class="wiki-aliases" data-no-interface-translation>{{ page.aliases | join: ' · ' | escape }}</p>{% endif %}
-            {% if page.last_modified_at %}<p class="wiki-updated">{{ wiki_copy.updated }} <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: '%Y-%m-%d' }}</time></p>{% endif %}
+            {% comment %}Jekyll supplies site.time for undated collection documents. Never publish that fallback.{% endcomment %}
+            {% assign wiki_created = nil %}
+            {% if page.date and page.date != site.time %}{% assign wiki_created = page.date %}{% endif %}
+            <div class="wiki-dates">
+              {% if wiki_created %}<p><span>{{ wiki_copy.created }}</span> <time datetime="{{ wiki_created | date_to_xmlschema }}">{{ wiki_created | date: '%Y-%m-%d' }}</time></p>{% endif %}
+              {% assign modified = page.last_modified_at | default: wiki_created %}
+              {% if modified %}<p><span>{{ wiki_copy.updated }}</span> <time datetime="{{ modified | date_to_xmlschema }}">{{ modified | date: '%Y-%m-%d' }}</time></p>{% endif %}
+            </div>
             {% capture wiki_toc %}{% include wiki-headings.html html=content url=page.url %}{% endcapture %}
             {% assign wiki_toc = wiki_toc | strip %}
             {% if page.description or wiki_toc != '' or page.details.size > 0 %}
@@ -51,8 +58,8 @@
             <ul data-backlinks-list data-no-interface-translation></ul>
             <noscript><p>{{ wiki_copy.backlinks_noscript }}</p></noscript>
           </aside>
+          {% include post-comments.html %}
         </article>
-        {% include page-notes.html notes=site_copy.pages.wiki.notes %}
       </main>
     </div>
     {% include analytics-tracking.html %}

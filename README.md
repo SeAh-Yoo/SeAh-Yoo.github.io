@@ -556,6 +556,7 @@ image: /assets/images/example-post-cover.png
 title: 신뢰
 description: 이곳에 내가 생각하는 신뢰의 간략한 정의를 적습니다.
 aliases: [Trust, 믿음]
+date: 2026-09-10
 last_modified_at: 2026-09-10
 details:
   - title: 별도 문서의 설명
@@ -572,7 +573,7 @@ details:
 ```
 
 - 필수 필드는 `title`이며, 나머지는 선택입니다. 예시 링크의 대상은 직접 생성한
-  실제 문서로 바꿔 주세요. 작성 방법을 보여 주는 안내 항목 두 개가 기본 제공됩니다.
+  실제 문서로 바꿔 주세요.
 - `description`은 짧은 일반 텍스트입니다. 간략 설명 구역(`#wiki-summary`),
   색인의 설명 링크, 검색 요약, SEO 설명에 함께 쓰입니다. 긴 내용은 본문에 적습니다.
 - 본문의 `##`부터 `######`까지 실제 소제목은 문서 목차와 색인의 **세부 설명**에
@@ -581,7 +582,7 @@ details:
   `/wiki/파일명/#고정-id`를 지원합니다. 같은 소제목은 자동 목록에 이미 있으므로
   특별한 연결 이름이 필요할 때만 `details`에 다시 지정하세요.
 - 소제목에 `{#고정-id}`를 붙이면 문구를 고쳐도 링크가 유지됩니다. ID는 문서 내에서
-  중복되지 않아야 하며 `wiki-summary`, `wiki-detail-pages`, `wiki-backlinks-title`은
+  중복되지 않아야 하며 `wiki-summary`, `wiki-detail-pages`, `wiki-backlinks-title`, `post-endnotes`, `wiki-link-preview`는
   레이아웃에서 사용하는 예약 ID입니다.
 - 본문과 간략 설명에 다른 위키의 **제목 또는 별칭**을 적으면 해당 항목으로 자동 연결됩니다.
   `봉누도 시즌 2`와 `봉누도 시즌2`처럼 띄어쓰기가 달라도 인식하며, 표기한 문장은 유지합니다.
@@ -698,3 +699,288 @@ GoatCounter는 방문자의 브라우저에 추적용 쿠키나 고유 식별자
 - 각 SNS의 공식 공유 URL: 포스트 공유
 
 검색, 탐색 페이지, 안내 페이지, 전체 게시물, 출처 및 인용, 방문자 현황, 예상 완독 시간, 각주와 참고 문헌, 인용 카드, 목차, 연재, 이전·다음 글, RSS와 인쇄 레이아웃은 별도의 유료 서버 없이 Github Pages 내에서 정적으로 동작합니다.
+
+## 이 저장소를 복제해서 사용하기
+
+자신의 블로그·개인 위키로 시작하려면 저장소를 복제한 뒤 **`_posts/`, `_wiki/`, `assets/`의
+기존 내용을 전부 지우고**, **`_config.yml`과 `_data/site_identity.yml`을 원하는 내용으로
+바꾸면 됩니다.** 이는 복제본을 초기화하는 안내이며 이 저장소의 현재 콘텐츠는 삭제하지 않습니다.
+레이아웃·스타일·스크립트·include는 남겨 두고 자신의 Markdown과 이미지를 새로 추가하세요.
+
+1. `_config.yml`의 `url`을 자신의 도메인으로 바꿉니다. `사용자명.github.io` 저장소라면
+   `baseurl: ""`, 프로젝트 저장소라면 `baseurl: "/저장소명"`을 사용합니다.
+   `timezone`, 기본 언어와 permalink도 확인하세요.
+2. `_data/site_identity.yml`의 한국어·영어·일본어 브랜드명, 작성자·운영자 소개,
+   메뉴·페이지 문구, 링크, notes와 브라우저 저장 키를 자신의 값으로 바꿉니다.
+   언어별 설정을 남기면 각 언어의 개인 소개도 모두 교체해야 합니다.
+3. `assets/`를 비웠다면 새 프로필·사이트 심볼·파비콘·공유 이미지·언어 아이콘을 추가하고
+   `site_identity.yml`의 `assets` 및 `settings.supported_languages[].icon` 경로를 수정합니다.
+   `_posts/`·`_wiki/`에 새로 작성한 이미지 경로도 존재하는 파일을 가리켜야 합니다.
+   플랫폼 배지를 쓸 계획이면 기본 `assets/svg/{chzzk,soop,twitch,rplay,youtube}.svg` 다섯 개는
+   삭제 전 별도 보관해 다시 넣거나 같은 이름·크기의 자체 SVG로 교체하세요.
+   플랫폼 배지 자산의 구체적인 출처·구분은 `assets/svg/README.md`를 확인하세요.
+4. 댓글을 쓰기 전 `site_identity.yml`에서 `comments.enabled: false`로 둡니다.
+   자신의 공개 저장소에서 Discussions를 켜고 giscus 앱 연결을 설정한 뒤
+   [giscus 설정 페이지](https://giscus.app/ko)에서 받은 `repo`, `repo_id`, `category`,
+   `category_id`를 입력하고 다시 활성화하세요. `theme_base`는 자신의 공개
+   `styles/` 배포 경로(끝 `/` 포함)로 바꾸거나 비워 기본 테마를 사용합니다.
+5. 통계를 사용하지 않으면 `_data/analytics.json`의 `goatcounterCode`를 비웁니다.
+   기존 작성자의 통계 스냅샷 `_data/reading_pulse.json`도 자신의 데이터로 초기화하고,
+   `.github/workflows/refresh-reading-pulse.yml`은 자신의 통계 설정을 마칠 때까지 끄세요.
+   통계를 쓸 경우 `scripts/refresh-reading-pulse.mjs`의 사이트 식별용 User-Agent도 교체합니다.
+6. 자신의 GitHub Pages 배포 설정과 필요하면 `CNAME`, `google27564fde5057ccbe.html` 같은
+   도메인·소유 확인 파일을 점검합니다. 원래 소유자의 검증 파일은 복제본에 필요하지 않습니다.
+   `AGENTS.md`의 개인 계정·origin 안내도 자신의 저장소에 맞게 교체하세요.
+   다른 소유자의 SSH 별칭·키 경로를 그대로 사용하지 마세요.
+7. 새 `_posts/` 파일에는 날짜 파일명과 Front Matter를, 새 `_wiki/` 파일에는 `title`,
+   `date`, 필요시 `description`, `aliases`, `last_modified_at`을 적습니다.
+   공통 틀은 `_includes/wiki-templates/`와 `_data/wiki_templates.yml`에서 수정합니다.
+8. 아래 빌드·테스트 명령으로 확인한 뒤 자신의 원격 저장소에 푸시합니다.
+   비밀키·인증정보·환경변수 파일은 커밋하지 않습니다.
+
+추가 점검으로 `rg -n "SeAh-Yoo|seah-yoo|묘아란|AhRan"`을 실행하면 남아 있는 원래 소유자의
+설정이나 문구를 찾을 수 있습니다. Git 기록까지 복제하면 삭제한 예전 콘텐츠도 과거 커밋에 남습니다.
+자신의 새 콘텐츠만 있는 기록으로 시작하려면 새 저장소에 필요한 템플릿 파일을 복사해 시작하세요.
+공유 URL, RSS, 검색, 위키 본문 링크는 자신의 `url`·`baseurl` 환경에서 다시 확인하는 것이 좋습니다.
+
+## 위키 기능과 작성법 업데이트
+
+개인 위키는 `_wiki/`의 Markdown, 가나다순 `/wiki/` 색인, 제목·별칭 검색,
+표준 Markdown 링크와 자동 연결, 역링크, 소제목 목차, 취소선 기능을 함께 제공합니다.
+본문은 인터페이스 언어와 별개로 유지되며 테마와 모바일 레이아웃을 공유합니다.
+
+### 개별 위키 하단과 댓글
+
+개별 위키에는 포스트와 마찬가지로 `주의사항`·`방문객의 메모` 같은 하단 notes 카드를
+출력하지 않습니다. 위키 **색인 페이지**의 notes는 기존
+`locales.<언어>.pages.wiki.notes` 설정을 계속 사용합니다.
+
+포스트와 개별 위키의 댓글은 **GitHub Discussions 기반 giscus**를 공유합니다.
+`pathname` 기준이므로 각 위키 주소에 별도 댓글과 반응이 연결됩니다.
+`_includes/post-comments.html`, `scripts/document-comments.js`, `styles/document-comments.css`가
+공통 영역입니다. 화면 가까이 왔을 때 로드하고 선택한 테마·언어를 반영합니다.
+설정은 `_data/site_identity.yml`의 `comments`에서 관리하며, 사이트 전체를 끄려면
+`enabled: false`, 문서 하나만 끄려면 Front Matter에 `comments: false`를 넣습니다.
+실제 댓글 작성은 방문자가 GitHub로 로그인한 뒤 직접 수행합니다.
+
+### 최초 등록일과 수정일
+
+```yaml
+date: 2026-09-10
+last_modified_at: 2026-09-12
+```
+
+`date`는 이 위키에 최초 등록한 날짜, `last_modified_at`은 작성자가 관리하는 수정일입니다.
+수정일을 생략하면 최초 등록일을 표시합니다. 날짜를 확인하지 못했다면 생략할 수 있으며,
+Jekyll이 자동으로 제공하는 빌드 시각은 최초 등록일이나 검색 정렬 날짜로 표시하지 않습니다.
+날짜 파일명에서 Jekyll이 해석한 날짜도 사용되므로 위키 파일명은 날짜 없는 개념명을 권장합니다.
+화면 레이블은 `_data/site_identity.yml`의 `locales.<언어>.wiki.created/updated`에서 관리합니다.
+
+이번 보완에서는 기존 다섯 문서의 Git 최초 추가 커밋 `7920b15`의 작성 시각
+`2026-09-10T22:46:18+09:00`을 근거로 `date: 2026-09-10`을 추가했습니다.
+이는 이 저장소에 등록한 날짜이며, 다루는 방송의 시작일이나 원고의 최초 집필일을 뜻하지 않습니다.
+기존 `last_modified_at`과 본문은 유지했습니다. 확인 명령은 다음과 같습니다.
+
+```powershell
+git log --follow --diff-filter=A --format="%h %aI %s" -- _wiki/wiki-acau-pg2.md
+```
+
+### 각주와 명시적인 서지 정보
+
+```markdown
+본문의 보충 설명입니다.[^explanation]
+
+[^explanation]: 설명만 적어도 됩니다. [보충 링크](https://example.com/notes)
+```
+
+블로그와 위키가 `scripts/document-notes.js`와 `styles/document-notes.css`를 공유합니다.
+위키에는 블로그 공유·인용 카드 기능 전체를 로드하지 않습니다. 댓글은 별도 공통 모듈로 로드합니다.
+각주 번호는 각주로 이동하고, 각주 앞 번호와 돌아가기 화살표는 본문으로 복귀합니다.
+이동한 항목에 포커스와 잠시 지속되는 강조를 제공합니다.
+
+출처 목록에 올릴 자료는 해당 문서의 Front Matter `references`에 따로 적습니다.
+설명용 각주에 URL이 있어도 `/references/`에 자동 수집하지 않습니다.
+
+```yaml
+references:
+  - id: sample-source
+    title: 자료 제목
+    author: 저자 또는 기관
+    publisher: 발행처
+    year: 2026
+    type: 문서
+    url: https://example.com/source
+    note: 필요한 보충 서지 정보
+```
+
+게시물과 위키의 배열을 함께 수집하고, 같은 `id`는 한 번만 표시합니다.
+같은 자료를 인용한 모든 문서의 링크를 나열하며 한 문서의 중복 ID는 링크를 늘리지 않습니다.
+동일 ID에는 동일 서지 정보를 작성하세요. 값이 다르면 수집 순서상 첫 번째 값이 표시됩니다.
+ID는 `sample-source`처럼 구분이 쉬운 고유 영문·숫자·하이픈 조합을 권장합니다.
+새로운 중앙 등록소나 ID 전용 인용 문법은 없습니다.
+
+### 각주와 위키 링크 미리보기
+
+- 마우스: 각주 번호나 다른 위키 링크 위에 포인터를 올립니다.
+- 키보드: Tab으로 링크에 포커스를 두어 미리 보거나, 옆 `ⓘ` 버튼에서 Enter/Space로 엽니다.
+- 모바일: `ⓘ` 버튼을 터치합니다. 링크 자체를 터치하면 즉시 원래 대상으로 이동합니다.
+- 닫기 버튼, Escape, 바깥 터치로 닫을 수 있습니다. 닫기 버튼과 Escape는 버튼으로 포커스를 돌려줍니다.
+- 미리보기의 **원래 링크로 이동**도 사용할 수 있습니다. Ctrl/Cmd 클릭 등 링크의 기본 동작을 유지합니다.
+
+위키 링크에는 제목과 `description`이 표시됩니다. 설명이 없으면 안내 문구가 표시됩니다.
+미리보기는 본문을 대신하지 않으며, 각주의 서식은 간결한 텍스트로 보여 줍니다.
+JavaScript나 색인 요청이 실패해도 원래 Markdown 링크는 그대로 사용할 수 있습니다.
+
+### 재사용 가능한 틀
+
+공통 내용을 `_includes/wiki-templates/`에서 한 번 정의하고 필요한 위치에서 불러옵니다.
+문서 위·중간·하단 어디에나, 같은 틀을 여러 번 넣을 수 있습니다. 호출 앞뒤에 빈 줄을 두세요.
+
+{% raw %}
+```liquid
+{% include wiki-template.html name="안내문" %}
+
+{% include wiki-template.html name="안내문" title="범위" text="이 문서의 **작성 범위**를 적습니다." %}
+
+{% include wiki-template.html name="방송정보" platform="[치지직]" period="작성자가 확인한 진행 시기" note="선택적인 비고" %}
+
+{% include wiki-template.html name="관련항목" %}
+```
+{% endraw %}
+
+| 틀 이름 | 원본 파일 | 인수 |
+| --- | --- | --- |
+| 안내문 | `_includes/wiki-templates/notice.md` | `title`, `text` |
+| 방송정보 | `_includes/wiki-templates/broadcast.md` | `title`, `platform`, `period`, `note` |
+| 관련항목 | `_includes/wiki-templates/related.md` | `title`, `links` |
+
+기본 안내문은 중립적인 읽기 안내, 정보표의 미입력 값은 `미기재`, 관련항목의 기본 링크는
+위키 전체 색인입니다. 실제 사실이나 추천 목록은 작성자가 원본 틀에 추가합니다.
+여러 문서가 공유하는 관련 링크 묶음은 `related.md`를 수정하거나 별도의 틀 파일로 정의하세요.
+호출별 정보가 필요하면 `links`에 Markdown 목록을 전달할 수도 있습니다.
+
+{% raw %}
+```liquid
+{% capture related_links %}
+- [연결할 문서]({{ '/wiki/실제-파일명/' | relative_url }})
+- [연결할 소제목]({{ '/wiki/실제-파일명/' | relative_url }}#고정-id)
+{% endcapture %}
+{% include wiki-template.html name="관련항목" links=related_links %}
+```
+{% endraw %}
+
+예시 링크는 실제 작성한 문서 주소로 바꾸세요. 새 틀은 ASCII 파일명(예: `custom.md`)으로
+만들고 `_data/wiki_templates.yml`에 `내틀: custom`처럼 한글 이름을 등록합니다.
+매핑 없이 `name="custom"`으로도 부를 수 있습니다. 없는 이름은 조용히 누락되지 않고 빌드를 실패시킵니다.
+틀 안에서는 `include.args.platform`처럼 전달된 인수를 참조합니다.
+
+{% raw %}
+```markdown
+**{{ include.args.title | default: "공통 제목" | escape }}**
+
+여기에 공통 Markdown 내용과 [문서 링크]({{ '/wiki/실제-파일명/' | relative_url }})를 적습니다.
+```
+{% endraw %}
+
+틀은 Markdown 상태로 삽입한 뒤 문서 전체에서 한 번 Kramdown으로 변환합니다.
+따라서 본문·틀·접기 구역의 제목/별칭 자동 연결, 검색 색인, 역링크가 같은 내용을 읽습니다.
+정의 수정 후 재빌드하면 사용하는 모든 문서와 색인에 반영됩니다. 별도 Ruby 플러그인은 없습니다.
+기본 틀은 HTML ID를 만들지 않습니다. 새 틀에도 고정 `id`/`{#id}`를 반복해 넣지 마세요.
+소제목을 넣으면 Kramdown이 문서 전체에서 중복 없는 ID를 생성합니다.
+틀 내부에 별도 `markdownify`를 적용하면 독립 변환으로 ID·각주 번호가 충돌할 수 있으므로 사용하지 않습니다.
+표 인수의 `|`는 `&#124;`로 적고, 여러 문단이나 목록이 필요하면 `capture`를 사용하세요.
+
+### 작성자가 지정하는 접기·펼치기
+
+{% raw %}
+```markdown
+<details markdown="1">
+<summary>접힌 상태로 시작하는 구역</summary>
+
+## 구역 내부 소제목 {#folded-section}
+
+- 목록을 쓸 수 있습니다.
+- 설명 각주도 쓸 수 있습니다.[^inside]
+
+| 항목 | 설명 |
+| --- | --- |
+| 예시 | 작성자가 채울 내용 |
+
+{% include wiki-template.html name="방송정보" platform="[YouTube]" %}
+
+</details>
+
+<details markdown="1" open>
+<summary>처음부터 펼쳐진 구역</summary>
+
+본문과 [소제목 링크](#folded-section)를 적습니다.
+
+</details>
+
+[^inside]: 접힌 구역에서 인용한 각주입니다.
+```
+{% endraw %}
+
+`open`이 있으면 펼쳐진 상태, 없으면 접힌 상태로 시작합니다. `<summary>`는 짧은 일반 텍스트로
+쓰고 그 다음에 빈 줄을 둡니다. 문단 길이와 관계없이 작성자가 표시한 구역만 접힙니다.
+각주 정의는 위 예시처럼 문서 마지막에 모으면 관리하기 편합니다.
+목차, 직접 URL의 `#folded-section`, 뒤로/앞으로 이동이 내부 소제목을 가리키면
+상위 `details`를 모두 펼칩니다. JavaScript 없이도 `summary`의 기본 키보드·터치 조작은 작동합니다.
+
+### 플랫폼 배지
+
+```markdown
+[chzzk] [치지직]
+[SOOP] [숲]
+[Twitch] [트위치]
+[RPlay] [알플레이] [알플]
+[Youtube] [YouTube] [유튜브] [유튭]
+```
+
+영문 대소문자를 구별하지 않습니다. 명시적인 대괄호 표기만 64×24 SVG 배지로 바뀌며
+각각 치지직, SOOP, Twitch, RPlay, YouTube의 홈으로 연결됩니다. 같은 탭의 일반 링크입니다.
+채널 주소, 새 창, 추적 매개변수는 추가하지 않습니다.
+`[SOOP](https://example.com/)` 같은 Markdown 링크, 코드, 이미지 대체 텍스트,
+HTML 속성과 일반 플랫폼명은 그대로 유지합니다. 틀과 접기 구역에도 적용됩니다.
+
+원본 Markdown은 바꾸지 않습니다. 변환은 렌더링된 **텍스트 노드**에서 플랫폼 배지 → 위키 자동 연결
+순서로 진행하고, 역링크용 HTML에도 같은 순서를 적용합니다. 검색 색인에는 원래 표기가 남으며
+화면 DOM에도 검색 가능한 숨김 텍스트와 플랫폼 접근성 이름을 보존합니다.
+현재 SVG는 공식 로고가 아닌 직접 만든 플랫폼명 텍스트 배지입니다.
+제공된 로고 참고와 공식 자산·사용 조건 확인 결과는 [자산 기록](assets/svg/README.md)에 있습니다.
+
+### 개발 검증
+
+```powershell
+jekyll build --safe
+python scripts/test-wiki.py
+node --test scripts/wiki-autolinks.test.cjs
+python scripts/test-wiki-authoring.py
+```
+
+GitHub Pages의 Jekyll 버전으로도 확인하려면 해당 gem을 설치한 환경에서 실행합니다.
+
+```powershell
+jekyll _3.10.0_ build --safe
+$env:JEKYLL_VERSION = "3.10.0"
+python scripts/test-wiki.py
+python scripts/test-wiki-authoring.py
+Remove-Item Env:JEKYLL_VERSION
+```
+
+[GitHub Pages 의존성 목록](https://pages.github.com/versions/)에서 버전을 확인할 수 있습니다.
+통합 테스트는 임시 폴더에 별도 문서를 만들며 실제 위키에 테스트 내용을 추가하지 않습니다.
+각주, 출처 ID 중복, 반복 틀, 공통 틀 수정의 색인 반영, 중첩 접기, 날짜 없는 문서,
+수정일 기본값, 하위 경로 호스팅을 검사합니다.
+
+`python scripts/test-wiki-authoring.py --keep`은 마지막 `FIXTURE_SITE` 경로에 Chrome용 테스트 사이트를 남깁니다.
+그 경로로 아래 서버를 실행해 `/wiki/example/`, `/wiki/target/`, `/references/`, `/posts/example/`를 확인합니다.
+
+```powershell
+python -m http.server 4173 --bind 127.0.0.1 --directory "FIXTURE_SITE에 출력된 경로"
+```
+
+Chrome에서 390px/320px 모바일 폭과 데스크톱을 확인하고, Tab/Enter/Escape,
+터치의 열기·닫기·원래 링크 이동, `#deep` 직접 진입, 테마·언어 전환,
+검색의 `공통변경검증`/`테스트별칭`, 자동 연결과 대상 문서의 역링크를 검사합니다.
+검증을 마치면 서버를 종료하세요. 내부 브라우저는 사용하지 않습니다.

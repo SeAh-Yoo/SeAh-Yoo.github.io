@@ -32,7 +32,7 @@
     'dim-passage': 'giscus-dim-passage.css',
     'moss-pipeline': 'giscus-moss-pipeline.css',
   });
-  const GISCUS_BASE = 'https://cdn.jsdelivr.net/gh/SeAh-Yoo/SeAh-Yoo.github.io@main/styles/';
+  const GISCUS_BASE = identity.comments?.theme_base || '';
   const originalText = new WeakMap();
   const originalAttributes = new WeakMap();
   const originalDocumentTitle = document.title;
@@ -211,7 +211,7 @@
     }
   };
 
-  const giscusThemeUrl = (theme) => `${GISCUS_BASE}${GISCUS_THEMES[theme] || GISCUS_THEMES[DEFAULTS.theme]}`;
+  const giscusThemeUrl = (theme) => GISCUS_BASE ? `${GISCUS_BASE}${GISCUS_THEMES[theme] || GISCUS_THEMES[DEFAULTS.theme]}` : 'preferred_color_scheme';
 
   const applyTheme = (theme) => {
     const selectedTheme = THEMES.includes(theme) ? theme : DEFAULTS.theme;

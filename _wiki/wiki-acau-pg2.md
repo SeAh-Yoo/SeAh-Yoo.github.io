@@ -2,6 +2,7 @@
 title: 악어의 놀이터2
 description: 명실상부 2024년 SOOP 인방계 최대 떡밥. 악어 크루 주축의 대규모 스트리머 전용 마인크래프트 서버/콘텐츠.
 aliases: [Acau-PG-2, Acau-Playground-II, 악놀2]
+date: 2026-09-10
 last_modified_at: 2026-09-10
 details:
 ---

@@ -37,6 +37,16 @@ assets:
   # Used by _includes/head.html as the default social preview image.
   default_social_image: "/assets/images/default-social.jpg"
 
+# Shared GitHub Discussions / giscus connection for posts and wiki entries.
+# Set enabled: false when copying the repository until your own giscus setup is ready.
+comments:
+  enabled: true
+  repo: "SeAh-Yoo/SeAh-Yoo.github.io"
+  repo_id: "R_kgDOTBXxUQ"
+  category: "Announcements"
+  category_id: "DIC_kwDOTBXxUc4C_vht"
+  theme_base: "https://cdn.jsdelivr.net/gh/SeAh-Yoo/SeAh-Yoo.github.io@main/styles/"
+
 # All visible interface copy lives below this key, grouped by language.
 locales:
   ko:
@@ -246,7 +256,12 @@ locales:
 
     wiki:
       all_entries: "이상위키 항목 | WIERD WIKI ENTRIES"
-      updated: "항목 작성일자:"
+      created: "최초 등록일:"
+      updated: "수정일:"
+      preview: "미리보기"
+      preview_close: "미리보기 닫기"
+      preview_open: "원래 링크로 이동"
+      no_description: "간략 설명이 아직 없습니다."
       contents: "이상위키 항목 목차"
       summary: "설명 요약"
       details: "항목 세부 내용"
@@ -484,11 +499,11 @@ locales:
         description: "문하수도에 인용된 책, 보고서, 기사, 논문, 영상과 웹 원문을 모아보는 출처 목록입니다."
         section_eyebrow: "Source storage"
         section_title: "이상기록에 사용한 내용들의 출처"
-        section_description: "각 이상기록의 references 목록을 자동으로 수집합니다.<br />같은 id의 자료는 한 번만 등록하고, 해당 자료를 인용한 게시물을 함께 표시합니다."
+        section_description: "게시물과 위키의 references 목록을 자동으로 수집합니다.<br />같은 id의 자료는 한 번만 등록하고, 해당 자료를 인용한 게시물과 위키를 함께 표시합니다."
         library_label: "원문 자료 목록"
         default_type: "Source"
         cited_in_label: "인용된 글"
-        empty_message: "아직 등록된 원문 자료가 없습니다. 게시물 Front Matter에 references를 추가하면 이곳에 자동으로 수집됩니다."
+        empty_message: "아직 등록된 원문 자료가 없습니다. 게시물 또는 위키 Front Matter에 references를 추가하면 이곳에 자동으로 수집됩니다."
         notes:
           enabled: true
           items:
@@ -752,7 +767,12 @@ locales:
 
     wiki:
       all_entries: "Browse the personal wiki"
+      created: "First published"
       updated: "Updated"
+      preview: "Preview"
+      preview_close: "Close preview"
+      preview_open: "Follow original link"
+      no_description: "No short description yet."
       contents: "On this page"
       summary: "Brief definition"
       details: "Further detail"
@@ -990,11 +1010,11 @@ locales:
         description: "A source list gathering books, reports, articles, papers, videos, and web originals cited in THE LITERARY UNDERGROUND ─ WIERD STORIES."
         section_eyebrow: "Source storage"
         section_title: "Sources used in posts"
-        section_description: "The references list in each post is collected automatically. A source with the same id is stored once and shown together with every post that cites it."
+        section_description: "References in posts and wiki entries are collected automatically. A source with the same id is stored once, with links to every document that cites it."
         library_label: "Original source list"
         default_type: "Source"
         cited_in_label: "Cited in"
-        empty_message: "No original sources have been registered yet. Add references to a post's Front Matter and they will be collected here automatically."
+        empty_message: "No original sources have been registered yet. Add references to a post or wiki entry's Front Matter and they will be collected here automatically."
         notes:
           enabled: true
           items:
@@ -1258,7 +1278,12 @@ locales:
 
     wiki:
       all_entries: "個人ウィキの一覧へ"
+      created: "初回登録日"
       updated: "更新日"
+      preview: "プレビュー"
+      preview_close: "プレビューを閉じる"
+      preview_open: "元のリンクへ移動"
+      no_description: "概要はまだありません。"
       contents: "このページの目次"
       summary: "簡単な説明"
       details: "詳しい説明"
@@ -1496,11 +1521,11 @@ locales:
         description: "文学下水道で引用した本、報告書、記事、論文、動画、ウェブ原文をまとめた出典一覧です。"
         section_eyebrow: "Source storage"
         section_title: "投稿で使用した出典"
-        section_description: "各投稿のreferences一覧を自動収集します。同じidの資料は一度だけ登録し、その資料を引用した投稿も一緒に表示します。"
+        section_description: "投稿とウィキのreferences一覧を自動収集します。同じidの資料は一度だけ登録し、引用したすべての文書を表示します。"
         library_label: "原資料一覧"
         default_type: "Source"
         cited_in_label: "引用した記事"
-        empty_message: "登録された原資料はまだありません。投稿のFront Matterにreferencesを追加すると、ここへ自動で収集されます。"
+        empty_message: "登録された原資料はまだありません。投稿またはウィキのFront Matterにreferencesを追加すると、ここへ自動で収集されます。"
         notes:
           enabled: true
           items:

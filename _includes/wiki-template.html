@@ -1,0 +1,7 @@
+{%- comment -%}Emit Markdown into the document's single Kramdown pass: no local markdownify,
+heading IDs or footnote counters. include.args in the child contains the caller's parameters.{%- endcomment -%}
+{%- assign wiki_template_name = site.data.wiki_templates[include.name] | default: include.name -%}
+{%- assign wiki_template_file = 'wiki-templates/' | append: wiki_template_name | append: '.md' -%}
+<div class="wiki-template" markdown="1">
+{% include {{ wiki_template_file }} args=include %}
+</div>

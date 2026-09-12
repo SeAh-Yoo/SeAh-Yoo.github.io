@@ -2,6 +2,7 @@
 title: 봉누도 시즌1
 description: 명실상부 24년도 치지직 최대 떡밥 중 하나. 스트리머 전용 GTA 5 인생 모드 RP 서버/콘텐츠.
 aliases: [Bong-Nuh-Doh-1, NamBong-island-I, 봉누도1]
+date: 2026-09-10
 last_modified_at: 2026-09-10
 details:
 ---

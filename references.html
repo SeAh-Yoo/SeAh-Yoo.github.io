@@ -8,7 +8,7 @@ permalink: /references/
 {% assign identity = site.data.site_identity %}
 {% assign site_copy = identity.locales[identity.settings.default_language] %}
 {% assign page_copy = site_copy.pages.references %}
-{% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
+{% assign reference_documents = site.posts | concat: site.wiki %}
 
 <section class="reference-intro glass-panel" aria-labelledby="reference-intro-title">
   <p class="eyebrow">{{ page_copy.section_eyebrow }}</p>
@@ -18,7 +18,7 @@ permalink: /references/
 
 <section class="reference-library" aria-label="{{ page_copy.library_label }}">
   <ol class="reference-list">
-  {% for post in base_posts %}
+  {% for post in reference_documents %}
     {% for reference in post.references %}
       {% capture reference_marker %}|{{ reference.id }}|{% endcapture %}
       {% unless seen_references contains reference_marker %}
@@ -40,10 +40,15 @@ permalink: /references/
           <div class="reference-cited-in">
             <p>{{ page_copy.cited_in_label }}</p>
             <ul>
-              {% for cited_post in base_posts %}
+              {% for cited_post in reference_documents %}
                 {% for cited_reference in cited_post.references %}
                   {% if cited_reference.id == reference.id %}
+                  {% if cited_post.collection == 'wiki' %}
+                  <li><a href="{{ cited_post.url | relative_url }}" data-no-interface-translation>{{ cited_post.title | escape }}</a></li>
+                  {% else %}
                   <li><a href="{{ cited_post.url | relative_url }}" data-post-card data-translation-key="{{ cited_post.translation_key | default: cited_post.slug | escape }}"><span data-post-field data-post-title>{{ cited_post.title }}</span></a></li>
+                  {% endif %}
+                  {% break %}
                   {% endif %}
                 {% endfor %}
               {% endfor %}

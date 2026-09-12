@@ -602,8 +602,7 @@
   margin-bottom: 20px;
 }
 
-.post .post-share-kicker,
-.post .post-comments-kicker {
+.post .post-share-kicker {
   margin: 0 0 5px;
   color: var(--accent);
   font-size: 0.7rem;
@@ -612,8 +611,7 @@
   letter-spacing: 0.16em;
 }
 
-.post-share-dialog h2,
-.post-comments h2 {
+.post-share-dialog h2 {
   margin: 0;
   color: var(--text);
   font-size: 1.2rem;
@@ -705,190 +703,6 @@
   font-size: 0.76rem;
   line-height: 1.45;
   text-align: center;
-}
-
-.post-comments {
-  margin-top: 28px;
-  padding-top: 28px;
-  border-top: 1px solid var(--line);
-}
-
-.post-comments-header {
-  margin-bottom: 20px;
-}
-
-.post .post-comments-header > p:last-child {
-  margin: 8px 0 0;
-  color: var(--muted);
-  font-size: 0.82rem;
-  line-height: 1.6;
-}
-
-.post-comments .giscus,
-.post-comments .giscus-frame {
-  width: 100%;
-}
-
-.post .footnotes {
-  margin-top: 58px;
-  padding: 24px;
-  border: 1px solid rgba(139, 216, 255, 0.2);
-  border-radius: 22px;
-  background: linear-gradient(145deg, rgba(139, 216, 255, 0.07), rgba(215, 184, 255, 0.05));
-  scroll-margin-top: 110px;
-}
-
-.post .footnotes > hr {
-  display: none;
-}
-
-.post-endnotes-header {
-  margin-bottom: 16px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.post .post-endnotes-eyebrow {
-  margin: 0 0 4px;
-  color: var(--accent);
-  font-family: var(--font-symbol), var(--font-body), system-ui, sans-serif;
-  font-size: 0.67rem;
-  font-weight: 800;
-  line-height: 1.4;
-  letter-spacing: 0.16em;
-}
-
-.post .post-endnotes-heading {
-  margin: 0;
-  color: #f4f8ff;
-  font-size: clamp(1.12rem, 2vw, 1.38rem);
-  letter-spacing: -0.035em;
-}
-
-.post .post-endnotes-help {
-  margin: 8px 0 0;
-  color: rgba(199, 211, 230, 0.72);
-  font-size: 0.76rem;
-  line-height: 1.65;
-}
-
-.post .footnotes ol {
-  display: grid;
-  gap: 10px;
-  margin: 0;
-  padding-left: 0;
-  list-style: none;
-}
-
-.post .footnotes li {
-  display: grid;
-  grid-template-columns: 34px minmax(0, 1fr);
-  align-items: start;
-  gap: 10px;
-  padding: 10px 12px 10px 4px;
-  border-radius: 12px;
-  color: rgba(231, 238, 249, 0.84);
-  font-size: 0.88rem;
-  line-height: 1.75;
-  transition: background 0.2s ease, box-shadow 0.2s ease;
-}
-
-.post .footnotes li::marker {
-  color: var(--accent);
-  font-family: var(--font-symbol), var(--font-body), system-ui, sans-serif;
-  font-size: 0.78rem;
-  font-weight: 800;
-}
-
-.post .footnotes li p {
-  grid-column: 2;
-  margin: 0;
-  color: inherit;
-  font-size: inherit;
-  line-height: inherit;
-}
-
-.post .post-endnote-number-link {
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border: 1px solid rgba(139, 216, 255, 0.34);
-  border-radius: 999px;
-  background: rgba(139, 216, 255, 0.11);
-  color: var(--accent);
-  font-family: var(--font-symbol), var(--font-body), system-ui, sans-serif;
-  font-size: 0.74rem;
-  font-weight: 800;
-  line-height: 1;
-  text-decoration: none;
-}
-
-.post .post-endnote-number-link:hover,
-.post .post-endnote-number-link:focus-visible {
-  border-color: rgba(139, 216, 255, 0.72);
-  background: rgba(139, 216, 255, 0.2);
-  color: #fff;
-  text-shadow: none;
-}
-
-.post .post-endnote-reference {
-  display: inline-grid;
-  place-items: center;
-  min-width: 1.38em;
-  height: 1.38em;
-  margin: 0 0.12em;
-  padding: 0 0.25em;
-  border: 1px solid rgba(139, 216, 255, 0.3);
-  border-radius: 999px;
-  background: rgba(139, 216, 255, 0.1);
-  color: #c8f1ff;
-  font-family: var(--font-symbol), var(--font-body), system-ui, sans-serif;
-  font-size: 0.68em;
-  font-weight: 800;
-  line-height: 1;
-  text-decoration: none;
-  vertical-align: 0.26em;
-}
-
-.post .post-endnote-reference:hover,
-.post .post-endnote-reference:focus-visible {
-  border-color: rgba(139, 216, 255, 0.74);
-  background: rgba(139, 216, 255, 0.2);
-  color: #fff;
-  text-shadow: none;
-}
-
-.post .post-endnote-backlink {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 28px;
-  min-height: 28px;
-  margin-left: 5px;
-  border: 1px solid rgba(215, 184, 255, 0.25);
-  border-radius: 999px;
-  background: rgba(215, 184, 255, 0.08);
-  color: #e8d8ff;
-  font-family: var(--font-symbol), var(--font-body), system-ui, sans-serif;
-  font-size: 0.7rem;
-  font-weight: 800;
-  line-height: 1;
-  text-decoration: none;
-}
-
-.post .post-endnote-backlink:hover,
-.post .post-endnote-backlink:focus-visible {
-  border-color: rgba(215, 184, 255, 0.65);
-  background: rgba(215, 184, 255, 0.17);
-  color: #fff;
-  text-shadow: none;
-}
-
-.post .footnotes li.is-footnote-target,
-.post sup.is-footnote-target {
-  background: rgba(139, 216, 255, 0.13);
-  box-shadow: 0 0 0 3px rgba(139, 216, 255, 0.11);
 }
 
 .post-quote-card {

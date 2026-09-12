@@ -34,6 +34,7 @@
         // A template parses links without loading images or executing the indexed HTML.
         const template = document.createElement('template');
         template.innerHTML = entry.html;
+        window.wikiAuthoring?.applyPlatforms(template.content);
         apply(template.content, catalog, source.href);
         const pointsHere = Array.from(template.content.querySelectorAll('a[href]')).some((link) => {
           try { return pageKey(new URL(link.getAttribute('href'), source)) === currentKey; }
@@ -50,6 +51,7 @@
         item.append(link);
         list.append(item);
       });
+      window.wikiAuthoring?.enhancePreviews(entries);
       statusKey = backlinks.length ? 'backlinks_found' : 'backlinks_empty';
       updateStatus();
     })

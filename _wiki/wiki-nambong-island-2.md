@@ -2,6 +2,7 @@
 title: 봉누도 시즌2
 description: 남봉이 진행하는 스트리머 전용 GTA 5 인생 모드 RP 서버/콘텐츠.
 aliases: [Bong-Nuh-Doh-2, NamBong-island-II, 봉누도2]
+date: 2026-09-10
 last_modified_at: 2026-09-10
 ---
 

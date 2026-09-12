@@ -25,3 +25,10 @@ defaults:
       path: "google27564fde5057ccbe.html"
     values:
       sitemap: false
+
+# Development checks are not published as site assets.
+exclude:
+  - scripts/test-wiki.py
+  - scripts/test-wiki-authoring.py
+  - scripts/wiki-autolinks.test.cjs
+  - scripts/__pycache__
