@@ -1,0 +1,31 @@
+{% assign ranked_entries = include.entries | sort: 'month' | reverse %}
+<div class="reading-pulse-list">
+  {% for entry in ranked_entries %}
+    <article class="reading-pulse-item"{% if include.kind == 'post' %} data-post-card data-translation-key="{{ entry.translationKey | default: entry.slug | escape }}"{% endif %}>
+      <div class="reading-pulse-item-heading">
+        <p class="eyebrow" aria-hidden="true">{{ forloop.index }}</p>
+        <h4><a href="{{ entry.url | default: entry.path | relative_url }}"{% if include.kind == 'post' %} data-post-link{% endif %}><span data-no-interface-translation{% if include.kind == 'post' %} data-post-field data-post-title{% endif %}>{{ entry.title | escape }}</span></a></h4>
+      </div>
+      <dl class="reading-pulse-metrics{% if include.kind == 'wiki' %} reading-pulse-metrics-wiki{% endif %}">
+        <div>
+          <dt data-i18n="pages.reading_pulse.dashboard.post_recent_label">{{ dashboard_copy.post_recent_label }}</dt>
+          <dd>{{ entry.month | default: 0 }}</dd>
+        </div>
+        <div>
+          <dt data-i18n="pages.reading_pulse.dashboard.post_total_label">{{ dashboard_copy.post_total_label }}</dt>
+          <dd>{{ entry.total | default: 0 }}</dd>
+        </div>
+        {% if include.kind == 'post' %}
+          <div>
+            <dt data-i18n="pages.reading_pulse.dashboard.read_75_label">{{ dashboard_copy.read_75_label }}</dt>
+            <dd>{{ entry.read75 | default: 0 }}</dd>
+          </div>
+          <div>
+            <dt data-i18n="pages.reading_pulse.dashboard.completion_label">{{ dashboard_copy.completion_label }}</dt>
+            <dd>{{ entry.readComplete | default: 0 }}</dd>
+          </div>
+        {% endif %}
+      </dl>
+    </article>
+  {% endfor %}
+</div>

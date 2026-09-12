@@ -8,9 +8,9 @@ permalink: /timeline/
 {% assign page_copy = site_copy.pages.timeline %}
 {% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
 <section class="timeline-intro glass-panel" aria-labelledby="timeline-intro-title">
-  <p class="eyebrow">{{ page_copy.section_eyebrow }}</p>
-  <h2 id="timeline-intro-title">{{ page_copy.section_title }}</h2>
-  <p>{{ page_copy.section_description }}</p>
+  <p class="eyebrow" data-i18n-html="pages.timeline.section_eyebrow">{{ page_copy.section_eyebrow }}</p>
+  <h2 id="timeline-intro-title" data-i18n-html="pages.timeline.section_title">{{ page_copy.section_title }}</h2>
+  <p data-i18n-html="pages.timeline.section_description">{{ page_copy.section_description }}</p>
 </section>
 
 {% assign current_year = "" %}
@@ -22,7 +22,7 @@ permalink: /timeline/
       {% assign current_year = post_year %}
       <section class="timeline-era glass-panel" aria-labelledby="timeline-{{ post_year }}">
         <header class="timeline-era-header">
-          <p class="eyebrow">{{ page_copy.era_label }}</p>
+          <p class="eyebrow" data-i18n-html="pages.timeline.era_label">{{ page_copy.era_label }}</p>
           <h2 id="timeline-{{ post_year }}">{{ post_year }}</h2>
         </header>
         <ol class="timeline-list">

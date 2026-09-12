@@ -129,8 +129,27 @@
   };
 
   const shouldSkipTranslation = (element) => element?.closest?.(
-    'script, style, [data-no-interface-translation], [data-post-field], .post-content',
+    'script, style, [data-no-interface-translation], [data-post-field], .post-content, [data-i18n], [data-i18n-html]',
   );
+
+  // Explicit keys preserve page context and HTML across repeated language changes.
+  // HTML values come only from the repository-owned identity file, never fetched content.
+  const localizeKeyedCopy = () => {
+    document.querySelectorAll('[data-i18n], [data-i18n-html]').forEach((element) => {
+      const html = element.hasAttribute('data-i18n-html');
+      const key = html ? element.dataset.i18nHtml : element.dataset.i18n;
+      const value = getCopy(key);
+      if (typeof value === 'string') {
+        if (html) element.innerHTML = value;
+        else element.textContent = value;
+      }
+    });
+    ['alt', 'aria-label', 'title'].forEach((attribute) => {
+      document.querySelectorAll(`[data-i18n-${attribute}]`).forEach((element) => {
+        element.setAttribute(attribute, getCopy(element.getAttribute(`data-i18n-${attribute}`)));
+      });
+    });
+  };
 
   const localizeTextNodes = (language) => {
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
@@ -198,8 +217,27 @@
     originalMetaContent.forEach((content, element) => {
       element.content = preserveWikiContent ? content : translateText(content, language);
     });
+    const pageKey = document.querySelector('meta[name="site-identity-key"]')?.content;
+    if (pageKey) {
+      const plain = (value) => {
+        const template = document.createElement('template');
+        template.innerHTML = String(value).replace(/<br\s*\/?\s*>/gi, ' ');
+        return template.content.textContent.replace(/\s+/g, ' ').trim();
+      };
+      const brandName = getCopy('brand.name');
+      const title = pageKey === 'home'
+        ? `${brandName} | ${getCopy('brand.seo_title_suffix')}`
+        : `${getCopy(`pages.${pageKey}.title`)} | ${brandName}`;
+      const description = plain(getCopy(`pages.${pageKey}.description`, getCopy('brand.description')));
+      document.title = plain(title);
+      originalMetaContent.forEach((_content, element) => {
+        const isTitle = /title$/.test(element.getAttribute('property') || element.name || '');
+        element.content = isTitle ? plain(title) : description;
+      });
+    }
     localizeTextNodes(language);
     localizeAttributes(language);
+    localizeKeyedCopy();
     localizeDates(language);
     const giscusContainer = document.querySelector('[data-giscus-container]');
     if (giscusContainer) {

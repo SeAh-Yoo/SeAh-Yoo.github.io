@@ -10,7 +10,7 @@ sitemap: false
 {% assign page_copy = site_copy.pages.not_found %}
 
 <section class="about-section glass-panel" aria-labelledby="not-found-title">
-  <p class="eyebrow">{{ page_copy.section_eyebrow }}</p>
-  <h2 id="not-found-title">{{ page_copy.section_title }}</h2>
-  <p><a href="{{ identity.links.home | relative_url }}">{{ page_copy.home_label }}</a>{{ page_copy.section_prefix }} <a href="{{ site_copy.pages.start.path | relative_url }}">{{ site_copy.pages.start.title }}</a> · <a href="{{ site_copy.pages.timeline.path | relative_url }}">{{ site_copy.pages.timeline.title }}</a>.</p>
+  <p class="eyebrow" data-i18n-html="pages.not_found.section_eyebrow">{{ page_copy.section_eyebrow }}</p>
+  <h2 id="not-found-title" data-i18n-html="pages.not_found.section_title">{{ page_copy.section_title }}</h2>
+  <p><a href="{{ identity.links.home | relative_url }}" data-i18n-html="pages.not_found.home_label">{{ page_copy.home_label }}</a><span data-i18n-html="pages.not_found.section_prefix">{{ page_copy.section_prefix }}</span> <a href="{{ site_copy.pages.start.path | relative_url }}" data-i18n-html="pages.start.title">{{ site_copy.pages.start.title }}</a> · <a href="{{ site_copy.pages.timeline.path | relative_url }}" data-i18n-html="pages.timeline.title">{{ site_copy.pages.timeline.title }}</a>.</p>
 </section>

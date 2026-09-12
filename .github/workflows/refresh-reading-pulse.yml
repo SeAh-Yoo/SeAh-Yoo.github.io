@@ -26,7 +26,17 @@ jobs:
         with:
           node-version: 20
 
-      - name: Refresh the public counter snapshot
+      - name: Use Ruby for the published URL manifest
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Build the published URL manifest
+        run: |
+          gem install jekyll -v 3.10.0 --no-document
+          jekyll _3.10.0_ build --safe
+
+      - name: Refresh post and wiki counters
         run: node scripts/refresh-reading-pulse.mjs
 
       - name: Commit a changed snapshot

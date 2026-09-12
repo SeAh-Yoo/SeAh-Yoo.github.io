@@ -24,14 +24,16 @@
 <title>{{ document_title | strip | escape }}</title>
 <meta name="description" content="{{ page_description | strip_html | normalize_whitespace | escape }}" />
 <meta name="author" content="{{ brand.author.name | escape }}" />
+{% if page.identity_key %}<meta name="site-identity-key" content="{{ page.identity_key | escape }}" />{% endif %}
 {% if page.noindex %}
 <meta name="robots" content="noindex, follow" />
 {% else %}
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 {% endif %}
 <meta name="theme-color" content="#0c0d18" />
-<script id="site-identity-data" type="application/json">{{ identity | jsonify }}</script>
-<script src="{{ '/scripts/site-preferences.js' | relative_url }}"></script>
+{% comment %}Serialize only the runtime view; shared/pages are YAML authoring aliases of locales.{% endcomment %}
+<script id="site-identity-data" type="application/json">{"settings": {{ identity.settings | jsonify }}, "links": {{ identity.links | jsonify }}, "assets": {{ identity.assets | jsonify }}, "comments": {{ identity.comments | jsonify }}, "locales": {{ identity.locales | jsonify }}}</script>
+<script src="{{ '/scripts/site-preferences.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
 {% if identity.assets.favicon_image %}<link rel="icon" type="image/png" sizes="32x32" href="{{ identity.assets.favicon_image | relative_url }}" />{% endif %}
 {% if identity.assets.favicon_large_image %}<link rel="icon" type="image/png" sizes="192x192" href="{{ identity.assets.favicon_large_image | relative_url }}" />{% endif %}
 {% if identity.assets.favicon_svg_image %}<link rel="icon" type="image/svg+xml" sizes="any" href="{{ identity.assets.favicon_svg_image | relative_url }}" />{% endif %}
@@ -168,7 +170,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css" />
 <link rel="stylesheet" href="{{ '/styles/design-system.css' | relative_url }}" />
 <link rel="stylesheet" href="{{ '/styles/theme-system.css' | relative_url }}" />
-<link rel="stylesheet" href="{{ '/styles/index.css' | relative_url }}" />
+<link rel="stylesheet" href="{{ '/styles/index.css' | relative_url }}?v={{ site.time | date: '%s' }}" />
 <link rel="stylesheet" href="{{ '/styles/sidebar-collapse.css' | relative_url }}" />
 <link rel="stylesheet" href="{{ '/styles/counter.css' | relative_url }}" />
 <link rel="stylesheet" href="{{ '/styles/search.css' | relative_url }}" />

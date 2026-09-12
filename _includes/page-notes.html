@@ -4,9 +4,9 @@
   <section class="page-note-grid">
     {% for note in page_notes.items %}
       {% if note.title or note.body %}
-      <aside class="about-note glass-panel"{% if note.title %} aria-label="{{ note.title | escape }}"{% endif %}>
-        {% if note.title %}<strong>{{ note.title }}</strong>{% endif %}
-        {% if note.body %}<p>{{ note.body }}</p>{% endif %}
+      <aside class="about-note glass-panel"{% if note.title %} aria-labelledby="page-note-{{ forloop.index }}"{% endif %}>
+        {% if note.title %}<strong id="page-note-{{ forloop.index }}"{% if include.identity_key %} data-i18n-html="pages.{{ include.identity_key }}.notes.items.{{ forloop.index0 }}.title"{% endif %}>{{ note.title }}</strong>{% endif %}
+        {% if note.body %}<p{% if include.identity_key %} data-i18n-html="pages.{{ include.identity_key }}.notes.items.{{ forloop.index0 }}.body"{% endif %}>{{ note.body }}</p>{% endif %}
       </aside>
       {% endif %}
     {% endfor %}

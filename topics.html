@@ -8,12 +8,12 @@ permalink: /topics/
 {% assign page_copy = site_copy.pages.topics %}
 {% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
 <section class="topic-intro glass-panel" aria-labelledby="topic-intro-title">
-  <p class="eyebrow">{{ page_copy.section_eyebrow }}</p>
-  <h2 id="topic-intro-title">{{ page_copy.section_title }}</h2>
-  <p>{{ page_copy.section_prefix }} <a href="{{ site_copy.pages.categories.path | relative_url }}">{{ site_copy.pages.categories.title }}</a> {{ page_copy.section_suffix }}</p>
+  <p class="eyebrow" data-i18n-html="pages.topics.section_eyebrow">{{ page_copy.section_eyebrow }}</p>
+  <h2 id="topic-intro-title" data-i18n-html="pages.topics.section_title">{{ page_copy.section_title }}</h2>
+  <p><span data-i18n-html="pages.topics.section_prefix">{{ page_copy.section_prefix }}</span> <a href="{{ site_copy.pages.categories.path | relative_url }}" data-i18n-html="pages.categories.title">{{ site_copy.pages.categories.title }}</a> <span data-i18n-html="pages.topics.section_suffix">{{ page_copy.section_suffix }}</span></p>
   <nav class="topic-chip-list" aria-label="{{ page_copy.list_label }}">
     {% for topic in page_copy.items %}
-    <a class="topic-chip" href="#{{ topic.id }}">{{ topic.label }}</a>
+    <a class="topic-chip" href="#{{ topic.id }}" data-i18n-html="pages.topics.items.{{ forloop.index0 }}.label">{{ topic.label }}</a>
     {% endfor %}
   </nav>
 </section>
@@ -25,9 +25,9 @@ permalink: /topics/
   {% endfor %}
   <section class="topic-section" id="{{ topic.id }}" aria-labelledby="topic-{{ topic.id }}">
     <div class="topic-section-heading">
-      <p class="eyebrow">{{ topic_post_count }}{{ page_copy.post_count_suffix }}</p>
-      <h2 id="topic-{{ topic.id }}">{{ topic.label }}</h2>
-      <p>{{ topic.description }}</p>
+      <p class="eyebrow">{{ topic_post_count }}<span data-i18n="pages.topics.post_count_suffix">{{ page_copy.post_count_suffix }}</span></p>
+      <h2 id="topic-{{ topic.id }}" data-i18n-html="pages.topics.items.{{ forloop.index0 }}.label">{{ topic.label }}</h2>
+      <p data-i18n-html="pages.topics.items.{{ forloop.index0 }}.description">{{ topic.description }}</p>
     </div>
     {% if topic_post_count > 0 %}
     <div class="card-grid">
@@ -42,7 +42,7 @@ permalink: /topics/
       {% endfor %}
     </div>
     {% else %}
-    <p class="topic-empty">{{ page_copy.empty_message }}</p>
+    <p class="topic-empty" data-i18n-html="pages.topics.empty_message">{{ page_copy.empty_message }}</p>
     {% endif %}
   </section>
 {% endfor %}

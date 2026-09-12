@@ -7,7 +7,7 @@
     {% include head.html %}
   </head>
   <body>
-    <a class="skip-link" href="#main-content">{{ site_copy.ui.skip_link }}</a>
+    <a class="skip-link" href="#main-content" data-i18n-html="ui.skip_link">{{ site_copy.ui.skip_link }}</a>
     <div class="aurora aurora-one" aria-hidden="true"></div>
     <div class="aurora aurora-two" aria-hidden="true"></div>
     <div class="shell">
@@ -15,13 +15,13 @@
 
       <main class="content" id="main-content">
         <header class="hero glass-panel">
-          <p class="eyebrow">{{ page_copy.eyebrow | strip }}</p>
-          <h1>{{ page_copy.title | strip }}</h1>
-          <p>{{ page_copy.intro | strip }}</p>
+          <p class="eyebrow" data-i18n-html="pages.categories.eyebrow">{{ page_copy.eyebrow | strip }}</p>
+          <h1 data-i18n-html="pages.categories.title">{{ page_copy.title | strip }}</h1>
+          <p data-i18n-html="pages.categories.intro">{{ page_copy.intro | strip }}</p>
         </header>
 
         {{ content }}
-        {% include page-notes.html notes=page_copy.notes %}
+        {% include page-notes.html notes=page_copy.notes identity_key=page.identity_key %}
       </main>
     </div>
     {% include analytics-tracking.html %}

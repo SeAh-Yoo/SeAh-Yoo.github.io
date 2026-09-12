@@ -3,90 +3,84 @@ layout: page
 identity_key: reading_pulse
 permalink: /reading-pulse/
 ---
-
 {% assign pulse = site.data.reading_pulse %}
 {% assign identity = site.data.site_identity %}
 {% assign site_copy = identity.locales[identity.settings.default_language] %}
-{% assign page_copy = site_copy.pages.reading_pulse %}
-{% assign dashboard_copy = page_copy.dashboard %}
-{% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
+{% assign dashboard_copy = site_copy.pages.reading_pulse.dashboard %}
 
 <section class="reading-pulse glass-panel" aria-labelledby="reading-pulse-title">
   <div class="reading-pulse-heading">
-    <p class="section-label">{{ dashboard_copy.eyebrow }}</p>
-    <h2 id="reading-pulse-title">{{ dashboard_copy.title }}</h2>
-    <p>{{ dashboard_copy.intro }}</p>
+    <p class="section-label" data-i18n="pages.reading_pulse.dashboard.eyebrow">{{ dashboard_copy.eyebrow }}</p>
+    <h2 id="reading-pulse-title" data-i18n="pages.reading_pulse.dashboard.title">{{ dashboard_copy.title }}</h2>
+    <p data-i18n-html="pages.reading_pulse.dashboard.intro">{{ dashboard_copy.intro }}</p>
   </div>
 
-  {% if pulse and pulse.posts and pulse.posts.size > 0 %}
+  {% if pulse.generated_at %}
     {% assign month_total = 0 %}
     {% assign reading_total = 0 %}
     {% for post in pulse.posts %}
       {% assign month_total = month_total | plus: post.month %}
-      {% assign post_reads = post.read75 | plus: post.readComplete %}
-      {% assign reading_total = reading_total | plus: post_reads %}
+      {% assign reading_total = reading_total | plus: post.readComplete %}
+    {% endfor %}
+    {% for entry in pulse.wiki %}
+      {% assign month_total = month_total | plus: entry.month %}
     {% endfor %}
 
-    <dl class="reading-pulse-summary" aria-label="{{ dashboard_copy.summary_label }}">
+    <dl class="reading-pulse-summary" aria-label="{{ dashboard_copy.summary_label }}" data-i18n-aria-label="pages.reading_pulse.dashboard.summary_label">
       <div>
-        <dt>{{ dashboard_copy.total_visits_label }}</dt>
+        <dt data-i18n="pages.reading_pulse.dashboard.total_visits_label">{{ dashboard_copy.total_visits_label }}</dt>
         <dd>{{ pulse.site.total | default: 0 }}</dd>
       </div>
       <div>
-        <dt>{{ dashboard_copy.recent_visits_label }}</dt>
+        <dt data-i18n="pages.reading_pulse.dashboard.recent_visits_label">{{ dashboard_copy.recent_visits_label }}</dt>
         <dd>{{ month_total }}</dd>
       </div>
       <div>
-        <dt>{{ dashboard_copy.reading_total_label }}</dt>
+        <dt data-i18n="pages.reading_pulse.dashboard.reading_total_label">{{ dashboard_copy.reading_total_label }}</dt>
         <dd>{{ reading_total }}</dd>
       </div>
     </dl>
 
     <p class="reading-pulse-updated">
-      {{ dashboard_copy.updated_label }}: <time datetime="{{ pulse.generated_at | date_to_xmlschema }}" data-date-style="short">{{ pulse.generated_at | date: site_copy.meta.date_short }}</time>
+      <span data-i18n="pages.reading_pulse.dashboard.updated_label">{{ dashboard_copy.updated_label }}</span>:
+      <time datetime="{{ pulse.generated_at | date_to_xmlschema }}" data-date-style="long">{{ pulse.generated_at | date: site_copy.meta.date_long }}</time>
     </p>
+    {% if pulse.period %}
+      <p class="reading-pulse-updated">
+        <span data-i18n="pages.reading_pulse.dashboard.period_label">{{ dashboard_copy.period_label }}</span>:
+        <span data-no-interface-translation>{{ pulse.period.start }} — {{ pulse.period.end }} ({{ pulse.period.timezone }})</span>
+      </p>
+    {% endif %}
 
-    {% assign ranked_posts = pulse.posts | sort: "month" | reverse %}
-    <div class="reading-pulse-list" aria-label="{{ dashboard_copy.post_list_label }}">
-      {% for post in ranked_posts %}
-        {% assign matching_posts = base_posts | where: "url", post.path %}
-        {% assign matching_post = matching_posts | first %}
-        <article class="reading-pulse-item" data-post-card data-translation-key="{{ matching_post.translation_key | default: matching_post.slug | default: post.path | escape }}">
-          <div class="reading-pulse-item-heading">
-            <p class="eyebrow">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</p>
-            <h3><a href="{{ post.path | relative_url }}" data-post-link><span data-post-field data-post-title>{{ post.title }}</span></a></h3>
-          </div>
+    <section class="reading-pulse-group" aria-labelledby="pulse-posts-title">
+      <h3 id="pulse-posts-title" data-i18n="pages.reading_pulse.dashboard.post_list_title">{{ dashboard_copy.post_list_title }}</h3>
+      <p data-i18n="pages.reading_pulse.dashboard.post_list_intro">{{ dashboard_copy.post_list_intro }}</p>
+      {% if pulse.posts.size > 0 %}
+        {% include reading-pulse-list.html entries=pulse.posts kind='post' %}
+      {% else %}
+        <p role="status" data-i18n="pages.reading_pulse.dashboard.posts_empty">{{ dashboard_copy.posts_empty }}</p>
+      {% endif %}
+    </section>
 
-          <dl class="reading-pulse-metrics">
-            <div>
-              <dt>{{ dashboard_copy.post_recent_label }}</dt>
-              <dd>{{ post.month | default: 0 }}</dd>
-            </div>
-            <div>
-              <dt>{{ dashboard_copy.post_total_label }}</dt>
-              <dd>{{ post.total | default: 0 }}</dd>
-            </div>
-            <div>
-              <dt>{{ dashboard_copy.read_75_label }}</dt>
-              <dd>{{ post.read75 | default: 0 }}</dd>
-            </div>
-            <div>
-              <dt>{{ dashboard_copy.completion_label }}</dt>
-              <dd>{{ post.readComplete | default: 0 }}</dd>
-            </div>
-          </dl>
-        </article>
-      {% endfor %}
-    </div>
+    <section class="reading-pulse-group" aria-labelledby="pulse-wiki-title">
+      <h3 id="pulse-wiki-title" data-i18n="pages.reading_pulse.dashboard.wiki_list_title">{{ dashboard_copy.wiki_list_title }}</h3>
+      <p data-i18n="pages.reading_pulse.dashboard.wiki_list_intro">{{ dashboard_copy.wiki_list_intro }}</p>
+      {% if pulse.wiki.size > 0 %}
+        {% include reading-pulse-list.html entries=pulse.wiki kind='wiki' %}
+      {% elsif pulse.wiki %}
+        <p role="status" data-i18n="pages.reading_pulse.dashboard.wiki_empty">{{ dashboard_copy.wiki_empty }}</p>
+      {% else %}
+        <p role="status" data-i18n="pages.reading_pulse.dashboard.wiki_pending">{{ dashboard_copy.wiki_pending }}</p>
+      {% endif %}
+      <p class="reading-pulse-note" data-i18n="pages.reading_pulse.dashboard.wiki_reading_note">{{ dashboard_copy.wiki_reading_note }}</p>
+    </section>
   {% else %}
     <div class="reading-pulse-empty" role="status">
-      <p class="section-label">{{ dashboard_copy.pending_eyebrow }}</p>
-      <h2>{{ dashboard_copy.pending_title }}</h2>
-      <p>{{ dashboard_copy.pending_description }}</p>
+      <p class="section-label" data-i18n="pages.reading_pulse.dashboard.pending_eyebrow">{{ dashboard_copy.pending_eyebrow }}</p>
+      <h3 data-i18n="pages.reading_pulse.dashboard.pending_title">{{ dashboard_copy.pending_title }}</h3>
+      <p data-i18n="pages.reading_pulse.dashboard.pending_description">{{ dashboard_copy.pending_description }}</p>
     </div>
   {% endif %}
 
-  <p class="reading-pulse-note">
-    {{ dashboard_copy.note }}
-  </p>
+  <p class="reading-pulse-note" data-i18n-html="pages.reading_pulse.dashboard.note">{{ dashboard_copy.note }}</p>
 </section>

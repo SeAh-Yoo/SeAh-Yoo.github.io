@@ -15,14 +15,14 @@
 
       <main class="content" id="main-content">
         <header class="hero page-hero glass-panel">
-          <p class="eyebrow">{{ page_copy.eyebrow | default: page.eyebrow | default: site_copy.brand.english_name | strip }}</p>
-          <h1>{{ page_copy.title | default: page.title | strip }}</h1>
+          <p class="eyebrow"{% if page_copy.eyebrow %} data-i18n="pages.{{ page.identity_key }}.eyebrow"{% endif %}>{{ page_copy.eyebrow | default: page.eyebrow | default: site_copy.brand.english_name | strip }}</p>
+          <h1{% if page_copy.title %} data-i18n="pages.{{ page.identity_key }}.title"{% endif %}>{{ page_copy.title | default: page.title | strip }}</h1>
           {% assign page_intro = page_copy.intro | default: page.intro %}
-          {% if page_intro %}<p>{{ page_intro | strip }}</p>{% endif %}
+          {% if page_intro %}<p{% if page_copy.intro %} data-i18n-html="pages.{{ page.identity_key }}.intro"{% endif %}>{{ page_intro | strip }}</p>{% endif %}
         </header>
 
         {{ content }}
-        {% include page-notes.html notes=page_copy.notes %}
+        {% include page-notes.html notes=page_copy.notes identity_key=page.identity_key %}
       </main>
     </div>
     {% include analytics-tracking.html %}

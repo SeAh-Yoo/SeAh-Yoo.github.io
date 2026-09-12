@@ -1,36 +1,84 @@
 {
-  "schema_version": 1,
-  "generated_at": "2026-09-12T07:57:53.038Z",
+  "schema_version": 2,
+  "generated_at": "2026-09-12T14:49:20.573Z",
+  "period": {
+    "start": "2026-08-14",
+    "end": "2026-09-12",
+    "timezone": "Asia/Seoul"
+  },
   "site": {
-    "total": 349
+    "total": 350
   },
   "posts": [
-    {
-      "slug": "2026-ncsoft-trust",
-      "title": "신뢰 회복의 다리를 부순 고소장",
-      "path": "/posts/2026-ncsoft-trust/",
-      "month": 1,
-      "total": 18,
-      "read75": 4,
-      "readComplete": 2
-    },
     {
       "slug": "2026-ai-spread",
       "title": "발명은 순간, 변혁은 세대의 업보",
       "path": "/posts/2026-ai-spread/",
+      "url": "/posts/2026-ai-spread/",
+      "translationKey": "ai-spread",
       "month": 1,
       "total": 22,
       "read75": 1,
       "readComplete": 1
     },
     {
+      "slug": "2026-ncsoft-trust",
+      "title": "신뢰 회복의 다리를 부순 고소장",
+      "path": "/posts/2026-ncsoft-trust/",
+      "url": "/posts/2026-ncsoft-trust/",
+      "translationKey": "ncsoft-trust",
+      "month": 1,
+      "total": 18,
+      "read75": 4,
+      "readComplete": 2
+    },
+    {
       "slug": "2026-game-for-girls",
       "title": "세상의 반은 여자, 게이머의 반은?",
       "path": "/posts/game-for-girls/",
+      "url": "/posts/game-for-girls/",
+      "translationKey": "game-for-girls",
       "month": 1,
       "total": 29,
       "read75": 11,
       "readComplete": 8
+    }
+  ],
+  "wiki": [
+    {
+      "title": "악어의 놀이터2",
+      "path": "/wiki/wiki-acau-pg2/",
+      "url": "/wiki/wiki-acau-pg2/",
+      "month": 1,
+      "total": 1
+    },
+    {
+      "title": "봉누도 시즌1",
+      "path": "/wiki/wiki-nambong-island-1/",
+      "url": "/wiki/wiki-nambong-island-1/",
+      "month": 3,
+      "total": 3
+    },
+    {
+      "title": "봉누도 시즌2",
+      "path": "/wiki/wiki-nambong-island-2/",
+      "url": "/wiki/wiki-nambong-island-2/",
+      "month": 1,
+      "total": 1
+    },
+    {
+      "title": "팰월드",
+      "path": "/wiki/wiki-palworld/",
+      "url": "/wiki/wiki-palworld/",
+      "month": 2,
+      "total": 2
+    },
+    {
+      "title": "유전원 USB 허브",
+      "path": "/wiki/wiki-usb-hub/",
+      "url": "/wiki/wiki-usb-hub/",
+      "month": 0,
+      "total": 0
     }
   ]
 }

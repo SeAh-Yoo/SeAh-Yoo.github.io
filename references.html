@@ -11,9 +11,9 @@ permalink: /references/
 {% assign reference_documents = site.posts | concat: site.wiki %}
 
 <section class="reference-intro glass-panel" aria-labelledby="reference-intro-title">
-  <p class="eyebrow">{{ page_copy.section_eyebrow }}</p>
-  <h2 id="reference-intro-title">{{ page_copy.section_title }}</h2>
-  <p>{{ page_copy.section_description }}</p>
+  <p class="eyebrow" data-i18n-html="pages.references.section_eyebrow">{{ page_copy.section_eyebrow }}</p>
+  <h2 id="reference-intro-title" data-i18n-html="pages.references.section_title">{{ page_copy.section_title }}</h2>
+  <p data-i18n-html="pages.references.section_description">{{ page_copy.section_description }}</p>
 </section>
 
 <section class="reference-library" aria-label="{{ page_copy.library_label }}">
@@ -38,7 +38,7 @@ permalink: /references/
             {% if reference.note %}<p class="reference-note" data-post-field>{{ reference.note }}</p>{% endif %}
           </div>
           <div class="reference-cited-in">
-            <p>{{ page_copy.cited_in_label }}</p>
+            <p data-i18n-html="pages.references.cited_in_label">{{ page_copy.cited_in_label }}</p>
             <ul>
               {% for cited_post in reference_documents %}
                 {% for cited_reference in cited_post.references %}
@@ -61,6 +61,6 @@ permalink: /references/
   </ol>
 
   {% if reference_count == 0 %}
-  <p class="reference-empty glass-panel">{{ page_copy.empty_message }}</p>
+  <p class="reference-empty glass-panel" data-i18n-html="pages.references.empty_message">{{ page_copy.empty_message }}</p>
   {% endif %}
 </section>

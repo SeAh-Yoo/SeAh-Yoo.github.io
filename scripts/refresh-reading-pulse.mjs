@@ -1,312 +1,113 @@
 #!/usr/bin/env node
 
 /**
- * Build a small, committed reading-pulse snapshot from GoatCounter's public
- * counter endpoints. This deliberately uses no API key: every request below
- * is a public /counter/*.json request that a visitor could make as well.
+ * Refresh the committed public GoatCounter snapshot (no API key).
+ * Run jekyll build --safe first: the manifest uses Jekyll's actual published
+ * URLs, including collection permalinks, publication rules, and baseurl.
+ * Optional argument: path to a manifest from a different build destination.
  */
-
-import { mkdir, readFile, readdir, rename, writeFile } from 'node:fs/promises';
-import { basename, dirname, extname, join } from 'node:path';
+import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const scriptDirectory = dirname(fileURLToPath(import.meta.url));
-const repositoryDirectory = dirname(scriptDirectory);
-const postsDirectory = join(repositoryDirectory, '_posts');
+const repositoryDirectory = dirname(dirname(fileURLToPath(import.meta.url)));
 const analyticsPath = join(repositoryDirectory, '_data', 'analytics.json');
 const snapshotPath = join(repositoryDirectory, '_data', 'reading_pulse.json');
-const siteConfigPath = join(repositoryDirectory, '_config.yml');
+const manifestPath = process.argv[2]
+  ? resolve(process.argv[2])
+  : join(repositoryDirectory, '_site', 'reading-pulse-index.json');
 const requestTimeoutMs = 20_000;
 const requestConcurrency = 4;
 
-const postFilenamePattern = /^(\d{4}-\d{2}-\d{2})-(.+)\.(?:md|markdown)$/i;
-
-const stripPlainYamlComment = (value) => {
-  let quote = null;
-  let escaped = false;
-
-  for (let index = 0; index < value.length; index += 1) {
-    const character = value[index];
-
-    if (quote === '"') {
-      if (character === '"' && !escaped) {
-        quote = null;
-      }
-      escaped = character === '\\' && !escaped;
-      continue;
-    }
-
-    if (quote === "'") {
-      if (character === "'") {
-        quote = null;
-      }
-      continue;
-    }
-
-    if (character === '"' || character === "'") {
-      quote = character;
-      continue;
-    }
-
-    if (character === '#' && (index === 0 || /\s/.test(value[index - 1]))) {
-      return value.slice(0, index).trimEnd();
-    }
-  }
-
-  return value.trimEnd();
-};
-
-const parseYamlScalar = (rawValue) => {
-  const value = stripPlainYamlComment(rawValue.trim());
-
-  if (!value || value === 'null' || value === '~') {
-    return '';
-  }
-
-  if (value.startsWith('"') && value.endsWith('"') && value.length >= 2) {
-    try {
-      return JSON.parse(value);
-    } catch {
-      return value.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
-    }
-  }
-
-  if (value.startsWith("'") && value.endsWith("'") && value.length >= 2) {
-    return value.slice(1, -1).replace(/''/g, "'");
-  }
-
-  return value;
-};
-
-/**
- * The blog only needs a handful of top-level scalar fields. Parsing those
- * directly keeps the refresh job dependency-free while still handling quoted,
- * commented, folded, and literal YAML values safely.
- */
-const parseTopLevelYamlScalars = (documentText) => {
-  const values = {};
-  const lines = documentText.replace(/^\uFEFF/, '').split(/\r?\n/);
-
-  for (let index = 0; index < lines.length; index += 1) {
-    const match = lines[index].match(/^([A-Za-z_][A-Za-z0-9_-]*)\s*:\s*(.*)$/);
-
-    if (!match) {
-      continue;
-    }
-
-    const [, key, rawValue] = match;
-    const compactValue = rawValue.trim();
-
-    if (/^[>|][+-]?$/.test(compactValue)) {
-      const folded = compactValue.startsWith('>');
-      const block = [];
-      let indentation = null;
-      let cursor = index + 1;
-
-      for (; cursor < lines.length; cursor += 1) {
-        const nextLine = lines[cursor];
-
-        if (!nextLine.trim()) {
-          block.push('');
-          continue;
-        }
-
-        const nextIndentation = nextLine.match(/^\s*/)[0].length;
-
-        if (nextIndentation === 0) {
-          break;
-        }
-
-        indentation ??= nextIndentation;
-        block.push(nextLine.slice(Math.min(indentation, nextIndentation)));
-      }
-
-      values[key] = folded
-        ? block.join(' ').replace(/\s+/g, ' ').trim()
-        : block.join('\n').trim();
-      index = cursor - 1;
-      continue;
-    }
-
-    values[key] = parseYamlScalar(rawValue);
-  }
-
-  return values;
-};
-
-const extractFrontMatter = (source, fileName) => {
-  const match = source.replace(/^\uFEFF/, '').match(/^---[ \t]*\r?\n([\s\S]*?)\r?\n---[ \t]*(?:\r?\n|$)/);
-
-  if (!match) {
-    throw new Error(`${fileName} is missing YAML front matter.`);
-  }
-
-  return parseTopLevelYamlScalars(match[1]);
-};
-
-const filenameSlug = (fileName) => {
-  const match = basename(fileName).match(postFilenamePattern);
-  const fallback = basename(fileName, extname(fileName));
-  const candidate = match ? match[2] : fallback;
-
-  return candidate.trim().replace(/\s+/g, '-').replace(/^[-/]+|[-/]+$/g, '');
-};
-
-const normalizeSlug = (value, fallback, fileName) => {
-  const slug = String(value || fallback)
-    .trim()
-    .replace(/^\/+|\/+$/g, '')
-    .replace(/\s+/g, '-');
-
-  if (!slug) {
-    throw new Error(`Could not determine a slug for ${fileName}.`);
-  }
-
-  return slug;
-};
-
-const fallbackTitle = (slug) => slug.replace(/[-_]+/g, ' ');
-
-const buildPostPath = (permalink, defaultPermalink, slug, fileName) => {
-  const template = String(permalink || defaultPermalink || '/posts/:slug/').trim();
-
-  if (/^https?:\/\//i.test(template) || template.startsWith('//')) {
-    throw new Error(`${fileName} has an unsupported absolute permalink.`);
-  }
-
-  let path = template.replace(/:slug|:title/g, slug);
-
-  if (/:\w+/.test(path)) {
-    throw new Error(`${fileName} has a permalink token this snapshot script cannot resolve: ${template}`);
-  }
-
-  path = path.split(/[?#]/, 1)[0] || '/';
-  path = `/${path}`.replace(/\/{2,}/g, '/');
-
-  if (!path.endsWith('/') && !/\.[A-Za-z0-9]+$/.test(path)) {
-    path += '/';
-  }
-
-  return path;
-};
-
-const readPosts = async (defaultPermalink) => {
-  const entries = await readdir(postsDirectory, { withFileTypes: true });
-  const postFiles = entries
-    .filter((entry) => entry.isFile() && /\.(?:md|markdown)$/i.test(entry.name))
-    .map((entry) => entry.name)
-    .sort((first, second) => first.localeCompare(second, 'en'));
-
-  const posts = await Promise.all(postFiles.map(async (fileName) => {
-    const source = await readFile(join(postsDirectory, fileName), 'utf8');
-    const frontMatter = extractFrontMatter(source, fileName);
-    const slug = normalizeSlug(frontMatter.slug, filenameSlug(fileName), fileName);
-    const title = String(frontMatter.title || fallbackTitle(slug)).trim();
-
-    return {
-      slug,
-      title,
-      path: buildPostPath(frontMatter.permalink, defaultPermalink, slug, fileName),
-    };
-  }));
-
-  const seenSlugs = new Set();
-  const seenPaths = new Set();
-
-  posts.forEach((post) => {
-    if (seenSlugs.has(post.slug)) {
-      throw new Error(`Duplicate post slug found: ${post.slug}`);
-    }
-    if (seenPaths.has(post.path)) {
-      throw new Error(`Duplicate post permalink found: ${post.path}`);
-    }
-    seenSlugs.add(post.slug);
-    seenPaths.add(post.path);
-  });
-
-  return posts;
-};
-
 const normalizeGoatCounterOrigin = (code) => {
   const rawCode = String(code || '').trim();
-
-  if (!rawCode) {
-    throw new Error('_data/analytics.json needs a non-empty goatcounterCode value.');
-  }
-
-  const input = /^https?:\/\//i.test(rawCode)
+  if (!rawCode) throw new Error('_data/analytics.json needs a non-empty goatcounterCode.');
+  const url = new URL(/^https?:\/\//i.test(rawCode)
     ? rawCode
-    : `https://${rawCode.includes('.') ? rawCode : `${rawCode}.goatcounter.com`}`;
-  const url = new URL(input);
-
-  if (
-    url.protocol !== 'https:'
-    || !/^[a-z0-9][a-z0-9-]*\.goatcounter\.com$/i.test(url.hostname)
-    || url.username
-    || url.password
-    || url.port
-  ) {
-    throw new Error('goatcounterCode must be a standard https://<code>.goatcounter.com address or just <code>.');
+    : `https://${rawCode.includes('.') ? rawCode : `${rawCode}.goatcounter.com`}`);
+  if (url.protocol !== 'https:' || !/^[a-z0-9][a-z0-9-]*\.goatcounter\.com$/i.test(url.hostname)
+      || url.username || url.password || url.port) {
+    throw new Error('goatcounterCode must be a standard HTTPS GoatCounter address or code.');
   }
-
   return url.origin;
 };
 
-const buildCounterUrl = (origin, path, parameters = {}) => {
-  const url = new URL(`/counter/${encodeURIComponent(path)}.json`, origin);
-
-  Object.entries(parameters).forEach(([key, value]) => {
-    if (value) {
-      url.searchParams.set(key, value);
+const readManifest = async () => {
+  let manifest;
+  try {
+    manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+  } catch (error) {
+    throw new Error(`Build the site with jekyll build --safe before refreshing counters: ${error.message}`);
+  }
+  if (!Array.isArray(manifest.posts) || !Array.isArray(manifest.wiki)) {
+    throw new Error('The reading-pulse manifest must contain posts and wiki arrays.');
+  }
+  const paths = new Set();
+  const eventKeys = new Set();
+  for (const [kind, entries] of [['posts', manifest.posts], ['wiki', manifest.wiki]]) {
+    for (const entry of entries) {
+      if (typeof entry.title !== 'string' || !entry.title.trim()) {
+        throw new Error(`Missing ${kind} title in the manifest.`);
+      }
+      for (const key of ['path', 'url']) {
+        if (typeof entry[key] !== 'string' || !entry[key].startsWith('/')
+            || entry[key].startsWith('//') || /[?#]/.test(entry[key])) {
+          throw new Error(`Invalid ${kind} ${key}: ${entry[key]}`);
+        }
+      }
+      if (paths.has(entry.path)) throw new Error(`Duplicate counter path: ${entry.path}`);
+      paths.add(entry.path);
+      if (kind === 'posts') {
+        if (typeof entry.slug !== 'string' || !entry.slug || eventKeys.has(entry.slug)) {
+          throw new Error(`Missing or duplicate post event slug: ${entry.slug}`);
+        }
+        eventKeys.add(entry.slug);
+      }
     }
-  });
+    entries.sort((a, b) => a.path.localeCompare(b.path, 'en'));
+  }
+  return manifest;
+};
 
-  return url;
+// Thirty calendar dates including today, in the site's configured timezone.
+// Store the range with the snapshot so an older snapshot never claims to be live.
+const recentPeriod = (now, timezone) => {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: timezone, year: 'numeric', month: '2-digit', day: '2-digit',
+  }).formatToParts(now);
+  const part = (type) => parts.find((item) => item.type === type).value;
+  const end = `${part('year')}-${part('month')}-${part('day')}`;
+  const start = new Date(`${end}T00:00:00Z`);
+  start.setUTCDate(start.getUTCDate() - 29);
+  return { start: start.toISOString().slice(0, 10), end, timezone };
 };
 
 const parseCounterCount = (payload, url) => {
-  const value = payload?.count ?? payload?.count_unique ?? 0;
-
-  if (typeof value === 'number') {
-    if (!Number.isFinite(value)) {
-      throw new Error(`GoatCounter returned a non-finite count for ${url}.`);
-    }
-    return Math.max(0, Math.trunc(value));
+  const raw = payload?.count ?? payload?.count_unique;
+  if (raw === null || raw === undefined) throw new Error(`Missing counter count: ${url}`);
+  const value = String(raw).replaceAll(',', '').trim();
+  if (!/^\d+(?:\.\d+)?$/.test(value) || !Number.isFinite(Number(value))) {
+    throw new Error(`Invalid counter count from ${url}`);
   }
-
-  const normalized = String(value).replaceAll(',', '').trim();
-
-  if (!/^\d+(?:\.\d+)?$/.test(normalized)) {
-    throw new Error(`GoatCounter returned an invalid count for ${url}.`);
-  }
-
-  return Math.max(0, Math.trunc(Number(normalized)));
+  return Math.max(0, Math.trunc(Number(value)));
 };
 
 const fetchCounter = async (origin, path, parameters = {}) => {
-  const url = buildCounterUrl(origin, path, parameters);
+  const url = new URL(`/counter/${encodeURIComponent(path)}.json`, origin);
+  for (const [key, value] of Object.entries(parameters)) url.searchParams.set(key, value);
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), requestTimeoutMs);
-
   try {
     const response = await fetch(url, {
       headers: {
         Accept: 'application/json',
-        'User-Agent': 'SeAh-Yoo-reading-pulse/1.0 (+https://seah-yoo.github.io/)',
+        'User-Agent': 'SeAh-Yoo-reading-pulse/2.0 (+https://seah-yoo.github.io/)',
       },
       signal: controller.signal,
     });
-
-    // A never-seen counter path responds with 404. It is a legitimate zero,
-    // especially for newly published posts and newly introduced events.
-    if (response.status === 404) {
-      return 0;
-    }
-
-    if (!response.ok) {
-      throw new Error(`GoatCounter request failed (${response.status}) for ${url}.`);
-    }
-
+    // A path never visited before legitimately has no public counter.
+    if (response.status === 404) return 0;
+    if (!response.ok) throw new Error(`GoatCounter request failed (${response.status}) for ${url}`);
     return parseCounterCount(await response.json(), url);
   } finally {
     clearTimeout(timeout);
@@ -316,15 +117,12 @@ const fetchCounter = async (origin, path, parameters = {}) => {
 const mapWithConcurrency = async (items, limit, mapper) => {
   const results = new Array(items.length);
   let nextIndex = 0;
-
   const worker = async () => {
     while (nextIndex < items.length) {
-      const currentIndex = nextIndex;
-      nextIndex += 1;
-      results[currentIndex] = await mapper(items[currentIndex]);
+      const index = nextIndex++;
+      results[index] = await mapper(items[index]);
     }
   };
-
   await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
   return results;
 };
@@ -333,80 +131,68 @@ const readExistingSnapshot = async () => {
   try {
     return JSON.parse(await readFile(snapshotPath, 'utf8'));
   } catch (error) {
-    if (error && error.code === 'ENOENT') {
-      return null;
-    }
-
-    console.warn(`Ignoring an unreadable existing reading-pulse snapshot: ${error.message}`);
+    if (error.code !== 'ENOENT') console.warn(`Unreadable existing snapshot: ${error.message}`);
     return null;
   }
 };
 
-const snapshotSignature = (snapshot) => JSON.stringify({
-  schema_version: snapshot.schema_version,
-  site: snapshot.site,
-  posts: snapshot.posts,
-});
+const snapshotSignature = ({ schema_version, period, site, posts, wiki }) =>
+  JSON.stringify({ schema_version, period, site, posts, wiki });
 
 const writeSnapshot = async (snapshot) => {
   const existing = await readExistingSnapshot();
-
-  // Do not advance generated_at on an otherwise identical run. This keeps the
-  // scheduled workflow from making a commit merely because a day has passed.
   if (existing && snapshotSignature(existing) === snapshotSignature(snapshot)) {
-    console.log('Reading-pulse metrics are unchanged; snapshot left untouched.');
-    return false;
+    console.log('Reading-pulse metrics and date range are unchanged; snapshot left untouched.');
+    return;
   }
-
   await mkdir(dirname(snapshotPath), { recursive: true });
   const temporaryPath = `${snapshotPath}.${process.pid}.tmp`;
-  const document = `${JSON.stringify(snapshot, null, 2)}\n`;
-
-  await writeFile(temporaryPath, document, 'utf8');
+  await writeFile(temporaryPath, `${JSON.stringify(snapshot, null, 2)}\n`, 'utf8');
   await rename(temporaryPath, snapshotPath);
-  console.log(`Reading-pulse snapshot updated for ${snapshot.posts.length} post(s).`);
-  return true;
+  console.log(`Reading-pulse snapshot updated: ${snapshot.posts.length} post(s), ${snapshot.wiki.length} wiki page(s).`);
 };
 
 const main = async () => {
-  const [analytics, config] = await Promise.all([
-    readFile(analyticsPath, 'utf8').then((source) => JSON.parse(source)),
-    readFile(siteConfigPath, 'utf8').then(parseTopLevelYamlScalars),
+  const [analytics, manifest] = await Promise.all([
+    readFile(analyticsPath, 'utf8').then(JSON.parse),
+    readManifest(),
   ]);
   const origin = normalizeGoatCounterOrigin(analytics.goatcounterCode);
-  const posts = await readPosts(config.permalink);
+  const now = new Date();
+  const period = recentPeriod(now, manifest.timezone || 'UTC');
+  const range = { start: period.start, end: period.end };
+  // Bound ALL public requests, including per-post events, to four in flight.
+  const requests = [{ path: 'TOTAL' }];
+  const prepare = (entry, kind) => {
+    const offset = requests.length;
+    requests.push({ path: entry.path, parameters: range }, { path: entry.path });
+    if (kind === 'post') {
+      requests.push({ path: `read-75--${entry.slug}` }, { path: `read-complete--${entry.slug}` });
+    }
+    return { entry, offset };
+  };
+  const posts = manifest.posts.map((entry) => prepare(entry, 'post'));
+  const wiki = manifest.wiki.map((entry) => prepare(entry, 'wiki'));
+  const counts = await mapWithConcurrency(requests, requestConcurrency,
+    ({ path, parameters }) => fetchCounter(origin, path, parameters));
+  const visits = ({ entry, offset }) => ({
+    ...entry, month: counts[offset], total: counts[offset + 1],
+  });
 
-  const [siteTotal, postMetrics] = await Promise.all([
-    fetchCounter(origin, 'TOTAL'),
-    mapWithConcurrency(posts, requestConcurrency, async (post) => {
-      const [month, total, read75, readComplete] = await Promise.all([
-        fetchCounter(origin, post.path, { start: 'month' }),
-        fetchCounter(origin, post.path),
-        fetchCounter(origin, `read-75--${post.slug}`),
-        fetchCounter(origin, `read-complete--${post.slug}`),
-      ]);
-
-      return {
-        ...post,
-        month,
-        total,
-        read75,
-        readComplete,
-      };
-    }),
-  ]);
-
+  // All requests must succeed before replacing the last successful snapshot.
   await writeSnapshot({
-    schema_version: 1,
-    generated_at: new Date().toISOString(),
-    site: {
-      total: siteTotal,
-    },
-    posts: postMetrics,
+    schema_version: 2,
+    generated_at: now.toISOString(),
+    period,
+    site: { total: counts[0] },
+    posts: posts.map((item) => ({
+      ...visits(item), read75: counts[item.offset + 2], readComplete: counts[item.offset + 3],
+    })),
+    wiki: wiki.map(visits),
   });
 };
 
 main().catch((error) => {
-  console.error(`Reading-pulse refresh failed: ${error.message}`);
+  console.error(`Reading-pulse refresh failed; existing snapshot retained: ${error.message}`);
   process.exitCode = 1;
 });

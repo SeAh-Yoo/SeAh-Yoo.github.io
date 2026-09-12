@@ -146,7 +146,7 @@ kakao_javascript_key: "본인의_Kakao_JavaScript_키"
 
 포스트의 제목·부제·본문·출처처럼 글 자체에 속한 내용을 제외한 인터페이스 문구는 `_data/site_identity.yml`에서 관리합니다. 브랜드와 관리인 정보, 내부·외부 링크, 이미지 경로, 탐색 메뉴, 모든 정적 페이지의 제목·소개·목록, 검색·분석·포스트 도구 문구, 테마와 언어 표시명이 여기에 포함됩니다.
 
-레이아웃, include, 정적 페이지와 JavaScript에는 표시 문구를 직접 적지 않고 중앙 설정의 키를 읽습니다. 텍스트 안에 값을 삽입하는 `{count}`, `{minutes}` 같은 변수는 해당 문구 바로 윗줄의 `# Variables:` 주석에 기록합니다. 화면에 쓰는 경로나 외부 URL도 `links` 또는 `assets`에서 관리합니다.
+레이아웃, include, 정적 페이지와 JavaScript에는 표시 문구를 직접 적지 않고 중앙 설정의 키를 읽습니다. `{count}`, `{minutes}` 같은 치환 변수와 HTML 태그는 세 언어에서 보존합니다. 공통 URL은 `links`, 공통 이미지는 `assets`, 관리인 페이지 이미지는 `pages.about.images`에서 관리합니다.
 
 기본 빌드는 `settings.default_language`인 한국어 문구로 정적 HTML을 만들고, `scripts/site-preferences.js`가 사용자가 고른 언어의 같은 키를 적용합니다.
 
@@ -157,38 +157,42 @@ kakao_javascript_key: "본인의_Kakao_JavaScript_키"
 | `settings` | 기본 언어, 지원 언어와 국기·아이콘 경로, 브라우저 저장 키 |
 | `links` | 홈·피드·검색 색인·라이선스·분석 안내 경로 |
 | `assets` | 파비콘·프로필·기본 소셜 이미지 경로 |
-| `locales.ko`, `locales.en`, `locales.ja` | 한국어·영어·일본어 인터페이스 사전 |
-| `locales.<언어>.brand` | 블로그명, 슬로건, SEO 설명, 홈 태그라인, 저자와 인용 카드 문구 |
-| `locales.<언어>.operator` | 공간 관리인 소개, 기록 목적·방법, 보존 메모와 안내문 |
-| `locales.<언어>.ui`, `locales.<언어>.navigation` | 공통 버튼, 접근성 레이블과 탐색 메뉴 문구 |
-| `locales.<언어>.search`, `locales.<언어>.analytics`, `locales.<언어>.post` | 검색·방문 현황·포스트 도구의 동적 문구 |
-| `locales.<언어>.themes` | 화면 테마 표시명 |
-| `locales.<언어>.pages` | 9개 정적 페이지의 메뉴명, 제목, 소개, SEO 설명, 목록과 하단 메모 |
+| `shared.<구성요소>.locales.ko/en/ja` | 브랜드·메뉴·검색·테마·포스트 도구 등 공통 문구를 구성 요소별로 비교·편집 |
+| `pages.<페이지>.locales.ko/en/ja` | 한 페이지의 제목·소개·SEO·본문·하단 메모를 세 언어와 함께 편집 |
+| `pages.about.locales.<언어>.sections` | 관리인 소개와 다섯 섹션의 본문·이미지 대체 텍스트 |
+| `pages.about.images` | 섹션별 이미지 경로, 크기, 좌우 배치 |
+| `locales.ko/en/ja` | 기존 Liquid와 JavaScript를 위한 YAML 참조. 이곳에 문구를 중복 작성하지 않음 |
+
+`&page_about_ko`는 원본에 붙인 이름이고 `*page_about_ko`는 그 원본을 가리킵니다.
+페이지별 영역에서 수정하면 기존 `locales.ko.pages.about` 경로에도 자동으로 반영됩니다.
+별도의 동기화 스크립트나 Jekyll 플러그인은 필요 없습니다.
+관리인 소개는 기존 `operator`에서 `pages.about.locales.<언어>.sections.profile/editorial`로 이동했습니다.
+명시적인 `data-i18n`(텍스트), `data-i18n-html`(저장소의 HTML 문구), `data-i18n-alt`(대체 텍스트)를 사용하면
+같은 원문이라도 페이지 문맥에 맞는 키로 번역되고 줄바꿈·강조를 유지합니다.
 
 세 언어의 키 구조는 동일하게 유지합니다. 새 문구 키를 추가할 때는 `ko`, `en`, `ja`에 같은 위치로 모두 추가해야 언어 전환 시 빠진 문구가 생기지 않습니다.
 
 ### 페이지별 하단 메모
 
-포스트를 제외한 모든 정적 페이지에는 같은 모양의 하단 메모 두 칸이 있습니다. 각 언어의 `pages.<identity_key>.notes`에서 페이지별로 내용을 다르게 적을 수 있습니다.
+정적 페이지의 하단 메모는 `pages.<identity_key>.locales.<언어>.notes`에서 편집합니다.
 
 ```yaml
-locales:
-  ko:
-    pages:
-      about:
+pages:
+  about:
+    locales:
+      ko:
         notes:
           enabled: true
           items:
-            - title: "입구에 남긴 안내"
+            - title: "주의사항"
               body: "페이지에 표시할 첫 번째 메모"
             - title: "관리인의 메모"
               body: "페이지에 표시할 두 번째 메모"
 ```
 
-메모 전체를 숨기려면 `enabled: false`로 바꾸고, 한 칸만 쓰려면 필요하지 않은 `items` 항목을 제거합니다. 같은 페이지의 영어·일본어 메모는 각각 `locales.en.pages`, `locales.ja.pages`의 같은 위치에서 관리합니다.
+메모 전체를 숨기려면 `enabled: false`로 바꾸고, 한 칸만 쓰려면 필요하지 않은 `items` 항목을 제거합니다. 같은 페이지 바로 아래의 `en`, `ja`에도 동일한 항목 구조를 유지합니다.
 
-위키는 `locales.<언어>.pages.wiki.notes`에서 관리합니다. 위키 목록(`/wiki/`)과
-모든 개별 위키 문서 하단에 같은 메모를 표시합니다. 다른 페이지와 마찬가지로
+위키 목록(`/wiki/`)의 메모는 `pages.wiki.locales.<언어>.notes`에서 관리합니다. 다른 페이지와 마찬가지로
 `enabled: false` 또는 `items: []`로 숨길 수 있습니다.
 
 ### 메뉴명 위계
@@ -196,13 +200,13 @@ locales:
 사이드바는 각 페이지의 `label`을 큰 기능명으로, `title`을 작은 공간형 보조 명칭으로 표시합니다.
 
 ```yaml
-locales:
-  ko:
-    pages:
-      timeline:
-        label: "전체 게시물"
-        title: "공간 이력"
-        eyebrow: "WRITTEN TRACES"
+pages:
+  timeline:
+    locales:
+      ko:
+        label: "시간순"
+        title: "작성 이력"
+        eyebrow: "시간순 | WRITTEN TRACES"
 ```
 
 작은 모바일 화면에서는 보조 명칭이 숨겨질 수 있으므로 `label`만 읽어도 기능을 이해할 수 있어야 합니다.
@@ -214,13 +218,13 @@ locales:
 | `identity_key` | 경로 | 화면 기능 | 콘셉트 강조용 보조 명칭 |
 | --- | --- | --- | --- |
 | `home` | `/` | 홈 | 문하수도 |
-| `start` | `/start-here/` | 처음 읽기 | 중심 합류점 |
-| `about` | `/about/` | 공간 안내 | 이곳은 어디 |
-| `timeline` | `/timeline/` | 전체 게시물 | 공간 이력 |
-| `reading_pulse` | `/reading-pulse/` | 방문자 현황 | 남겨진 발자국 |
-| `topics` | `/topics/` | 소재별 분류 | 공간 계통 |
-| `references` | `/references/` | 출처 및 인용 | 수집물 보관함 |
-| `categories` | `/categories/` | 주제별 분류 | 하수 관로 |
+| `start` | `/start-here/` | 안내소 | 시작 지점 |
+| `about` | `/about/` | 관리인 | 관리 부서 |
+| `timeline` | `/timeline/` | 시간순 | 작성 이력 |
+| `reading_pulse` | `/reading-pulse/` | 방문 기록 | 방문객의 흔적 |
+| `topics` | `/topics/` | 소재별 | 태그 모음 |
+| `references` | `/references/` | 출처 & 인용 | 이상기록 추가 보관함 |
+| `categories` | `/categories/` | 주제별 | 기록 분류 |
 | `not_found` | `/404.html` | 찾을 수 없는 페이지 | 막힌 통로 |
 
 ## 인터페이스 언어
@@ -261,7 +265,7 @@ locales:
 | 주소 | 역할 | 콘셉트 강조용 보조 명칭 | 작성자가 관리할 값 |
 | --- | --- | --- | --- |
 | `/start-here/` | 탐색 페이지 | 중심 합류점 | `start_here`, `start_here_order` |
-| `/about/` | 소개 페이지 | 공간 안내 | `_data/site_identity.yml`의 `locales.<언어>.operator`, `locales.<언어>.pages.about` |
+| `/about/` | 소개 페이지 | 공간 안내 | `_data/site_identity.yml`의 `pages.about.locales.<언어>.sections` |
 | `/timeline/` | 전체 게시물 | 공간 이력 | 없음 |
 | `/reading-pulse/` | 방문자 현황 | 남겨진 발자국 | GoatCounter 공개 집계 |
 | `/topics/` | 소재별 분류 | 공간 계통 | `topics` |
@@ -270,7 +274,7 @@ locales:
 
 ### 탐색 페이지
 
-`_data/site_identity.yml`의 `locales.<언어>.pages.start.paths`에 입문 경로의 제목과 설명을 정하고, 각 포스트에 아래 값을 추가합니다.
+`_data/site_identity.yml`의 `pages.start.locales.<언어>.paths`에 입문 경로의 제목과 설명을 정하고, 각 포스트에 아래 값을 추가합니다.
 
 ```yaml
 start_here: "game-industry"
@@ -281,7 +285,7 @@ start_here_order: 2
 
 ### 소재별 분류 페이지
 
-`category_key`가 큰 전문 분야의 안정적인 식별자라면 `topics`는 글을 여러 질문과 소재로 연결하는 세분화된 분류입니다. 주제 목록과 설명은 `_data/site_identity.yml`의 `locales.<언어>.pages.topics.items`에서 관리합니다.
+`category_key`가 큰 전문 분야의 안정적인 식별자라면 `topics`는 글을 여러 질문과 소재로 연결하는 세분화된 분류입니다. 주제 목록과 설명은 `_data/site_identity.yml`의 `pages.topics.locales.<언어>.items`에서 관리합니다.
 
 ```yaml
 topics:
@@ -364,16 +368,35 @@ Esc                    검색창 닫기
 
 ### 정적 방문 현황 페이지
 
-`/reading-pulse/`는 공개 GoatCounter 카운터를 하루 한 번 읽어 만든 정적 스냅샷입니다. 누적 방문, 최근 30일 방문, 75% 읽기와 완독 기록을 글별로 보여 줍니다.
+`/reading-pulse/`는 공개 GoatCounter 카운터를 하루 한 번 읽어 만든 정적 스냅샷입니다.
+상단은 사이트 누적 집계, 포스트·위키의 최근 30일 방문 합계, 포스트의 누적 완독 기록을 보여 줍니다.
+포스트별 목록 아래에 위키별 방문 목록을 별도로 표시합니다. 위키에는 방문 수만 있으며 읽기 이벤트는 수집하지 않습니다.
+75% 읽기와 완독은 중복될 수 있는 별개 이벤트이므로 합쳐서 조회수로 표시하지 않습니다.
+사이트 누적값은 다른 페이지·이벤트를 포함할 수 있어 아래 목록의 합계와 다를 수 있습니다.
 
 - 원본 데이터: `_data/reading_pulse.json`
 - 생성 도구: `scripts/refresh-reading-pulse.mjs`
+- 공개 URL 목록: Jekyll이 생성하는 `_site/reading-pulse-index.json`
 - 자동 갱신: `.github/workflows/refresh-reading-pulse.yml`
 - 비밀키 없이 공개 `/counter/*.json` 응답만 사용
 
 ```powershell
+jekyll build --safe
 node scripts/refresh-reading-pulse.mjs
+jekyll serve --safe --host 127.0.0.1 --port 4173
 ```
+
+스크립트는 기본 언어 포스트와 공개 위키 문서의 실제 Jekyll URL을 사용합니다.
+개별 permalink, 컬렉션 설정, baseurl과 비공개/미래 포스트 제외는 Jekyll의 빌드 결과를 따릅니다.
+다른 빌드 경로를 쓰면 `node scripts/refresh-reading-pulse.mjs <생성된-manifest-경로>`로 지정합니다.
+정기 워크플로도 Jekyll 3.10.0으로 URL 목록을 만든 다음 집계합니다.
+
+스냅샷 `schema_version: 2`는 `posts`, `wiki`, `period.start/end/timezone`을 저장합니다.
+`month` 필드는 호환을 위해 이름을 유지하지만, 사이트 시간대의 오늘을 포함하는 최근 30개 날짜를 뜻합니다.
+해당 범위를 `start=YYYY-MM-DD&end=YYYY-MM-DD`로 명시해 조회합니다.
+공개 카운터의 범위와 캐시 동작은 [GoatCounter 문서](https://www.goatcounter.com/help/visitor-counter)를 참고하세요.
+아직 방문하지 않은 경로의 404는 0으로 처리하고, 통신·응답 오류는 기존 스냅샷을 보존한 채 실패합니다.
+수치나 표시 기간이 달라졌을 때만 저장하며, 위키만 달라진 경우도 갱신합니다.
 
 소개 페이지에서 이 브라우저의 통계 수집을 제외할 수 있습니다.
 
@@ -528,7 +551,7 @@ image: /assets/images/example-post-cover.png
 
 - `lang`: 포스트 문서의 언어. `ko`, `en`, `ja` 중 하나
 - `translation_key`: 원문과 번역본을 연결하는 공통 식별자
-- `category_key`: 언어가 바뀌어도 유지되는 큰 전문 분야 식별자. `site_identity.yml`의 `locales.<언어>.pages.categories.items[].id`와 일치
+- `category_key`: 언어가 바뀌어도 유지되는 큰 전문 분야 식별자. `site_identity.yml`의 `pages.categories.locales.<언어>.items[].id`와 일치
 - `date`: 작성 시각 및 이전·다음 글 정렬의 유일한 기준
 - `last_modified_at`: 화면과 구조화 데이터에 표시할 마지막 수정 시각
 - `category`: 큰 전문 분야
@@ -753,7 +776,7 @@ GoatCounter는 방문자의 브라우저에 추적용 쿠키나 고유 식별자
 
 개별 위키에는 포스트와 마찬가지로 `주의사항`·`방문객의 메모` 같은 하단 notes 카드를
 출력하지 않습니다. 위키 **색인 페이지**의 notes는 기존
-`locales.<언어>.pages.wiki.notes` 설정을 계속 사용합니다.
+`pages.wiki.locales.<언어>.notes` 설정을 계속 사용합니다.
 
 포스트와 개별 위키의 댓글은 **GitHub Discussions 기반 giscus**를 공유합니다.
 `pathname` 기준이므로 각 위키 주소에 별도 댓글과 반응이 연결됩니다.
@@ -774,7 +797,7 @@ last_modified_at: 2026-09-12
 수정일을 생략하면 최초 등록일을 표시합니다. 날짜를 확인하지 못했다면 생략할 수 있으며,
 Jekyll이 자동으로 제공하는 빌드 시각은 최초 등록일이나 검색 정렬 날짜로 표시하지 않습니다.
 날짜 파일명에서 Jekyll이 해석한 날짜도 사용되므로 위키 파일명은 날짜 없는 개념명을 권장합니다.
-화면 레이블은 `_data/site_identity.yml`의 `locales.<언어>.wiki.created/updated`에서 관리합니다.
+화면 레이블은 `_data/site_identity.yml`의 `shared.wiki.locales.<언어>.created/updated`에서 관리합니다.
 
 이번 보완에서는 기존 다섯 문서의 Git 최초 추가 커밋 `7920b15`의 작성 시각
 `2026-09-10T22:46:18+09:00`을 근거로 `date: 2026-09-10`을 추가했습니다.
