@@ -10,7 +10,7 @@ permalink: /topics/
 <section class="topic-intro glass-panel" aria-labelledby="topic-intro-title">
   <p class="eyebrow" data-i18n-html="pages.topics.section_eyebrow">{{ page_copy.section_eyebrow }}</p>
   <h2 id="topic-intro-title" data-i18n-html="pages.topics.section_title">{{ page_copy.section_title }}</h2>
-  <p><span data-i18n-html="pages.topics.section_prefix">{{ page_copy.section_prefix }}</span> <a href="{{ site_copy.pages.categories.path | relative_url }}" data-i18n-html="pages.categories.title">{{ site_copy.pages.categories.title }}</a> <span data-i18n-html="pages.topics.section_suffix">{{ page_copy.section_suffix }}</span></p>
+  <p><span data-i18n-html="pages.topics.section_prefix">{{ page_copy.section_prefix }}</span> <a href="{{ site_copy.pages.categories.path | relative_url }}" data-i18n-html="pages.categories.title">{{ site_copy.pages.categories.title }}</a><span data-i18n-html="pages.topics.section_suffix">{{ page_copy.section_suffix }}</span></p>
   <nav class="topic-chip-list" aria-label="{{ page_copy.list_label }}">
     {% for topic in page_copy.items %}
     <a class="topic-chip" href="#{{ topic.id }}" data-i18n-html="pages.topics.items.{{ forloop.index0 }}.label">{{ topic.label }}</a>

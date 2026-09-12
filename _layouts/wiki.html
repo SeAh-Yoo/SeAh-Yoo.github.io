@@ -13,24 +13,24 @@
       <main class="content" id="main-content">
         <article class="post glass-panel wiki-article" lang="{{ page.lang }}">
           <header class="post-header">
-            <a class="post-category-eyebrow" href="{{ '/wiki/' | relative_url }}">{{ wiki_copy.all_entries }}</a>
+            <a class="post-category-eyebrow" href="{{ '/wiki/' | relative_url }}" data-i18n="wiki.all_entries">{{ wiki_copy.all_entries }}</a>
             <h1 data-no-interface-translation>{{ page.title | escape }}</h1>
             {% if page.aliases.size > 0 %}<p class="wiki-aliases" data-no-interface-translation>{{ page.aliases | join: ' · ' | escape }}</p>{% endif %}
             {% comment %}Jekyll supplies site.time for undated collection documents. Never publish that fallback.{% endcomment %}
             {% assign wiki_created = nil %}
             {% if page.date and page.date != site.time %}{% assign wiki_created = page.date %}{% endif %}
             <div class="wiki-dates">
-              {% if wiki_created %}<p><span>{{ wiki_copy.created }}</span> <time datetime="{{ wiki_created | date_to_xmlschema }}">{{ wiki_created | date: '%Y-%m-%d' }}</time></p>{% endif %}
+              {% if wiki_created %}<p><span data-i18n="wiki.created">{{ wiki_copy.created }}</span> <time datetime="{{ wiki_created | date_to_xmlschema }}">{{ wiki_created | date: '%Y-%m-%d' }}</time></p>{% endif %}
               {% assign modified = page.last_modified_at | default: wiki_created %}
-              {% if modified %}<p><span>{{ wiki_copy.updated }}</span> <time datetime="{{ modified | date_to_xmlschema }}">{{ modified | date: '%Y-%m-%d' }}</time></p>{% endif %}
+              {% if modified %}<p><span data-i18n="wiki.updated">{{ wiki_copy.updated }}</span> <time datetime="{{ modified | date_to_xmlschema }}">{{ modified | date: '%Y-%m-%d' }}</time></p>{% endif %}
             </div>
             {% capture wiki_toc %}{% include wiki-headings.html html=content url=page.url %}{% endcapture %}
             {% assign wiki_toc = wiki_toc | strip %}
             {% if page.description or wiki_toc != '' or page.details.size > 0 %}
-            <nav class="wiki-toc" aria-label="{{ wiki_copy.contents }}">
-              <p class="eyebrow">{{ wiki_copy.contents }}</p>
+            <nav class="wiki-toc" aria-label="{{ wiki_copy.contents }}" data-i18n-aria-label="wiki.contents">
+              <p class="eyebrow" data-i18n="wiki.contents">{{ wiki_copy.contents }}</p>
               <ul>
-                {% if page.description %}<li><a href="#wiki-summary">{{ wiki_copy.summary }}</a></li>{% endif %}
+                {% if page.description %}<li><a href="#wiki-summary" data-i18n="wiki.summary">{{ wiki_copy.summary }}</a></li>{% endif %}
                 {{ wiki_toc }}
                 {% include wiki-details.html entry=page %}
               </ul>
@@ -40,20 +40,20 @@
           <div class="post-content">
             {% if page.description %}
             <section class="wiki-summary" aria-labelledby="wiki-summary">
-              <h2 id="wiki-summary">{{ wiki_copy.summary }}</h2>
+              <h2 id="wiki-summary" data-i18n="wiki.summary">{{ wiki_copy.summary }}</h2>
               <p data-no-interface-translation>{{ page.description | escape }}</p>
             </section>
             {% endif %}
             {{ content }}
             {% if page.details.size > 0 %}
-            <aside class="wiki-detail-pages" aria-label="{{ wiki_copy.details }}">
-              <h2 id="wiki-detail-pages">{{ wiki_copy.details }}</h2>
+            <aside class="wiki-detail-pages" aria-label="{{ wiki_copy.details }}" data-i18n-aria-label="wiki.details">
+              <h2 id="wiki-detail-pages" data-i18n="wiki.details">{{ wiki_copy.details }}</h2>
               <ul>{% include wiki-details.html entry=page %}</ul>
             </aside>
             {% endif %}
           </div>
           <aside class="wiki-backlinks" aria-labelledby="wiki-backlinks-title" data-wiki-backlinks data-wiki-index="{{ '/wiki-index.json' | relative_url }}">
-            <h2 id="wiki-backlinks-title">{{ wiki_copy.backlinks }}</h2>
+            <h2 id="wiki-backlinks-title" data-i18n="wiki.backlinks">{{ wiki_copy.backlinks }}</h2>
             <p data-backlinks-status role="status" hidden>{{ wiki_copy.backlinks_loading }}</p>
             <ul data-backlinks-list data-no-interface-translation></ul>
             <noscript><p>{{ wiki_copy.backlinks_noscript }}</p></noscript>

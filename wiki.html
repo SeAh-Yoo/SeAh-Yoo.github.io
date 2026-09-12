@@ -29,7 +29,7 @@ permalink: /wiki/
     {% assign group_entries = group_entries | strip %}
     {% if group_entries != '' %}
     <section class="wiki-group" aria-labelledby="wiki-group-{{ group_index }}" data-wiki-group data-group-label="{{ group }}">
-      <h2 id="wiki-group-{{ group_index }}">{{ group }}</h2>
+      <h2 id="wiki-group-{{ group_index }}">{% if group == "0–9 / 기타" %}<span data-i18n="wiki.other_group">{{ wiki_copy.other_group }}</span>{% else %}{{ group }}{% endif %}</h2>
       <ul class="wiki-entry-list">{{ group_entries }}</ul>
     </section>
     {% endif %}
@@ -41,7 +41,7 @@ permalink: /wiki/
   <nav class="wiki-alphabet" aria-label="{{ wiki_copy.alphabet }}">
     {% for group in wiki_groups %}
       {% capture group_marker %}data-group-label="{{ group }}"{% endcapture %}
-      {% if wiki_sections contains group_marker %}<a href="#wiki-group-{{ forloop.index }}">{{ group }}</a>{% endif %}
+      {% if wiki_sections contains group_marker %}<a href="#wiki-group-{{ forloop.index }}">{% if group == "0–9 / 기타" %}<span data-i18n="wiki.other_group">{{ wiki_copy.other_group }}</span>{% else %}{{ group }}{% endif %}</a>{% endif %}
     {% endfor %}
   </nav>
   {{ wiki_sections }}

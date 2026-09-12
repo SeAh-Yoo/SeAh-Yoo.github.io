@@ -85,14 +85,14 @@ shared:
       ko: &shared_brand_ko
         name: 이상기록 문하수도
         short_name: 문하수도
-        english_name: THE LITERARY UNDERGROUND ─ WIERD STORIES
+        english_name: THE LITERARY UNDERGROUND ─ WEIRD STORIES
         sidebar_subtitle: NERDY, SUBCULTURE STORIES
         slogan: 하위 문화의 중심을 꿈꾸는 서브컬처의 하수도
         seo_title_suffix: 서브컬쳐 렉카 블로그
         description: 비평이라고 하기도 민망한 소소한 글을 게시하는 소소한 개인 블로그.
         home_tagline: 문화 수도로의 도약을 망상하는 하위 문화의 하수도.<br />AI, 게임, 만화/애니메이션, 영화, 인터넷 방송, 커뮤니티, 서브컬쳐 등.
         post_context: AI, 게임, 만화/애니메이션, 영화, 인터넷 방송, 커뮤니티, 서브컬쳐 등을 다루는 블로그.
-        quote_card_kicker: THE LITERARY UNDERGROUND ─ WIERD STORIES
+        quote_card_kicker: THE LITERARY UNDERGROUND ─ WEIRD STORIES
         quote_card_label: 이상기록 문하수도
         quote_card_filename_prefix: 문하수도-이상기록
         author:
@@ -101,7 +101,7 @@ shared:
       en: &shared_brand_en
         name: Literary Underground — Strange Records
         short_name: Literary Underground
-        english_name: THE LITERARY UNDERGROUND ─ WIERD STORIES
+        english_name: THE LITERARY UNDERGROUND ─ WEIRD STORIES
         sidebar_subtitle: NERDY, SUBCULTURE STORIES
         slogan: A sewer of subculture dreaming of becoming its center
         seo_title_suffix: A Subculture Rubbernecking Blog
@@ -109,7 +109,7 @@ shared:
         home_tagline: A sewer of subculture daydreaming of becoming a cultural capital.<br />AI, games, manga/anime, film, livestreaming, online communities, subculture,
           and more.
         post_context: A blog about AI, games, manga/anime, film, livestreaming, online communities, subculture, and more.
-        quote_card_kicker: THE LITERARY UNDERGROUND ─ WIERD STORIES
+        quote_card_kicker: THE LITERARY UNDERGROUND ─ WEIRD STORIES
         quote_card_label: Literary Underground — Strange Records
         quote_card_filename_prefix: literary-underground-record
         author:
@@ -118,18 +118,18 @@ shared:
       ja: &shared_brand_ja
         name: 異常記録 文学下水道
         short_name: 文学下水道
-        english_name: THE LITERARY UNDERGROUND ─ WIERD STORIES
+        english_name: THE LITERARY UNDERGROUND ─ WEIRD STORIES
         sidebar_subtitle: NERDY, SUBCULTURE STORIES
         slogan: サブカルチャーの中心を夢見る、下位文化の下水道
         seo_title_suffix: サブカルの話題を拾う個人ブログ
         description: 批評と呼ぶのも気恥ずかしい、ささやかな文章を載せる小さな個人ブログ。
         home_tagline: 文化の都への飛躍を妄想する、下位文化の下水道。<br />AI、ゲーム、漫画・アニメ、映画、ネット配信、コミュニティ、サブカルチャーなど。
         post_context: AI、ゲーム、漫画・アニメ、映画、ネット配信、コミュニティ、サブカルチャーなどを扱うブログ。
-        quote_card_kicker: THE LITERARY UNDERGROUND ─ WIERD STORIES
+        quote_card_kicker: THE LITERARY UNDERGROUND ─ WEIRD STORIES
         quote_card_label: 異常記録 文学下水道
         quote_card_filename_prefix: 文学下水道-記録
         author:
-          name: ユ・セア
+          name: ミョ・アラン
           alternate_name: AhRan Myo
   ui:
     locales:
@@ -563,7 +563,7 @@ shared:
   wiki:
     locales:
       ko: &shared_wiki_ko
-        all_entries: 이상위키 항목 | WIERD WIKI ENTRIES
+        all_entries: 이상위키 항목 | WEIRD WIKI ENTRIES
         created: '최초 등록일:'
         updated: '수정일:'
         preview: 미리보기
@@ -580,19 +580,20 @@ shared:
         backlinks_error: 연결 목록을 불러오지 못했습니다. 새로고침해 주세요.
         backlinks_noscript: 자동 역링크를 보려면 JavaScript를 켜 주세요.
         alphabet: 가나다순 목차
+        other_group: 0–9 / 기타
         empty: 아직 작성된 이상위키 항목이 없습니다.
         result_wiki: 이상위키
         result_post: 이상위키 게시물
       en: &shared_wiki_en
-        all_entries: Strange wiki entries | WIERD WIKI ENTRIES
-        created: First published
-        updated: Updated
+        all_entries: Strange wiki entries | WEIRD WIKI ENTRIES
+        created: 'First published:'
+        updated: 'Updated:'
         preview: Preview
         preview_close: Close preview
         preview_open: Follow original link
         no_description: No short description yet.
         contents: Strange wiki contents
-        summary: Brief definition
+        summary: Summary
         details: Further detail
         backlinks: Other entries connected to this strange wiki entry
         backlinks_loading: Checking connected strange wiki entries…
@@ -600,14 +601,15 @@ shared:
         backlinks_empty: No other strange wiki entries mention this entry yet.
         backlinks_error: Could not load links. Please refresh this page.
         backlinks_noscript: Enable JavaScript to see automatic backlinks.
-        alphabet: Alphabetical contents
+        alphabet: Korean alphabetical index
+        other_group: 0–9 / Other
         empty: No strange wiki entries have been written yet.
         result_wiki: Strange wiki
         result_post: Strange wiki post
       ja: &shared_wiki_ja
-        all_entries: 異常ウィキの項目 | WIERD WIKI ENTRIES
-        created: 初回登録日
-        updated: 更新日
+        all_entries: 異常ウィキの項目 | WEIRD WIKI ENTRIES
+        created: 初回登録日：
+        updated: 更新日：
         preview: プレビュー
         preview_close: プレビューを閉じる
         preview_open: 元のリンクへ移動
@@ -621,7 +623,8 @@ shared:
         backlinks_empty: この項目に言及しているほかの異常ウィキ項目はまだありません。
         backlinks_error: リンクを読み込めませんでした。ページを再読み込みしてください。
         backlinks_noscript: 自動バックリンクを見るにはJavaScriptを有効にしてください。
-        alphabet: 五十音・ハングル順の目次
+        alphabet: ハングル順の目次
+        other_group: 0–9 / その他
         empty: 異常ウィキの項目はまだありません。
         result_wiki: 異常ウィキ
         result_post: 異常ウィキの記事
@@ -638,7 +641,7 @@ pages:
             - title: 방문객의 메모
               body: 전에 수상한 방을 발견했다. 거기는 분명 탈출구임이 분명하다.<br />하지만 끔찍하게 생긴 거인이 거기를 막고 서 있어서 들어갈 수 없었다.
         path: /wiki/
-        eyebrow: 이상위키 | WIERD WIKI
+        eyebrow: 이상위키 | WEIRD WIKI
         label: 이상위키
         title: 개념 정리
         intro: 객관적 서술보다는 매우 개인적이고 주관적인 판단으로 작성된 문제적 위키.<br />주로 인터넷 방송(인이 도움이 될 내용)에 대한 내용을 기록, 정리합니다.
@@ -652,7 +655,7 @@ pages:
             - title: Visitor’s note
               body: I found a suspicious room before. It must be the exit.<br />But a hideous giant was blocking it, so I could not get in.
         path: /wiki/
-        eyebrow: Strange wiki | WIERD WIKI
+        eyebrow: Strange wiki | WEIRD WIKI
         label: Strange wiki
         title: Concept notes
         intro: A questionable wiki written from very personal, subjective judgments rather than objective descriptions.<br />Mostly records and organizes information
@@ -667,7 +670,7 @@ pages:
             - title: 訪問者のメモ
               body: 前に怪しい部屋を見つけた。あそこはきっと出口に違いない。<br />でも、恐ろしい姿の巨人が立ちはだかっていて入れなかった。
         path: /wiki/
-        eyebrow: 異常ウィキ | WIERD WIKI
+        eyebrow: 異常ウィキ | WEIRD WIKI
         label: 異常ウィキ
         title: 概念整理
         intro: 客観的な記述よりも、きわめて個人的で主観的な判断で書かれた問題だらけのウィキ。<br />主にネット配信や、配信者の役に立ちそうな内容を記録・整理します。
@@ -678,12 +681,12 @@ pages:
         path: /
         title: 이상기록 문하수도
         label: 홈
-        eyebrow: THE LITERARY UNDERGROUND ─ WIERD STORIES
+        eyebrow: THE LITERARY UNDERGROUND ─ WEIRD STORIES
         description: AI, 게임, 만화/애니메이션, 영화, 인터넷 방송, 커뮤니티, 서브컬쳐 등.
         featured_aria_prefix: 가장 최근 이상 기록
         featured_kicker: 가장 최근 이상 기록
         featured_open_label: 이상 기록 열기
-        recent_eyebrow: WIERD HISTORIES
+        recent_eyebrow: WEIRD HISTORIES
         recent_title: 그 밖에 최근 이상 기록
         recent_more_label: 전체 이상 기록 보기
         discovery_eyebrow: NAVIGATOR FOR GUESTS
@@ -707,12 +710,12 @@ pages:
         path: /
         title: Literary Underground — Strange Records
         label: Home
-        eyebrow: THE LITERARY UNDERGROUND ─ WIERD STORIES
+        eyebrow: THE LITERARY UNDERGROUND ─ WEIRD STORIES
         description: AI, games, manga/anime, film, livestreaming, online communities, subculture, and more.
         featured_aria_prefix: Latest strange record
         featured_kicker: Latest strange record
         featured_open_label: Open the strange record
-        recent_eyebrow: WIERD HISTORIES
+        recent_eyebrow: WEIRD HISTORIES
         recent_title: Other recent strange records
         recent_more_label: View all strange records
         discovery_eyebrow: NAVIGATOR FOR GUESTS
@@ -736,12 +739,12 @@ pages:
         path: /
         title: 異常記録 文学下水道
         label: ホーム
-        eyebrow: THE LITERARY UNDERGROUND ─ WIERD STORIES
+        eyebrow: THE LITERARY UNDERGROUND ─ WEIRD STORIES
         description: AI、ゲーム、漫画・アニメ、映画、ネット配信、コミュニティ、サブカルチャーなど。
         featured_aria_prefix: 最新の異常記録
         featured_kicker: 最新の異常記録
         featured_open_label: 異常記録を開く
-        recent_eyebrow: WIERD HISTORIES
+        recent_eyebrow: WEIRD HISTORIES
         recent_title: そのほかの最近の異常記録
         recent_more_label: すべての異常記録を見る
         discovery_eyebrow: NAVIGATOR FOR GUESTS
@@ -941,7 +944,7 @@ pages:
         description: The Literary Underground’s development and writing, subject choices, editorial principles, and anonymous visitor counts.
         sections:
           profile:
-            eyebrow: THE KEEPER
+            eyebrow: THE KEEPER ROLE
             title: Keeper of the Literary Underground
             name: AhRan Myo
             alternate_name: 묘아란
@@ -950,10 +953,10 @@ pages:
             site_description: The person who decorates and maintains the Literary Underground, sorting and writing its strange records.<br />&nbsp;<br />Interested
               in all sorts of subcultures and reasonably knowledgeable, though neither that knowledge nor those abilities are quite top-tier.<br />Likes researching
               and digging into things, but tends to move on to another interest after reaching a certain level.
-            separator: ·
+            separator: ' · '
             image_alt: Profile image of AhRan Myo, keeper of the Literary Underground
           editorial:
-            eyebrow: NOTES ON KEEPING
+            eyebrow: TOPICS & CONCEPTS
             title: Subjects and concept
             editorial_purpose: Small thoughts on AI, games, manga/anime, film, livestreaming, online communities, subculture, and more.
             editorial_method: In particular, I prepare and publish guides to livestreaming.<br />I try to base posts on facts and evidence whenever possible.
@@ -979,9 +982,9 @@ pages:
             description: The Literary Underground uses GoatCounter to count anonymous visits and post-reading activity.<br />This website does not create cookies
               or permanent identifiers for analytics.<br />&nbsp;<br />Visit and reading counts are approximate figures used to help maintain the blog, rather than
               exact measurements.
-            opt_out_prefix: If you prefer, choose
+            opt_out_prefix: If you do not want your visits counted, choose
             opt_out_label: exclude this browser from statistics
-            opt_out_suffix: . Details are available in
+            opt_out_suffix: .<br />Details are available in
             privacy_label: GoatCounter's privacy guide
             privacy_suffix: .
             image_alt: Fading footprints beside the water in an empty sewer
@@ -1001,17 +1004,17 @@ pages:
         description: 文学下水道の開発と執筆、主題の選定、編集方針、匿名の訪問集計について説明します。
         sections:
           profile:
-            eyebrow: THE KEEPER
+            eyebrow: THE KEEPER ROLE
             title: 文学下水道の管理人
-            name: ユ・セア
+            name: ミョ・アラン
             alternate_name: AhRan Myo
             role: ブログの管理と執筆
             introduction: 2000年10月10日生まれ、天秤座。身長170.8cm。人生最軽量は49kg、最重量は秘密。
             site_description: 文学下水道を飾り、管理し、異常記録を分類して書く人。<br />&nbsp;<br />あらゆるサブカルチャーに興味があり、それなりに詳しいものの、知識も能力も最高水準には届かないほう。<br />何でも調べて深掘りするのが好きだが、ある程度まで進むと別のことに興味を移しがち。
             separator: ・
-            image_alt: 文学下水道の管理人、묘아란のプロフィール画像
+            image_alt: 文学下水道の管理人、ミョ・アランのプロフィール画像
           editorial:
-            eyebrow: NOTES ON KEEPING
+            eyebrow: TOPICS & CONCEPTS
             title: 主題とコンセプト
             editorial_purpose: AI、ゲーム、漫画・アニメ、映画、ネット配信、コミュニティ、サブカルチャーなどについての、ささやかな考え。
             editorial_method: 特にネット配信のガイドや道しるべになる記事を準備し、連載しています。<br />できるだけ事実と根拠に基づく記事を書くよう努めています。
@@ -1034,9 +1037,9 @@ pages:
             eyebrow: VISITOR TRACES
             title: 訪問記録について
             description: 文学下水道はGoatCounterで匿名の訪問の流れと記事の閲覧状況を集計します。<br />このウェブサイトは統計のためのCookieや永続的な識別子を作成しません。<br />&nbsp;<br />訪問・閲覧数は厳密な実数ではなく、ブログ管理の参考にするためのおおよその数値です。
-            opt_out_prefix: 希望しない場合は
+            opt_out_prefix: 集計を希望しない場合は
             opt_out_label: このブラウザーを統計から除外
-            opt_out_suffix: を選べます。詳しい方式は
+            opt_out_suffix: を選べます。<br />詳しくは
             privacy_label: GoatCounterのプライバシー案内
             privacy_suffix: で確認できます。
             image_alt: 誰もいない下水道の水辺にかすかに残る足跡
@@ -1289,15 +1292,15 @@ pages:
         description: Explore the Literary Underground’s strange records through connected subjects and keywords.
         section_eyebrow: Material index
         section_title: Subjects of the strange records
-        section_prefix: One record can connect to several questions or materials. Browse the specialist category list on
-        section_suffix: ', or use this page to continue reading across fields through a shared concern.'
-        list_label: Material list
+        section_prefix: One strange record can connect to several questions or subjects. Browse the category list on
+        section_suffix: ', or use this page to read posts on different subjects connected by the same tag.'
+        list_label: Tag list
         post_count_suffix: ' strange records'
         empty_message: Writing for this topic is being prepared.
         items:
           - id: women-oriented-games
             label: Games for women
-            description: Women players, women-oriented narratives, and the game market
+            description: Stories about women players, women-oriented narratives, and games
           - id: game-culture
             label: Game culture
             description: Player experience, communities, and cultural language
@@ -1330,15 +1333,15 @@ pages:
         description: 文学下水道の異常記録を、題材やキーワードのつながりから探します。
         section_eyebrow: Material index
         section_title: 異常記録の題材
-        section_prefix: 一つの記録は複数の問いや素材につながります。専門カテゴリー別の一覧は
-        section_suffix: で確認し、ここでは異なる分野の記事を同じ問題意識で続けて読めます。
-        list_label: 素材一覧
+        section_prefix: 一つの異常記録は複数の問いや題材につながります。主題別の一覧は
+        section_suffix: で確認でき、ここでは異なる主題の記事を同じタグでつなげて読めます。
+        list_label: タグ一覧
         post_count_suffix: 件の異常記録
         empty_message: このトピックの記事を準備しています。
         items:
           - id: women-oriented-games
             label: 女性向けゲーム
-            description: 女性プレイヤー、女性向け物語、ゲーム市場の関係
+            description: 女性プレイヤー、女性向けの物語、ゲームについての話
           - id: game-culture
             label: ゲーム文化
             description: プレイヤーの体験、コミュニティ、文化的言語
@@ -1393,7 +1396,7 @@ pages:
         description: Browse books, reports, articles, papers, videos, and original web sources cited in the Literary Underground.
         section_eyebrow: Source storage
         section_title: Sources used in the strange records
-        section_description: References in posts and wiki entries are collected automatically. A source with the same id is stored once, with links to every document
+        section_description: References in posts and wiki entries are collected automatically.<br />A source with the same id is stored once, with links to every document
           that cites it.
         library_label: Original source list
         default_type: Source
@@ -1415,7 +1418,7 @@ pages:
         description: 文学下水道で引用した本、報告書、記事、論文、動画、ウェブ原文の一覧です。
         section_eyebrow: Source storage
         section_title: 異常記録に使用した内容の出典
-        section_description: 投稿とウィキのreferences一覧を自動収集します。同じidの資料は一度だけ登録し、引用したすべての文書を表示します。
+        section_description: 投稿とウィキのreferences一覧を自動収集します。<br />同じidの資料は一度だけ登録し、引用したすべての文書を表示します。
         library_label: 原資料一覧
         default_type: Source
         cited_in_label: 引用した記事
@@ -1426,7 +1429,7 @@ pages:
             - title: <font color=red>注意事項</font>
               body: <font color=red>これまでの注意事項はすべて嘘です。<br />絶対に従ってはいけません。忘れないでください。</font>
             - title: 訪問者のメモ
-              body: あの人たち、大丈夫なの？ 10人以上で一緒に歩いているけど……<br />そんなことをしたら……どうなるか分からないのに。本当に。
+              body: あの人たち、大丈夫なの？ 10人を超える人数で一緒に歩いているけど……<br />そんなことをしたら……どうなるか分からないのに。本当に。
   categories:
     locales:
       ko: &page_categories_ko
@@ -1549,8 +1552,7 @@ pages:
             - title: Warnings
               body: Do not read any strange records you find in this area.<br />Do not trust any records other than the warnings.
             - title: Keeper’s note
-              body: Genuine warnings appear here at irregular intervals.<br />Most warnings must neither be trusted nor followed. I wish the work were just a little
-                easier.
+              body: Strange, fake warnings sometimes appear in this space.<br />Most warnings must neither be trusted nor followed. Except those written in red.
       ja: &page_not_found_ja
         path: /404.html
         title: この区域には入れません
@@ -1567,7 +1569,7 @@ pages:
             - title: 注意事項
               body: この区域で奇妙な記録を見つけても、読んではいけません。<br />注意事項以外の記録は一切信じてはいけません。
             - title: 管理人のメモ
-              body: この空間には不規則に本物の注意事項が現れる。<br />大半の注意事項は信じても従ってもいけない。もう少し仕事が楽ならいいのに。
+              body: この空間には変則的な偽の注意事項が現れることがある。<br />大半の注意事項は信じても従ってもいけない。赤い文字で書かれたものを除いて。
 # 호환용 참조 — 아래 별칭은 유지하고, 위의 원본 문구를 편집하세요.
 locales:
   ko:
