@@ -532,20 +532,10 @@
   font-weight: 900;
 }
 
-.post-rss-icon {
-  color: #ffb36b;
-  font-size: 0.57rem;
-  letter-spacing: -0.02em;
-}
-
 .post-share-trigger {
   border-color: rgba(215, 184, 255, 0.3);
   background: linear-gradient(135deg, rgba(139, 216, 255, 0.12), rgba(215, 184, 255, 0.11));
   color: #edf7ff;
-}
-
-.post-rss-button {
-  border-color: rgba(255, 179, 107, 0.24);
 }
 
 .post-print-button {
@@ -562,12 +552,6 @@
   outline: none;
   animation: none;
   transform: translateY(-1px);
-}
-
-.post .post-rss-button:hover,
-.post .post-rss-button:focus-visible {
-  border-color: rgba(255, 179, 107, 0.62);
-  background: rgba(255, 179, 107, 0.1);
 }
 
 .post-share-dialog {

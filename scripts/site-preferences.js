@@ -400,6 +400,9 @@
     document.querySelectorAll('[data-language-select]').forEach((select) => {
       select.value = preferences.language;
     });
+    document.querySelectorAll('[data-language-button]').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.languageButton === preferences.language));
+    });
     const selectedOption = languageOptions.find((option) => option.id === preferences.language);
     document.querySelectorAll('[data-language-flag]').forEach((element) => {
       element.textContent = selectedOption?.flag || '';
@@ -467,6 +470,9 @@
     });
     document.querySelectorAll('[data-language-select]').forEach((select) => {
       select.addEventListener('change', () => set('language', select.value));
+    });
+    document.querySelectorAll('[data-language-button]').forEach((button) => {
+      button.addEventListener('click', () => set('language', button.dataset.languageButton));
     });
     localizePostCards();
     redirectLocalizedPost();
