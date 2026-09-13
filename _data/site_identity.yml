@@ -683,8 +683,10 @@ pages:
         featured_aria_prefix: 가장 최근 이상 기록
         featured_kicker: 가장 최근 이상 기록
         featured_open_label: 이상 기록 열기
-        recent_eyebrow: WEIRD HISTORIES
-        recent_title: 그 밖에 최근 이상 기록
+        recent_eyebrow: NEWLY PUBLISHED
+        recent_title: 최신 등록 게시물
+        wiki_recent_title: 최근 수정 위키
+        wiki_more_label: 위키 전체 보기
         recent_more_label: 전체 이상 기록 보기
         discovery_eyebrow: NAVIGATOR FOR GUESTS
         discovery_title: 문하수도의 나침반
@@ -712,8 +714,10 @@ pages:
         featured_aria_prefix: Latest strange record
         featured_kicker: Latest strange record
         featured_open_label: Open the strange record
-        recent_eyebrow: WEIRD HISTORIES
-        recent_title: Other recent strange records
+        recent_eyebrow: NEWLY PUBLISHED
+        recent_title: Latest published posts
+        wiki_recent_title: Recently updated wiki
+        wiki_more_label: Browse the wiki
         recent_more_label: View all strange records
         discovery_eyebrow: NAVIGATOR FOR GUESTS
         discovery_title: The Literary Underground compass
@@ -741,8 +745,10 @@ pages:
         featured_aria_prefix: 最新の異常記録
         featured_kicker: 最新の異常記録
         featured_open_label: 異常記録を開く
-        recent_eyebrow: WEIRD HISTORIES
-        recent_title: そのほかの最近の異常記録
+        recent_eyebrow: NEWLY PUBLISHED
+        recent_title: 最新の投稿
+        wiki_recent_title: 最近更新されたウィキ
+        wiki_more_label: ウィキ一覧
         recent_more_label: すべての異常記録を見る
         discovery_eyebrow: NAVIGATOR FOR GUESTS
         discovery_title: 文学下水道の羅針盤
@@ -764,7 +770,7 @@ pages:
   start:
     locales:
       ko: &page_start_ko
-        path: /start-here/
+        path: /
         label: 안내소
         title: 시작 지점
         eyebrow: 안내소 | HOMEGROUND IN MANHOLE ACCESS POINT
@@ -793,7 +799,7 @@ pages:
             - title: 방문객의 메모
               body: 만약 다른 일행과 마주친다면 절대 인사나 대화를 나누어서는 안된다.<br />그 이유는 ■■■■■이다. 절대 인사를 하거나 대화를 하지 말 것.
       en: &page_start_en
-        path: /start-here/
+        path: /
         label: Start here
         title: Starting point
         eyebrow: Start here | HOMEGROUND IN MANHOLE ACCESS POINT
@@ -822,7 +828,7 @@ pages:
             - title: Visitor’s note
               body: If you encounter another group, do not greet them or speak to them.<br />The reason is ■■■■■. Never greet them or start a conversation.
       ja: &page_start_ja
-        path: /start-here/
+        path: /
         label: 案内所
         title: 出発地点
         eyebrow: 案内所 | HOMEGROUND IN MANHOLE ACCESS POINT

@@ -1,0 +1,19 @@
+{% capture wiki_order %}{% for entry in site.wiki %}{{ entry.last_modified_at | default: entry.date | default: '1970-01-01' | date: '%s' | prepend: '000000000000' | slice: -12, 12 }}:{{ forloop.index0 }}{% unless forloop.last %}|{% endunless %}{% endfor %}{% endcapture %}
+{% assign wiki_order = wiki_order | split: '|' | sort | reverse %}
+<section class="recent-section" aria-labelledby="recent-wiki-title">
+  <header class="section-heading">
+    <h2 id="recent-wiki-title" data-i18n="pages.home.wiki_recent_title">{{ home_copy.wiki_recent_title }}</h2>
+    <a class="section-heading-link" href="{{ pages.wiki.path | relative_url }}" data-i18n="pages.home.wiki_more_label">{{ home_copy.wiki_more_label }}</a>
+  </header>
+  <div class="recent-post-list">
+    {% for key in wiki_order limit: 5 %}
+    {% assign entry_index = key | split: ':' | last | plus: 0 %}
+    {% assign entry = site.wiki[entry_index] %}
+    {% assign updated = entry.last_modified_at | default: entry.date %}
+    <a class="recent-wiki" href="{{ entry.url | relative_url }}">
+      <span class="recent-copy" data-no-interface-translation><h3>{{ entry.title | escape }}</h3>{% if entry.description %}<p>{{ entry.description | escape }}</p>{% endif %}</span>
+      {% if updated %}<time class="meta" datetime="{{ updated | date_to_xmlschema }}">{{ updated | date: '%Y.%m.%d' }}</time>{% endif %}
+    </a>
+    {% else %}<p data-i18n="wiki.empty">{{ site_copy.wiki.empty }}</p>{% endfor %}
+  </div>
+</section>

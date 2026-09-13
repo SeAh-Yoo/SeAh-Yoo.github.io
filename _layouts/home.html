@@ -3,7 +3,7 @@
 {% assign brand = site_copy.brand %}
 {% assign pages = site_copy.pages %}
 {% assign home_copy = pages.home %}
-{% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
+{% assign base_posts = site.posts | where: "lang", identity.settings.default_language | sort: "date" | reverse %}
 <!doctype html>
 <html lang="{{ site_copy.meta.html_lang }}">
   <head>
@@ -17,21 +17,20 @@
       {% include sidebar.html %}
 
       <main class="content" id="main-content">
+        <header class="home-hero">
+          <p class="eyebrow" data-i18n-html="pages.start.label">{{ pages.start.label }}</p>
+          <h1 id="home-title"><a class="hero-title-link" href="{{ '/' | relative_url }}" data-i18n-html="brand.name">{{ brand.name }}</a></h1>
+          <p class="home-deck" data-i18n-html="pages.start.intro">{{ pages.start.intro }}</p>
+        </header>
+        {% include home-compass.html %}
         {% if base_posts.size > 0 %}
         {% assign featured_post = base_posts | first %}
         {% assign featured_image = featured_post.image | default: featured_post.image1 %}
-        <section class="home-cover" aria-labelledby="home-title">
-          <header class="home-hero">
-            <p class="eyebrow" data-i18n-html="pages.home.eyebrow">{{ home_copy.eyebrow | strip }}</p>
-            <h1 id="home-title"><a class="hero-title-link" href="{{ '/' | relative_url }}" data-i18n-html="brand.name">{{ brand.name }}</a></h1>
-            <p class="home-deck" data-i18n-html="brand.home_tagline">{{ brand.home_tagline }}</p>
-            <nav class="hero-actions" aria-label="{{ home_copy.discovery_primary_label | strip }}">
-              <a class="hero-action hero-action-primary" href="{{ pages.start.path | relative_url }}" data-i18n-html="pages.start.label">{{ pages.start.label }}</a>
-              <a class="hero-action" href="{{ pages.timeline.path | relative_url }}" data-i18n-html="pages.timeline.label">{{ pages.timeline.label }}</a>
-              <a class="hero-action" href="{{ pages.tags.path | relative_url }}" data-i18n-html="pages.tags.label">{{ pages.tags.label }}</a>
-            </nav>
+        <section class="home-cover" aria-labelledby="recent-posts-title">
+          <header class="section-heading">
+            <div><p class="eyebrow" data-i18n-html="pages.home.recent_eyebrow">{{ home_copy.recent_eyebrow }}</p><h2 id="recent-posts-title" data-i18n-html="pages.home.recent_title">{{ home_copy.recent_title }}</h2></div>
+            <a class="section-heading-link" href="{{ pages.timeline.path | relative_url }}" data-i18n-html="pages.home.recent_more_label">{{ home_copy.recent_more_label }}</a>
           </header>
-
           <a class="home-featured" href="{{ featured_post.url | relative_url }}" aria-label="{{ home_copy.featured_aria_prefix }}: {{ featured_post.title | escape }}" data-post-card data-translation-key="{{ featured_post.translation_key | default: featured_post.slug | escape }}" data-post-aria-prefix="{{ home_copy.featured_aria_prefix | escape }}">
             <span class="featured-media" aria-hidden="true">
               {% if featured_image %}
@@ -48,16 +47,10 @@
               <span class="featured-link" aria-hidden="true">{{ home_copy.featured_open_label }} <span>→</span></span>
             </span>
           </a>
-        </section>
 
         {% if base_posts.size > 1 %}
-        <section class="recent-section" aria-labelledby="recent-posts-title">
-          <header class="section-heading">
-            <div><p class="eyebrow" data-i18n-html="pages.home.recent_eyebrow">{{ home_copy.recent_eyebrow }}</p><h2 id="recent-posts-title" data-i18n-html="pages.home.recent_title">{{ home_copy.recent_title }}</h2></div>
-            <a class="section-heading-link" href="{{ pages.timeline.path | relative_url }}" data-i18n-html="pages.home.recent_more_label">{{ home_copy.recent_more_label }}</a>
-          </header>
           <div class="recent-post-list">
-            {% for post in base_posts offset: 1 limit: 3 %}
+            {% for post in base_posts offset: 1 limit: 4 %}
             {% assign card_image = post.image | default: post.image1 %}
             <a class="recent-post" href="{{ post.url | relative_url }}" data-post-card data-translation-key="{{ post.translation_key | default: post.slug | escape }}">
               <span class="recent-media" aria-hidden="true">
@@ -71,25 +64,13 @@
             </a>
             {% endfor %}
           </div>
-        </section>
         {% endif %}
-
-        <section class="home-discovery" aria-labelledby="home-discovery-title">
-          <header class="section-heading home-discovery-heading"><div><p class="eyebrow" data-i18n-html="pages.home.discovery_eyebrow">{{ home_copy.discovery_eyebrow }}</p><h2 id="home-discovery-title" data-i18n-html="pages.home.discovery_title">{{ home_copy.discovery_title }}</h2></div></header>
-          <div class="home-discovery-layout">
-            <a class="discovery-primary" href="{{ pages.start.path | relative_url }}">
-              <span data-i18n-html="pages.home.discovery_primary_label">{{ home_copy.discovery_primary_label | strip }}</span><strong data-i18n-html="pages.start.title">{{ pages.start.title | strip }}</strong><p data-i18n-html="pages.home.discovery_primary_text">{{ home_copy.discovery_primary_text | strip }}</p><em aria-hidden="true">{{ home_copy.discovery_open_label }} →</em>
-            </a>
-            <nav class="discovery-links" aria-label="{{ home_copy.discovery_nav_label }}">
-              <a href="{{ pages.tags.path | relative_url }}"><strong data-i18n-html="pages.tags.title">{{ pages.tags.title }}</strong><span data-i18n-html="pages.home.tags_discovery_text">{{ home_copy.tags_discovery_text }}</span></a>
-              <a href="{{ pages.categories.path | relative_url }}"><strong data-i18n-html="pages.categories.title">{{ pages.categories.title }}</strong><span data-i18n-html="pages.home.categories_discovery_text">{{ home_copy.categories_discovery_text }}</span></a>
-              <a href="{{ pages.timeline.path | relative_url }}"><strong data-i18n-html="pages.timeline.title">{{ pages.timeline.title }}</strong><span data-i18n-html="pages.home.timeline_discovery_text">{{ home_copy.timeline_discovery_text }}</span></a>
-            </nav>
-          </div>
         </section>
+
         {% else %}
         <section class="empty glass-panel">{{ home_copy.empty_message }}</section>
         {% endif %}
+        {% include home-recent-wiki.html %}
         {% include page-notes.html notes=home_copy.notes identity_key='home' %}
       </main>
     </div>

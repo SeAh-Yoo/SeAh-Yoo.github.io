@@ -79,3 +79,20 @@
   .recent-media { aspect-ratio: 16 / 8; }
   .section-heading { align-items: start; }
 }
+
+/* Unified guide: large icon targets with labels, wrapping on narrow screens. */
+.home-compass { margin-bottom: 3rem; padding: 1.5rem 0 2rem; border-block: 1px solid var(--color-border-subtle); }
+.home-compass h2 { margin: 0 0 1.25rem; font-family: var(--font-display); font-size: 1.3rem; }
+.compass-actions { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 1rem; }
+.compass-action { display: flex; flex-direction: column; align-items: center; gap: .7rem; color: var(--color-text-secondary); text-decoration: none; text-align: center; font-size: .8rem; font-weight: 700; word-break: keep-all; }
+.compass-icon { display: grid; place-items: center; width: 100%; max-width: 5rem; aspect-ratio: 1; border: 1px solid var(--color-border-strong); border-radius: var(--radius-small); background: var(--color-surface); }
+.compass-icon svg { width: 2rem; height: 2rem; }
+.compass-origin .compass-icon { background: var(--color-accent); color: var(--color-background); }
+.compass-action:hover, .compass-action:focus-visible { color: var(--color-accent-secondary); }
+.compass-action:hover .compass-icon, .compass-action:focus-visible .compass-icon { border-color: var(--color-accent-secondary); }
+.home-cover .home-featured { margin-bottom: 0; }
+.recent-wiki { display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; padding: 1.25rem 0; border-bottom: 1px solid var(--color-border-subtle); color: inherit; text-decoration: none; }
+.recent-wiki time { flex-shrink: 0; }
+.recent-wiki:hover h3 { color: var(--color-accent-secondary); }
+@media (max-width: 760px) { .compass-actions { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 430px) { .compass-actions { gap: 1.25rem .65rem; } .recent-wiki { align-items: start; flex-direction: column; gap: .6rem; } }

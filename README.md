@@ -26,7 +26,7 @@
 - Kramdown 각주 및 참고 문헌과 본문 상호 이동
 - Front Matter 작성 시각 기준 이전 글·다음 글
 - Front Matter 기반 연재 목록
-- 최근 기록을 보여 주는 홈과 질문별 입문 경로를 제공하는 안내소
+- 홈과 통합된 안내소: 최신 등록 게시물 5개, 최근 수정 위키 5개, 주요 메뉴 SVG 버튼
 - 소재의 연결 관계를 보여 주는 태그 및 소재별 분류 페이지
 - 작성 시각순 전체 목록인 히스토리 페이지
 - GoatCounter 기반 익명 방문과 완독 흐름을 보여 주는 현황 페이지
@@ -224,7 +224,7 @@ pages:
 | --- | --- | --- | --- |
 | `home` | `/` | 홈 | 이상기록 문하수도 |
 | `wiki` | `/wiki/` | 이상위키 | 개념 정리 |
-| `start` | `/start-here/` | 안내소 | 시작 지점 |
+| `start` | `/` | 안내소 | 시작 지점 |
 | `about` | `/about/` | 관리인 | 관리 부서 |
 | `timeline` | `/timeline/` | 시간순 | 작성 이력 |
 | `visitor_stats` | `/visitor-stats/` | 방문 기록 | 방문객의 흔적 |
@@ -1071,5 +1071,6 @@ Chrome에서 390px/320px 모바일 폭과 데스크톱을 확인하고, Tab/Ente
 - 태그 페이지는 `/tags/`, 방문 통계는 `/visitor-stats/`를 사용합니다. 이전 `/topics/`, `/reading-pulse/`는 검색 매개변수와 앵커를 유지하며 이동합니다.
 - 리디렉션 페이지는 사이트맵에서 제외하고 새 주소를 canonical로 지정합니다.
 - 새 페이지의 `analytics_path`는 기존 GoatCounter 경로를 유지합니다. 리디렉션 페이지에서는 집계하지 않아 중복 집계를 피합니다. 통계 스냅샷 파일과 갱신 도구 이름은 유지합니다.
-- 안내소 AI 항목의 새 ID는 `ai-issues`입니다. `source_id: ai-society`로 기존 포스트 분류를 읽으며 `#path-ai-society` 앵커도 유지합니다. 포스트의 `topics` 필드는 그대로 사용합니다.
 - 검증: `jekyll build --safe` 후 `node --test scripts/navigation.test.cjs`.
+
+안내소는 홈(`/`)으로 통합되어 있으며 `/start-here/`는 홈으로 이동합니다. 위키 목록은 `last_modified_at`(없으면 `date`) 내림차순으로 최대 5개를 표시합니다. 날짜가 모두 없으면 목록 끝에 배치합니다.

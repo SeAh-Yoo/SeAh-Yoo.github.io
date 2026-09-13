@@ -38,7 +38,7 @@ test('built routes use new canonicals and preserve historical analytics paths', 
 });
 
 test('all built localization bindings resolve for every language', () => {
-  for (const path of ['', 'tags/', 'visitor-stats/', 'about/', 'categories/', 'start-here/', 'timeline/', 'references/']) {
+  for (const path of ['', 'tags/', 'visitor-stats/', 'about/', 'categories/', 'timeline/', 'references/']) {
     const html = read(`_site/${path}index.html`);
     const data = JSON.parse(html.match(/<script id="site-identity-data"[^>]*>(.*?)<\/script>/s)[1]);
     for (const [, key] of html.matchAll(/data-i18n(?:-html|-alt|-aria-label|-title)?="([^"]+)"/g)) {
@@ -48,6 +48,20 @@ test('all built localization bindings resolve for every language', () => {
     }
   }
   const start = read('_site/start-here/index.html');
-  assert.match(start, /id="path-ai-issues"/);
-  assert.match(start, /id="path-ai-society"/);
+  assert.match(start, /noindex, follow/);
+  assert.match(start, /data-redirect-target href="\/"/);
+});
+
+
+test('unified guide lists publication dates and wiki modification dates newest first', () => {
+  const home = read('_site/index.html');
+  for (const className of ['home-cover', 'recent-section']) {
+    const section = home.match(new RegExp(`<section class="${className}"[\\s\\S]*?</section>`))[0];
+    const dates = [...section.matchAll(/<time[^>]*datetime="([^"]+)"/g)].map((match) => Date.parse(match[1]));
+    assert.ok(dates.length > 0 && dates.length <= 5);
+    assert.deepEqual(dates, [...dates].sort((a, b) => b - a));
+  }
+  assert.equal((home.match(/class="compass-action/g) || []).length, 8); // nav plus seven links
+  assert.doesNotMatch(home, /class="path-section"/);
+  assert.ok(!read('_site/sitemap.xml').includes('/start-here/</loc>'));
 });
