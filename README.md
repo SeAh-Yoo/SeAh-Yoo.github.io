@@ -164,7 +164,8 @@ kakao_javascript_key: "본인의_Kakao_JavaScript_키"
 | `assets` | 파비콘·프로필·기본 소셜 이미지 경로 |
 | `shared.<구성요소>.locales.ko/en/ja` | 브랜드·메뉴·검색·테마·포스트 도구 등 공통 문구를 구성 요소별로 비교·편집 |
 | `pages.<페이지>.locales.ko/en/ja` | 한 페이지의 제목·소개·SEO·본문·하단 메모를 세 언어와 함께 편집 |
-| `pages.about.locales.<언어>.sections` | 관리인 소개와 다섯 섹션의 본문·이미지 대체 텍스트 |
+| `pages.about.locales.<언어>.sections` | 소개 네 칸과 안내 네 칸의 본문·이미지 대체 텍스트 |
+| `pages.about.section_order` | 관리인 페이지의 섹션 표시 순서 |
 | `pages.about.images` | 섹션별 이미지 경로, 크기, 좌우 배치 |
 | `locales.ko/en/ja` | 기존 Liquid와 JavaScript를 위한 YAML 참조. 이곳에 문구를 중복 작성하지 않음 |
 
@@ -176,6 +177,23 @@ kakao_javascript_key: "본인의_Kakao_JavaScript_키"
 같은 원문이라도 페이지 문맥에 맞는 키로 번역되고 줄바꿈·강조를 유지합니다.
 
 세 언어의 키 구조는 동일하게 유지합니다. 새 문구 키를 추가할 때는 `ko`, `en`, `ja`에 같은 위치로 모두 추가해야 언어 전환 시 빠진 문구가 생기지 않습니다.
+
+### 관리인 소개 편집과 로컬 미리보기
+
+`pages.about.locales.ko.sections`의 `profile`(현실의 관리인), `subculture`(서브컬쳐와 게임),
+`livestreaming`(인터넷 방송), `interests`(요즘 관심 있는 것)를 편집합니다.
+각 칸의 `paragraphs`에는 문단을, `items`에는 목록 항목을 `- 내용`으로 추가합니다.
+HTML 줄바꿈·강조·링크를 사용할 수 있으며, 빈 목록은 `[]`로 둡니다.
+언어별 문단 수는 달라도 됩니다. 한국어를 바꿔도 영어·일본어가 자동 번역되지는 않습니다.
+새 칸은 `section_order`에 키를 추가하고 세 언어의 `sections`에 제목과 문단을 작성합니다.
+이미지는 선택 사항이며 `pages.about.images`에 같은 키를 추가하면 표시됩니다.
+
+```powershell
+jekyll serve --safe --host 127.0.0.1 --port 4000 --livereload --force_polling
+```
+
+`http://127.0.0.1:4000/about/`에서 확인합니다. Markdown, YAML, HTML, CSS를 저장하면
+자동으로 다시 빌드되고 브라우저가 새로고침됩니다. `_config.yml` 변경은 서버 재시작이 필요합니다.
 
 ### 페이지별 하단 메모
 

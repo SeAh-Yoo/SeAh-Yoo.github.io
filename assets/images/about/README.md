@@ -1,9 +1,18 @@
 # 관리인 페이지 삽화
 
-2026-09-12, Codex 내장 ImageGen으로 생성한 네 장입니다. 기존 프로필 사진은 유지했습니다.
+2026-09-13, Codex 내장 ImageGen으로 기존 다섯 장을 참조해 픽셀 아트로 재생성했습니다. 프로필은 사용자가 제공한 인물 레퍼런스도 함께 사용했습니다.
 이미지 경로·위치는 `_data/site_identity.yml`의 `pages.about.images`,
 대체 텍스트는 `pages.about.locales.<언어>.sections.<섹션>.image_alt`에서 편집합니다.
-원본 구도를 유지하고 JPEG로 압축한 웹용 이미지입니다.
+원본의 구도와 주요 사물, 보라색·청록색 조명을 유지했으며, 페이지에서는 `*-pixel.webp`를 사용합니다.
+모든 픽셀 아트 파일은 512×512 WebP로 저장했고 150KB 미만인지 확인했습니다.
+
+| 파일 | 바이트 |
+| --- | ---: |
+| profile-pixel.webp | 40,934 |
+| editorial-pixel.webp | 108,186 |
+| navigation-pixel.webp | 116,130 |
+| participation-pixel.webp | 112,832 |
+| privacy-pixel.webp | 105,770 |
 
 ## editorial.jpg
 

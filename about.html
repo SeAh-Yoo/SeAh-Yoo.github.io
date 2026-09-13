@@ -7,20 +7,20 @@ permalink: /about/
 {% assign site_copy = identity.locales[identity.settings.default_language] %}
 {% assign pages = site_copy.pages %}
 {% assign about_copy = pages.about %}
-{% assign section_order = 'profile,editorial,navigation,participation,privacy' | split: ',' %}
+{% assign section_order = identity.pages.about.section_order %}
 
 {% for section_key in section_order %}
   {% assign section = about_copy.sections[section_key] %}
   {% assign illustration = identity.pages.about.images[section_key] %}
   {% assign copy_key = 'pages.about.sections.' | append: section_key %}
-  <section class="about-section about-profile-card glass-panel{% if illustration.side == 'left' %} about-image-left{% endif %}" aria-labelledby="about-{{ section_key }}-title">
+  <section class="about-section about-profile-card glass-panel{% unless illustration.src %} about-text-only{% endunless %}{% if illustration.side == 'left' %} about-image-left{% endif %}" aria-labelledby="about-{{ section_key }}-title">
     <div class="about-profile-copy">
       <p class="eyebrow" data-i18n="{{ copy_key }}.eyebrow">{{ section.eyebrow }}</p>
       <h2 id="about-{{ section_key }}-title" data-i18n="{{ copy_key }}.title">{{ section.title }}</h2>
       {% case section_key %}
         {% when 'profile' %}
           <p><strong data-i18n="{{ copy_key }}.name">{{ section.name }}</strong><span data-i18n="{{ copy_key }}.separator">{{ section.separator }}</span><span data-i18n="{{ copy_key }}.introduction">{{ section.introduction }}</span></p>
-          <p data-i18n-html="{{ copy_key }}.site_description">{{ section.site_description }}</p>
+
         {% when 'editorial' %}
           <p data-i18n-html="{{ copy_key }}.editorial_purpose">{{ section.editorial_purpose }}</p>
           <p data-i18n-html="{{ copy_key }}.editorial_method">{{ section.editorial_method }}</p>
@@ -34,6 +34,12 @@ permalink: /about/
           <p data-i18n-html="{{ copy_key }}.description">{{ section.description }}</p>
           <p><span data-i18n="{{ copy_key }}.opt_out_prefix">{{ section.opt_out_prefix }}</span> <a href="{{ identity.links.analytics_opt_out }}" data-i18n="{{ copy_key }}.opt_out_label">{{ section.opt_out_label }}</a><span data-i18n-html="{{ copy_key }}.opt_out_suffix">{{ section.opt_out_suffix }}</span> <a href="{{ identity.links.analytics_privacy }}" rel="noopener noreferrer" target="_blank" data-i18n="{{ copy_key }}.privacy_label">{{ section.privacy_label }}</a><span data-i18n="{{ copy_key }}.privacy_suffix">{{ section.privacy_suffix }}</span></p>
       {% endcase %}
+      <div data-i18n-list="{{ copy_key }}.paragraphs" data-i18n-list-tag="p" data-no-interface-translation>
+        {% for paragraph in section.paragraphs %}<p>{{ paragraph }}</p>{% endfor %}
+      </div>
+      <ul class="about-interest-list" data-i18n-list="{{ copy_key }}.items" data-i18n-list-tag="li" data-no-interface-translation{% unless section.items.size > 0 %} hidden{% endunless %}>
+        {% for item in section.items %}<li>{{ item }}</li>{% endfor %}
+      </ul>
     </div>
     {% if illustration.src %}
       <figure class="about-profile-image">

@@ -282,6 +282,9 @@ a { color: inherit; }
 .about-section p, .about-note p, .category-index p, .timeline-intro p, .topic-intro p, .path-intro p, .reference-intro p { max-width: 70ch; color: var(--color-text-secondary); }
 .about-section a, .category-index a, .topic-intro a, .path-intro a, .reference-intro a { text-decoration: underline; text-underline-offset: 0.2em; }
 .about-profile-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(12rem, 18rem); gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+.about-text-only { grid-template-columns: minmax(0, 1fr); }
+.about-interest-list { padding-left: 1.25rem; color: var(--color-text-secondary); line-height: 1.8; }
+.about-interest-list li + li { margin-top: 0.4rem; }
 .about-profile-copy { min-width: 0; overflow-wrap: anywhere; }
 .about-image-left { grid-template-columns: minmax(12rem, 18rem) minmax(0, 1fr); }
 .about-image-left .about-profile-image { grid-column: 1; grid-row: 1; }

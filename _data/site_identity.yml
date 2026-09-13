@@ -29,7 +29,7 @@ assets:
   favicon_image: /assets/images/manhole-dive-favicon-32.png
   favicon_large_image: /assets/images/manhole-dive-icon-192.png
   apple_touch_icon: /assets/images/manhole-dive-apple-touch-180.png
-  profile_image: /assets/images/profile.jpg
+  profile_image: /assets/images/about/profile-pixel.webp
   default_social_image: /assets/images/default-social.jpg
 comments:
   enabled: true
@@ -857,52 +857,83 @@ pages:
             - title: 訪問者のメモ
               body: 別の一行に出会っても、絶対に挨拶や会話をしてはいけない。<br />理由は■■■■■だ。絶対に挨拶も会話もするな。
   about:
+    # 표시할 순서입니다. 새 칸은 이 목록과 아래 각 언어의 sections에 같은 키로 추가합니다.
+    section_order: [profile, subculture, livestreaming, interests, editorial, navigation, participation, privacy]
+    # 이미지 없는 칸도 가능합니다. paragraphs/items는 항목 수 제한이 없습니다.
+    # 문단은 paragraphs의 - 항목으로 추가합니다. HTML 사용 가능, 들여쓰기는 공백으로 유지하세요.
+    # 한국어만 수정하면 다른 언어의 기존 번역은 자동 번역되지 않습니다.
     images:
       profile:
-        src: /assets/images/profile.jpg
+        src: /assets/images/about/profile-pixel.webp
         side: right
-        width: 1254
-        height: 1254
+        width: 512
+        height: 512
       editorial:
-        src: /assets/images/about/editorial.jpg
+        src: /assets/images/about/editorial-pixel.webp
         side: left
-        width: 1254
-        height: 1254
+        width: 512
+        height: 512
       navigation:
-        src: /assets/images/about/navigation.jpg
+        src: /assets/images/about/navigation-pixel.webp
         side: right
-        width: 1254
-        height: 1254
+        width: 512
+        height: 512
       participation:
-        src: /assets/images/about/participation.jpg
+        src: /assets/images/about/participation-pixel.webp
         side: left
-        width: 1254
-        height: 1254
+        width: 512
+        height: 512
       privacy:
-        src: /assets/images/about/privacy.jpg
+        src: /assets/images/about/privacy-pixel.webp
         side: right
-        width: 1254
-        height: 1254
+        width: 512
+        height: 512
     locales:
       ko: &page_about_ko
         path: /about/
         label: 관리인
         title: 관리 부서
         eyebrow: 관리인 | Property Management Department
-        intro: 누가 문하수도를 관리하는지 안내합니다.
+        intro: 어떤 사람이 이 블로그, 즉, 이상기록-문하수도를 관리하는지 소개합니다.<br />이 블로그는 GPT-5.6 Sol, 5.6 Luna, 6-Astra로 바이브 코딩되었습니다.
         description: 문하수도의 블로그 개발 및 작성, 주제 선정, 편집 원칙과 익명 방문 통계 방식을 설명합니다.
         sections:
           profile:
             eyebrow: THE KEEPER ROLE
-            title: 문하수도 관리인
-            name: 유세아
+            title: 신상 정보
+            name: 실명전사 유세아
             alternate_name: SeAh Yoo
-            role: 블로그 관리 및 작성
+            role: 블로그 관리 및 작성, 편집
             introduction: 2000년 10월 10일생, 천칭자리, 키 170.8cm, 체중 인생 최저치 49kg, 최고치 비밀.
-            site_description: 문하수도를 꾸미고 관리하고 이상 기록을 분류하고 작성하는 사람.<br />&nbsp;<br />온갖 서브컬쳐에 관심은 물론 조예가 있지만 그 지식이나 능력이 최고 수준에는 이르지 못하는 편.<br />뭐든 연구하고 깊히 파는 것을 좋아하지만
-              어느 정도 수준에 이르면 다른 것으로 흥미를 돌리는 편.
             separator: ' · '
             image_alt: 문하수도 관리인 유세아의 프로필 이미지
+            paragraphs:
+            - 문하수도를 꾸미고 관리하고, 이상 기록을 분류하고 작성하는 사람.
+          subculture:
+            eyebrow: 'KNOWLEDGE I : COMICS & MOVIES'
+            title: 만화, 그리고 영화
+            paragraphs:
+            - 왓챠피디아 애니/영화/드라마 평가 900개 돌파 (감상시간 1700시간 돌파).
+            items:
+            - '<strong>좋아하는 만화가</strong>: 호리코시 코헤이(나의 히어로 아카데미아), 마츠이 유세이(암살교실), 후지모토 타츠키(체인소맨), 키기츠 카츠히사(프랑켄프랑), 古 미우라 켄타로(베르세르크), 이토 준지(토미에)'
+            - '<strong>좋아하는 감독</strong>: 코랄리 파르자(서브스턴스), 로버트 저메키스(캐스트 어웨이), 드류 고다드(캐빈 인 더 우즈), 크리스토퍼 놀란(인셉션), 스탠리 큐브릭(샤이닝)'
+          livestreaming:
+            eyebrow: 'KNOWLEDGE II : NOVEL & STORIES'
+            title: 소설, 그리고 이야기
+            paragraphs:
+            - 만화와 소설, 게임을 모두 좋아하는 활자 중독자.
+            items:
+            - '<strong>좋아하는 작가</strong>: 로버트 A. 하인라인(우주복 있음, 출장 가능), J.R.R. 톨킨(반지의 제왕), 조지 R.R. 마틴(얼음과 불의 노래), 안제이 삽코프스키(위쳐 시리즈)'
+            - '<strong>좋아하는 이야기</strong>: 오버로드, Re:Zero부터 시작하는 이세계 생활, Get Backers 탈환대, 강철의 연금술사, 진격의 거인, 약사의 혼잣말, 책벌레의 하극상, 연운(Where Winds Meet)'
+          interests:
+            eyebrow: 'KNOWLEDGE III : INTERESTS ABOUT STREAMING'
+            title: 인터넷 방송
+            paragraphs:
+            - 학생 때는 방송을 했지만 취직 후엔 할 수 없는 몸이 되어버린 사람.
+            items:
+            - 인생 전체 실시간 방송 경력 약 4~5년
+            - 트위치 약 1년 방송 1,000팔로워 이상 도달
+            - 트위치 일 평균 시청자 100명 도달
+            - 일본 버튜버 극초창기에 유료 버튜버 프로그램 사용 (국내 버튜버가 거의 없던 시절)
           editorial:
             eyebrow: TOPICS & CONCEPTS
             title: 주제와 컨셉
@@ -951,16 +982,38 @@ pages:
         sections:
           profile:
             eyebrow: THE KEEPER ROLE
-            title: Keeper of the Literary Underground
+            title: The keeper, offline
             name: SeAh Yoo
             alternate_name: 유세아
             role: Blog maintenance and writing
             introduction: 'Born October 10, 2000. Libra. 170.8 cm tall. Lowest-ever weight: 49 kg. Highest: a secret.'
-            site_description: The person who decorates and maintains the Literary Underground, sorting and writing its strange records.<br />&nbsp;<br />Interested
-              in all sorts of subcultures and reasonably knowledgeable, though neither that knowledge nor those abilities are quite top-tier.<br />Likes researching
-              and digging into things, but tends to move on to another interest after reaching a certain level.
             separator: ' · '
             image_alt: Profile image of SeAh Yoo, keeper of the Literary Underground
+            paragraphs:
+            - The person who decorates and maintains the Literary Underground, sorting and writing its strange records.
+          subculture:
+            eyebrow: SUBCULTURE & GAMES
+            title: Subculture & games
+            paragraphs:
+            - Interested in all sorts of subcultures and reasonably knowledgeable, though neither that knowledge nor those abilities are quite top-tier.
+            - I like researching and digging into things, but tend to move on to another interest after reaching a certain level.
+            items: []
+          livestreaming:
+            eyebrow: LIVESTREAMING
+            title: Livestreaming
+            paragraphs:
+            - I am interested in livestreaming and explore ideas that help make sense of it.
+            - In particular, I prepare and publish guides to livestreaming. I want to leave useful records for streamers, grounded in facts and evidence.
+            items: []
+          interests:
+            eyebrow: CURRENT INTERESTS
+            title: Current interests
+            paragraphs:
+            - A place for the subjects I want to look into more closely.
+            items:
+            - Games and subculture
+            - Livestreaming and streaming guides
+            - AI and online communities
           editorial:
             eyebrow: TOPICS & CONCEPTS
             title: Subjects and concept
@@ -1011,14 +1064,38 @@ pages:
         sections:
           profile:
             eyebrow: THE KEEPER ROLE
-            title: 文学下水道の管理人
+            title: 現実の管理人
             name: ユ・セア
             alternate_name: SeAh Yoo
             role: ブログの管理と執筆
             introduction: 2000年10月10日生まれ、天秤座。身長170.8cm。人生最軽量は49kg、最重量は秘密。
-            site_description: 文学下水道を飾り、管理し、異常記録を分類して書く人。<br />&nbsp;<br />あらゆるサブカルチャーに興味があり、それなりに詳しいものの、知識も能力も最高水準には届かないほう。<br />何でも調べて深掘りするのが好きだが、ある程度まで進むと別のことに興味を移しがち。
             separator: ・
             image_alt: 文学下水道の管理人、ユ・セアのプロフィール画像
+            paragraphs:
+            - 文学下水道を飾り、管理し、異常記録を分類して書く人。
+          subculture:
+            eyebrow: SUBCULTURE & GAMES
+            title: サブカルチャーとゲーム
+            paragraphs:
+            - あらゆるサブカルチャーに興味があり、それなりに詳しいものの、知識も能力も最高水準には届かないほう。
+            - 何でも調べて深掘りするのが好きだが、ある程度まで進むと別のことに興味が移りがち。
+            items: []
+          livestreaming:
+            eyebrow: LIVESTREAMING
+            title: ネット配信
+            paragraphs:
+            - ネット配信に関心を持ち、その理解につながる話題を探究しています。
+            - 特にネット配信のガイドや道しるべになる記事を準備し、連載しています。事実と根拠をもとに、配信する人にも役立つ記録を残したいと思っています。
+            items: []
+          interests:
+            eyebrow: CURRENT INTERESTS
+            title: 最近気になっていること
+            paragraphs:
+            - 今、もう少し掘り下げたい話題をここに集めます。
+            items:
+            - ゲームとサブカルチャー
+            - ネット配信と配信ガイド
+            - AIとオンラインコミュニティ
           editorial:
             eyebrow: TOPICS & CONCEPTS
             title: 主題とコンセプト

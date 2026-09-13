@@ -144,6 +144,19 @@
         else element.textContent = value;
       }
     });
+    // Rebuild lists so each language can have its own number of paragraphs/items.
+    document.querySelectorAll('[data-i18n-list]').forEach((element) => {
+      const values = getCopy(element.dataset.i18nList, []);
+      const tag = element.dataset.i18nListTag === 'li' ? 'li' : 'p';
+      const entries = Array.isArray(values) ? values : [];
+      element.replaceChildren(...entries.map((value) => {
+        const child = document.createElement(tag);
+        // Only repository-owned YAML provides this HTML, as with data-i18n-html.
+        child.innerHTML = String(value);
+        return child;
+      }));
+      element.hidden = entries.length === 0;
+    });
     ['alt', 'aria-label', 'title'].forEach((attribute) => {
       document.querySelectorAll(`[data-i18n-${attribute}]`).forEach((element) => {
         element.setAttribute(attribute, getCopy(element.getAttribute(`data-i18n-${attribute}`)));
