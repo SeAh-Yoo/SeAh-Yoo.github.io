@@ -378,7 +378,7 @@ shared:
         endnotes:
           kicker: NOTES
           title: 각주 및 참고 문헌
-          help: 본문의 각주 번호를 선택하면 이곳으로 이동합니다. 참고 문헌 번호 또는 돌아가기 화살표를 선택하면 읽던 위치로 돌아갑니다.
+          help: 본문의 각주 번호를 선택하면 이곳으로 이동합니다. 번호 또는 돌아가기 화살표를 선택하면 읽던 위치로 돌아갑니다.
           reference_link_label: 각주 및 참고 문헌 {number}으로 이동
           reference_item_label: 각주 및 참고 문헌 {number}
           backlink_label: 본문의 각주 {number} 위치로 돌아가기
