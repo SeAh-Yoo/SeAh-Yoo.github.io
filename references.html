@@ -58,6 +58,25 @@ permalink: /references/
       {% endunless %}
     {% endfor %}
   {% endfor %}
+  {% comment %}Collect Markdown endnotes from posts only; wiki notes stay local.
+  Preserve rendered paragraphs and links, with unique IDs for this collection page.
+  {% endcomment %}
+  {% for post in site.posts %}
+    {% assign rendered_post = post.content | markdownify %}
+    {% assign note_sections = rendered_post | split: '<div class="footnotes"' %}
+    {% if note_sections.size > 1 %}
+      {% assign reference_count = reference_count | plus: 1 %}
+      {% capture note_html %}<div class="footnotes"{{ note_sections[1] }}{% endcapture %}
+      {% capture note_prefix %}id="post-notes-{{ forloop.index }}-{% endcapture %}
+      {% capture source_fragment %}href="{{ post.url | relative_url }}#{% endcapture %}
+      <li class="reference-item glass-panel">
+        <div class="reference-item-main">
+          <h2><a href="{{ post.url | relative_url }}#post-endnotes" data-no-interface-translation>{{ post.title | escape }} — 각주</a></h2>
+          {{ note_html | replace: 'id="', note_prefix | replace: 'href="#', source_fragment }}
+        </div>
+      </li>
+    {% endif %}
+  {% endfor %}
   </ol>
 
   {% if reference_count == 0 %}

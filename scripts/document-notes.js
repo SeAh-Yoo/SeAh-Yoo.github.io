@@ -2,6 +2,68 @@
   const copy = (path, fallback = '') => window.siteIdentity?.get(path, fallback) ?? fallback;
   const formatCopy = (path, variables, fallback = '') => window.siteIdentity?.format(path, variables, fallback) ?? fallback;
   const normalizeReaderText = (text) => String(text || '').replace(/\s+/g, ' ').trim();
+  const preview = document.createElement('aside');
+  preview.className = 'document-note-preview';
+  preview.id = 'document-note-preview';
+  preview.hidden = true;
+  const previewTitle = document.createElement('strong');
+  const previewBody = document.createElement('div');
+  preview.append(previewTitle, previewBody);
+  document.body.append(preview);
+  let activeNote = null;
+  let closeTimer;
+  const closePreview = () => {
+    clearTimeout(closeTimer);
+    activeNote?.removeAttribute('aria-details');
+    activeNote = null;
+    preview.hidden = true;
+  };
+  const positionPreview = () => {
+    if (!activeNote) return;
+    const rect = activeNote.getBoundingClientRect();
+    const bounds = preview.getBoundingClientRect();
+    preview.style.left = `${Math.max(8, Math.min(rect.left, document.documentElement.clientWidth - bounds.width - 8))}px`;
+    preview.style.top = `${rect.bottom + bounds.height + 8 <= innerHeight ? rect.bottom + 6 : Math.max(8, rect.top - bounds.height - 6)}px`;
+  };
+  const showPreview = (link, target, label) => {
+    closePreview();
+    activeNote = link;
+    previewTitle.textContent = label;
+    const clone = target.cloneNode(true);
+    clone.querySelectorAll('.reversefootnote, .post-endnote-number-link, .wiki-preview-trigger').forEach(node => node.remove());
+    clone.removeAttribute('id');
+    clone.removeAttribute('tabindex');
+    clone.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'));
+    // Keep paragraphs and source links without nesting another endnote list item.
+    previewBody.replaceChildren(...clone.childNodes);
+    preview.setAttribute('aria-label', label);
+    link.setAttribute('aria-details', preview.id);
+    preview.hidden = false;
+    positionPreview();
+  };
+  const scheduleClose = () => {
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(() => {
+      if (!preview.matches(':hover') && !preview.contains(document.activeElement)
+          && !activeNote?.matches(':hover') && activeNote !== document.activeElement) closePreview();
+    }, 220);
+  };
+  preview.addEventListener('pointerenter', () => clearTimeout(closeTimer));
+  preview.addEventListener('pointerleave', scheduleClose);
+  preview.addEventListener('focusout', scheduleClose);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && activeNote) {
+      const link = activeNote;
+      const restore = preview.contains(document.activeElement);
+      if (restore) link.focus();
+      closePreview();
+    }
+  });
+  document.addEventListener('pointerdown', event => {
+    if (activeNote && !preview.contains(event.target) && !activeNote.contains(event.target)) closePreview();
+  });
+  window.addEventListener('resize', positionPreview);
+  window.addEventListener('scroll', positionPreview, { passive: true });
   const revealAncestors = (target) => {
     for (let parent = target.parentElement; parent; parent = parent.parentElement) {
       if (parent.matches('details')) parent.open = true;
@@ -121,12 +183,25 @@
     };
 
     root.querySelectorAll('a.footnote').forEach((link, index) => {
+      if (link.dataset.noteReady !== undefined) return;
+      link.dataset.noteReady = '';
       const number = getEndnoteNumber(link, index);
+      const label = `각주 #${number.padStart(3, '0')}`;
 
       link.classList.add('post-endnote-reference');
-      link.setAttribute('aria-label', formatCopy('post.endnotes.reference_link_label', { number }));
-      link.setAttribute('title', formatCopy('post.endnotes.reference_link_label', { number }));
+      link.setAttribute('aria-label', label);
+      link.removeAttribute('title');
       link.setAttribute('role', 'doc-noteref');
+      const target = getHashTarget(link.getAttribute('href'));
+      if (target) {
+        link.addEventListener('pointerenter', event => {
+          if (event.pointerType !== 'touch') showPreview(link, target, label);
+        });
+        link.addEventListener('focus', () => showPreview(link, target, label));
+        link.addEventListener('pointerleave', scheduleClose);
+        link.addEventListener('blur', scheduleClose);
+      }
+      link.addEventListener('click', closePreview);
       link.addEventListener('click', focusHashTarget);
     });
 

@@ -83,17 +83,9 @@
     const pageKey = (url) => window.wikiAutolinks?.pageKey(url) || url.origin + url.pathname;
     const catalog = new Map(entries.map((entry) => [pageKey(new URL(entry.url, location.href)), entry]));
     document.querySelectorAll('.wiki-article a[href]').forEach((link) => {
-      if (link.hasAttribute('data-preview-ready') || link.closest('.platform-badge')) return;
+      if (link.matches('a.footnote, a.reversefootnote, .post-endnote-number-link') || link.hasAttribute('data-preview-ready') || link.closest('.platform-badge')) return;
       let title, description;
-      if (link.matches('a.footnote')) {
-        let target;
-        try { target = document.getElementById(decodeURIComponent(new URL(link.href).hash.slice(1))); } catch { return; }
-        if (!target) return;
-        const clone = target.cloneNode(true);
-        clone.querySelectorAll('.reversefootnote, .post-endnote-number-link').forEach((node) => node.remove());
-        title = target.getAttribute('aria-label') || link.textContent;
-        description = clone.textContent.replace(/\s+/g, ' ').trim();
-      } else {
+      {
         let key;
         try { key = pageKey(new URL(link.href)); } catch { return; }
         if (key === pageKey(new URL(location.href))) return;
