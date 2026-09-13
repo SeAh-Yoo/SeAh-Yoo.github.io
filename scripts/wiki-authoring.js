@@ -1,53 +1,6 @@
 (() => {
   const copy = (key) => window.siteIdentity?.get(`wiki.${key}`, '') || '';
-  const assetRoot = document.querySelector('script[data-platform-assets]')?.dataset.platformAssets || '/assets/svg/';
-  const platforms = [
-    { id: 'chzzk', label: '치지직 / CHZZK', names: ['chzzk', '치지직'], url: 'https://chzzk.naver.com/' },
-    { id: 'soop', label: 'SOOP / 숲', names: ['soop', '숲'], url: 'https://www.sooplive.com/' },
-    { id: 'twitch', label: 'Twitch / 트위치', names: ['twitch', '트위치'], url: 'https://www.twitch.tv/' },
-    { id: 'rplay', label: 'RPlay / 알플레이', names: ['rplay', '알플레이', '알플'], url: 'https://rplay.live/' },
-    { id: 'youtube', label: 'YouTube / 유튜브', names: ['youtube', '유튜브', '유튭'], url: 'https://www.youtube.com/' },
-  ];
-  const byName = new Map(platforms.flatMap((platform) => platform.names.map((name) => [name, platform])));
-  const pattern = /\[(chzzk|치지직|soop|숲|twitch|트위치|rplay|알플레이|알플|youtube|유튜브|유튭)\]/gi;
-  const excluded = 'a, pre, code, kbd, samp, script, style, textarea, button, select, svg, math, .wiki-preview';
-  const applyPlatforms = (root) => {
-    if (!root) return;
-    const doc = root.ownerDocument;
-    const walker = doc.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) {
-      if (!walker.currentNode.parentElement?.closest(excluded)) nodes.push(walker.currentNode);
-    }
-    for (const node of nodes) {
-      const matches = [...node.nodeValue.matchAll(pattern)];
-      if (!matches.length) continue;
-      const fragment = doc.createDocumentFragment();
-      let position = 0;
-      for (const match of matches) {
-        fragment.append(doc.createTextNode(node.nodeValue.slice(position, match.index)));
-        const platform = byName.get(match[1].toLowerCase());
-        const link = doc.createElement('a');
-        link.className = 'platform-badge';
-        link.href = platform.url;
-        link.setAttribute('aria-label', platform.label);
-        link.title = platform.label;
-        const icon = doc.createElement('img');
-        icon.src = `${assetRoot}${platform.id}.svg`;
-        icon.alt = '';
-        icon.width = 24;
-        icon.height = 24;
-        const text = doc.createElement('span');
-        text.className = 'platform-badge-text';
-        text.textContent = match[0];
-        link.append(icon, text);
-        fragment.append(link);
-        position = match.index + match[0].length;
-      }
-      fragment.append(doc.createTextNode(node.nodeValue.slice(position)));
-      node.replaceWith(fragment);
-    }
-  };
+  const applyPlatforms = root => window.platformLinks?.apply(root);
 
   // Links always navigate normally. A separate button provides unambiguous touch/keyboard previews.
   const panel = document.createElement('aside');
@@ -169,6 +122,5 @@
     });
   };
   window.wikiAuthoring = { applyPlatforms, enhancePreviews };
-  applyPlatforms(document.querySelector('.wiki-article .post-content'));
   enhancePreviews();
 })();

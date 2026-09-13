@@ -185,8 +185,11 @@
 <link rel="stylesheet" href="{{ '/styles/document-comments.css' | relative_url }}" />
 <script defer src="{{ '/scripts/document-comments.js' | relative_url }}"></script>
 {% endif %}
-{% if page.layout == 'wiki' %}
+{% if page.layout == 'wiki' or page.layout == 'post' %}
 <link rel="stylesheet" href="{{ '/styles/wiki-authoring.css' | relative_url }}" />
+<script defer src="{{ '/scripts/platform-links.js' | relative_url }}" data-platform-assets="{{ '/assets/svg/' | relative_url }}"></script>
+{% endif %}
+{% if page.layout == 'wiki' %}
 <script defer src="{{ '/scripts/wiki-authoring.js' | relative_url }}" data-platform-assets="{{ '/assets/svg/' | relative_url }}"></script>
 {% endif %}
 {% if page.layout == 'wiki' or page.identity_key == 'wiki' %}

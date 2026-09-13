@@ -23,3 +23,8 @@
 @media print { .wiki-preview, .wiki-preview-trigger { display: none !important; } }
 
 .wiki-preview-trigger { font-family: system-ui, sans-serif; }
+
+/* Visible channel names wrap with the surrounding sentence. */
+.post-content a.platform-channel { display: inline; line-height: inherit; vertical-align: baseline; text-decoration: underline; text-underline-offset: .18em; }
+.post-content a.platform-channel img { margin-inline-end: .3em; vertical-align: -.3em; }
+.platform-channel-name { overflow-wrap: anywhere; }
