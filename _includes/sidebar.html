@@ -47,8 +47,13 @@
             </a>
           </li>
           <li>
-            <a href="{{ pages.timeline.path | relative_url }}"{% if page.url == pages.timeline.path %} aria-current="page"{% endif %}>
-              <span class="nav-label" data-i18n-html="pages.timeline.label">{{ pages.timeline.label | strip }}</span><small class="nav-metaphor" data-i18n-html="pages.timeline.title">{{ pages.timeline.title | strip }}</small>
+            <a href="{{ pages.about.path | relative_url }}"{% if page.url == pages.about.path %} aria-current="page"{% endif %}>
+              <span class="nav-label" data-i18n-html="pages.about.label">{{ pages.about.label | strip }}</span><small class="nav-metaphor" data-i18n-html="pages.about.title">{{ pages.about.title | strip }}</small>
+            </a>
+          </li>
+          <li>
+            <a href="{{ pages.categories.path | relative_url }}"{% if page.url == pages.categories.path %} aria-current="page"{% endif %}>
+              <span class="nav-label" data-i18n-html="pages.categories.label">{{ pages.categories.label | strip }}</span><small class="nav-metaphor" data-i18n-html="pages.categories.title">{{ pages.categories.title | strip }}</small>
             </a>
           </li>
           <li>
@@ -57,8 +62,8 @@
             </a>
           </li>
           <li>
-            <a href="{{ pages.about.path | relative_url }}"{% if page.url == pages.about.path %} aria-current="page"{% endif %}>
-              <span class="nav-label" data-i18n-html="pages.about.label">{{ pages.about.label | strip }}</span><small class="nav-metaphor" data-i18n-html="pages.about.title">{{ pages.about.title | strip }}</small>
+            <a href="{{ pages.timeline.path | relative_url }}"{% if page.url == pages.timeline.path %} aria-current="page"{% endif %}>
+              <span class="nav-label" data-i18n-html="pages.timeline.label">{{ pages.timeline.label | strip }}</span><small class="nav-metaphor" data-i18n-html="pages.timeline.title">{{ pages.timeline.title | strip }}</small>
             </a>
           </li>
           <li>
@@ -66,13 +71,17 @@
               <span class="nav-label" data-i18n-html="pages.wiki.label">{{ pages.wiki.label | strip }}</span><small class="nav-metaphor" data-i18n-html="pages.wiki.title">{{ pages.wiki.title | strip }}</small>
             </a>
           </li>
+          <li>
+            <a href="{{ pages.visitor_stats.path | relative_url }}"{% if page.url == pages.visitor_stats.path %} aria-current="page"{% endif %}>
+              <span class="nav-label" data-i18n-html="pages.visitor_stats.label">{{ pages.visitor_stats.label | strip }}</span><small class="nav-metaphor" data-i18n-html="pages.visitor_stats.title">{{ pages.visitor_stats.title | strip }}</small>
+            </a>
+          </li>
+          <li>
+            <a href="{{ pages.references.path | relative_url }}"{% if page.url == pages.references.path %} aria-current="page"{% endif %}>
+              <span class="nav-label" data-i18n-html="pages.references.label">{{ pages.references.label | strip }}</span><small class="nav-metaphor" data-i18n-html="pages.references.title">{{ pages.references.title | strip }}</small>
+            </a>
+          </li>
         </ul>
-      </nav>
-
-      <nav class="sidebar-footer-nav" aria-label="{{ site_copy.navigation.utility_label }}">
-        <a href="{{ pages.categories.path | relative_url }}" data-i18n-html="pages.categories.label">{{ pages.categories.label | strip }}</a>
-        <a href="{{ pages.visitor_stats.path | relative_url }}" data-i18n-html="pages.visitor_stats.label">{{ pages.visitor_stats.label | strip }}</a>
-        <a href="{{ pages.references.path | relative_url }}" data-i18n-html="pages.references.label">{{ pages.references.label | strip }}</a>
       </nav>
 
       <section class="theme-switcher" aria-label="{{ site_copy.navigation.theme_label }}">
