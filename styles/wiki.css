@@ -1,4 +1,4 @@
-.wiki-index { padding: clamp(1.25rem, 4vw, 3rem); }
+.wiki-index { margin-top: 1rem; padding: clamp(1.25rem, 4vw, 3rem); }
 .wiki-alphabet { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border-subtle); }
 .wiki-alphabet a { display: inline-flex; align-items: center; justify-content: center; min-height: var(--tap-target); min-width: var(--tap-target); padding: 0.4rem 0.7rem; border: 1px solid var(--color-border-strong); border-radius: var(--radius-small); text-decoration: none; }
 .wiki-alphabet a:hover { background: var(--color-accent-soft); }
