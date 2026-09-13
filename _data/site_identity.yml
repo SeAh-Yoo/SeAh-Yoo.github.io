@@ -242,7 +242,7 @@ shared:
         title: Search posts and wiki
         close_label: Close search
         input_label: Search query
-        placeholder: Search titles, aliases, text, fields, topics, and series
+        placeholder: Search titles, aliases, text, categories, tags, and series
         initial_status: Enter a search query.
         keyboard_hint: Move through results · Enter to open
         empty_message: No such record exists.
@@ -695,7 +695,7 @@ pages:
         discovery_primary_text: 관심 있는 질문부터 문하수도의 주요 기록을 순서대로 살펴봅니다.
         discovery_open_label: 통로 살펴보기
         discovery_nav_label: 다른 탐색 방법
-        topics_discovery_text: 질문과 소재가 만나는 경로로 찾기
+        tags_discovery_text: 질문과 소재가 만나는 경로로 찾기
         categories_discovery_text: 큰 주제별 관로를 따라 찾기
         timeline_discovery_text: 처음 남겨진 시각순으로 찾기
         empty_message: 아직 이 공간에 남겨진 기록이 없습니다.
@@ -720,11 +720,11 @@ pages:
         recent_more_label: View all strange records
         discovery_eyebrow: NAVIGATOR FOR GUESTS
         discovery_title: The Literary Underground compass
-        discovery_primary_label: Information desk
+        discovery_primary_label: Start here
         discovery_primary_text: Start with a question that interests you and explore the main records of the Literary Underground in order.
         discovery_open_label: Explore the passage
         discovery_nav_label: Other ways to explore
-        topics_discovery_text: Find paths where questions and materials meet
+        tags_discovery_text: Find paths where questions and materials meet
         categories_discovery_text: Follow pipelines grouped by broad category
         timeline_discovery_text: Browse by the time each record first appeared
         empty_message: No records have been left in this space yet.
@@ -753,7 +753,7 @@ pages:
         discovery_primary_text: 気になる問いから、文学下水道の主な記録を順番にたどります。
         discovery_open_label: 通路を見てみる
         discovery_nav_label: ほかの探索方法
-        topics_discovery_text: 問いと素材が交わる経路から探す
+        tags_discovery_text: 問いと素材が交わる経路から探す
         categories_discovery_text: 大きなカテゴリー別の管路をたどる
         timeline_discovery_text: 記録が最初に現れた時刻順に探す
         empty_message: この空間にはまだ記録が残されていません。
@@ -783,7 +783,8 @@ pages:
             title: 성능 낮은 게임 렉카
             description: 게임과 관련된 이슈를 가볍게 핥기만 합니다.
             prompt: 많은 사람들이 관심을 갖고 있는 게임과 게임 산업에 대한 여러 이슈에 대해 다룹니다.
-          - id: ai-society
+          - id: ai-issues
+            source_id: ai-society
             title: 다양한 AI 이슈
             description: AI와 관련된 이슈를 깊이 있게 다룹니다.
             prompt: AI 분야에서 많은 사람들이 관심을 가질 수도 있는 이슈나 재밌는 지식에 대해 말합니다.
@@ -796,9 +797,9 @@ pages:
               body: 만약 다른 일행과 마주친다면 절대 인사나 대화를 나누어서는 안된다.<br />그 이유는 ■■■■■이다. 절대 인사를 하거나 대화를 하지 말 것.
       en: &page_start_en
         path: /start-here/
-        label: Information desk
+        label: Start here
         title: Starting point
-        eyebrow: Information desk | HOMEGROUND IN MANHOLE ACCESS POINT
+        eyebrow: Start here | HOMEGROUND IN MANHOLE ACCESS POINT
         intro: Routes through the strange records, so first-time visitors do not lose their way.<br />May this path not be your last journey.
         description: An introduction to the main subjects for first-time visitors to the Literary Underground.
         guide_eyebrow: EXPLORATION GUIDE
@@ -811,7 +812,8 @@ pages:
             title: A low-powered gaming gossip tow truck
             description: Barely skimming the surface of gaming issues.
             prompt: Issues in games and the games industry that have caught people’s attention.
-          - id: ai-society
+          - id: ai-issues
+            source_id: ai-society
             title: All kinds of AI issues
             description: Taking a deeper look at AI issues.
             prompt: Issues and interesting bits of knowledge in AI that people might find worth exploring.
@@ -839,7 +841,8 @@ pages:
             title: 低性能なゲーム話題回収車
             description: ゲームの話題を、ほんの表面だけなめていきます。
             prompt: 多くの人が関心を寄せるゲームやゲーム業界のさまざまな話題を扱います。
-          - id: ai-society
+          - id: ai-issues
+            source_id: ai-society
             title: さまざまなAIの話題
             description: AIにまつわる話題を深く掘り下げます。
             prompt: AI分野で多くの人が興味を持つかもしれない話題や、面白い知識について語ります。
@@ -1073,9 +1076,9 @@ pages:
               body: 배가 너무 고파서 아까 어떤 방에서 발견한 빵을 먹었다.<br />그걸 먹은 뒤로 같은 곳을 빙빙 도는 것 같이 느껴진다.
       en: &page_timeline_en
         path: /timeline/
-        label: Chronology
+        label: Timeline
         title: Writing history
-        eyebrow: Chronology | WRITTEN TRACES
+        eyebrow: Timeline | WRITTEN TRACES
         intro: Browse the strange records left in the Literary Underground in chronological order.
         description: All posts published in the Literary Underground, ordered by their original writing date and time.
         section_eyebrow: Record history
@@ -1111,10 +1114,10 @@ pages:
               body: 先ほど来た場所へ戻った気がするなら、実際に戻っています。<br />確かに前へ進み続けていても、戻ってしまうことがあります。
             - title: 訪問者のメモ
               body: 腹が減りすぎて、さっき部屋で見つけたパンを食べた。<br />それからずっと同じ場所をぐるぐる回っている気がする。
-  reading_pulse:
+  visitor_stats:
     locales:
-      ko: &page_reading_pulse_ko
-        path: /reading-pulse/
+      ko: &page_visitor_stats_ko
+        path: /visitor-stats/
         label: 방문 기록
         title: 방문객의 흔적
         eyebrow: 방문 기록 | VISITOR TRACES
@@ -1156,11 +1159,11 @@ pages:
               body: 구역 내의 다른 일행들과 함께 합류하여 탐색해서는 안됩니다.<br />절대 다른 일행과 인사, 대화, 소통, 교류를 하지 마십시오.
             - title: 방문객의 메모
               body: 나는 한 번 이곳을 나갔었다. 하지만 다시 돌아왔다.<br />이곳은 ■■■이다. 이곳은 ■■■■이다. 나는 ■■하다.
-      en: &page_reading_pulse_en
-        path: /reading-pulse/
-        label: Visitor records
+      en: &page_visitor_stats_en
+        path: /visitor-stats/
+        label: Visitor statistics
         title: Traces of visitors
-        eyebrow: Visitor records | VISITOR TRACES
+        eyebrow: Visitor statistics | VISITOR TRACES
         intro: Visits through the Literary Underground, and traces of reading its strange records and wiki.
         description: Anonymous visitor counts, popular posts, reading activity, and visits to individual wiki pages in the Literary Underground.
         dashboard:
@@ -1199,8 +1202,8 @@ pages:
               body: Do not join other groups to explore this area together.<br />Never greet, speak to, communicate with, or interact with another group.
             - title: Visitor’s note
               body: I left this place once. But I came back.<br />This place is ■■■. This place is ■■■■. I am ■■.
-      ja: &page_reading_pulse_ja
-        path: /reading-pulse/
+      ja: &page_visitor_stats_ja
+        path: /visitor-stats/
         label: 訪問記録
         title: 訪問者の痕跡
         eyebrow: 訪問記録 | VISITOR TRACES
@@ -1241,16 +1244,16 @@ pages:
               body: 区域内の別の一行と合流して探索してはいけません。<br />絶対に別の一行と挨拶、会話、意思疎通、交流をしないでください。
             - title: 訪問者のメモ
               body: 私は一度ここを出た。でも戻ってきた。<br />ここは■■■だ。ここは■■■■だ。私は■■だ。
-  topics:
+  tags:
     locales:
-      ko: &page_topics_ko
-        path: /topics/
+      ko: &page_tags_ko
+        path: /tags/
         label: 소재별
         title: 태그 모음
         eyebrow: 소재별 | PATHS AND JUNCTIONS
         intro: 각 게시물에 관련된 소재, 즉, 태그를 통해서 게시물을 확인할 수 있습니다.
         description: 문하수도의 이상기록을 소재와 키워드의 연결 관계로 탐색합니다.
-        section_eyebrow: Material index
+        section_eyebrow: Tag index
         section_title: 이상기록의 소재들
         section_prefix: 하나의 이상기록은 여러 질문이나 소재와 연결될 수 있습니다. 주제별 목록은
         section_suffix: 에서 확인하고, 이곳에서는 서로 다른 주제의 글을 같은 태그로 엮어 읽을 수 있습니다.
@@ -1283,14 +1286,14 @@ pages:
               body: 하수도를 지나는 수로 속 오수는 대체로 안전합니다.<br />만일 하수도의 물 속에 빠졌다가 나왔을 경우, 걱정하지 않으셔도 됩니다.
             - title: 방문객의 메모
               body: 여기에는 쥐나 바퀴벌레 같은 생명체의 흔적조차 없다. 이유를 알 수 없다.<br />하지만 서로 다른 3인조 3번이나 마주쳤다. 인사를 해도 반응하지 않는다.
-      en: &page_topics_en
-        path: /topics/
-        label: Topics
+      en: &page_tags_en
+        path: /tags/
+        label: Tags
         title: Tag collection
         eyebrow: Topics | PATHS AND JUNCTIONS
         intro: 'Find posts through their subjects and keywords: their tags.'
         description: Explore the Literary Underground’s strange records through connected subjects and keywords.
-        section_eyebrow: Material index
+        section_eyebrow: Tag index
         section_title: Subjects of the strange records
         section_prefix: One strange record can connect to several questions or subjects. Browse the category list on
         section_suffix: ', or use this page to read posts on different subjects connected by the same tag.'
@@ -1324,14 +1327,14 @@ pages:
             - title: Visitor’s note
               body: There is not even a trace of rats, cockroaches, or any other living thing here. I do not know why.<br />But I have run into three different groups
                 of three. They do not respond when I greet them.
-      ja: &page_topics_ja
-        path: /topics/
+      ja: &page_tags_ja
+        path: /tags/
         label: 題材別
         title: タグ一覧
         eyebrow: 題材別 | PATHS AND JUNCTIONS
         intro: 各記事に関連する題材、つまりタグを通じて記事を探せます。
         description: 文学下水道の異常記録を、題材やキーワードのつながりから探します。
-        section_eyebrow: Material index
+        section_eyebrow: Tag index
         section_title: 異常記録の題材
         section_prefix: 一つの異常記録は複数の問いや題材につながります。主題別の一覧は
         section_suffix: で確認でき、ここでは異なる主題の記事を同じタグでつなげて読めます。
@@ -1389,9 +1392,9 @@ pages:
               body: 저 사람들 괜찮은 거 맞아? 10명이 넘게 같이 다니고 있는데...<br />저러면... 어떻게 될지도 모른다고. 정말로.
       en: &page_references_en
         path: /references/
-        label: Sources & quotations
-        title: Supplementary strange-record archive
-        eyebrow: Sources & quotations | COLLECTED SOURCES
+        label: References
+        title: References — Supplementary archive
+        eyebrow: References | COLLECTED SOURCES
         intro: Books, articles, papers, videos, and original web sources gathered for each strange record.
         description: Browse books, reports, articles, papers, videos, and original web sources cited in the Literary Underground.
         section_eyebrow: Source storage
@@ -1589,8 +1592,8 @@ locales:
       start: *page_start_ko
       about: *page_about_ko
       timeline: *page_timeline_ko
-      reading_pulse: *page_reading_pulse_ko
-      topics: *page_topics_ko
+      visitor_stats: *page_visitor_stats_ko
+      tags: *page_tags_ko
       references: *page_references_ko
       categories: *page_categories_ko
       not_found: *page_not_found_ko
@@ -1611,8 +1614,8 @@ locales:
       start: *page_start_en
       about: *page_about_en
       timeline: *page_timeline_en
-      reading_pulse: *page_reading_pulse_en
-      topics: *page_topics_en
+      visitor_stats: *page_visitor_stats_en
+      tags: *page_tags_en
       references: *page_references_en
       categories: *page_categories_en
       not_found: *page_not_found_en
@@ -1633,8 +1636,8 @@ locales:
       start: *page_start_ja
       about: *page_about_ja
       timeline: *page_timeline_ja
-      reading_pulse: *page_reading_pulse_ja
-      topics: *page_topics_ja
+      visitor_stats: *page_visitor_stats_ja
+      tags: *page_tags_ja
       references: *page_references_ja
       categories: *page_categories_ja
       not_found: *page_not_found_ja

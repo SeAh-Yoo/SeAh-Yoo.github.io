@@ -122,10 +122,10 @@ kakao_javascript_key: "본인의_Kakao_JavaScript_키"
 * 주간·월간·전체 방문 현황
 * 75% 읽기와 완독 이벤트
 * 공유, 주소 복사, 인쇄·PDF 및 인용 카드 이벤트
-* `/reading-pulse/` 정적 방문 현황 페이지
+* `/visitor-stats/` 정적 방문 현황 페이지
 * GitHub Actions를 통한 일일 통계 스냅샷 갱신
 
-`/reading-pulse/`와 포스트별 공개 카운터는 GoatCounter의 공개 `/counter/*.json` 응답을 사용하며 별도의 API 비밀키를 저장하지 않습니다. 해당 기능을 사용하려면 자신의 GoatCounter 사이트에서 공개 카운터 응답을 사용할 수 있어야 합니다.
+`/visitor-stats/`와 포스트별 공개 카운터는 GoatCounter의 공개 `/counter/*.json` 응답을 사용하며 별도의 API 비밀키를 저장하지 않습니다. 해당 기능을 사용하려면 자신의 GoatCounter 사이트에서 공개 카운터 응답을 사용할 수 있어야 합니다.
 
 포크 직후에는 기존 블로그 통계가 들어 있는 `_data/reading_pulse.json`을 삭제하거나 초기화해야 합니다.
 
@@ -221,8 +221,8 @@ pages:
 | `start` | `/start-here/` | 안내소 | 시작 지점 |
 | `about` | `/about/` | 관리인 | 관리 부서 |
 | `timeline` | `/timeline/` | 시간순 | 작성 이력 |
-| `reading_pulse` | `/reading-pulse/` | 방문 기록 | 방문객의 흔적 |
-| `topics` | `/topics/` | 소재별 | 태그 모음 |
+| `visitor_stats` | `/visitor-stats/` | 방문 기록 | 방문객의 흔적 |
+| `tags` | `/tags/` | 소재별 | 태그 모음 |
 | `references` | `/references/` | 출처 & 인용 | 이상기록 추가 보관함 |
 | `categories` | `/categories/` | 주제별 | 기록 분류 |
 | `not_found` | `/404.html` | 찾을 수 없는 페이지 | 막힌 통로 |
@@ -267,8 +267,8 @@ pages:
 | `/start-here/` | 탐색 페이지 | 중심 합류점 | `start_here`, `start_here_order` |
 | `/about/` | 소개 페이지 | 공간 안내 | `_data/site_identity.yml`의 `pages.about.locales.<언어>.sections` |
 | `/timeline/` | 전체 게시물 | 공간 이력 | 없음 |
-| `/reading-pulse/` | 방문자 현황 | 남겨진 발자국 | GoatCounter 공개 집계 |
-| `/topics/` | 소재별 분류 | 공간 계통 | `topics` |
+| `/visitor-stats/` | 방문자 현황 | 남겨진 발자국 | GoatCounter 공개 집계 |
+| `/tags/` | 소재별 분류 | 공간 계통 | `topics` |
 | `/references/` | 출처 및 인용 | 수집물 보관함 | `references` |
 | `/categories/` | 주제별 분류 | 하수 관로 | `category` |
 
@@ -285,7 +285,7 @@ start_here_order: 2
 
 ### 소재별 분류 페이지
 
-`category_key`가 큰 전문 분야의 안정적인 식별자라면 `topics`는 글을 여러 질문과 소재로 연결하는 세분화된 분류입니다. 주제 목록과 설명은 `_data/site_identity.yml`의 `pages.topics.locales.<언어>.items`에서 관리합니다.
+`category_key`가 큰 전문 분야의 안정적인 식별자라면 `topics`는 글을 여러 질문과 소재로 연결하는 세분화된 분류입니다. 주제 목록과 설명은 `_data/site_identity.yml`의 `pages.tags.locales.<언어>.items`에서 관리합니다.
 
 ```yaml
 topics:
@@ -294,7 +294,7 @@ topics:
   - "시장 관성"
 ```
 
-주제는 2~4개 정도를 권장합니다. 새 주제는 먼저 세 언어의 `pages.topics.items`에 같은 `id`와 언어별 `label`, `description`을 등록한 뒤 기본 언어의 `label`을 게시물에 추가합니다.
+주제는 2~4개 정도를 권장합니다. 새 주제는 먼저 세 언어의 `pages.tags.items`에 같은 `id`와 언어별 `label`, `description`을 등록한 뒤 기본 언어의 `label`을 게시물에 추가합니다.
 
 ### 각주 모아보기 및 출처, 레퍼런스 페이지
 
@@ -368,7 +368,7 @@ Esc                    검색창 닫기
 
 ### 정적 방문 현황 페이지
 
-`/reading-pulse/`는 공개 GoatCounter 카운터를 하루 한 번 읽어 만든 정적 스냅샷입니다.
+`/visitor-stats/`는 공개 GoatCounter 카운터를 하루 한 번 읽어 만든 정적 스냅샷입니다.
 상단은 사이트 누적 집계, 포스트·위키의 최근 30일 방문 합계, 포스트의 누적 완독 기록을 보여 줍니다.
 포스트별 목록 아래에 위키별 방문 목록을 별도로 표시합니다. 위키에는 방문 수만 있으며 읽기 이벤트는 수집하지 않습니다.
 75% 읽기와 완독은 중복될 수 있는 별개 이벤트이므로 합쳐서 조회수로 표시하지 않습니다.
@@ -683,8 +683,10 @@ details:
 ├─ start-here.html                 # 탐색 페이지
 ├─ about.html                      # 안내 페이지
 ├─ timeline.html                   # 전체 게시물
-├─ reading-pulse.html              # 방문자 현황
-├─ topics.html                     # 소재별 분류
+├─ visitor-stats.html              # 방문자 현황
+├─ reading-pulse.html              # 기존 주소 리디렉션
+├─ tags.html                       # 소재별 분류
+├─ topics.html                     # 기존 주소 리디렉션
 ├─ references.html                 # 출처 및 인용
 ├─ categories.html                 # 주제별 분류
 ├─ search.json
@@ -1008,3 +1010,11 @@ Chrome에서 390px/320px 모바일 폭과 데스크톱을 확인하고, Tab/Ente
 터치의 열기·닫기·원래 링크 이동, `#deep` 직접 진입, 테마·언어 전환,
 검색의 `공통변경검증`/`테스트별칭`, 자동 연결과 대상 문서의 역링크를 검사합니다.
 검증을 마치면 서버를 종료하세요. 내부 브라우저는 사용하지 않습니다.
+
+### 탐색 URL 호환성
+
+- 태그 페이지는 `/tags/`, 방문 통계는 `/visitor-stats/`를 사용합니다. 이전 `/topics/`, `/reading-pulse/`는 검색 매개변수와 앵커를 유지하며 이동합니다.
+- 리디렉션 페이지는 사이트맵에서 제외하고 새 주소를 canonical로 지정합니다.
+- 새 페이지의 `analytics_path`는 기존 GoatCounter 경로를 유지합니다. 리디렉션 페이지에서는 집계하지 않아 중복 집계를 피합니다. 통계 스냅샷 파일과 갱신 도구 이름은 유지합니다.
+- 안내소 AI 항목의 새 ID는 `ai-issues`입니다. `source_id: ai-society`로 기존 포스트 분류를 읽으며 `#path-ai-society` 앵커도 유지합니다. 포스트의 `topics` 필드는 그대로 사용합니다.
+- 검증: `jekyll build --safe` 후 `node --test scripts/navigation.test.cjs`.

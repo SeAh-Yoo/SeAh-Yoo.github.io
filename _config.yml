@@ -31,4 +31,5 @@ exclude:
   - scripts/test-wiki.py
   - scripts/test-wiki-authoring.py
   - scripts/wiki-autolinks.test.cjs
+  - scripts/navigation.test.cjs
   - scripts/__pycache__

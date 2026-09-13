@@ -1,0 +1,87 @@
+---
+layout: page
+identity_key: visitor_stats
+permalink: /visitor-stats/
+analytics_path: /reading-pulse/
+---
+{% assign pulse = site.data.reading_pulse %}
+{% assign identity = site.data.site_identity %}
+{% assign site_copy = identity.locales[identity.settings.default_language] %}
+{% assign dashboard_copy = site_copy.pages.visitor_stats.dashboard %}
+
+<section class="reading-pulse glass-panel" aria-labelledby="reading-pulse-title">
+  <div class="reading-pulse-heading">
+    <p class="section-label" data-i18n="pages.visitor_stats.dashboard.eyebrow">{{ dashboard_copy.eyebrow }}</p>
+    <h2 id="reading-pulse-title" data-i18n="pages.visitor_stats.dashboard.title">{{ dashboard_copy.title }}</h2>
+    <p data-i18n-html="pages.visitor_stats.dashboard.intro">{{ dashboard_copy.intro }}</p>
+  </div>
+
+  {% if pulse.generated_at %}
+    {% assign month_total = 0 %}
+    {% assign reading_total = 0 %}
+    {% for post in pulse.posts %}
+      {% assign month_total = month_total | plus: post.month %}
+      {% assign reading_total = reading_total | plus: post.readComplete %}
+    {% endfor %}
+    {% for entry in pulse.wiki %}
+      {% assign month_total = month_total | plus: entry.month %}
+    {% endfor %}
+
+    <dl class="reading-pulse-summary" aria-label="{{ dashboard_copy.summary_label }}" data-i18n-aria-label="pages.visitor_stats.dashboard.summary_label">
+      <div>
+        <dt data-i18n="pages.visitor_stats.dashboard.total_visits_label">{{ dashboard_copy.total_visits_label }}</dt>
+        <dd>{{ pulse.site.total | default: 0 }}</dd>
+      </div>
+      <div>
+        <dt data-i18n="pages.visitor_stats.dashboard.recent_visits_label">{{ dashboard_copy.recent_visits_label }}</dt>
+        <dd>{{ month_total }}</dd>
+      </div>
+      <div>
+        <dt data-i18n="pages.visitor_stats.dashboard.reading_total_label">{{ dashboard_copy.reading_total_label }}</dt>
+        <dd>{{ reading_total }}</dd>
+      </div>
+    </dl>
+
+    <p class="reading-pulse-updated">
+      <span data-i18n="pages.visitor_stats.dashboard.updated_label">{{ dashboard_copy.updated_label }}</span>:
+      <time datetime="{{ pulse.generated_at | date_to_xmlschema }}" data-date-style="long">{{ pulse.generated_at | date: site_copy.meta.date_long }}</time>
+    </p>
+    {% if pulse.period %}
+      <p class="reading-pulse-updated">
+        <span data-i18n="pages.visitor_stats.dashboard.period_label">{{ dashboard_copy.period_label }}</span>:
+        <span data-no-interface-translation>{{ pulse.period.start }} — {{ pulse.period.end }} ({{ pulse.period.timezone }})</span>
+      </p>
+    {% endif %}
+
+    <section class="reading-pulse-group" aria-labelledby="pulse-posts-title">
+      <h3 id="pulse-posts-title" data-i18n="pages.visitor_stats.dashboard.post_list_title">{{ dashboard_copy.post_list_title }}</h3>
+      <p data-i18n="pages.visitor_stats.dashboard.post_list_intro">{{ dashboard_copy.post_list_intro }}</p>
+      {% if pulse.posts.size > 0 %}
+        {% include reading-pulse-list.html entries=pulse.posts kind='post' %}
+      {% else %}
+        <p role="status" data-i18n="pages.visitor_stats.dashboard.posts_empty">{{ dashboard_copy.posts_empty }}</p>
+      {% endif %}
+    </section>
+
+    <section class="reading-pulse-group" aria-labelledby="pulse-wiki-title">
+      <h3 id="pulse-wiki-title" data-i18n="pages.visitor_stats.dashboard.wiki_list_title">{{ dashboard_copy.wiki_list_title }}</h3>
+      <p data-i18n="pages.visitor_stats.dashboard.wiki_list_intro">{{ dashboard_copy.wiki_list_intro }}</p>
+      {% if pulse.wiki.size > 0 %}
+        {% include reading-pulse-list.html entries=pulse.wiki kind='wiki' %}
+      {% elsif pulse.wiki %}
+        <p role="status" data-i18n="pages.visitor_stats.dashboard.wiki_empty">{{ dashboard_copy.wiki_empty }}</p>
+      {% else %}
+        <p role="status" data-i18n="pages.visitor_stats.dashboard.wiki_pending">{{ dashboard_copy.wiki_pending }}</p>
+      {% endif %}
+      <p class="reading-pulse-note" data-i18n="pages.visitor_stats.dashboard.wiki_reading_note">{{ dashboard_copy.wiki_reading_note }}</p>
+    </section>
+  {% else %}
+    <div class="reading-pulse-empty" role="status">
+      <p class="section-label" data-i18n="pages.visitor_stats.dashboard.pending_eyebrow">{{ dashboard_copy.pending_eyebrow }}</p>
+      <h3 data-i18n="pages.visitor_stats.dashboard.pending_title">{{ dashboard_copy.pending_title }}</h3>
+      <p data-i18n="pages.visitor_stats.dashboard.pending_description">{{ dashboard_copy.pending_description }}</p>
+    </div>
+  {% endif %}
+
+  <p class="reading-pulse-note" data-i18n-html="pages.visitor_stats.dashboard.note">{{ dashboard_copy.note }}</p>
+</section>

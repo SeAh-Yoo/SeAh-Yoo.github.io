@@ -28,7 +28,7 @@
             <nav class="hero-actions" aria-label="{{ home_copy.discovery_primary_label | strip }}">
               <a class="hero-action hero-action-primary" href="{{ pages.start.path | relative_url }}" data-i18n-html="pages.start.label">{{ pages.start.label }}</a>
               <a class="hero-action" href="{{ pages.timeline.path | relative_url }}" data-i18n-html="pages.timeline.label">{{ pages.timeline.label }}</a>
-              <a class="hero-action" href="{{ pages.topics.path | relative_url }}" data-i18n-html="pages.topics.label">{{ pages.topics.label }}</a>
+              <a class="hero-action" href="{{ pages.tags.path | relative_url }}" data-i18n-html="pages.tags.label">{{ pages.tags.label }}</a>
             </nav>
           </header>
 
@@ -81,7 +81,7 @@
               <span data-i18n-html="pages.home.discovery_primary_label">{{ home_copy.discovery_primary_label | strip }}</span><strong data-i18n-html="pages.start.title">{{ pages.start.title | strip }}</strong><p data-i18n-html="pages.home.discovery_primary_text">{{ home_copy.discovery_primary_text | strip }}</p><em aria-hidden="true">{{ home_copy.discovery_open_label }} →</em>
             </a>
             <nav class="discovery-links" aria-label="{{ home_copy.discovery_nav_label }}">
-              <a href="{{ pages.topics.path | relative_url }}"><strong data-i18n-html="pages.topics.title">{{ pages.topics.title }}</strong><span data-i18n-html="pages.home.topics_discovery_text">{{ home_copy.topics_discovery_text }}</span></a>
+              <a href="{{ pages.tags.path | relative_url }}"><strong data-i18n-html="pages.tags.title">{{ pages.tags.title }}</strong><span data-i18n-html="pages.home.tags_discovery_text">{{ home_copy.tags_discovery_text }}</span></a>
               <a href="{{ pages.categories.path | relative_url }}"><strong data-i18n-html="pages.categories.title">{{ pages.categories.title }}</strong><span data-i18n-html="pages.home.categories_discovery_text">{{ home_copy.categories_discovery_text }}</span></a>
               <a href="{{ pages.timeline.path | relative_url }}"><strong data-i18n-html="pages.timeline.title">{{ pages.timeline.title }}</strong><span data-i18n-html="pages.home.timeline_discovery_text">{{ home_copy.timeline_discovery_text }}</span></a>
             </nav>

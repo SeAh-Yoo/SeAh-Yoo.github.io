@@ -27,7 +27,7 @@ permalink: /about/
           <p data-i18n-html="{{ copy_key }}.preservation_note">{{ section.preservation_note }}</p>
         {% when 'navigation' %}
           <p><span data-i18n="{{ copy_key }}.intro">{{ section.intro }}</span> <a href="{{ pages.start.path | relative_url }}" data-i18n="pages.start.title">{{ pages.start.title }}</a><span data-i18n="{{ copy_key }}.start_suffix">{{ section.start_suffix }}</span></p>
-          <p><span data-i18n="{{ copy_key }}.paths_prefix">{{ section.paths_prefix }}</span> <a href="{{ pages.categories.path | relative_url }}" data-i18n="pages.categories.label">{{ pages.categories.label }}</a> · <a href="{{ pages.topics.path | relative_url }}" data-i18n="pages.topics.label">{{ pages.topics.label }}</a> · <span data-i18n="{{ copy_key }}.series_label">{{ section.series_label }}</span> · <a href="{{ pages.timeline.path | relative_url }}" data-i18n="pages.timeline.label">{{ pages.timeline.label }}</a>.</p>
+          <p><span data-i18n="{{ copy_key }}.paths_prefix">{{ section.paths_prefix }}</span> <a href="{{ pages.categories.path | relative_url }}" data-i18n="pages.categories.label">{{ pages.categories.label }}</a> · <a href="{{ pages.tags.path | relative_url }}" data-i18n="pages.tags.label">{{ pages.tags.label }}</a> · <span data-i18n="{{ copy_key }}.series_label">{{ section.series_label }}</span> · <a href="{{ pages.timeline.path | relative_url }}" data-i18n="pages.timeline.label">{{ pages.timeline.label }}</a>.</p>
         {% when 'participation' %}
           <p data-i18n-html="{{ copy_key }}.description">{{ section.description }}</p>
         {% when 'privacy' %}

@@ -10,7 +10,7 @@ permalink: /categories/
 <section class="category-index glass-panel" aria-labelledby="category-index-heading">
   <p class="eyebrow" data-i18n-html="pages.categories.section_eyebrow">{{ page_copy.section_eyebrow }}</p>
   <h2 id="category-index-heading" data-i18n-html="pages.categories.section_title">{{ page_copy.section_title }}</h2>
-  <p><span data-i18n-html="pages.categories.section_prefix">{{ page_copy.section_prefix }}</span> <a href="{{ site_copy.pages.topics.path | relative_url }}" data-i18n-html="pages.topics.title">{{ site_copy.pages.topics.title }}</a><span data-i18n-html="pages.categories.section_suffix">{{ page_copy.section_suffix }}</span></p>
+  <p><span data-i18n-html="pages.categories.section_prefix">{{ page_copy.section_prefix }}</span> <a href="{{ site_copy.pages.tags.path | relative_url }}" data-i18n-html="pages.tags.title">{{ site_copy.pages.tags.title }}</a><span data-i18n-html="pages.categories.section_suffix">{{ page_copy.section_suffix }}</span></p>
 
   <nav class="category-chip-list" aria-label="{{ page_copy.list_label }}">
     {% for category in page_copy.items %}

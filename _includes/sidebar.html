@@ -51,8 +51,8 @@
             </a>
           </li>
           <li>
-            <a href="{{ pages.topics.path | relative_url }}"{% if page.url == pages.topics.path %} aria-current="page"{% endif %}>
-              <span class="nav-label" data-i18n-html="pages.topics.label">{{ pages.topics.label | strip }}</span><small class="nav-metaphor" data-i18n-html="pages.topics.title">{{ pages.topics.title | strip }}</small>
+            <a href="{{ pages.tags.path | relative_url }}"{% if page.url == pages.tags.path %} aria-current="page"{% endif %}>
+              <span class="nav-label" data-i18n-html="pages.tags.label">{{ pages.tags.label | strip }}</span><small class="nav-metaphor" data-i18n-html="pages.tags.title">{{ pages.tags.title | strip }}</small>
             </a>
           </li>
           <li>
@@ -88,7 +88,7 @@
 
       <nav class="sidebar-footer-nav" aria-label="{{ site_copy.navigation.utility_label }}">
         <a href="{{ pages.categories.path | relative_url }}" data-i18n-html="pages.categories.label">{{ pages.categories.label | strip }}</a>
-        <a href="{{ pages.reading_pulse.path | relative_url }}" data-i18n-html="pages.reading_pulse.label">{{ pages.reading_pulse.label | strip }}</a>
+        <a href="{{ pages.visitor_stats.path | relative_url }}" data-i18n-html="pages.visitor_stats.label">{{ pages.visitor_stats.label | strip }}</a>
         <a href="{{ pages.references.path | relative_url }}" data-i18n-html="pages.references.label">{{ pages.references.label | strip }}</a>
         <a href="{{ identity.links.feed | relative_url }}" data-i18n-html="navigation.feed_label">{{ site_copy.navigation.feed_label }}</a>
       </nav>

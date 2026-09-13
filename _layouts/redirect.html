@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="{{ page.redirect_to | absolute_url }}">
+    <title>페이지 이동 / Page moved</title>
+    <script src="{{ '/scripts/legacy-redirect.js' | relative_url }}" defer></script>
+    <noscript><meta http-equiv="refresh" content="0;url={{ page.redirect_to | relative_url }}"></noscript>
+  </head>
+  <body>
+    <p>페이지 주소가 변경되었습니다. / This page has moved.</p>
+    <a data-redirect-target href="{{ page.redirect_to | relative_url }}">새 페이지로 이동 / Continue to the new page</a>
+  </body>
+</html>

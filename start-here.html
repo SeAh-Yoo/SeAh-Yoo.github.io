@@ -16,13 +16,15 @@ permalink: /start-here/
 </section>
 
 {% for path in page_copy.paths %}
+  {% assign source_id = path.source_id | default: path.id %}
   {% assign path_post_count = 0 %}
   {% for post in ordered_posts %}
-    {% if post.start_here == path.id %}{% assign path_post_count = path_post_count | plus: 1 %}{% endif %}
+    {% if post.start_here == source_id %}{% assign path_post_count = path_post_count | plus: 1 %}{% endif %}
   {% endfor %}
   <section class="path-section" aria-labelledby="path-{{ path.id }}">
     <div class="path-section-heading">
       <p class="eyebrow">{{ path_post_count }}<span data-i18n="pages.start.post_count_suffix">{{ page_copy.post_count_suffix }}</span></p>
+      {% if path.source_id %}<span id="path-{{ path.source_id }}" aria-hidden="true"></span>{% endif %}
       <h2 id="path-{{ path.id }}" data-i18n-html="pages.start.paths.{{ forloop.index0 }}.title">{{ path.title }}</h2>
       <p data-i18n-html="pages.start.paths.{{ forloop.index0 }}.description">{{ path.description }}</p>
       <small data-i18n-html="pages.start.paths.{{ forloop.index0 }}.prompt">{{ path.prompt }}</small>
@@ -30,7 +32,7 @@ permalink: /start-here/
     {% if path_post_count > 0 %}
     <ol class="path-list">
       {% for post in ordered_posts %}
-        {% if post.start_here == path.id %}
+        {% if post.start_here == source_id %}
         <li>
           <a class="path-card glass-panel" href="{{ post.url | relative_url }}" data-post-card data-translation-key="{{ post.translation_key | default: post.slug | escape }}"
              data-analytics-event="start-here-select--{{ path.id | slugify }}"

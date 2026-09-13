@@ -8,20 +8,20 @@
       </div>
       <dl class="reading-pulse-metrics{% if include.kind == 'wiki' %} reading-pulse-metrics-wiki{% endif %}">
         <div>
-          <dt data-i18n="pages.reading_pulse.dashboard.post_recent_label">{{ dashboard_copy.post_recent_label }}</dt>
+          <dt data-i18n="pages.visitor_stats.dashboard.post_recent_label">{{ dashboard_copy.post_recent_label }}</dt>
           <dd>{{ entry.month | default: 0 }}</dd>
         </div>
         <div>
-          <dt data-i18n="pages.reading_pulse.dashboard.post_total_label">{{ dashboard_copy.post_total_label }}</dt>
+          <dt data-i18n="pages.visitor_stats.dashboard.post_total_label">{{ dashboard_copy.post_total_label }}</dt>
           <dd>{{ entry.total | default: 0 }}</dd>
         </div>
         {% if include.kind == 'post' %}
           <div>
-            <dt data-i18n="pages.reading_pulse.dashboard.read_75_label">{{ dashboard_copy.read_75_label }}</dt>
+            <dt data-i18n="pages.visitor_stats.dashboard.read_75_label">{{ dashboard_copy.read_75_label }}</dt>
             <dd>{{ entry.read75 | default: 0 }}</dd>
           </div>
           <div>
-            <dt data-i18n="pages.reading_pulse.dashboard.completion_label">{{ dashboard_copy.completion_label }}</dt>
+            <dt data-i18n="pages.visitor_stats.dashboard.completion_label">{{ dashboard_copy.completion_label }}</dt>
             <dd>{{ entry.readComplete | default: 0 }}</dd>
           </div>
         {% endif %}
