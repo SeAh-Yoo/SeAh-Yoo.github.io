@@ -93,8 +93,8 @@ shared:
         quote_card_label: 이상기록 문하수도
         quote_card_filename_prefix: 문하수도-이상기록
         author:
-          name: 묘아란
-          alternate_name: AhRan Myo
+          name: 유세아
+          alternate_name: SeAh Yoo
       en: &shared_brand_en
         name: Literary Underground — Strange Records
         short_name: Literary Underground
@@ -110,8 +110,8 @@ shared:
         quote_card_label: Literary Underground — Strange Records
         quote_card_filename_prefix: literary-underground-record
         author:
-          name: AhRan Myo
-          alternate_name: 묘아란
+          name: SeAh Yoo
+          alternate_name: 유세아
       ja: &shared_brand_ja
         name: 異常記録 文学下水道
         short_name: 文学下水道
@@ -126,8 +126,8 @@ shared:
         quote_card_label: 異常記録 文学下水道
         quote_card_filename_prefix: 文学下水道-記録
         author:
-          name: ミョ・アラン
-          alternate_name: AhRan Myo
+          name: ユ・セア
+          alternate_name: SeAh Yoo
   ui:
     locales:
       ko: &shared_ui_ko
@@ -889,14 +889,14 @@ pages:
           profile:
             eyebrow: THE KEEPER ROLE
             title: 문하수도 관리인
-            name: 묘아란
-            alternate_name: AhRan Myo
+            name: 유세아
+            alternate_name: SeAh Yoo
             role: 블로그 관리 및 작성
             introduction: 2000년 10월 10일생, 천칭자리, 키 170.8cm, 체중 인생 최저치 49kg, 최고치 비밀.
             site_description: 문하수도를 꾸미고 관리하고 이상 기록을 분류하고 작성하는 사람.<br />&nbsp;<br />온갖 서브컬쳐에 관심은 물론 조예가 있지만 그 지식이나 능력이 최고 수준에는 이르지 못하는 편.<br />뭐든 연구하고 깊히 파는 것을 좋아하지만
               어느 정도 수준에 이르면 다른 것으로 흥미를 돌리는 편.
             separator: ' · '
-            image_alt: 문하수도 관리인 묘아란의 프로필 이미지
+            image_alt: 문하수도 관리인 유세아의 프로필 이미지
           editorial:
             eyebrow: TOPICS & CONCEPTS
             title: 주제와 컨셉
@@ -946,15 +946,15 @@ pages:
           profile:
             eyebrow: THE KEEPER ROLE
             title: Keeper of the Literary Underground
-            name: AhRan Myo
-            alternate_name: 묘아란
+            name: SeAh Yoo
+            alternate_name: 유세아
             role: Blog maintenance and writing
             introduction: 'Born October 10, 2000. Libra. 170.8 cm tall. Lowest-ever weight: 49 kg. Highest: a secret.'
             site_description: The person who decorates and maintains the Literary Underground, sorting and writing its strange records.<br />&nbsp;<br />Interested
               in all sorts of subcultures and reasonably knowledgeable, though neither that knowledge nor those abilities are quite top-tier.<br />Likes researching
               and digging into things, but tends to move on to another interest after reaching a certain level.
             separator: ' · '
-            image_alt: Profile image of AhRan Myo, keeper of the Literary Underground
+            image_alt: Profile image of SeAh Yoo, keeper of the Literary Underground
           editorial:
             eyebrow: TOPICS & CONCEPTS
             title: Subjects and concept
@@ -1006,13 +1006,13 @@ pages:
           profile:
             eyebrow: THE KEEPER ROLE
             title: 文学下水道の管理人
-            name: ミョ・アラン
-            alternate_name: AhRan Myo
+            name: ユ・セア
+            alternate_name: SeAh Yoo
             role: ブログの管理と執筆
             introduction: 2000年10月10日生まれ、天秤座。身長170.8cm。人生最軽量は49kg、最重量は秘密。
             site_description: 文学下水道を飾り、管理し、異常記録を分類して書く人。<br />&nbsp;<br />あらゆるサブカルチャーに興味があり、それなりに詳しいものの、知識も能力も最高水準には届かないほう。<br />何でも調べて深掘りするのが好きだが、ある程度まで進むと別のことに興味を移しがち。
             separator: ・
-            image_alt: 文学下水道の管理人、ミョ・アランのプロフィール画像
+            image_alt: 文学下水道の管理人、ユ・セアのプロフィール画像
           editorial:
             eyebrow: TOPICS & CONCEPTS
             title: 主題とコンセプト

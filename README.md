@@ -1,10 +1,10 @@
-# 유세아의 문하수도
+# 이상기록 문하수도 — 유세아
 > **하위 문화의 중심을 꿈꾸는 서브컬처의 하수도**  
 
 **웹사이트:** https://seah-yoo.github.io/
 
 ## 소개
-이 저장소는 GitHub Pages와 Jekyll로 운영되는 유세아의 개인 칼럼 블로그이자, 실제 운영 환경을 포함한 Jekyll 블로그 테마입니다.
+이 저장소는 GitHub Pages와 Jekyll로 운영되는 유세아의 개인 칼럼 블로그와 개인 위키입니다. AI, 게임, 만화·애니메이션, 영화, 인터넷 방송, 커뮤니티 등 서브컬처의 이야기를 기록합니다. 실제 운영 환경을 포함한 Jekyll 테마로도 구성되어 있습니다.
 
 - 화면 구성은 장문의 가독성을 최우선으로 하며, 오래 머물러도 가급적 눈이 아프지 않도록 디자인하는 것이 목표입니다.
 
@@ -26,11 +26,12 @@
 - Kramdown 각주 및 참고 문헌과 본문 상호 이동
 - Front Matter 작성 시각 기준 이전 글·다음 글
 - Front Matter 기반 연재 목록
-- 질문별 입문 경로인 메인 페이지
+- 최근 기록을 보여 주는 홈과 질문별 입문 경로를 제공하는 안내소
 - 소재의 연결 관계를 보여 주는 태그 및 소재별 분류 페이지
 - 작성 시각순 전체 목록인 히스토리 페이지
 - GoatCounter 기반 익명 방문과 완독 흐름을 보여 주는 현황 페이지
-- Front Matter 기반 레퍼런스(각주 및 참고자료) 페이지
+- 포스트·위키의 Front Matter 기반 출처 및 인용 페이지
+- 개인 위키: 제목·별칭 검색, 자동 연결·역링크, 재사용 틀, 접기·펼치기
 - 제목·본문·카테고리·주제·연재 전체 검색
 - SNS 공유, RSS, 인쇄와 PDF 저장, 인용문 PNG 카드
 - 국기 아이콘으로 선택하는 한국어·영어·일본어 인터페이스
@@ -61,7 +62,7 @@
 - 모바일은 축소판이 아니라 별도의 읽기 환경임을 명심.
 - 사이드바가 독서를 방해하지 않도록 디자인.
 - 접근성을 장식보다 우선.
-- 모든 디자인 토큰은 `styles/design-system.css`에서 중앙 관리.
+- 공통 디자인 토큰은 `styles/design-system.css`, 테마별 색상은 `styles/theme-system.css`에서 관리. 기능별 스타일은 각 CSS 파일에서 보완.
 - 브랜드, 화면 문구와 블로그 콘셉트 관련 문구는 `_data/site_identity.yml`에서 중앙 관리.
 
 ## 포크 후 반드시 변경할 항목
@@ -144,6 +145,10 @@ kakao_javascript_key: "본인의_Kakao_JavaScript_키"
 
 ## 브랜드와 화면 문구 관리
 
+관리인 이름은 한국어 `유세아`, 영어 `SeAh Yoo`, 일본어 `ユ・セア`로 표기합니다.
+공통 저자 정보는 `shared.brand.locales.<언어>.author`, 소개 페이지는
+`pages.about.locales.<언어>.sections.profile`에서 이름·대체 이름·이미지 설명을 함께 수정합니다.
+
 포스트의 제목·부제·본문·출처처럼 글 자체에 속한 내용을 제외한 인터페이스 문구는 `_data/site_identity.yml`에서 관리합니다. 브랜드와 관리인 정보, 내부·외부 링크, 이미지 경로, 탐색 메뉴, 모든 정적 페이지의 제목·소개·목록, 검색·분석·포스트 도구 문구, 테마와 언어 표시명이 여기에 포함됩니다.
 
 레이아웃, include, 정적 페이지와 JavaScript에는 표시 문구를 직접 적지 않고 중앙 설정의 키를 읽습니다. `{count}`, `{minutes}` 같은 치환 변수와 HTML 태그는 세 언어에서 보존합니다. 공통 URL은 `links`, 공통 이미지는 `assets`, 관리인 페이지 이미지는 `pages.about.images`에서 관리합니다.
@@ -217,7 +222,8 @@ pages:
 
 | `identity_key` | 경로 | 화면 기능 | 콘셉트 강조용 보조 명칭 |
 | --- | --- | --- | --- |
-| `home` | `/` | 홈 | 문하수도 |
+| `home` | `/` | 홈 | 이상기록 문하수도 |
+| `wiki` | `/wiki/` | 이상위키 | 개념 정리 |
 | `start` | `/start-here/` | 안내소 | 시작 지점 |
 | `about` | `/about/` | 관리인 | 관리 부서 |
 | `timeline` | `/timeline/` | 시간순 | 작성 이력 |
@@ -225,7 +231,7 @@ pages:
 | `tags` | `/tags/` | 소재별 | 태그 모음 |
 | `references` | `/references/` | 출처 & 인용 | 이상기록 추가 보관함 |
 | `categories` | `/categories/` | 주제별 | 기록 분류 |
-| `not_found` | `/404.html` | 찾을 수 없는 페이지 | 막힌 통로 |
+| `not_found` | `/404.html` | 오류 안내 | 해당 구역으로 진입할 수 없습니다 |
 
 ## 인터페이스 언어
 
@@ -258,19 +264,20 @@ pages:
 
 ## 발견과 아카이브
 
-사이드바의 `탐색기`와 `보조 탐색기`에서 아래 정적 페이지로 이동합니다.
+사이드바의 탐색 메뉴에서 아래 정적 페이지로 이동합니다.
 
-목록은 Jekyll 빌드 시 게시물 Front Matter를 읽어 자동으로 생성됩니다.
+기록 목록은 Jekyll 빌드 시 포스트·위키의 Front Matter와 중앙 페이지 설정을 읽어 생성됩니다.
 
 | 주소 | 역할 | 콘셉트 강조용 보조 명칭 | 작성자가 관리할 값 |
 | --- | --- | --- | --- |
-| `/start-here/` | 탐색 페이지 | 중심 합류점 | `start_here`, `start_here_order` |
-| `/about/` | 소개 페이지 | 공간 안내 | `_data/site_identity.yml`의 `pages.about.locales.<언어>.sections` |
-| `/timeline/` | 전체 게시물 | 공간 이력 | 없음 |
-| `/visitor-stats/` | 방문자 현황 | 남겨진 발자국 | GoatCounter 공개 집계 |
-| `/tags/` | 소재별 분류 | 공간 계통 | `topics` |
-| `/references/` | 출처 및 인용 | 수집물 보관함 | `references` |
-| `/categories/` | 주제별 분류 | 하수 관로 | `category` |
+| `/start-here/` | 탐색 페이지 | 시작 지점 | `start_here`, `start_here_order` |
+| `/wiki/` | 개인 위키 | 개념 정리 | `_wiki/`의 제목·별칭·본문 |
+| `/about/` | 소개 페이지 | 관리 부서 | `_data/site_identity.yml`의 `pages.about.locales.<언어>.sections` |
+| `/timeline/` | 전체 게시물 | 작성 이력 | 없음 |
+| `/visitor-stats/` | 방문자 현황 | 방문객의 흔적 | GoatCounter 공개 집계 |
+| `/tags/` | 소재별 분류 | 태그 모음 | `topics` |
+| `/references/` | 출처 및 인용 | 이상기록 추가 보관함 | `references` |
+| `/categories/` | 주제별 분류 | 기록 분류 | `category` |
 
 ### 탐색 페이지
 
@@ -298,7 +305,7 @@ topics:
 
 ### 각주 모아보기 및 출처, 레퍼런스 페이지
 
-`/references/`는 각 포스트의 `references` 배열을 합쳐 보여 줍니다. 동일한 `id`를 쓰면 출처 목록에는 한 번만 나타나며, 그 자료를 인용한 글이 함께 표시됩니다.
+`/references/`는 포스트와 위키의 `references` 배열을 합쳐 보여 줍니다. 설명용 각주의 URL은 자동 수집하지 않습니다. 동일한 `id`를 쓰면 출처 목록에는 한 번만 나타나며, 그 자료를 인용한 글이 함께 표시됩니다.
 
 ```yaml
 references:
@@ -321,10 +328,10 @@ references:
 
 검색은 사이드바 상단의 빠른 도구 영역에서 `TOP` 버튼과 나란히 제공됩니다.
 
-- 데스크톱: 검색, `↑ TOP`, 국기 언어 선택기를 하나의 글래스 도구 레일로 표시
+- 데스크톱: 검색, TOP, RSS 도구와 국기 언어 선택기를 표시
 - 모바일: 터치 영역을 유지한 아이콘 버튼으로 표시
 - 현재 페이지를 떠나지 않는 명령 팔레트형 검색창
-- 제목, 본문, 설명, 카테고리, 주제와 연재명 검색
+- 포스트의 제목·본문·설명·카테고리·주제·연재명과 위키의 제목·별칭·본문 검색
 - 제목 일치도를 가장 높게 평가하고 최신 작성 시각을 보조 기준으로 사용
 - 최대 12개 결과 표시
 
@@ -363,8 +370,8 @@ Esc                    검색창 닫기
 | `read-complete--<slug>` | 30초 이상 머문 뒤 읽기 진행이 90%에 도달했을 때 |
 | `quote-card-export--<slug>` | PNG 인용 카드를 만들었을 때 |
 | `share-*--<slug>` | 공유 창·공유 수단·주소 복사·인쇄/PDF를 사용했을 때 |
-| `reference-open--<id>` | 수집물 보관함의 외부 원문을 열었을 때 |
-| `start-here-select--<path>` | 중심 합류점에서 글을 선택했을 때 |
+| `reference-open--<id>` | 이상기록 추가 보관함의 외부 원문을 열었을 때 |
+| `start-here-select--<path>` | 시작 지점에서 글을 선택했을 때 |
 
 ### 정적 방문 현황 페이지
 
@@ -557,9 +564,9 @@ image: /assets/images/example-post-cover.png
 - `category`: 큰 전문 분야
 - `description`: 검색 결과와 SNS 미리보기 설명
 - `thesis`: 선택적인 핵심 논지
-- `start_here`, `start_here_order`: 중심 합류점의 경로와 읽기 순서
-- `topics`: 공간 계통과 검색에 쓰는 세분화된 소재 배열
-- `references`: 수집물 보관함에 자동 수집할 출처 배열
+- `start_here`, `start_here_order`: 시작 지점의 경로와 읽기 순서
+- `topics`: 태그 모음과 검색에 쓰는 세분화된 소재 배열
+- `references`: 이상기록 추가 보관함에 자동 수집할 출처 배열
 - `series`, `series_order`: 선택적인 연재명과 회차
 
 제목과 부제목은 Front Matter에서 자동 출력되므로 본문에 다시 적지 않습니다. `_config.yml`의 `kramdown.hard_wrap`이 활성화되어 있어 본문에서 한 번 줄을 바꾸면 화면에도 줄바꿈으로 반영됩니다.
@@ -630,7 +637,7 @@ details:
 - 수정일은 `last_modified_at`을 직접 갱신합니다. 위키는 게시물 목록과 RSS에 섞이지 않습니다.
 
 로컬 확인은 `jekyll build --safe` 후 `python scripts/test-wiki.py`와
-`node --test scripts/wiki-autolinks.test.cjs`를 실행합니다.
+`node --test scripts/wiki-autolinks.test.cjs scripts/navigation.test.cjs`를 실행합니다.
 브라우저 미리보기는 `python -m http.server 4173 --bind 127.0.0.1 --directory _site`로
 시작하여 `http://127.0.0.1:4173/wiki/`를 엽니다.
 
@@ -660,8 +667,12 @@ details:
 │  ├─ categories.html
 │  ├─ home.html                    # 홈 편집 화면과 중앙화된 홈 카피
 │  ├─ page.html                    # 정적 탐색 페이지 공통 레이아웃
-│  └─ post.html                    # 포스트 전체 구성
+│  ├─ post.html                    # 포스트 전체 구성
+│  ├─ wiki.html                    # 개별 위키 문서
+│  └─ redirect.html                # 이전 탐색 주소 호환
+├─ _wiki/                          # 개인 위키 마크다운 원본
 ├─ _posts/                         # 포스트 마크다운 원본
+├─ assets/svg/                     # 언어·도구 아이콘과 동적 플랫폼 배지
 ├─ assets/images/                  # 포스트와 프로필 이미지
 ├─ scripts/
 │  ├─ index.js
@@ -669,6 +680,12 @@ details:
 │  ├─ site-search.js               # 언어별 검색 결과와 한국어 대체 출력
 │  ├─ site-preferences.js          # 테마·언어 저장과 인터페이스 전환
 │  ├─ post-actions.js
+│  ├─ platform-links.js            # 플랫폼 배지·스트리머 채널 링크
+│  ├─ wiki.js                       # 위키 색인·역링크·미리보기
+│  ├─ wiki-autolinks.js             # 제목·별칭 자동 연결
+│  ├─ wiki-authoring.js             # 접기 구역 탐색
+│  ├─ document-notes.js            # 포스트·위키 공통 각주
+│  ├─ document-comments.js         # 공통 댓글 로딩
 │  └─ refresh-reading-pulse.mjs
 ├─ styles/
 │  ├─ design-system.css
@@ -689,6 +706,8 @@ details:
 ├─ topics.html                     # 기존 주소 리디렉션
 ├─ references.html                 # 출처 및 인용
 ├─ categories.html                 # 주제별 분류
+├─ wiki.html                       # 위키 색인
+├─ wiki-index.json                 # 자동 연결·역링크·미리보기용 색인
 ├─ search.json
 ├─ feed.xml
 ├─ index.html
@@ -743,7 +762,7 @@ GoatCounter는 방문자의 브라우저에 추적용 쿠키나 고유 식별자
    `_posts/`·`_wiki/`에 새로 작성한 이미지 경로도 존재하는 파일을 가리켜야 합니다.
    플랫폼 배지를 쓸 계획이면 기본 `assets/svg/{chzzk,soop,twitch,rplay,youtube}.svg` 다섯 개는
    삭제 전 별도 보관해 다시 넣거나 같은 이름·크기의 자체 SVG로 교체하세요.
-   플랫폼 배지 자산의 구체적인 출처·구분은 `assets/svg/README.md`를 확인하세요.
+   플랫폼 배지 경로는 `scripts/platform-links.js`에서 플랫폼 ID로 동적으로 구성합니다.
 4. 댓글을 쓰기 전 `site_identity.yml`에서 `comments.enabled: false`로 둡니다.
    자신의 공개 저장소에서 Discussions를 켜고 giscus 앱 연결을 설정한 뒤
    [giscus 설정 페이지](https://giscus.app/ko)에서 받은 `repo`, `repo_id`, `category`,
@@ -763,12 +782,12 @@ GoatCounter는 방문자의 브라우저에 추적용 쿠키나 고유 식별자
 8. 아래 빌드·테스트 명령으로 확인한 뒤 자신의 원격 저장소에 푸시합니다.
    비밀키·인증정보·환경변수 파일은 커밋하지 않습니다.
 
-추가 점검으로 `rg -n "SeAh-Yoo|seah-yoo|묘아란|AhRan"`을 실행하면 남아 있는 원래 소유자의
+추가 점검으로 `rg -n "SeAh-Yoo|seah-yoo|유세아|SeAh Yoo|ユ・セア"`을 실행하면 남아 있는 원래 소유자의
 설정이나 문구를 찾을 수 있습니다. Git 기록까지 복제하면 삭제한 예전 콘텐츠도 과거 커밋에 남습니다.
 자신의 새 콘텐츠만 있는 기록으로 시작하려면 새 저장소에 필요한 템플릿 파일을 복사해 시작하세요.
 공유 URL, RSS, 검색, 위키 본문 링크는 자신의 `url`·`baseurl` 환경에서 다시 확인하는 것이 좋습니다.
 
-## 위키 기능과 작성법 업데이트
+## 위키 기능과 상세 작성법
 
 개인 위키는 `_wiki/`의 Markdown, 가나다순 `/wiki/` 색인, 제목·별칭 검색,
 표준 Markdown 링크와 자동 연결, 역링크, 소제목 목차, 취소선 기능을 함께 제공합니다.
@@ -973,9 +992,8 @@ HTML 속성과 일반 플랫폼명은 그대로 유지합니다. 틀과 접기 �
 원본 Markdown은 바꾸지 않습니다. 변환은 렌더링된 **텍스트 노드**에서 플랫폼 배지 → 위키 자동 연결
 순서로 진행하고, 역링크용 HTML에도 같은 순서를 적용합니다. 검색 색인에는 원래 표기가 남으며
 화면 DOM에도 검색 가능한 숨김 텍스트와 플랫폼 접근성 이름을 보존합니다.
-현재 SVG는 사용자가 제공한 공식 로고 이미지의 윤곽을 추출한 로컬 벡터 변환본입니다.
-공식 배포 원본 SVG와는 구분하며, 원본 비율과 어두운 테마의 대비를 유지합니다.
-사용한 원본 파일과 변환 방식, 공식 자산 확인 경로는 [자산 기록](assets/svg/README.md)에 있습니다.
+배지 파일은 `assets/svg/`에 있으며 `scripts/platform-links.js`가 플랫폼 ID에 `.svg`를 붙여 불러옵니다.
+따라서 파일명을 직접 참조하는 코드가 없다는 이유만으로 미사용 자산으로 분류하면 안 됩니다.
 
 ### 스트리머 채널 링크와 이름 자동 연결
 
@@ -1017,7 +1035,7 @@ YouTube 표시 이름은 번역하지 않습니다. 기존 플랫폼 별칭과 �
 ```powershell
 jekyll build --safe
 python scripts/test-wiki.py
-node --test scripts/wiki-autolinks.test.cjs
+node --test scripts/wiki-autolinks.test.cjs scripts/navigation.test.cjs
 python scripts/test-wiki-authoring.py
 ```
 
