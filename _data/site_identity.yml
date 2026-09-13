@@ -900,7 +900,7 @@ pages:
           profile:
             eyebrow: THE KEEPER ROLE
             title: 신상 정보
-            name: 실명전사 유세아
+            name: 실명전사 유세아 ♀️
             alternate_name: SeAh Yoo
             role: 블로그 관리 및 작성, 편집
             introduction: 00년 10월 10일생, ENTP, 키 170.8cm, 체중 인생 최저치 49kg, 최고치 비밀.
@@ -914,18 +914,18 @@ pages:
             paragraphs:
             - 왓챠피디아 애니/영화/드라마 평가 900개 돌파 (감상시간 1700시간 돌파).
             items:
-            - '<strong>좋아하는 만화가</strong>:<br />호리코시 코헤이(나의 히어로 아카데미아)<br />마츠이 유세이(암살교실)<br />후지모토 타츠키(체인소맨)<br />키기츠 카츠히사(프랑켄프랑)<br />古 미우라 켄타로(베르세르크)<br />이토 준지(토미에)'
-            - '<strong>좋아하는 감독</strong>:<br />코랄리 파르자(서브스턴스)<br />팀 버튼(화성 침공)<br />로버트 저메키스(캐스트 어웨이)<br />드류 고다드(캐빈 인 더 우즈)<br />크리스토퍼 놀란(인셉션)<br />스탠리 큐브릭(샤이닝)'
-            - '<strong>좋아하는 시리즈/드라마</strong>:<br />기묘한 이야기<br />에일리언 시리즈<br />웬즈데이<br />무빙<br />셜록'
+            - '<strong>좋아하는 만화가</strong>: 호리코시 코헤이(나의 히어로 아카데미아), 마츠이 유세이(암살교실), 후지모토 타츠키(체인소맨), 키기츠 카츠히사(프랑켄프랑), 古 미우라 켄타로(베르세르크), 이토 준지(토미에)'
+            - '<strong>좋아하는 감독</strong>: 안노 히데아키(신세기 에반게리온), 코랄리 파르자(서브스턴스), 팀 버튼(화성 침공), 로버트 저메키스(캐스트 어웨이), 드류 고다드(캐빈 인 더 우즈), 크리스토퍼 놀란(인셉션), 스탠리 큐브릭(샤이닝)'
+            - '<strong>좋아하는 시리즈/드라마</strong>: 기묘한 이야기, 에일리언 시리즈, 웬즈데이, 무빙, 셜록'
           livestreaming:
             eyebrow: 'KNOWLEDGE II : NOVEL & STORIES'
             title: 소설, 그리고 이야기
             paragraphs:
             - 만화와 소설, 게임을 모두 좋아하는 활자 중독자.
             items:
-            - '<strong>좋아하는 작가</strong>:<br />로버트 A. 하인라인(우주복 있음, 출장 가능)<br />J.R.R. 톨킨(반지의 제왕)<br />조지 R.R. 마틴(얼음과 불의 노래)<br />안제이 삽코프스키(위쳐 시리즈)'
-            - '<strong>좋아하는 이야기</strong>:<br />오버로드<br />Re:Zero부터 시작하는 이세계 생활<br />Get Backers 탈환대<br />강철의 연금술사<br />진격의 거인<br />약사의 혼잣말<br />책벌레의 하극상<br />바람의 검심<br />공각기동대'
-            - '<strong>좋아하는 게임</strong>:<br />마비노기<br />심즈 3/4<br />프로젝트 세카이<br />프로젝트 좀보이드<br />산소 미포함<br />연운(Where Winds Meet)<br />마술양품점 (서비스 종료)<br />야생의 땅 듀랑고 (서비스 종료)'
+            - '<strong>좋아하는 작가</strong>: 로버트 A. 하인라인(우주복 있음, 출장 가능), J.R.R. 톨킨(반지의 제왕), 조지 R.R. 마틴(얼음과 불의 노래), 안제이 삽코프스키(위쳐 시리즈)'
+            - '<strong>좋아하는 이야기</strong>: 오버로드, Re:Zero부터 시작하는 이세계 생활, Get Backers 탈환대, 강철의 연금술사, 진격의 거인, 약사의 혼잣말, 책벌레의 하극상, 바람의 검심, 공각기동대'
+            - '<strong>좋아하는 게임</strong>: 마비노기, 심즈 3/4, 프로젝트 세카이, 프로젝트 좀보이드, 산소 미포함, 연운(Where Winds Meet), 마술양품점 (서비스 종료), 야생의 땅 듀랑고 (서비스 종료)'
           interests:
             eyebrow: 'KNOWLEDGE III : INTERESTS ABOUT STREAMING'
             title: 인터넷 방송
@@ -979,43 +979,48 @@ pages:
         label: Keeper
         title: Management department
         eyebrow: Keeper | Property Management Department
-        intro: Meet the person who maintains the Literary Underground.
+        intro: 'This introduces the person who manages this blog, that is, Strange Records — Literary Underground.<br />This blog was vibe-coded with GPT-5.6 Sol, 5.6 Luna, and 6-Astra.'
         description: The Literary Underground’s development and writing, subject choices, editorial principles, and anonymous visitor counts.
         sections:
           profile:
             eyebrow: THE KEEPER ROLE
-            title: The keeper, offline
-            name: SeAh Yoo
+            title: Personal information
+            name: 'Real-name warrior SeAh Yoo ♀️'
             alternate_name: 유세아
-            role: Blog maintenance and writing
-            introduction: 'Born October 10, 2000. Libra. 170.8 cm tall. Lowest-ever weight: 49 kg. Highest: a secret.'
+            role: Blog management, writing, and editing
+            introduction: 'Born on October 10, 2000; ENTP; 170.8 cm tall; lowest-ever weight: 49 kg; highest: a secret.'
             separator: ' · '
             image_alt: Profile image of SeAh Yoo, keeper of the Literary Underground
             paragraphs:
             - The person who decorates and maintains the Literary Underground, sorting and writing its strange records.
           subculture:
-            eyebrow: SUBCULTURE & GAMES
-            title: Subculture & games
+            eyebrow: 'KNOWLEDGE I : COMICS & MOVIES'
+            title: Manga and film
             paragraphs:
-            - Interested in all sorts of subcultures and reasonably knowledgeable, though neither that knowledge nor those abilities are quite top-tier.
-            - I like researching and digging into things, but tend to move on to another interest after reaching a certain level.
-            items: []
+            - 'More than 900 anime, film, and drama ratings on Watcha Pedia (over 1,700 hours watched).'
+            items:
+            - '<strong>Favorite manga artists</strong>: Kōhei Horikoshi (My Hero Academia), Yūsei Matsui (Assassination Classroom), Tatsuki Fujimoto (Chainsaw Man), Katsuhisa Kigitsu (Franken Fran), the late Kentarō Miura (Berserk), Junji Ito (Tomie)'
+            - '<strong>Favorite directors</strong>: Hideaki Anno (Neon Genesis Evangelion), Coralie Fargeat (The Substance), Tim Burton (Mars Attacks!), Robert Zemeckis (Cast Away), Drew Goddard (The Cabin in the Woods), Christopher Nolan (Inception), Stanley Kubrick (The Shining)'
+            - '<strong>Favorite series/dramas</strong>: Stranger Things, the Alien series, Wednesday, Moving, Sherlock'
           livestreaming:
-            eyebrow: LIVESTREAMING
+            eyebrow: 'KNOWLEDGE II : NOVEL & STORIES'
+            title: Novels and stories
+            paragraphs:
+            - A print addict who loves manga, novels, and games alike.
+            items:
+            - '<strong>Favorite authors</strong>: Robert A. Heinlein (Have Spacesuit—Will Travel), J.R.R. Tolkien (The Lord of the Rings), George R.R. Martin (A Song of Ice and Fire), Andrzej Sapkowski (The Witcher series)'
+            - '<strong>Favorite stories</strong>: Overlord, Re:Zero − Starting Life in Another World, GetBackers, Fullmetal Alchemist, Attack on Titan, The Apothecary Diaries, Ascendance of a Bookworm, Rurouni Kenshin, Ghost in the Shell'
+            - '<strong>Favorite games</strong>: Mabinogi, The Sims 3/4, Project SEKAI, Project Zomboid, Oxygen Not Included, Where Winds Meet, Magic Boutique (service discontinued), Durango: Wild Lands (service discontinued)'
+          interests:
+            eyebrow: 'KNOWLEDGE III : INTERESTS ABOUT STREAMING'
             title: Livestreaming
             paragraphs:
-            - I am interested in livestreaming and explore ideas that help make sense of it.
-            - In particular, I prepare and publish guides to livestreaming. I want to leave useful records for streamers, grounded in facts and evidence.
-            items: []
-          interests:
-            eyebrow: CURRENT INTERESTS
-            title: Current interests
-            paragraphs:
-            - A place for the subjects I want to look into more closely.
+            - A person who streamed as a student but became unable to do so after getting a job.
             items:
-            - Games and subculture
-            - Livestreaming and streaming guides
-            - AI and online communities
+            - About 4–5 years of live-streaming experience in total
+            - Reached more than 1,000 followers after about one year of streaming on Twitch
+            - Reached an average of 100 viewers per day on Twitch
+            - Used paid VTuber software in the very early days of Japanese VTubers (when there were hardly any VTubers in Korea)
           editorial:
             eyebrow: TOPICS & CONCEPTS
             title: Subjects and concept
@@ -1061,43 +1066,48 @@ pages:
         label: 管理人
         title: 管理部署
         eyebrow: 管理人 | Property Management Department
-        intro: 文学下水道を管理している人物を案内します。
+        intro: 'このブログ、つまり「異常記録・文学下水道」を管理している人物を紹介します。<br />このブログはGPT-5.6 Sol、5.6 Luna、6-Astraでバイブコーディングされました。'
         description: 文学下水道の開発と執筆、主題の選定、編集方針、匿名の訪問集計について説明します。
         sections:
           profile:
             eyebrow: THE KEEPER ROLE
-            title: 現実の管理人
-            name: ユ・セア
+            title: 身上情報
+            name: 本名戦士ユ・セア ♀️
             alternate_name: SeAh Yoo
-            role: ブログの管理と執筆
-            introduction: 2000年10月10日生まれ、天秤座。身長170.8cm。人生最軽量は49kg、最重量は秘密。
+            role: ブログの管理・執筆・編集
+            introduction: '2000年10月10日生まれ、ENTP。身長170.8cm、人生最軽量49kg、最高体重は秘密。'
             separator: ・
             image_alt: 文学下水道の管理人、ユ・セアのプロフィール画像
             paragraphs:
             - 文学下水道を飾り、管理し、異常記録を分類して書く人。
           subculture:
-            eyebrow: SUBCULTURE & GAMES
-            title: サブカルチャーとゲーム
+            eyebrow: 'KNOWLEDGE I : COMICS & MOVIES'
+            title: マンガ、そして映画
             paragraphs:
-            - あらゆるサブカルチャーに興味があり、それなりに詳しいものの、知識も能力も最高水準には届かないほう。
-            - 何でも調べて深掘りするのが好きだが、ある程度まで進むと別のことに興味が移りがち。
-            items: []
+            - 'Watcha Pediaでアニメ・映画・ドラマの評価が900件を突破（鑑賞時間は1,700時間を突破）。'
+            items:
+            - '<strong>好きな漫画家</strong>：堀越耕平（僕のヒーローアカデミア）、松井優征（暗殺教室）、藤本タツキ（チェンソーマン）、キギツ・カツヒサ（フランケン・ふらん）、故・三浦建太郎（ベルセルク）、伊藤潤二（富江）'
+            - '<strong>好きな監督</strong>：庵野秀明（新世紀エヴァンゲリオン）、コラリー・ファルジャ（サブスタンス）、ティム・バートン（マーズ・アタック！）、ロバート・ゼメキス（キャスト・アウェイ）、ドリュー・ゴダード（キャビン・イン・ザ・ウッズ）、クリストファー・ノーラン（インセプション）、スタンリー・キューブリック（シャイニング）'
+            - '<strong>好きなシリーズ／ドラマ</strong>：ストレンジャー・シングス、エイリアンシリーズ、ウェンズデー、ムービング、SHERLOCK'
           livestreaming:
-            eyebrow: LIVESTREAMING
+            eyebrow: 'KNOWLEDGE II : NOVEL & STORIES'
+            title: 小説、そして物語
+            paragraphs:
+            - マンガと小説とゲームをすべて愛する活字中毒者。
+            items:
+            - '<strong>好きな作家</strong>：ロバート・A・ハインライン（宇宙服あり、出張可能）、J・R・R・トールキン（指輪物語）、ジョージ・R・R・マーティン（氷と炎の歌）、アンジェイ・サプコフスキ（ウィッチャーシリーズ）'
+            - '<strong>好きな物語</strong>：オーバーロード、Re:ゼロから始める異世界生活、GetBackers -奪還屋-、鋼の錬金術師、進撃の巨人、薬屋のひとりごと、本好きの下剋上、るろうに剣心、攻殻機動隊'
+            - '<strong>好きなゲーム</strong>：マビノギ、The Sims 3/4、プロジェクトセカイ、Project Zomboid、Oxygen Not Included、Where Winds Meet、魔術雑貨店（サービス終了）、野生の地：デュランゴ（サービス終了）'
+          interests:
+            eyebrow: 'KNOWLEDGE III : INTERESTS ABOUT STREAMING'
             title: ネット配信
             paragraphs:
-            - ネット配信に関心を持ち、その理解につながる話題を探究しています。
-            - 特にネット配信のガイドや道しるべになる記事を準備し、連載しています。事実と根拠をもとに、配信する人にも役立つ記録を残したいと思っています。
-            items: []
-          interests:
-            eyebrow: CURRENT INTERESTS
-            title: 最近気になっていること
-            paragraphs:
-            - 今、もう少し掘り下げたい話題をここに集めます。
+            - 学生時代は配信をしていたが、就職してからは配信できない身になってしまった人。
             items:
-            - ゲームとサブカルチャー
-            - ネット配信と配信ガイド
-            - AIとオンラインコミュニティ
+            - 生涯を通じたライブ配信の経験は約4～5年
+            - Twitchで約1年間配信し、フォロワー1,000人以上に到達
+            - Twitchで1日平均視聴者数100人に到達
+            - 日本のVTuber黎明期に有料VTuberソフトを使用（韓国国内にVTuberがほとんどいなかった頃）
           editorial:
             eyebrow: TOPICS & CONCEPTS
             title: 主題とコンセプト
