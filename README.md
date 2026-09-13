@@ -579,7 +579,7 @@ image: /assets/images/example-post-cover.png
 
 `_wiki/`에 개념별 Markdown 파일을 추가합니다. 예를 들어 `_wiki/trust.md`는
 `/wiki/trust/`가 됩니다. 제목 변경과 무관하게 파일명 또는 `permalink`는 유지하세요.
-사이트 사이드바의 **개인 위키**에서 가나다순으로 탐색할 수 있습니다.
+사이트 사이드바의 **개인 위키** 메뉴에서 가나다순으로 탐색할 수 있습니다.
 
 ```markdown
 ---
