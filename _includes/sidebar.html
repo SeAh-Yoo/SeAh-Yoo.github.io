@@ -2,7 +2,6 @@
 {% assign site_copy = identity.locales[identity.settings.default_language] %}
 {% assign brand = site_copy.brand %}
 {% assign pages = site_copy.pages %}
-{% assign base_posts = site.posts | where: "lang", identity.settings.default_language %}
 <aside class="sidebar glass-panel" aria-label="{{ brand.short_name }} {{ site_copy.ui.sidebar_aria_suffix }}" data-mobile-sidebar>
   <div class="sidebar-header">
     <a class="brand" href="{{ identity.links.home | relative_url }}" aria-label="{{ brand.name }} {{ site_copy.ui.home_aria_suffix }}">
@@ -17,19 +16,21 @@
     </a>
 
     <div class="sidebar-quick-actions" role="group" aria-label="{{ site_copy.ui.quick_tools_label }}">
-      {% include site-search.html %}
-      <button class="sidebar-top-button" type="button" data-scroll-top aria-label="{{ site_copy.ui.scroll_top_label }}">
-        <span aria-hidden="true">↑</span><span class="sidebar-top-label" data-i18n-html="ui.top_button_label">{{ site_copy.ui.top_button_label }}</span>
-      </button>
-      {% assign default_language_option = identity.settings.supported_languages | where: "id", identity.settings.default_language | first %}
-      <div class="sidebar-language-quick-control" title="{{ site_copy.navigation.language_label }}">
-        <span class="language-select-flag" data-language-flag aria-hidden="true">{{ default_language_option.flag }}</span>
-        <img class="language-select-flag-image" data-language-flag-image src="{{ default_language_option.icon | relative_url }}" alt="" aria-hidden="true" />
-        <select id="site-language-select" data-language-select aria-label="{{ site_copy.navigation.language_label }} {{ site_copy.ui.language_select_suffix }}">
-          {% for language in identity.settings.supported_languages %}
-          <option value="{{ language.id }}">{{ language.flag }} {{ site_copy.languages[language.id] }}</option>
-          {% endfor %}
-        </select>
+      <div class="toolbar-group toolbar-function-group" role="group" aria-label="{{ site_copy.ui.quick_tools_label }}">
+        {% include site-search.html %}
+        <button class="sidebar-top-button" type="button" data-scroll-top aria-label="{{ site_copy.ui.scroll_top_label }}" title="{{ site_copy.ui.scroll_top_label }}" data-i18n-aria-label="ui.scroll_top_label" data-i18n-title="ui.scroll_top_label">
+          <img class="toolbar-icon" src="{{ "/assets/svg/toolbar-top.svg" | relative_url }}" alt="" width="28" height="28" />
+        </button>
+        <a class="sidebar-rss-button" href="{{ identity.links.feed | relative_url }}" type="application/rss+xml" aria-label="{{ site_copy.navigation.feed_label }}" title="{{ site_copy.navigation.feed_label }}" data-i18n-aria-label="navigation.feed_label" data-i18n-title="navigation.feed_label">
+          <img class="toolbar-icon" src="{{ '/assets/svg/toolbar-rss.svg' | relative_url }}" alt="" width="28" height="28" />
+        </a>
+      </div>
+      <div class="toolbar-group toolbar-language-group" role="group" aria-label="{{ site_copy.navigation.language_label }}">
+        {% for language in identity.settings.supported_languages %}
+        <button class="sidebar-language-button" type="button" data-language-button="{{ language.id }}" aria-label="{{ site_copy.languages[language.id] }}" title="{{ site_copy.languages[language.id] }}" data-i18n-aria-label="languages.{{ language.id }}" data-i18n-title="languages.{{ language.id }}" aria-pressed="{% if language.id == identity.settings.default_language %}true{% else %}false{% endif %}">
+          <img class="toolbar-icon" src="{{ language.icon | relative_url }}" alt="" width="28" height="28" />
+        </button>
+        {% endfor %}
       </div>
     </div>
 
@@ -68,29 +69,10 @@
         </ul>
       </nav>
 
-      {% if base_posts.size > 0 %}
-      <nav class="archive-nav sidebar-latest" aria-labelledby="archive-heading">
-        <div class="archive-header">
-          <p class="eyebrow" id="archive-heading" data-i18n-html="navigation.latest_heading">{{ site_copy.navigation.latest_heading }}</p>
-        </div>
-        <ol class="archive-list">
-          {% for post in base_posts limit: 3 %}
-          <li>
-            <a href="{{ post.url | relative_url }}" data-post-card data-translation-key="{{ post.translation_key | default: post.slug | escape }}"{% if page.url == post.url %} class="active" aria-current="page"{% endif %}>
-              <span class="archive-title" data-post-field data-post-title>{{ post.title }}</span>
-              <time datetime="{{ post.date | date_to_xmlschema }}" data-post-field data-post-date data-date-style="short">{{ post.date | date: site_copy.meta.date_short }}</time>
-            </a>
-          </li>
-          {% endfor %}
-        </ol>
-      </nav>
-      {% endif %}
-
       <nav class="sidebar-footer-nav" aria-label="{{ site_copy.navigation.utility_label }}">
         <a href="{{ pages.categories.path | relative_url }}" data-i18n-html="pages.categories.label">{{ pages.categories.label | strip }}</a>
         <a href="{{ pages.visitor_stats.path | relative_url }}" data-i18n-html="pages.visitor_stats.label">{{ pages.visitor_stats.label | strip }}</a>
         <a href="{{ pages.references.path | relative_url }}" data-i18n-html="pages.references.label">{{ pages.references.label | strip }}</a>
-        <a href="{{ identity.links.feed | relative_url }}" data-i18n-html="navigation.feed_label">{{ site_copy.navigation.feed_label }}</a>
       </nav>
 
       <section class="theme-switcher" aria-label="{{ site_copy.navigation.theme_label }}">

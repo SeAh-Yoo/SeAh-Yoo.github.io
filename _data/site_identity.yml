@@ -11,14 +11,11 @@ settings:
   preference_storage_key: literary-underground:preferences:v1
   supported_languages:
     - id: ko
-      flag: 🇰🇷
-      icon: /assets/images/language-ko.svg
+      icon: /assets/svg/language-ko.svg
     - id: en
-      flag: 🇺🇸
-      icon: /assets/images/language-en.svg
+      icon: /assets/svg/language-en.svg
     - id: ja
-      flag: 🇯🇵
-      icon: /assets/images/language-ja.svg
+      icon: /assets/svg/language-ja.svg
 links:
   home: /
   feed: /feed.xml

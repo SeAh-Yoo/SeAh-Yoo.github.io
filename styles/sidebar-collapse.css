@@ -3,17 +3,18 @@
 
 @media (max-width: 900px) {
   .sidebar { overflow: visible; }
-  .sidebar-header { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
-  .sidebar-header .brand { min-width: 0; flex: 1 1 auto; }
-  .sidebar-quick-actions { flex: 0 0 auto; margin-top: 0; }
-  .sidebar-search-trigger { width: var(--tap-target); min-width: var(--tap-target); padding-inline: 0; }
-  .sidebar-search-label, .sidebar-search-shortcut, .sidebar-top-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+  .sidebar-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 0.6rem; }
+  .sidebar-header .brand { min-width: 0; }
+  .sidebar-header .sidebar-menu-button { grid-column: 2; grid-row: 1; width: var(--tap-target); min-height: var(--tap-target); border-color: var(--color-border-subtle); }
+  .sidebar-quick-actions { grid-column: 1 / -1; grid-row: 2; margin-top: 0; }
+  .toolbar-group { min-width: 0; }
+  .sidebar-quick-actions :is(.sidebar-search-trigger, .sidebar-top-button, .sidebar-rss-button, .sidebar-language-button) { min-height: var(--tap-target); }
   .sidebar-collapse-region {
     position: absolute;
     top: calc(100% - 1px);
     right: -1px;
     left: -1px;
-    max-height: calc(100dvh - var(--header-height) - 2rem - env(safe-area-inset-top));
+    max-height: calc(100dvh - 10rem - env(safe-area-inset-top));
     overflow-y: auto;
     border: 1px solid var(--color-border-subtle);
     border-top: 0;

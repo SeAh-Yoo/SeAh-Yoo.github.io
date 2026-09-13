@@ -27,7 +27,7 @@
   menuButton.setAttribute('aria-expanded', 'false');
   menuButton.setAttribute('aria-label', copy('ui.menu_open_label'));
   menuButton.innerHTML = `<span class="sidebar-menu-icon" aria-hidden="true">☰</span><span class="sidebar-top-label">${copy('ui.menu_button_label')}</span>`;
-  quickActions.insertBefore(menuButton, topButton);
+  sidebar.querySelector('.sidebar-header').append(menuButton);
 
   const setExpanded = (expanded, options = {}) => {
     const isMobile = mobileQuery.matches;
