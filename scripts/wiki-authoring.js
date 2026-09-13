@@ -2,7 +2,7 @@
   const copy = (key) => window.siteIdentity?.get(`wiki.${key}`, '') || '';
   const applyPlatforms = root => window.platformLinks?.apply(root);
 
-  // Links always navigate normally. A separate button provides unambiguous touch/keyboard previews.
+  // The link itself opens the preview on hover or keyboard focus.
   const panel = document.createElement('aside');
   panel.className = 'wiki-preview';
   panel.id = 'wiki-link-preview';
@@ -12,10 +12,7 @@
   const body = document.createElement('p');
   heading.setAttribute('data-no-interface-translation', '');
   body.setAttribute('data-no-interface-translation', '');
-  const openLink = document.createElement('a');
-  const closeButton = document.createElement('button');
-  closeButton.type = 'button';
-  panel.append(heading, body, openLink, closeButton);
+  panel.append(heading, body);
   document.body.append(panel);
   let active = null;
   let timer;
@@ -25,8 +22,8 @@
     const previous = active;
     active = null;
     panel.hidden = true;
-    previous.button.setAttribute('aria-expanded', 'false');
-    if (restore) previous.button.focus();
+    previous.link.removeAttribute('aria-details');
+    if (restore) previous.link.focus();
   };
   const position = () => {
     if (!active) return;
@@ -39,43 +36,32 @@
     panel.style.left = `${left}px`;
     panel.style.top = `${top}px`;
   };
-  const show = (item, focus = false) => {
+  const show = (item) => {
     clearTimeout(timer);
-    if (active && active !== item) active.button.setAttribute('aria-expanded', 'false');
+    if (active && active !== item) active.link.removeAttribute('aria-details');
     active = item;
     heading.textContent = item.title;
     body.textContent = item.description || copy('no_description');
-    openLink.href = item.link.href;
-    openLink.textContent = copy('preview_open');
-    closeButton.textContent = copy('preview_close');
+    panel.setAttribute('aria-label', item.title);
     panel.hidden = false;
-    item.button.setAttribute('aria-expanded', 'true');
+    item.link.setAttribute('aria-details', panel.id);
     position();
-    if (focus) closeButton.focus({ preventScroll: true });
   };
   const scheduleClose = () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
       if (!panel.matches(':hover') && !panel.contains(document.activeElement)
-          && !active?.link.matches(':hover') && document.activeElement !== active?.link
-          && document.activeElement !== active?.button) close();
+          && !active?.link.matches(':hover') && document.activeElement !== active?.link) close();
     }, 220);
   };
   panel.addEventListener('pointerenter', () => clearTimeout(timer));
   panel.addEventListener('pointerleave', scheduleClose);
   panel.addEventListener('focusout', scheduleClose);
-  closeButton.addEventListener('click', () => close(true));
-  openLink.addEventListener('click', (event) => {
-    if (active?.link.matches('a.footnote') && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
-      event.preventDefault();
-      active.link.click();
-    }
-  });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && active) { event.preventDefault(); close(panel.contains(document.activeElement)); }
   });
   document.addEventListener('pointerdown', (event) => {
-    if (active && !panel.contains(event.target) && event.target !== active.button && !active.link.contains(event.target)) close();
+    if (active && !panel.contains(event.target) && !active.link.contains(event.target)) close();
   });
   window.addEventListener('resize', position);
   window.addEventListener('scroll', position, { passive: true });
@@ -95,21 +81,11 @@
         description = entry.description;
       }
       link.dataset.previewReady = '';
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'wiki-preview-trigger';
-      button.textContent = 'ⓘ';
-      button.setAttribute('aria-label', `${title} — ${copy('preview')}`);
-      button.setAttribute('aria-controls', panel.id);
-      button.setAttribute('aria-expanded', 'false');
-      link.after(button);
-      const item = { link, button, title, description };
-      button.addEventListener('click', () => active === item && !panel.hidden ? close() : show(item, true));
+      const item = { link, title, description };
       link.addEventListener('pointerenter', (event) => { if (event.pointerType !== 'touch') show(item); });
       link.addEventListener('pointerleave', scheduleClose);
       link.addEventListener('focus', () => show(item));
       link.addEventListener('blur', scheduleClose);
-      button.addEventListener('blur', scheduleClose);
       link.addEventListener('click', () => close());
     });
   };

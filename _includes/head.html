@@ -180,17 +180,17 @@
 <script defer src="{{ '/scripts/sidebar-collapse.js' | relative_url }}"></script>
 <script defer src="{{ '/scripts/site-search.js' | relative_url }}"></script>
 {% if page.layout == 'post' or page.layout == 'wiki' %}
-<link rel="stylesheet" href="{{ '/styles/document-notes.css' | relative_url }}?v=2" />
+<link rel="stylesheet" href="{{ '/styles/document-notes.css' | relative_url }}?v=3" />
 <script defer src="{{ '/scripts/document-notes.js' | relative_url }}?v=2"></script>
 <link rel="stylesheet" href="{{ '/styles/document-comments.css' | relative_url }}" />
 <script defer src="{{ '/scripts/document-comments.js' | relative_url }}"></script>
 {% endif %}
 {% if page.layout == 'wiki' or page.layout == 'post' %}
-<link rel="stylesheet" href="{{ '/styles/wiki-authoring.css' | relative_url }}" />
+<link rel="stylesheet" href="{{ '/styles/wiki-authoring.css' | relative_url }}?v=3" />
 <script defer src="{{ '/scripts/platform-links.js' | relative_url }}" data-platform-assets="{{ '/assets/svg/' | relative_url }}"></script>
 {% endif %}
 {% if page.layout == 'wiki' %}
-<script defer src="{{ '/scripts/wiki-authoring.js' | relative_url }}" data-platform-assets="{{ '/assets/svg/' | relative_url }}"></script>
+<script defer src="{{ '/scripts/wiki-authoring.js' | relative_url }}?v=3" data-platform-assets="{{ '/assets/svg/' | relative_url }}"></script>
 {% endif %}
 {% if page.layout == 'wiki' or page.identity_key == 'wiki' %}
 <link rel="stylesheet" href="{{ '/styles/wiki.css' | relative_url }}" />
