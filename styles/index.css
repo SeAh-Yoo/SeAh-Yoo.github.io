@@ -176,7 +176,7 @@ a { color: inherit; }
   text-decoration: none;
 }
 .sidebar-quick-actions :is(button, a):hover { background: var(--color-accent-soft); border-color: var(--color-border-strong); }
-.sidebar-language-button[aria-pressed="true"] { background: var(--color-accent); border-color: var(--color-accent); }
+.sidebar-language-button[aria-pressed="true"] { background: transparent; border-color: transparent; }
 .sidebar-quick-actions .toolbar-icon {
   display: block;
   flex: 0 0 28px;
@@ -185,6 +185,13 @@ a { color: inherit; }
   padding: 4px;
   border-radius: 8px;
   background: var(--color-accent);
+}
+.toolbar-language-group .toolbar-icon {
+  background: color-mix(in srgb, var(--color-accent) 68%, var(--color-background-soft));
+}
+.sidebar-language-button[aria-pressed="true"] .toolbar-icon {
+  background: color-mix(in srgb, var(--color-accent) 86%, white);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 72%, white);
 }
 .sidebar-search-label, .sidebar-search-shortcut, .sidebar-top-label {
   position: absolute; width: 1px; height: 1px; overflow: hidden;
