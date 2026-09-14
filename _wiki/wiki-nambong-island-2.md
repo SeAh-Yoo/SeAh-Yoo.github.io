@@ -125,7 +125,7 @@ last_modified_at: 2026-09-13
 
 {% capture service_rank_1 %}황인정[+너불]{% endcapture %}
 {% capture service_rank_6 %}김웅[+[치지직:17f0cfcba4ff608de5eabb5110d134d0]{김뿡}]<br>종조이[+달콤레나 씨] (사장 인정 공식 '무면라이더')<br>하진혁[+[치지직:182fdb958165fa6ad4d4ec1e9e4da3c0]{바테바테}]<br>좋마담[+[치지직:4a3cab967a74a5020258195fc9004145]{아로AURO}]<br>정다정[+[치지직:41d1490bd67b3818d7dc53427a4d6cea]{앵보}]<br>채재희[+[치지직:0e604eba7206f04b1e5f15e0a1cb2616]{채현찌}]<br>도미나[+[치지직:d5e2e0c14dcca4c4b10c7c9633022f52]{치치 Planeta}]<br>김분내[+[치지직:57aeb13825bf7d402273ecfa936356e4]{카토kato}]<br>베이비[+[치지직:5786141997728cc2fcd660a15ef5f3af]{호시에 제로}]<br>추학한[+[치지직:2d4aa2f79b0a397d032c479ef1b37a67]{후추}]{% endcapture %}
-{% include wiki-template.html name="공무직명단" department="교통정비공사" rank_1=service_rank_1 rank_6=service_rank_6 %}
+{% include wiki-template.html name="공무직명단" department="교통정비공사" rank_1=service_rank_1 rank_5="세콩[+가이드]" rank_6=service_rank_6 %}
 
 
 ### 사업체 (평판: 선 성향) [_접기]
