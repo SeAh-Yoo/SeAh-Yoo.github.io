@@ -56,6 +56,7 @@ last_modified_at: 2026-09-13
 
 ##### 봉누도 병원 (EMS)
 - 병원장: 도현정[+[치지직:b5ed5db484d04faf4d150aedd362f34b]{강지}]
+- 견습: 백초식[+[치지직:20ef78f064ebfd8dd4f7ec8a3a222fd2]{백곰파}]
 
 ##### 교통정비공사
 - 사장: 황인정[+[치지직:af3323d30e11ae42c39d7203c7e07fa2]{너불}]
@@ -122,7 +123,7 @@ last_modified_at: 2026-09-13
 
 {% capture service_rank_1 %}도현정[+강지]{% endcapture %}
 {% capture service_rank_7 %}채봄[+가이드]{% endcapture %}
-{% capture service_rank_8 %}공하나[+[치지직:93fe884808459fb4e4a3c7d64f0eef03]{고차비}]<br>왁뿌용[+[치지직:c8ce4df6e6cf691f05df554739ad05ed]{그냥 뿌요}]<br>퀸자몽[+[치지직:b814e815228894a3f75c67cac4f829d3]{김총무}]<br>인나유[+[치지직:d58ace43901fd369f1b4efa4ed175103]{미 유}]<br>배나온[+[치지직:554e99695decc451d57788b1fd5d5c07]{배돈}]<br>백초식[+[치지직:20ef78f064ebfd8dd4f7ec8a3a222fd2]{백곰파}]<br>구해영[+[치지직:36ddb9bb4f17593b60f1b63cec86611d]{사키하네 후야}]<br>차수진[+[치지직:aa66ed6da9e203c26807c0cd3579983a]{스즈 SUZU}]<br>안성실[+[치지직:eaf7b569c9992d0e57db0059eb5c0eeb]{이글콥}]<br>금희주[+[치지직:ed21d36a44d1956520189a784afc27ed]{이초홍}]<br>용몽원[+[치지직:db43350be77c4f6a9ff08d83574019a3]{자몽뀨1}]<br>빙세라[+[치지직:0d4e078913f04f0412f0092e10974492]{코오리 세라 Kori Serah}]<br>윤수아[+[치지직:81bd5b50f0c0728128442daf7db626fc]{토종 아오리}]<br>헤간호[+[치지직:b14e49789bae3c00b6b4c98d60ff036d]{HERA 헤라}]<br>레도연[+[치지직:a96cea2d2c39cec636ba8170c66a0510]{RED레드}]{% endcapture %}
+{% capture service_rank_8 %}공하나[+[치지직:93fe884808459fb4e4a3c7d64f0eef03]{고차비}]<br>왁뿌용[+[치지직:c8ce4df6e6cf691f05df554739ad05ed]{그냥 뿌요}]<br>퀸자몽[+[치지직:b814e815228894a3f75c67cac4f829d3]{김총무}]<br>인나유[+[치지직:d58ace43901fd369f1b4efa4ed175103]{미 유}]<br>배나온[+[치지직:554e99695decc451d57788b1fd5d5c07]{배돈}]<br>백초식[+백곰파]<br>구해영[+[치지직:36ddb9bb4f17593b60f1b63cec86611d]{사키하네 후야}]<br>차수진[+[치지직:aa66ed6da9e203c26807c0cd3579983a]{스즈 SUZU}]<br>안성실[+[치지직:eaf7b569c9992d0e57db0059eb5c0eeb]{이글콥}]<br>금희주[+[치지직:ed21d36a44d1956520189a784afc27ed]{이초홍}]<br>용몽원[+[치지직:db43350be77c4f6a9ff08d83574019a3]{자몽뀨1}]<br>빙세라[+[치지직:0d4e078913f04f0412f0092e10974492]{코오리 세라 Kori Serah}]<br>윤수아[+[치지직:81bd5b50f0c0728128442daf7db626fc]{토종 아오리}]<br>헤간호[+[치지직:b14e49789bae3c00b6b4c98d60ff036d]{HERA 헤라}]<br>레도연[+[치지직:a96cea2d2c39cec636ba8170c66a0510]{RED레드}]{% endcapture %}
 {% include wiki-template.html name="공무직명단" department="병원" rank_1=service_rank_1 rank_7=service_rank_7 rank_8=service_rank_8 %}
 
 
