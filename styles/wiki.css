@@ -16,13 +16,13 @@
 .wiki-toc { margin-top: 1.75rem; padding: 1rem 1.25rem; border: 1px solid var(--color-border-subtle); border-radius: var(--radius-small); background: var(--color-background-soft); }
 .wiki-toc .eyebrow { margin: 0; }
 .wiki-heading-list, .wiki-heading-list ol { list-style: none; padding-left: 0; }
-.wiki-heading-list ol { padding-left: clamp(0.6rem, 2vw, 1.1rem); margin-block: 0; }
+.wiki-heading-list ol { padding-inline-start: 2.5em; margin-block: 0; }
 .wiki-heading-list a { display: inline-block; padding-block: 0.2rem; }
 .wiki-heading-number { font-variant-numeric: tabular-nums; }
-/* Keep the wider reading measure and heading hierarchy exclusive to wiki. */
-body[data-wiki-document] .shell { width: min(100%, calc(var(--content-width) + var(--reading-width) * 0.33 + var(--sidebar-width) + 5rem)); }
-.wiki-article :is(.post-header, .post-content, .post-comments) { width: min(100%, calc(var(--reading-width) * 1.33)); }
+/* Keep the shared page shell, while giving wiki text a modestly wider measure. */
+.wiki-article :is(.post-header, .post-content) { width: min(100%, calc(var(--reading-width) * 1.2)); }
 .wiki-article { --wiki-heading-indent: clamp(0.6rem, 2vw, 1.25rem); }
+.wiki-article { --wiki-body-indent: 2.5em; }
 .wiki-article [data-wiki-depth] { max-width: none; }
 .wiki-article :is([data-wiki-depth="2"], [data-wiki-depth="3"], [data-wiki-depth="4"], [data-wiki-depth="5"], [data-wiki-depth="6"], [data-wiki-depth="7"]),
 .wiki-article .wiki-legacy-fold > summary {
@@ -40,15 +40,16 @@ body[data-wiki-document] .shell { width: min(100%, calc(var(--content-width) + v
 .wiki-article [data-wiki-content-depth="5"] { margin-inline-start: calc(var(--wiki-heading-indent) * 3); }
 .wiki-article [data-wiki-content-depth="6"] { margin-inline-start: calc(var(--wiki-heading-indent) * 4); }
 .wiki-article [data-wiki-content-depth="7"] { margin-inline-start: calc(var(--wiki-heading-indent) * 5); }
+.wiki-article .wiki-heading-content > :is(p, ul, ol, blockquote, table, .table-wrapper, details, .wiki-template) { margin-inline-start: var(--wiki-body-indent); }
 .wiki-article .post-content .wiki-legacy-fold { padding: 0; margin: 0; border: 0; background: transparent; }
 .wiki-article .wiki-legacy-fold > summary { display: block; list-style: none; }
 .wiki-legacy-fold > summary::-webkit-details-marker { display: none; }
 .wiki-legacy-fold > summary:focus-visible { outline: 2px solid var(--color-accent-secondary); outline-offset: 3px; }
 @media (max-width: 900px) {
-  body[data-wiki-document] .shell { width: 100%; }
+  .wiki-article :is(.post-header, .post-content) { width: 100%; }
 }
 @media print {
-  .wiki-article :is(.post-header, .post-content, .post-comments) { width: 100%; }
+  .wiki-article :is(.post-header, .post-content) { width: 100%; }
   .wiki-backlinks { break-inside: avoid; }
 }
 .wiki-section-toggle { display: inline-flex; align-items: center; gap: 0.35rem; min-height: var(--tap-target); margin-inline-start: 0.65rem; padding: 0.2rem 0.55rem; border: 1px solid var(--color-border-strong); border-radius: var(--radius-small); background: var(--color-background-soft); color: var(--color-accent-secondary); font: inherit; font-size: 0.85rem; vertical-align: middle; cursor: pointer; white-space: nowrap; }
@@ -71,12 +72,23 @@ body[data-wiki-document] .shell { width: min(100%, calc(var(--content-width) + v
 .wiki-backlinks > :last-child { margin-bottom: 0; }
 .wiki-backlinks p { color: var(--color-text-secondary); line-height: 1.7; }
 .wiki-backlinks li { margin-block: 0.75rem; }
+.wiki-comments { margin-top: 2rem; padding: clamp(1.25rem, 3vw, 2.5rem); border: 1px solid var(--color-border-strong); background: var(--color-surface-elevated); }
+.wiki-comments .post-comments { width: 100%; margin: 0; padding: 0; border-top: 0; }
+.wiki-comments .post-comments-header > p:last-child { margin: 8px 0 0; color: var(--muted); font-size: 0.82rem; line-height: 1.6; }
+.wiki-comments .post-comments-kicker { margin: 0 0 5px; color: var(--accent); font-size: 0.7rem; font-weight: 800; line-height: 1.4; letter-spacing: 0.16em; }
+.wiki-comments .post-comments h2 { margin: 0; color: var(--text); font-size: 1.2rem; letter-spacing: -0.03em; }
 .wiki-article :is(h1, h2, h3, h4, h5, h6), .wiki-group h2 { scroll-margin-top: 6rem; overflow-wrap: anywhere; }
 @media (max-width: 560px) {
   .wiki-toc, .wiki-summary { padding: 1rem; }
   .wiki-index { padding-inline: 1rem; }
 }
 @media print {
+  .wiki-article { padding-inline: 0; }
   .wiki-index-entry details { display: block; }
   .wiki-alphabet { display: none; }
+  .wiki-comments { padding: 0; border: 0; background: transparent; }
+}
+
+@media (min-width: 1200px) {
+  .wiki-article { padding-inline: clamp(2.5rem, 5vw, 5.5rem); }
 }

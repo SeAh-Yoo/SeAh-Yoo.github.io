@@ -50,14 +50,18 @@
             </aside>
             {% endif %}
           </div>
-          {% include post-comments.html %}
         </article>
-          <aside class="wiki-backlinks glass-panel" aria-labelledby="wiki-backlinks-title" data-wiki-backlinks data-wiki-index="{{ '/wiki-index.json' | relative_url }}">
-            <h2 id="wiki-backlinks-title" data-i18n="wiki.backlinks">{{ wiki_copy.backlinks }}</h2>
-            <p data-backlinks-status role="status" hidden>{{ wiki_copy.backlinks_loading }}</p>
-            <ul data-backlinks-list data-no-interface-translation></ul>
-            <noscript><p>{{ wiki_copy.backlinks_noscript }}</p></noscript>
-          </aside>
+        <aside class="wiki-backlinks glass-panel" aria-labelledby="wiki-backlinks-title" data-wiki-backlinks data-wiki-index="{{ '/wiki-index.json' | relative_url }}">
+          <h2 id="wiki-backlinks-title" data-i18n="wiki.backlinks">{{ wiki_copy.backlinks }}</h2>
+          <p data-backlinks-status role="status" hidden>{{ wiki_copy.backlinks_loading }}</p>
+          <ul data-backlinks-list data-no-interface-translation></ul>
+          <noscript><p>{{ wiki_copy.backlinks_noscript }}</p></noscript>
+        </aside>
+        {% if identity.comments.enabled and page.comments != false %}
+        <div class="wiki-comments glass-panel">
+          {% include post-comments.html %}
+        </div>
+        {% endif %}
       </main>
     </div>
     {% include analytics-tracking.html %}
