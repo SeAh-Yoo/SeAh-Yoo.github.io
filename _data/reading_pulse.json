@@ -1,13 +1,13 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-09-12T14:49:20.573Z",
+  "generated_at": "2026-09-14T09:00:48.525Z",
   "period": {
-    "start": "2026-08-14",
-    "end": "2026-09-12",
+    "start": "2026-08-16",
+    "end": "2026-09-14",
     "timezone": "Asia/Seoul"
   },
   "site": {
-    "total": 350
+    "total": 373
   },
   "posts": [
     {
@@ -49,36 +49,36 @@
       "title": "악어의 놀이터2",
       "path": "/wiki/wiki-acau-pg2/",
       "url": "/wiki/wiki-acau-pg2/",
-      "month": 1,
-      "total": 1
+      "month": 2,
+      "total": 2
     },
     {
       "title": "봉누도 시즌1",
       "path": "/wiki/wiki-nambong-island-1/",
       "url": "/wiki/wiki-nambong-island-1/",
-      "month": 3,
-      "total": 3
+      "month": 4,
+      "total": 5
     },
     {
       "title": "봉누도 시즌2",
       "path": "/wiki/wiki-nambong-island-2/",
       "url": "/wiki/wiki-nambong-island-2/",
-      "month": 1,
-      "total": 1
+      "month": 3,
+      "total": 3
     },
     {
       "title": "팰월드",
       "path": "/wiki/wiki-palworld/",
       "url": "/wiki/wiki-palworld/",
-      "month": 2,
-      "total": 2
+      "month": 3,
+      "total": 3
     },
     {
       "title": "유전원 USB 허브",
       "path": "/wiki/wiki-usb-hub/",
       "url": "/wiki/wiki-usb-hub/",
-      "month": 0,
-      "total": 0
+      "month": 1,
+      "total": 1
     }
   ]
 }
