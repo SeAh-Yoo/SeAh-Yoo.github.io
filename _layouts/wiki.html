@@ -32,10 +32,12 @@
             {% assign wiki_toc = wiki_toc | strip %}
             {% if page.description or wiki_toc != '' or page.details.size > 0 %}
             <nav class="wiki-toc" aria-label="{{ wiki_copy.contents }}" data-i18n-aria-label="wiki.contents">
-              <p class="eyebrow" data-i18n="wiki.contents">{{ wiki_copy.contents }}</p>
+              <details class="wiki-page-toc" data-wiki-page-toc>
+                <summary><span class="eyebrow" data-i18n="wiki.contents">{{ wiki_copy.contents }}</span> <span class="wiki-toc-action" aria-hidden="true"><span class="wiki-toc-open-label" data-i18n="wiki.expand_section">{{ wiki_copy.expand_section }}</span><span class="wiki-toc-close-label" data-i18n="wiki.collapse_section">{{ wiki_copy.collapse_section }}</span></span></summary>
               {% if page.description %}<ol class="wiki-heading-list"><li><span class="wiki-toc-row"><a class="wiki-toc-number" href="#wiki-summary" aria-label="{{ wiki_copy.summary }}" data-i18n-aria-label="wiki.summary">0.</a><span class="wiki-toc-title" data-i18n="wiki.summary">{{ wiki_copy.summary }}</span></span></li></ol>{% endif %}
               {% if wiki_toc != '' %}<ol class="wiki-heading-list">{{ wiki_toc }}</ol>{% endif %}
               {% if page.details.size > 0 %}<ul class="wiki-heading-list">{% include wiki-details.html entry=page %}</ul>{% endif %}
+              </details>
             </nav>
             {% endif %}
           </header>

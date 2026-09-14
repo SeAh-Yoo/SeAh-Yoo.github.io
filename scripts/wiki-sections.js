@@ -218,14 +218,20 @@
   }, true);
   window.addEventListener('hashchange', revealHash);
   window.addEventListener('site-preference-change', () => sections.forEach(update));
+  const pageToc = document.querySelector('[data-wiki-page-toc]');
+  let tocPrintState;
   let printState;
   window.addEventListener('beforeprint', () => {
     if (printState) return;
+    tocPrintState = pageToc?.open;
+    if (pageToc) pageToc.open = true;
     printState = Array.from(sections.values()).map(section => [section, isOpen(section)]);
     sections.forEach(section => setOpen(section, true));
   });
   window.addEventListener('afterprint', () => {
     printState?.forEach(([section, open]) => setOpen(section, open));
+    if (pageToc && tocPrintState !== undefined) pageToc.open = tocPrintState;
+    tocPrintState = undefined;
     printState = null;
   });
   revealHash();

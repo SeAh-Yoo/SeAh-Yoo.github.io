@@ -128,3 +128,13 @@
 @media print {
   .wiki-directory-tools, .wiki-section-copy, .wiki-copy-notice, .wiki-copy-dialog { display: none !important; }
 }
+
+.wiki-page-toc > summary { min-height: var(--tap-target); align-content: center; cursor: pointer; overflow-wrap: anywhere; }
+.wiki-page-toc > summary::marker { color: var(--color-accent-secondary); }
+.wiki-page-toc > summary:focus-visible { outline: 2px solid var(--color-accent-secondary); outline-offset: 3px; border-radius: var(--radius-small); }
+.wiki-toc-action { margin-inline-start: 0.65rem; color: var(--color-text-secondary); font-size: 0.85rem; white-space: nowrap; }
+.wiki-page-toc:not([open]) .wiki-toc-close-label, .wiki-page-toc[open] .wiki-toc-open-label { display: none; }
+@media print {
+  .wiki-toc-action { display: none; }
+  .wiki-page-toc > summary { list-style: none; }
+}
