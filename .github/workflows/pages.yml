@@ -24,6 +24,7 @@ jobs:
         with:
           ruby-version: '3.3'
       - run: gem install jekyll -v 3.10.0 --no-document
+      - run: gem install kramdown-parser-gfm -v 1.1.0 --no-document
       - uses: actions/configure-pages@v5
       - run: ruby scripts/test-extended-headings.rb
       - run: jekyll _3.10.0_ build
