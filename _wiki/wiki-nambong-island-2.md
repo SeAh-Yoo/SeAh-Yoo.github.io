@@ -46,7 +46,8 @@ last_modified_at: 2026-09-13
 
 ##### 봉누도 방송국
 - 국장: 이윤진[+[치지직:aed9d6557bebfb21ab3d081b862cdd2d]{이춘향}]
-- 기자: 명총희[+[치지직:b044e3a3b9259246bc92e863e7d3f3b8]{시라유키 히나}]
+- 인턴: 명총희[+[치지직:b044e3a3b9259246bc92e863e7d3f3b8]{시라유키 히나}]
+- 인턴: 밥돼길[+[치지직:26253bf7ed6b95832c40f4f43f6d049d]{티뭉}]
 
 ##### 봉누도 경찰서
 - 청창: 고상식[+[치지직:1343a0e30ff0acb09f2477a698d070a4]{고수달}]
@@ -57,8 +58,9 @@ last_modified_at: 2026-09-13
 
 ##### 교통정비공사
 - 사장: 황인정[+[치지직:af3323d30e11ae42c39d7203c7e07fa2]{너불}]
-- 좋마담[+[치지직:4a3cab967a74a5020258195fc9004145]{아로AURO}]
-- 종조이[+[치지직:a67b328bcc8eea4451ccfa754bc19ae1]{달콤레나 씨}]
+- 수습기사: 종조이[+[치지직:a67b328bcc8eea4451ccfa754bc19ae1]{달콤레나 씨}]
+- 수습기사: 하진혁[+[치지직:182fdb958165fa6ad4d4ec1e9e4da3c0]{바테바테}]
+- 수습기사: 좋마담[+[치지직:4a3cab967a74a5020258195fc9004145]{아로AURO}]
 
 #### 사업체 [_접기]
 
@@ -100,7 +102,7 @@ last_modified_at: 2026-09-13
 
 {% capture service_members_0 %}이윤진[+이춘향]{% endcapture %}
 {% capture service_members_1 %}오치에[+가이드]{% endcapture %}
-{% capture service_members_2 %}이줄만[+[치지직:17a4bfff01d96ffad065f641ce90bdde]{로마러}]<br>숭해춘[+[치지직:4ebef1eb4194611996dc38abf1d226d1]{마레 플로스}]<br>명총희[+시라유키 히나]<br>나익수[+[치지직:2e15ecbee8e01f6d43dbc9ec84530431]{위구리}]<br>신이버[+[치지직:8fd39bb8de623317de90654718638b10]{유즈하 리코}]<br>피터장파커[+[치지직:014a50b6ab22bd1a02a6c761917c062b]{장마군}]<br>고묵희[+[치지직:010379f20da3ec9249bfe0bbdcb05762]{코무키}]<br>킹기자[+[치지직:3eb9808e8ec29e79c6d54060c964b1a5]{킹설아}]<br>밥돼길[+[치지직:26253bf7ed6b95832c40f4f43f6d049d]{티뭉}]{% endcapture %}
+{% capture service_members_2 %}이줄만[+[치지직:17a4bfff01d96ffad065f641ce90bdde]{로마러}]<br>숭해춘[+[치지직:4ebef1eb4194611996dc38abf1d226d1]{마레 플로스}]<br>명총희[+시라유키 히나]<br>나익수[+[치지직:2e15ecbee8e01f6d43dbc9ec84530431]{위구리}]<br>신이버[+[치지직:8fd39bb8de623317de90654718638b10]{유즈하 리코}]<br>피터장파커[+[치지직:014a50b6ab22bd1a02a6c761917c062b]{장마군}]<br>고묵희[+[치지직:010379f20da3ec9249bfe0bbdcb05762]{코무키}]<br>킹기자[+[치지직:3eb9808e8ec29e79c6d54060c964b1a5]{킹설아}]<br>밥돼길[+치지직:티뭉]{% endcapture %}
 {% include wiki-template.html name="공무직명단" department="방송국" rank_1=service_members_0 rank_5=service_members_1 rank_6=service_members_2 %}
 
 #### 봉누도경찰서
@@ -124,7 +126,7 @@ last_modified_at: 2026-09-13
 2026년 09월 14일 서버 오픈 시점 교통정비공사의 인원은 전체 인원 209명 중에서 총 11명이다. (가이드 포함 12명)
 
 {% capture service_rank_1 %}황인정[+너불]{% endcapture %}
-{% capture service_rank_6 %}김웅[+[치지직:17f0cfcba4ff608de5eabb5110d134d0]{김뿡}]<br>종조이[+달콤레나 씨] (사장 인정 공식 '무면라이더')<br>하진혁[+[치지직:182fdb958165fa6ad4d4ec1e9e4da3c0]{바테바테}]<br>좋마담[+아로AURO]<br>정다정[+[치지직:41d1490bd67b3818d7dc53427a4d6cea]{앵보}]<br>채재희[+[치지직:0e604eba7206f04b1e5f15e0a1cb2616]{채현찌}]<br>도미나[+[치지직:d5e2e0c14dcca4c4b10c7c9633022f52]{치치 Planeta}]<br>김분내[+[치지직:57aeb13825bf7d402273ecfa936356e4]{카토kato}]<br>베이비[+[치지직:5786141997728cc2fcd660a15ef5f3af]{호시에 제로}]<br>추학한[+[치지직:2d4aa2f79b0a397d032c479ef1b37a67]{후추}]{% endcapture %}
+{% capture service_rank_6 %}김웅[+[치지직:17f0cfcba4ff608de5eabb5110d134d0]{김뿡}]<br>종조이[+달콤레나 씨] (사장 인정 공식 '무면라이더')<br>하진혁[+바테바테]<br>좋마담[+아로AURO]<br>정다정[+[치지직:41d1490bd67b3818d7dc53427a4d6cea]{앵보}]<br>채재희[+[치지직:0e604eba7206f04b1e5f15e0a1cb2616]{채현찌}]<br>도미나[+[치지직:d5e2e0c14dcca4c4b10c7c9633022f52]{치치 Planeta}]<br>김분내[+[치지직:57aeb13825bf7d402273ecfa936356e4]{카토kato}]<br>베이비[+[치지직:5786141997728cc2fcd660a15ef5f3af]{호시에 제로}]<br>추학한[+[치지직:2d4aa2f79b0a397d032c479ef1b37a67]{후추}]{% endcapture %}
 {% include wiki-template.html name="공무직명단" department="교통정비공사" rank_1=service_rank_1 rank_5="세콩[+가이드]" rank_6=service_rank_6 %}
 
 
