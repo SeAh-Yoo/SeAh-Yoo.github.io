@@ -5,6 +5,7 @@ Run after `jekyll build`. Uses Python's standard library and installed Jekyll.
 import json
 import os
 import re
+from html import unescape
 from html.parser import HTMLParser
 from pathlib import Path
 import shutil
@@ -110,9 +111,20 @@ def main():
             article = (dest / 'wiki/entry-0/index.html').read_text(encoding='utf-8')
             assert f'wiki-heading-level-{level}' in article
             assert f'aria-level="{level}"' in article
-        assert '가짜 제목</a>' not in directory
-        assert 'data-no-interface-translation>가. 하위 설명</a>' in directory
-        assert 'data-no-interface-translation>2. A &amp; B</a>' in directory
+        # Check the link's actual visible text separately from its accessible
+        # name: the title belongs outside the anchor, even for formatted headings.
+        for html in (directory, article):
+            for anchor, number, title in [('child', '가.', '하위 설명'), ('symbols', '2.', 'A & B')]:
+                href = f'/preview/wiki/entry-0/#{anchor}'
+                link = re.search(r'<a\b([^>]*href="' + re.escape(href) + r'"[^>]*)>(.*?)</a>', html, re.S)
+                assert link, f'Missing TOC link: {href}'
+                assert unescape(link[2]).strip() == number, f'TOC link must contain only its number: {href}'
+                attrs = dict(re.findall(r'([\w-]+)="([^"]*)"', link[1]))
+                assert unescape(attrs.get('aria-label', '')) == f'{number} {title}'
+                following = re.match(r'\s*<span\b[^>]*class="wiki-toc-title"[^>]*>(.*?)</span>', html[link.end():], re.S)
+                assert following, f'TOC title must follow the closed link: {href}'
+                assert unescape(following[1]) == title, f'TOC title must be plain text: {href}'
+            assert not any('가짜' in unquote(href) for href in Page(html).links), 'Code sample became a TOC link'
         print('PASS: all letter groups, double consonants, optional fields, nested headings, escaped code, baseurl')
 
 
