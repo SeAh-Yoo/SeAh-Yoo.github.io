@@ -5,8 +5,23 @@
 {% when '방송국' %}{% assign ranks = '편집국장,부장,선임기자,수석기자,기자,견습' | split: ',' %}{% assign department_class = 'broadcast' %}
 {% when '교통정비공사' %}{% assign ranks = '사장,실장,고위기사,모범기사,일반기사,수습기사' | split: ',' %}{% assign department_class = 'transport' %}
 {% endcase %}
+{% assign service_total = 0 %}
+{% assign service_guides = 0 %}
+{% for rank in ranks %}
+{% assign rank_key = 'rank_' | append: forloop.index %}
+{% assign rank_members = include.args[rank_key] | default: '' | strip | replace: '<br />', '<br>' | replace: '<br/>', '<br>' | split: '<br>' %}
+{% for member in rank_members %}
+{% assign member = member | strip %}
+{% if member != '' and member != '-' %}
+{% assign service_total = service_total | plus: 1 %}
+{% if member contains '[+가이드]' or member contains '[+운영자]' %}{% assign service_guides = service_guides | plus: 1 %}{% endif %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% assign service_players = service_total | minus: service_guides %}
 
 | 직위 | 인원 |
 | :--- | :--- |
 {% for rank in ranks %}{% assign rank_key = 'rank_' | append: forloop.index %}| {{ rank }} | {{ include.args[rank_key] | default: '-' | strip }} |
-{% endfor %}{: .wiki-service-table .wiki-service-{{ department_class }} }
+{% endfor %}| **인원 합계** | **{{ service_total }}명** (명단 기준: 참가자 {{ service_players }}명, 가이드·운영자 {{ service_guides }}명) |
+{: .wiki-service-table .wiki-service-{{ department_class }} }
