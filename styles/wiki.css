@@ -196,6 +196,22 @@
   .wiki-directory-tools, .wiki-section-copy, .wiki-copy-notice, .wiki-copy-dialog { display: none !important; }
 }
 
+.wiki-article .wiki-service-table { width: 100%; table-layout: fixed; border-top: 3px solid var(--service-color); }
+.wiki-service-city { --service-color: #7663a8; }
+.wiki-service-police { --service-color: #3675b5; }
+.wiki-service-hospital { --service-color: #b84e66; }
+.wiki-service-broadcast { --service-color: #358478; }
+.wiki-service-transport { --service-color: #a97528; }
+.wiki-article .wiki-service-table thead th { background: var(--service-color); color: #fff; }
+.wiki-article .wiki-service-table th:first-child,
+.wiki-article .wiki-service-table td:first-child { width: 8em; }
+.wiki-article .wiki-service-table td { overflow-wrap: anywhere; line-height: 2.2; }
+.wiki-article .wiki-service-table td:first-child { background: color-mix(in srgb, var(--service-color) 14%, transparent); font-weight: 600; }
+@media (max-width: 600px) {
+  .wiki-article .wiki-service-table th:first-child,
+  .wiki-article .wiki-service-table td:first-child { width: 5.5em; }
+}
+
 .wiki-page-toc > summary { min-height: var(--tap-target); align-content: center; cursor: pointer; overflow-wrap: anywhere; }
 .wiki-page-toc > summary::marker { color: var(--color-accent-secondary); }
 .wiki-page-toc > summary:focus-visible { outline: 2px solid var(--color-accent-secondary); outline-offset: 3px; border-radius: var(--radius-small); }
