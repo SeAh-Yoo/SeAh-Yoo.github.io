@@ -111,6 +111,9 @@ def main():
             article = (dest / 'wiki/entry-0/index.html').read_text(encoding='utf-8')
             assert f'wiki-heading-level-{level}' in article
             assert f'aria-level="{level}"' in article
+        assert 'id="wiki-toc-child"' in article
+        assert 'class="wiki-heading-number-link"' in article
+        assert 'href="#wiki-toc-child"' in article
         # Check the link's actual visible text separately from its accessible
         # name: the title belongs outside the anchor, even for formatted headings.
         for html in (directory, article):

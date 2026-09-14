@@ -199,9 +199,18 @@
     try { return hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null; }
     catch { return null; }
   };
+  const pageToc = document.querySelector('[data-wiki-page-toc]');
+  const revealPageTocTarget = (target) => {
+    if (!pageToc?.contains(target)) return false;
+    pageToc.open = true;
+    requestAnimationFrame(() => target.scrollIntoView({ block: 'center' }));
+    return true;
+  };
   const revealHash = () => {
     const target = hashTarget(location.hash);
-    if (!target || !root.contains(target)) return;
+    if (!target) return;
+    if (revealPageTocTarget(target)) return;
+    if (!root.contains(target)) return;
     reveal(target);
     requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
   };
@@ -211,14 +220,17 @@
     const url = new URL(link.href, location.href);
     if (url.origin !== location.origin || url.pathname !== location.pathname || url.search !== location.search) return;
     const target = hashTarget(url.hash);
+    if (target && link.matches('.wiki-heading-number-link') && revealPageTocTarget(target)) return;
     if (target && root.contains(target)) {
+      if (pageToc && link.matches('.wiki-toc-number') && link.closest('[data-wiki-page-toc]') === pageToc) {
+        pageToc.open = true;
+      }
       reveal(target);
       requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
     }
   }, true);
   window.addEventListener('hashchange', revealHash);
   window.addEventListener('site-preference-change', () => sections.forEach(update));
-  const pageToc = document.querySelector('[data-wiki-page-toc]');
   let tocPrintState;
   let printState;
   window.addEventListener('beforeprint', () => {

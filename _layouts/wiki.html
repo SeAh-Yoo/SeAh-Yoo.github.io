@@ -28,7 +28,7 @@
               {% assign modified = page.last_modified_at | default: wiki_created %}
               {% if modified %}<p><span data-i18n="wiki.updated">{{ wiki_copy.updated }}</span> <time datetime="{{ modified | date_to_xmlschema }}">{{ modified | date: '%Y-%m-%d' }}</time></p>{% endif %}
             </div>
-            {% capture wiki_toc %}{% include wiki-headings.html html=content url=page.url %}{% endcapture %}
+            {% capture wiki_toc %}{% include wiki-headings.html html=content url=page.url toc_ids=true %}{% endcapture %}
             {% assign wiki_toc = wiki_toc | strip %}
             {% if page.description or wiki_toc != '' or page.details.size > 0 %}
             <nav class="wiki-toc" aria-label="{{ wiki_copy.contents }}" data-i18n-aria-label="wiki.contents">

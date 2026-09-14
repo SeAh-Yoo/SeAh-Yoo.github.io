@@ -9,8 +9,10 @@ class WikiSectionsTest < Minitest::Test
   def test_depths_and_parent_reset
     source = (2..8).map { |level| "#{'#' * level} Heading #{level}\n\n" }.join
     html = render(source + "## Next\n\n### Child\n")
-    labels = html.scan(/data-wiki-no-autolink="">(.*?)<\/span>/).flatten
+    labels = html.scan(/data-wiki-no-autolink="">(.*?)<\/span>/).flatten.map { |label| label.gsub(/<[^>]*>/, '') }
     assert_equal ['1. ', '가. ', '1) ', '가) ', '[1] ', '[가] ', 'a. ', '2. ', '가. '], labels
+    linked_html = WikiSections.link_heading_numbers(html)
+    assert_includes linked_html, '<a class="wiki-heading-number-link" data-wiki-no-autolink="" href="#wiki-toc-heading-2">1. </a>'
   end
 
   def test_overflow

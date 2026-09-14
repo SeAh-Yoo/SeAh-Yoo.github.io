@@ -39,7 +39,16 @@ module WikiSections
 
   def self.render(source, site)
     config = site.config.merge('kramdown' => site.config.fetch('kramdown', {}).merge('input' => 'WikiGFM'))
-    Jekyll::Converters::Markdown::KramdownParser.new(config).convert(source)
+    html = Jekyll::Converters::Markdown::KramdownParser.new(config).convert(source)
+    link_heading_numbers(html)
+  end
+
+  def self.link_heading_numbers(html)
+    html.gsub(/(<h[2-6]\b[^>]*\bid="([^"]+)"[^>]*>\s*<span\b(?=[^>]*\bclass="wiki-heading-number\b")[^>]*>)(.*?)(<\/span>)/m) do
+      match = Regexp.last_match
+      toc_id = CGI.escapeHTML("wiki-toc-#{CGI.unescapeHTML(match[2])}")
+      "#{match[1]}<a class=\"wiki-heading-number-link\" data-wiki-no-autolink=\"\" href=\"##{toc_id}\">#{match[3]}</a>#{match[4]}"
+    end
   end
 
   module Renderer
@@ -57,14 +66,14 @@ module WikiSections
       WikiSections.render(source.to_s, @context.registers[:site])
     end
 
-    def wiki_contents(html, url)
+    def wiki_contents(html, url, toc_ids = true)
       roots = []
       stack = []
       html.scan(/<h([2-6])\b([^>]*)>(.*?)<\/h\1>/m) do |tag, attrs, text|
         id = attrs[/\bid="([^"]*)"/, 1]
         next unless id
         level = (attrs[/data-heading-level="(\d+)"/, 1] || tag).to_i
-        number = text[/<span\b[^>]*class="wiki-heading-number"[^>]*>(.*?)<\/span>/m, 1].to_s.strip
+        number = text[/<span\b[^>]*class="wiki-heading-number"[^>]*>(.*?)<\/span>/m, 1].to_s.gsub(/<[^>]*>/, '').strip
         title = text.sub(/<span\b[^>]*class="wiki-heading-number"[^>]*>.*?<\/span>/m, '').gsub(/<[^>]*>/, '')
         node = { level: level, id: id, number: number, text: title, children: [] }
         stack.pop while stack.last && stack.last[:level] >= level
@@ -75,9 +84,11 @@ module WikiSections
         nodes.map do |node|
           children = node[:children].empty? ? '' : "<ol>#{render_nodes.call(node[:children])}</ol>"
           href = CGI.escapeHTML("#{url}##{CGI.unescapeHTML(node[:id])}")
+          toc_id = CGI.escapeHTML("wiki-toc-#{CGI.unescapeHTML(node[:id])}")
+          toc_id_attribute = toc_ids ? " id=\"#{toc_id}\"" : ''
           title = CGI.escapeHTML(CGI.unescapeHTML(node[:text]))
           label = CGI.escapeHTML(CGI.unescapeHTML("#{node[:number]} #{node[:text]}"))
-          "<li class=\"wiki-heading-level-#{node[:level]}\"><span class=\"wiki-toc-row\" data-no-interface-translation><a class=\"wiki-toc-number\" href=\"#{href}\" aria-label=\"#{label}\">#{node[:number]}</a><span class=\"wiki-toc-title\">#{title}</span></span>#{children}</li>"
+          "<li#{toc_id_attribute} class=\"wiki-heading-level-#{node[:level]}\"><span class=\"wiki-toc-row\" data-no-interface-translation><a class=\"wiki-toc-number\" href=\"#{href}\" aria-label=\"#{label}\">#{node[:number]}</a><span class=\"wiki-toc-title\">#{title}</span></span>#{children}</li>"
         end.join
       end
       render_nodes.call(roots)

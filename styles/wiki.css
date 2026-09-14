@@ -9,7 +9,11 @@
 .wiki-index-entry h3 { margin: 0; font-size: 1.2rem; }
 .wiki-index-entry p { margin: 0.65rem 0; line-height: 1.8; }
 .wiki-summary-link { color: var(--color-text-secondary); text-decoration: none; }
-.wiki-summary-link:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+.wiki-summary-link:hover { text-decoration: none; }
+.wiki-index a,
+.wiki-index a:hover,
+.wiki-backlinks a,
+.wiki-backlinks a:hover { color: var(--color-accent-secondary); text-decoration: none; }
 .wiki-index-entry summary { width: fit-content; min-height: var(--tap-target); padding-block: 0.6rem; color: var(--color-accent-secondary); cursor: pointer; }
 .wiki-index-entry details ul, .wiki-toc ul { padding-left: 1.25rem; }
 .wiki-index-entry details li, .wiki-toc li { padding-block: 0.3rem; line-height: 1.65; }
@@ -23,6 +27,68 @@
 .wiki-article :is(.post-header, .post-content) { width: min(100%, calc(var(--reading-width) * 1.2)); }
 .wiki-article { --wiki-heading-indent: clamp(0.6rem, 2vw, 1.25rem); }
 .wiki-article { --wiki-body-indent: 2.5em; }
+.wiki-article {
+  --wiki-body-text: var(--color-text-secondary);
+  --wiki-toc-text: color-mix(in srgb, var(--color-text-secondary) 72%, var(--color-text-muted));
+  --wiki-footnote-text: var(--color-text-muted);
+  --wiki-rp-background: color-mix(in srgb, var(--color-text-muted) 18%, var(--color-background-soft));
+}
+.wiki-article .post-content { color: var(--wiki-body-text); }
+.wiki-article .post-content :is(p, li, blockquote, td, figcaption) { color: var(--wiki-body-text); }
+.wiki-article a,
+.wiki-article a:hover,
+.wiki-article .post-content a,
+.wiki-article .post-content a:hover { text-decoration: none; }
+.wiki-article .post-content a { color: var(--color-accent-secondary); }
+.wiki-article .post-content a:hover { color: var(--color-accent-secondary); }
+.wiki-article .post-content :is(a.footnote, .footnotes a) { color: var(--color-accent); }
+.wiki-article .post-content :is(a.footnote, .footnotes a):hover { color: var(--color-accent); }
+.wiki-article .post-content :is(a.footnote, .footnotes a) {
+  display: inline;
+  min-width: 0;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-family: inherit;
+  line-height: inherit;
+  text-shadow: none;
+}
+.wiki-article .post-content .footnotes a.post-endnote-number-link,
+.wiki-article .post-content .footnotes a.post-endnote-backlink,
+.wiki-article .post-content .footnotes a.reversefootnote {
+  display: inline;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-family: inherit;
+  line-height: inherit;
+}
+.wiki-article .post-content .footnotes,
+.wiki-article .post-content .footnotes :is(p, li) { color: var(--wiki-footnote-text); }
+.wiki-article .post-content .wiki-rp-annotation {
+  padding-inline: 0.18em;
+  border-radius: 0.2em;
+  background: var(--wiki-rp-background);
+  color: var(--wiki-body-text);
+}
+.wiki-article .post-content .wiki-rp a {
+  color: var(--color-text-primary);
+  background: var(--color-accent-soft);
+}
+.wiki-article .post-content .wiki-rp a:hover { color: var(--color-text-primary); }
+.wiki-article .post-content .wiki-heading-number-link { color: var(--color-accent-secondary); }
+.wiki-article .post-content .wiki-heading-number-link:hover { color: var(--color-accent-secondary); }
+.wiki-article .post-content :is(a.footnote, a.post-endnote-reference, a.post-endnote-number-link)::before { content: '[ '; }
+.wiki-article .post-content :is(a.footnote, a.post-endnote-reference, a.post-endnote-number-link)::after { content: ' ]'; }
 .wiki-article [data-wiki-depth] { max-width: none; }
 .wiki-article :is([data-wiki-depth="2"], [data-wiki-depth="3"], [data-wiki-depth="4"], [data-wiki-depth="5"], [data-wiki-depth="6"], [data-wiki-depth="7"]),
 .wiki-article .wiki-legacy-fold > summary {
@@ -98,7 +164,7 @@
 .wiki-card-description { color: var(--color-text-secondary); }
 .wiki-toc-row { display: flex; align-items: baseline; gap: 0.45em; }
 .wiki-heading-list .wiki-toc-number { flex: 0 0 auto; min-width: 1.75em; padding: 0.2rem 0.15rem; color: var(--color-accent-secondary); font-variant-numeric: tabular-nums; }
-.wiki-toc-title { min-width: 0; padding-block: 0.2rem; text-decoration: none; overflow-wrap: anywhere; }
+.wiki-toc-title { min-width: 0; padding-block: 0.2rem; color: var(--wiki-toc-text); overflow-wrap: anywhere; }
 .wiki-heading-list ol { padding-inline-start: clamp(0.65rem, 1.5vw, 1.25rem); }
 @media (max-width: 700px) {
   .wiki-entry-list { grid-template-columns: minmax(0, 1fr); }

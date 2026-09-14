@@ -1,2 +1,2 @@
 {%- assign wiki_heading_url = include.url | relative_url -%}
-{{- include.html | wiki_contents: wiki_heading_url -}}
+{{- include.html | wiki_contents: wiki_heading_url, include.toc_ids -}}
