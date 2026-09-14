@@ -17,7 +17,6 @@
 .wiki-toc .eyebrow { margin: 0; }
 .wiki-heading-list, .wiki-heading-list ol { list-style: none; padding-left: 0; }
 .wiki-heading-list ol { padding-left: clamp(0.6rem, 2vw, 1.1rem); margin-block: 0; }
-.wiki-heading-list > li > ol { padding-left: 0; }
 .wiki-heading-list a { display: inline-block; padding-block: 0.2rem; }
 .wiki-heading-number { font-variant-numeric: tabular-nums; }
 /* Keep the wider reading measure and heading hierarchy exclusive to wiki. */
