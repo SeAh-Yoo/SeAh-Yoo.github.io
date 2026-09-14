@@ -560,6 +560,20 @@ shared:
   wiki:
     locales:
       ko: &shared_wiki_ko
+        search_label: '위키 제목·별칭 검색'
+        search_clear: '검색어 지우기'
+        expand_contents: '목차 모두 펼치기'
+        collapse_contents: '목차 모두 접기'
+        search_count: '검색 결과 {count}개'
+        search_empty: '일치하는 항목이 없습니다. 검색어를 변경해 주세요.'
+        contents_state: '표시된 목차 {total}개 중 {open}개 펼침'
+        copy_section: '{title}: 절 주소 복사'
+        copy_success: '주소를 복사했습니다'
+        copy_fallback: '아래 주소를 선택하여 복사하세요.'
+        copy_address: '복사할 절 주소'
+        copy_close: '닫기'
+        wip: '작성 중'
+        wip_notice: '내용을 정리 중이며 일부 항목이 비어 있을 수 있습니다.'
         all_entries: 이상위키 항목 | WEIRD WIKI ENTRIES
         created: '최초 등록일:'
         updated: '수정일:'
@@ -585,6 +599,20 @@ shared:
         result_wiki: 이상위키
         result_post: 이상위키 게시물
       en: &shared_wiki_en
+        search_label: 'Search wiki titles and aliases'
+        search_clear: 'Clear search'
+        expand_contents: 'Expand all contents'
+        collapse_contents: 'Collapse all contents'
+        search_count: '{count} results'
+        search_empty: 'No matching entries. Try a different search term.'
+        contents_state: '{open} of {total} visible contents expanded'
+        copy_section: 'Copy section link: {title}'
+        copy_success: 'Link copied'
+        copy_fallback: 'Select and copy the address below.'
+        copy_address: 'Section address to copy'
+        copy_close: 'Close'
+        wip: 'Work in progress'
+        wip_notice: 'This entry is being organized; some sections may be empty.'
         all_entries: Strange wiki entries | WEIRD WIKI ENTRIES
         created: 'First published:'
         updated: 'Updated:'
@@ -610,6 +638,20 @@ shared:
         result_wiki: Strange wiki
         result_post: Strange wiki post
       ja: &shared_wiki_ja
+        search_label: 'ウィキのタイトル・別名を検索'
+        search_clear: '検索語をクリア'
+        expand_contents: '目次をすべて開く'
+        collapse_contents: '目次をすべて閉じる'
+        search_count: '検索結果 {count}件'
+        search_empty: '一致する項目がありません。検索語を変更してください。'
+        contents_state: '表示中の目次{total}件中{open}件が展開中'
+        copy_section: '{title}：節のアドレスをコピー'
+        copy_success: 'アドレスをコピーしました'
+        copy_fallback: '以下のアドレスを選択してコピーしてください。'
+        copy_address: 'コピーする節のアドレス'
+        copy_close: '閉じる'
+        wip: '執筆中'
+        wip_notice: '内容を整理中のため、一部の項目が空の場合があります。'
         all_entries: 異常ウィキの項目 | WEIRD WIKI ENTRIES
         created: 初回登録日：
         updated: 更新日：

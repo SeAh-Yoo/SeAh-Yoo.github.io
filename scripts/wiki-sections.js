@@ -97,6 +97,75 @@
     body.addEventListener('beforematch', () => reveal(body));
   });
 
+  // Icon-only buttons keep UI wording out of heading text and generated indexes.
+  const copyButtons = [];
+  const notice = document.createElement('div');
+  notice.className = 'wiki-copy-notice';
+  notice.setAttribute('role', 'status');
+  notice.setAttribute('aria-live', 'polite');
+  document.body.append(notice);
+  const dialog = document.createElement('dialog');
+  dialog.className = 'wiki-copy-dialog';
+  dialog.setAttribute('aria-labelledby', 'wiki-copy-help');
+  const help = document.createElement('p');
+  help.id = 'wiki-copy-help';
+  const address = document.createElement('input');
+  address.type = 'text';
+  address.readOnly = true;
+  address.setAttribute('data-no-interface-translation', '');
+  const close = document.createElement('button');
+  close.type = 'button';
+  dialog.append(help, address, close);
+  document.body.append(dialog);
+  let originButton;
+  let noticeTimer;
+  const localizeCopy = () => {
+    copyButtons.forEach(({ button, title }) => {
+      const label = copy('copy_section', '{title}: 절 주소 복사').replace('{title}', title);
+      button.setAttribute('aria-label', label);
+      button.title = label;
+    });
+    help.textContent = copy('copy_fallback', '아래 주소를 선택하여 복사하세요.');
+    address.setAttribute('aria-label', copy('copy_address', '복사할 절 주소'));
+    close.textContent = copy('copy_close', '닫기');
+    if (notice.textContent) notice.textContent = copy('copy_success', '주소를 복사했습니다');
+  };
+  close.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => originButton?.focus({ preventScroll: true }));
+  address.addEventListener('click', () => address.select());
+  headings.filter(heading => heading.id && !heading.closest('.footnotes, .wiki-toc, .wiki-backlinks, .wiki-detail-pages, .wiki-summary')).forEach(heading => {
+    const titleNode = heading.cloneNode(true);
+    titleNode.querySelectorAll('button, .wiki-heading-number').forEach(node => node.remove());
+    const title = titleNode.textContent.trim();
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'wiki-section-copy';
+    button.setAttribute('data-wiki-no-autolink', '');
+    button.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m10 13 4-4M8 16l-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m2 1 1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0"/></svg>';
+    button.addEventListener('click', async () => {
+      const url = new URL(location.href);
+      url.search = '';
+      url.hash = encodeURIComponent(heading.id);
+      try {
+        if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+        await navigator.clipboard.writeText(url.href);
+        clearTimeout(noticeTimer);
+        notice.textContent = copy('copy_success', '주소를 복사했습니다');
+        noticeTimer = setTimeout(() => { notice.textContent = ''; }, 2500);
+      } catch {
+        originButton = button;
+        address.value = url.href;
+        dialog.showModal();
+        address.focus({ preventScroll: true });
+        address.select();
+      }
+    });
+    copyButtons.push({ button, title });
+    heading.append(button);
+  });
+  localizeCopy();
+  window.addEventListener('site-preference-change', localizeCopy);
+
   // Preserve native details/summary markup, keyboard control and initial open
   // state. Its indicator uses the same books and labels as heading folds.
   root.querySelectorAll('details').forEach((details) => {

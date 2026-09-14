@@ -1151,3 +1151,23 @@ Chrome에서 390px/320px 모바일 폭과 데스크톱을 확인하고, Tab/Ente
 `python scripts/test-wiki-sections.py --keep`은 실제 위키 글을 수정하지 않고 임시 검증 사이트를 남깁니다.
 출력된 `FIXTURE_SITE`를 `python -m http.server 4173 --bind 127.0.0.1 --directory "FIXTURE_SITE"`로 실행한 뒤
 Chrome에서 `/wiki/section-preview/`, `/wiki/`, `/posts/section-preview/`를 확인합니다.
+
+
+### 위키 목록 검색과 절 주소 복사
+
+`/wiki/`에서 제목과 `aliases`를 부분 검색할 수 있습니다. 목차 일괄 조작은 현재 표시된
+카드에만 적용하며 검색어를 바꿔도 각 카드의 펼침 상태를 유지합니다.
+본문의 `##`~`########` 제목 옆 연결 아이콘은 현재 절의 주소를 복사합니다.
+클립보드를 사용할 수 없으면 선택 가능한 주소 창을 표시합니다.
+
+### 선택적 작성 중 표시
+
+위키 문서의 YAML front matter에 다음 필드를 추가하면 목록과 상세 페이지에
+‘작성 중’ 배지와 상세 안내가 표시됩니다.
+
+```yaml
+status: wip
+```
+
+작성이 끝나면 `status: wip` 행을 제거하세요. 필드가 없으면 기존 표시를 유지하며,
+빈 내용으로 상태를 추정하지 않습니다. 작성 중 문서도 게시된 상태로 목록·검색·사이트맵에 포함됩니다.

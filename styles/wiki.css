@@ -104,3 +104,27 @@
   .wiki-index-entry { padding: 1rem; }
   .wiki-article { --wiki-heading-indent: 0.6rem; --wiki-body-indent: 0.75rem; }
 }
+
+/* Directory controls enhance the complete, server-rendered list. */
+.wiki-index [hidden] { display: none !important; }
+.wiki-directory-tools { margin-bottom: 1.25rem; }
+.wiki-directory-tools > label { display: block; margin-bottom: 0.5rem; font-weight: 700; }
+.wiki-search-row, .wiki-bulk-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.wiki-search-row input { flex: 1 1 14rem; min-width: 0; width: 100%; }
+.wiki-bulk-actions { margin-top: 0.75rem; }
+.wiki-directory-tools :is(input, button), .wiki-copy-dialog :is(input, button) { min-height: var(--tap-target); padding: 0.5rem 0.75rem; border: 1px solid var(--color-border-strong); border-radius: var(--radius-small); background: var(--color-background-soft); color: var(--color-text-primary); font: inherit; }
+.wiki-directory-tools button, .wiki-copy-dialog button { cursor: pointer; }
+.wiki-directory-tools button:disabled { opacity: 0.5; cursor: default; }
+.wiki-directory-tools :is(input, button):focus-visible, .wiki-section-copy:focus-visible, .wiki-copy-dialog :is(input, button):focus-visible { outline: 2px solid var(--color-accent-secondary); outline-offset: 3px; }
+.wiki-bulk-actions span, .wiki-directory-tools p { color: var(--color-text-secondary); font-size: 0.9rem; }
+.wiki-wip-badge { display: inline-block; vertical-align: middle; margin-inline-start: 0.4rem; padding: 0.2rem 0.5rem; border: 1px solid var(--color-border-strong); border-radius: var(--radius-small); background: var(--color-accent-soft); color: var(--color-accent-secondary); font-size: 0.75rem; font-weight: 600; line-height: 1.5; }
+.wiki-wip-notice { color: var(--color-text-secondary); font-size: 0.9rem; }
+.wiki-section-copy { display: inline-flex; align-items: center; justify-content: center; min-width: var(--tap-target); min-height: var(--tap-target); margin-inline-start: 0.35rem; padding: 0.25rem; vertical-align: middle; border: 1px solid transparent; border-radius: var(--radius-small); background: transparent; color: var(--color-text-secondary); cursor: pointer; }
+.wiki-section-copy:hover { background: var(--color-accent-soft); color: var(--color-accent-secondary); }
+.wiki-copy-notice:not(:empty) { position: fixed; inset-inline: 1rem; bottom: 1.5rem; width: fit-content; max-width: calc(100% - 2rem); margin-inline: auto; padding: 0.75rem 1rem; border: 1px solid var(--color-border-strong); border-radius: var(--radius-small); background: var(--color-surface-elevated); color: var(--color-text-primary); z-index: 1000; }
+.wiki-copy-dialog { width: min(32rem, calc(100% - 2rem)); box-sizing: border-box; padding: 1.25rem; border: 1px solid var(--color-border-strong); border-radius: var(--radius-small); background: var(--color-surface-elevated); color: var(--color-text-primary); }
+.wiki-copy-dialog::backdrop { background: rgb(0 0 0 / 45%); }
+.wiki-copy-dialog input { display: block; box-sizing: border-box; width: 100%; margin-block: 0.75rem; }
+@media print {
+  .wiki-directory-tools, .wiki-section-copy, .wiki-copy-notice, .wiki-copy-dialog { display: none !important; }
+}

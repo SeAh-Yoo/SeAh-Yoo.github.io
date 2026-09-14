@@ -7,6 +7,59 @@
     list.append(...entries);
   });
 
+  const directory = document.querySelector('[data-wiki-directory]');
+  if (directory?.querySelector('[data-wiki-tools]')) {
+    const input = directory.querySelector('#wiki-search');
+    const clear = directory.querySelector('[data-wiki-clear]');
+    const expand = directory.querySelector('[data-wiki-expand]');
+    const collapse = directory.querySelector('[data-wiki-collapse]');
+    const status = directory.querySelector('[data-wiki-search-status]');
+    const empty = directory.querySelector('[data-wiki-search-empty]');
+    const normalize = value => value.trim().normalize('NFC').toLowerCase();
+    const cards = Array.from(directory.querySelectorAll('[data-wiki-entry]')).map(element => ({
+      element,
+      names: [element.dataset.searchTitle, ...(JSON.parse(element.dataset.searchAliases || 'null') || [])].map(normalize),
+      contents: element.querySelector(':scope > details')
+    }));
+    let composing = false;
+    let announcement;
+    let count = cards.length;
+    const visibleContents = () => cards.filter(card => !card.element.hidden && card.contents).map(card => card.contents);
+    const updateContents = () => {
+      const targets = visibleContents();
+      expand.disabled = collapse.disabled = !targets.length;
+      directory.querySelector('#wiki-contents-state').textContent = copy('contents_state')
+        .replace('{total}', targets.length).replace('{open}', targets.filter(target => target.open).length);
+    };
+    const announce = () => { status.textContent = copy('search_count').replace('{count}', count); };
+    const filter = () => {
+      if (composing) return;
+      const query = normalize(input.value);
+      cards.forEach(card => { card.element.hidden = !card.names.some(name => name.includes(query)); });
+      count = cards.filter(card => !card.element.hidden).length;
+      directory.querySelectorAll('[data-wiki-group]').forEach(group => {
+        group.hidden = !Array.from(group.querySelectorAll('[data-wiki-entry]')).some(card => !card.hidden);
+        const id = group.querySelector('h2').id;
+        directory.querySelector(`.wiki-alphabet a[href="#${id}"]`).hidden = group.hidden;
+      });
+      empty.hidden = count !== 0;
+      clear.disabled = !input.value;
+      updateContents();
+      clearTimeout(announcement);
+      announcement = setTimeout(announce, 350);
+    };
+    input.addEventListener('compositionstart', () => { composing = true; clearTimeout(announcement); });
+    input.addEventListener('compositionend', () => { composing = false; filter(); });
+    input.addEventListener('input', event => { if (!event.isComposing) filter(); });
+    clear.addEventListener('click', () => { input.value = ''; composing = false; filter(); input.focus(); });
+    expand.addEventListener('click', () => { visibleContents().forEach(target => { target.open = true; }); updateContents(); });
+    collapse.addEventListener('click', () => { visibleContents().forEach(target => { target.open = false; }); updateContents(); });
+    cards.forEach(card => card.contents?.addEventListener('toggle', updateContents));
+    window.addEventListener('site-preference-change', () => { announce(); updateContents(); });
+    directory.querySelector('[data-wiki-tools]').hidden = false;
+    filter();
+  }
+
   const root = document.querySelector('[data-wiki-backlinks]');
   if (!root) return;
   const status = root.querySelector('[data-backlinks-status]');

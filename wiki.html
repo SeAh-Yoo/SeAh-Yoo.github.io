@@ -15,8 +15,8 @@ permalink: /wiki/
         {% capture entry_group %}{% include wiki-group.html entry=entry %}{% endcapture %}
         {% assign entry_group = entry_group | strip %}
         {% if entry_group == group %}
-        <li class="wiki-index-entry" data-wiki-entry data-sort-title="{{ entry.sort_title | default: entry.title | escape }}">
-          <h3><a href="{{ entry.url | relative_url }}" data-no-interface-translation>{{ entry.title | escape }}</a></h3>
+        <li class="wiki-index-entry" data-wiki-entry data-search-title="{{ entry.title | escape }}" data-search-aliases="{{ entry.aliases | jsonify | escape }}" data-sort-title="{{ entry.sort_title | default: entry.title | escape }}">
+          <h3><a href="{{ entry.url | relative_url }}" data-no-interface-translation>{{ entry.title | escape }}</a>{% if entry.status == "wip" %} <span class="wiki-wip-badge" data-i18n="wiki.wip">{{ wiki_copy.wip }}</span>{% endif %}</h3>
           {% if entry.description %}<p class="wiki-card-description" data-no-interface-translation>{{ entry.description | escape }}</p>{% endif %}
           {% assign entry_html = entry.content | wiki_markdownify %}
           {% capture entry_sections %}{% include wiki-headings.html html=entry_html url=entry.url %}{% endcapture %}
@@ -38,12 +38,26 @@ permalink: /wiki/
 <div class="glass-panel wiki-index" data-wiki-directory>
   {% assign wiki_sections = wiki_sections | strip %}
   {% if wiki_sections != '' %}
-  <nav class="wiki-alphabet" aria-label="{{ wiki_copy.alphabet }}">
+  <div class="wiki-directory-tools" data-wiki-tools hidden>
+    <label for="wiki-search" data-i18n="wiki.search_label">{{ wiki_copy.search_label }}</label>
+    <div class="wiki-search-row">
+      <input id="wiki-search" type="search" autocomplete="off" aria-controls="wiki-results" />
+      <button type="button" data-wiki-clear data-i18n="wiki.search_clear">{{ wiki_copy.search_clear }}</button>
+    </div>
+    <div class="wiki-bulk-actions">
+      <button type="button" data-wiki-expand data-i18n="wiki.expand_contents" aria-controls="wiki-results" aria-describedby="wiki-contents-state">{{ wiki_copy.expand_contents }}</button>
+      <button type="button" data-wiki-collapse data-i18n="wiki.collapse_contents" aria-controls="wiki-results" aria-describedby="wiki-contents-state">{{ wiki_copy.collapse_contents }}</button>
+      <span id="wiki-contents-state"></span>
+    </div>
+    <p data-wiki-search-status role="status" aria-live="polite" aria-atomic="true"></p>
+    <p data-wiki-search-empty data-i18n="wiki.search_empty" hidden>{{ wiki_copy.search_empty }}</p>
+  </div>
+  <nav class="wiki-alphabet" data-i18n-aria-label="wiki.alphabet" aria-label="{{ wiki_copy.alphabet }}">
     {% for group in wiki_groups %}
       {% capture group_marker %}data-group-label="{{ group }}"{% endcapture %}
       {% if wiki_sections contains group_marker %}<a href="#wiki-group-{{ forloop.index }}">{% if group == "0–9 / 기타" %}<span data-i18n="wiki.other_group">{{ wiki_copy.other_group }}</span>{% else %}{{ group }}{% endif %}</a>{% endif %}
     {% endfor %}
   </nav>
-  {{ wiki_sections }}
+  <div id="wiki-results">{{ wiki_sections }}</div>
   {% else %}<p>{{ wiki_copy.empty }}</p>{% endif %}
 </div>
