@@ -77,9 +77,15 @@ def run(temp):
 
 [치지직:b044e3a3b9259246bc92e863e7d3f3b8]{시라유키 히나}
 
+[치지직:af3323d30e11ae42c39d7203c7e07fa2]{너불}
+[치지직:a67b328bcc8eea4451ccfa754bc19ae1]{달콤레나 씨}
+
+- 사장: 황인정[+너불]
+- 사원: 종조이[+달콤레나 씨]
+
 명총희[+시라유키 히나] {어둠 속의 명총희}[+시라유키 히나]
 
-A[+에이] {한글 English 혼합}[+Mixed 이름] {아주 긴 본문 이름}[+짧음]
+A[+에이] 가나다라[+가나다라마바사] {한글 English 혼합}[+Mixed 이름] {아주 긴 본문 이름}[+짧음]
 
 {모바일에서 화면보다 길어지는 아주 긴 이름을 안전하게 표시하는 실험용 본문 이름입니다}[+아주 긴 후리가나 주석도 화면 안에서 읽을 수 있도록 표시합니다 English and 한국어]
 
@@ -172,6 +178,9 @@ references:
     assert '<table>' in indexed['html'] and '{%' not in indexed['html']
     assert '<ruby class="wiki-rp">' in html
     assert '<span class="wiki-rp-base">명총희</span><rt class="wiki-rp-annotation">시라유키 히나</rt>' in html
+    assert '<span class="wiki-rp-base">황인정</span><rt class="wiki-rp-annotation">너불</rt>' in html
+    assert '<span class="wiki-rp-base">종조이</span><rt class="wiki-rp-annotation">달콤레나 씨</rt>' in html
+    assert '<span class="wiki-rp-base">가나다라</span><rt class="wiki-rp-annotation">가나다라마바사</rt>' in html
     assert '<a href="https://example.com/profile">시라유키 히나</a></rt>' in html
     assert 'data-wiki-heading-target="공무직 오리엔테이션 (2026.09.12)"' in html
     assert 'data-wiki-heading-target="없는 제목"' in html

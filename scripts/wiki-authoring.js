@@ -6,6 +6,34 @@
     if (typeof Intl.Segmenter === 'function') return Array.from(new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)).length;
     return Array.from(text).length;
   };
+  const naturalRpWidths = (ruby) => {
+    // Native ruby layout gives both rows the wider row's allocated width. A
+    // hidden clone keeps the same inherited font and icon styles while making
+    // each row independently measurable.
+    const clone = ruby.cloneNode(true);
+    clone.classList.remove('wiki-rp-overflow');
+    clone.setAttribute('aria-hidden', 'true');
+    Object.assign(clone.style, {
+      position: 'fixed',
+      inset: '0 auto auto 0',
+      display: 'inline-block',
+      width: 'max-content',
+      maxWidth: 'none',
+      visibility: 'hidden',
+      pointerEvents: 'none',
+    });
+    const base = clone.querySelector(':scope > .wiki-rp-base');
+    const annotation = clone.querySelector(':scope > rt');
+    base.style.setProperty('display', 'inline-block', 'important');
+    annotation.style.setProperty('display', 'inline-block', 'important');
+    ruby.after(clone);
+    const widths = {
+      base: base.getBoundingClientRect().width,
+      annotation: annotation.getBoundingClientRect().width,
+    };
+    clone.remove();
+    return widths;
+  };
   const balanceRp = (ruby) => {
     const base = ruby.querySelector(':scope > .wiki-rp-base');
     const annotation = ruby.querySelector(':scope > rt');
@@ -13,18 +41,29 @@
     base.style.removeProperty('--wiki-rp-spacing');
     annotation.style.removeProperty('--wiki-rp-spacing');
     ruby.classList.remove('wiki-rp-overflow');
-    const baseWidth = base.getBoundingClientRect().width;
-    const annotationWidth = annotation.getBoundingClientRect().width;
+    const { base: baseWidth, annotation: annotationWidth } = naturalRpWidths(ruby);
     const [shorter, shorterWidth, longerWidth] = baseWidth < annotationWidth
       ? [base, baseWidth, annotationWidth] : [annotation, annotationWidth, baseWidth];
-    const gaps = graphemeCount(shorter.textContent.trim()) - 1;
-    if (gaps > 0 && longerWidth - shorterWidth > 0.5) {
+    const shorterKey = baseWidth < annotationWidth ? 'base' : 'annotation';
+    const characters = graphemeCount(shorter.textContent.trim());
+    if (characters > 1 && shorterWidth > 0 && longerWidth - shorterWidth > 0.5 && longerWidth / shorterWidth <= 1.35) {
       const fontSize = parseFloat(getComputedStyle(shorter).fontSize) || 16;
-      const spacing = Math.min((longerWidth - shorterWidth) / gaps, fontSize * 0.45);
-      shorter.style.setProperty('--wiki-rp-spacing', `${spacing}px`);
+      const maximum = fontSize * 0.15;
+      shorter.style.setProperty('--wiki-rp-spacing', `${maximum}px`);
+      const expandedWidth = naturalRpWidths(ruby)[shorterKey];
+      if (expandedWidth >= longerWidth - 0.5 && expandedWidth > shorterWidth) {
+        const pixelsPerSpacing = (expandedWidth - shorterWidth) / maximum;
+        let spacing = Math.min(maximum, (longerWidth - shorterWidth) / pixelsPerSpacing);
+        shorter.style.setProperty('--wiki-rp-spacing', `${spacing}px`);
+        const measuredWidth = naturalRpWidths(ruby)[shorterKey];
+        spacing = Math.max(0, Math.min(maximum, spacing + (longerWidth - measuredWidth) / pixelsPerSpacing));
+        shorter.style.setProperty('--wiki-rp-spacing', `${spacing}px`);
+      } else {
+        shorter.style.removeProperty('--wiki-rp-spacing');
+      }
     }
     const viewportLimit = Math.max(0, Math.min(document.documentElement.clientWidth - 32, ruby.parentElement.clientWidth));
-    ruby.classList.toggle('wiki-rp-overflow', ruby.scrollWidth > viewportLimit);
+    ruby.classList.toggle('wiki-rp-overflow', Math.max(baseWidth, annotationWidth) > viewportLimit);
   };
   const enhanceRp = (root = document) => {
     const rubies = Array.from(root.querySelectorAll('ruby.wiki-rp'));
