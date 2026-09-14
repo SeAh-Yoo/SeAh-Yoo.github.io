@@ -36,7 +36,7 @@ sitemap: false
     "aliases": {{ entry.aliases | jsonify }},
     "date": {% if entry.date and entry.date != site.time %}{{ entry.date | date_to_xmlschema | jsonify }}{% else %}""{% endif %},
     "description": {{ entry.description | default: '' | strip_html | normalize_whitespace | jsonify }},
-    "content": {{ entry.content | markdownify | strip_html | normalize_whitespace | jsonify }}
+    "content": {{ entry.content | wiki_markdownify | strip_html | normalize_whitespace | jsonify }}
   }
 {% endfor %}
 ]

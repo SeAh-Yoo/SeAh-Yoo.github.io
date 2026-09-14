@@ -1,0 +1,157 @@
+(() => {
+  const root = document.querySelector('[data-wiki-document] .post-content');
+  if (!root) return;
+  const headings = Array.from(root.querySelectorAll('[data-wiki-depth]'));
+  const sections = new Map();
+  const byHeading = new Map();
+  const copy = (key, fallback) => window.siteIdentity?.get(`wiki.${key}`, fallback) || fallback;
+  const book = (open) => `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${open
+    ? '<path d="M12 5c-3-2-6-2-10-1v15c4-1 7-1 10 1 3-2 6-2 10-1V4c-4-1-7-1-10 1Zm0 0v15"/>'
+    : '<path d="M5 3h15v18H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm0 0v14h15M3 19a2 2 0 0 1 2-2M9 7h7"/>'}</svg>`;
+
+  const isOpen = (section) => section.details ? section.details.open : !section.body.hasAttribute('hidden');
+  const update = (section) => {
+    const open = isOpen(section);
+    section.button.setAttribute('aria-expanded', String(open));
+    section.icon.innerHTML = book(open);
+    section.label.textContent = open ? copy('collapse_section', '접기') : copy('expand_section', '열기');
+    section.button.setAttribute('aria-label', `${section.title}: ${section.label.textContent}`);
+  };
+  const setOpen = (section, open) => {
+    if (section.details) section.details.open = open;
+    else if (open) section.body.removeAttribute('hidden');
+    else section.body.setAttribute('hidden', 'onbeforematch' in document.documentElement ? 'until-found' : '');
+    update(section);
+  };
+
+  // Give every heading its own content measure. This keeps paragraphs, lists,
+  // quotes, tables, and images aligned with their heading's hierarchy. The
+  // first two levels intentionally share the base measure; indentation starts
+  // at the third wiki level.
+  const wrapHeadingContent = () => {
+    headings.slice().reverse().forEach((heading) => {
+      const parent = heading.parentElement;
+      if (!parent) return;
+      const depth = Number(heading.dataset.wikiDepth);
+      const body = document.createElement('div');
+      body.className = 'wiki-heading-content';
+      body.dataset.wikiContentDepth = String(depth);
+      heading.after(body);
+      let sibling = body.nextSibling;
+      while (sibling) {
+        if (sibling.nodeType === Node.ELEMENT_NODE && sibling.matches('[data-wiki-depth]')) {
+          const nextDepth = Number(sibling.dataset.wikiDepth);
+          if (nextDepth <= depth) break;
+        }
+        const next = sibling.nextSibling;
+        body.append(sibling);
+        sibling = next;
+      }
+    });
+  };
+
+  wrapHeadingContent();
+
+  // Work from the deepest/latest section upwards so parent sections contain
+  // already assembled children. A container boundary also ends its section.
+  headings.slice().reverse().forEach((heading, index) => {
+    if (!heading.hasAttribute('data-wiki-fold')) return;
+    const body = document.createElement('div');
+    body.className = 'wiki-section-body';
+    let id = `wiki-fold-${index + 1}`;
+    while (document.getElementById(id)) id += '-section';
+    body.id = id;
+    const depth = Number(heading.dataset.wikiDepth);
+    let sibling = heading.nextSibling;
+    heading.after(body);
+    while (sibling) {
+      if (sibling.nodeType === Node.ELEMENT_NODE && sibling.matches('h1,h2,h3,h4,h5,h6')) {
+        const nextDepth = Number(sibling.dataset.wikiDepth || Number(sibling.tagName.slice(1)) - 1);
+        if (nextDepth <= depth) break;
+      }
+      const next = sibling.nextSibling;
+      body.append(sibling);
+      sibling = next;
+    }
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'wiki-section-toggle';
+    button.setAttribute('aria-controls', body.id);
+    button.setAttribute('data-wiki-no-autolink', '');
+    const icon = document.createElement('span');
+    const label = document.createElement('span');
+    label.setAttribute('data-no-interface-translation', '');
+    button.append(icon, label);
+    const section = { heading, title: heading.textContent.trim(), body, button, icon, label };
+    sections.set(body, section);
+    byHeading.set(heading, section);
+    heading.append(button);
+    setOpen(section, false);
+    button.addEventListener('click', () => setOpen(section, body.hasAttribute('hidden')));
+    body.addEventListener('beforematch', () => reveal(body));
+  });
+
+  // Preserve native details/summary markup, keyboard control and initial open
+  // state. Its indicator uses the same books and labels as heading folds.
+  root.querySelectorAll('details').forEach((details) => {
+    const summary = details.querySelector(':scope > summary');
+    if (!summary) return;
+    const title = summary.textContent.trim();
+    const indicator = document.createElement('span');
+    indicator.className = 'wiki-section-toggle';
+    indicator.setAttribute('aria-hidden', 'true');
+    indicator.setAttribute('data-wiki-no-autolink', '');
+    const icon = document.createElement('span');
+    const label = document.createElement('span');
+    label.setAttribute('data-no-interface-translation', '');
+    indicator.append(icon, label);
+    summary.append(indicator);
+    details.classList.add('wiki-legacy-fold');
+    const section = { details, body: details, button: summary, title, icon, label };
+    sections.set(details, section);
+    update(section);
+    details.addEventListener('toggle', () => update(section));
+  });
+
+  function reveal(target) {
+    for (let node = target; node && node !== root; node = node.parentElement) {
+      if (sections.has(node)) setOpen(sections.get(node), true);
+      if (node.matches('details')) node.open = true;
+    }
+    if (byHeading.has(target)) setOpen(byHeading.get(target), true);
+  }
+  const hashTarget = (hash) => {
+    try { return hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null; }
+    catch { return null; }
+  };
+  const revealHash = () => {
+    const target = hashTarget(location.hash);
+    if (!target || !root.contains(target)) return;
+    reveal(target);
+    requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
+  };
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('a[href]');
+    if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    const url = new URL(link.href, location.href);
+    if (url.origin !== location.origin || url.pathname !== location.pathname || url.search !== location.search) return;
+    const target = hashTarget(url.hash);
+    if (target && root.contains(target)) {
+      reveal(target);
+      requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
+    }
+  }, true);
+  window.addEventListener('hashchange', revealHash);
+  window.addEventListener('site-preference-change', () => sections.forEach(update));
+  let printState;
+  window.addEventListener('beforeprint', () => {
+    if (printState) return;
+    printState = Array.from(sections.values()).map(section => [section, isOpen(section)]);
+    sections.forEach(section => setOpen(section, true));
+  });
+  window.addEventListener('afterprint', () => {
+    printState?.forEach(([section, open]) => setOpen(section, open));
+    printState = null;
+  });
+  revealHash();
+})();

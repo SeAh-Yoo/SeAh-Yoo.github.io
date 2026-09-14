@@ -111,8 +111,8 @@ def main():
             assert f'wiki-heading-level-{level}' in article
             assert f'aria-level="{level}"' in article
         assert '가짜 제목</a>' not in directory
-        assert 'data-no-interface-translation>하위 설명</a>' in directory
-        assert 'data-no-interface-translation>A &amp; B</a>' in directory
+        assert 'data-no-interface-translation>가. 하위 설명</a>' in directory
+        assert 'data-no-interface-translation>2. A &amp; B</a>' in directory
         print('PASS: all letter groups, double consonants, optional fields, nested headings, escaped code, baseurl')
 
 

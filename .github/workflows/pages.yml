@@ -27,10 +27,11 @@ jobs:
       - run: gem install kramdown-parser-gfm -v 1.1.0 --no-document
       - uses: actions/configure-pages@v5
       - run: ruby scripts/test-extended-headings.rb
+      - run: ruby scripts/test-wiki-sections.rb
       - run: jekyll _3.10.0_ build
         env:
           JEKYLL_ENV: production
-      - run: python scripts/test-wiki.py && python scripts/test-wiki-authoring.py
+      - run: python scripts/test-wiki.py && python scripts/test-wiki-authoring.py && python scripts/test-wiki-sections.py
         env:
           JEKYLL_VERSION: '3.10.0'
       - run: node --test scripts/wiki-autolinks.test.cjs scripts/navigation.test.cjs

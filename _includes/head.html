@@ -190,6 +190,7 @@
 <script defer src="{{ '/scripts/platform-links.js' | relative_url }}" data-platform-assets="{{ '/assets/svg/' | relative_url }}"></script>
 {% endif %}
 {% if page.layout == 'wiki' %}
+<script defer src="{{ '/scripts/wiki-sections.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
 <script defer src="{{ '/scripts/wiki-authoring.js' | relative_url }}?v=3" data-platform-assets="{{ '/assets/svg/' | relative_url }}"></script>
 {% endif %}
 {% if page.layout == 'wiki' or page.identity_key == 'wiki' %}

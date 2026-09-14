@@ -566,6 +566,8 @@ shared:
         preview: 미리보기
         preview_close: 미리보기 닫기
         preview_open: 원래 링크로 이동
+        expand_section: 열기
+        collapse_section: 접기
         no_description: 간략 설명이 아직 없습니다.
         contents: 이상위키 항목 목차
         summary: 설명 요약
@@ -588,6 +590,8 @@ shared:
         preview: Preview
         preview_close: Close preview
         preview_open: Follow original link
+        expand_section: Open
+        collapse_section: Close
         no_description: No short description yet.
         contents: Strange wiki contents
         summary: Summary
@@ -610,6 +614,8 @@ shared:
         preview: プレビュー
         preview_close: プレビューを閉じる
         preview_open: 元のリンクへ移動
+        expand_section: 開く
+        collapse_section: 閉じる
         no_description: 概要はまだありません。
         contents: 異常ウィキの目次
         summary: 簡単な説明

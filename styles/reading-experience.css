@@ -80,12 +80,12 @@ body:has(.post) .aurora { opacity: 0.05; }
 .post-content blockquote,
 .post-content table,
 .post-content figcaption { font-family: var(--font-body); }
-.post-content > p,
-.post-content > ul,
-.post-content > ol,
-.post-content > blockquote,
-.post-content > table,
-.post-content > .table-wrapper {
+:is(.post-content, .wiki-section-body) > p,
+:is(.post-content, .wiki-section-body) > ul,
+:is(.post-content, .wiki-section-body) > ol,
+:is(.post-content, .wiki-section-body) > blockquote,
+:is(.post-content, .wiki-section-body) > table,
+:is(.post-content, .wiki-section-body) > .table-wrapper {
   color: var(--color-text-primary);
   font-size: var(--reading-font-size);
   line-height: var(--reading-line-height);
@@ -115,14 +115,14 @@ body:has(.post) .aurora { opacity: 0.05; }
 
 .post-content img { display: block; width: auto; max-width: 100%; max-height: min(78vh, 860px); margin: clamp(2rem, 5vw, 3.5rem) auto; border-radius: var(--radius-small); object-fit: contain; background: var(--color-background-soft); }
 .post-content p:has(> img),
-.post-content > .post-image { width: min(100%, 78rem); max-width: none; margin-inline: 50%; transform: translateX(-50%); }
+:is(.post-content, .wiki-section-body) > .post-image { width: min(100%, 78rem); max-width: none; margin-inline: 50%; transform: translateX(-50%); }
 .post-image { margin-block: clamp(2rem, 5vw, 3.5rem); }
 .post-image img { margin-bottom: 0; }
 .post-image figcaption, .post-content figcaption { max-width: 62ch; margin: 0.7rem auto 0; color: var(--color-text-muted); font-size: 0.78rem; line-height: 1.55; text-align: center; word-break: keep-all; }
 
 .post-content table { width: max-content; min-width: 100%; border-collapse: collapse; background: var(--color-surface-elevated); }
 .post-content table:not(.footnotes table) { display: block; max-width: 100%; overflow-x: auto; }
-.post-content > .table-wrapper { max-width: 100%; overflow-x: auto; }
+:is(.post-content, .wiki-section-body) > .table-wrapper { max-width: 100%; overflow-x: auto; }
 .post-content th, .post-content td { padding: 0.75rem; border: 1px solid var(--color-border-subtle); text-align: left; vertical-align: top; }
 .post-content th { color: var(--color-text-primary); font-weight: 800; }
 .post-content td { color: var(--color-text-secondary); }
@@ -135,7 +135,7 @@ body:has(.post) .aurora { opacity: 0.05; }
 @media (min-width: 1200px) {
   .post { padding-inline: clamp(4rem, 8vw, 8.5rem); }
   .post-content p:has(> img),
-  .post-content > .post-image { width: min(calc(100% + 9rem), 78rem); }
+  :is(.post-content, .wiki-section-body) > .post-image { width: min(calc(100% + 9rem), 78rem); }
 }
 
 @media (max-width: 900px) {
@@ -143,7 +143,7 @@ body:has(.post) .aurora { opacity: 0.05; }
   .post h1 { font-size: clamp(1.85rem, 7.6vw, 3.15rem); }
   .post-content { padding-top: 2.5rem; }
   .post-content p:has(> img),
-  .post-content > .post-image { width: 100%; margin-inline: 0; transform: none; }
+  :is(.post-content, .wiki-section-body) > .post-image { width: 100%; margin-inline: 0; transform: none; }
 }
 
 @media (max-width: 560px) {
@@ -171,7 +171,7 @@ body:has(.post) .aurora { opacity: 0.05; }
 @media print {
   .post { padding: 0; color: #111; }
   .post-header, .post-content, .post-series, .post-actions, .post-continuation, .post-footer { width: 100%; }
-  .post-content > p, .post-content > ul, .post-content > ol, .post-content > blockquote { color: #111; font-size: 11pt; line-height: 1.72; }
+  :is(.post-content, .wiki-section-body) > p, :is(.post-content, .wiki-section-body) > ul, :is(.post-content, .wiki-section-body) > ol, :is(.post-content, .wiki-section-body) > blockquote { color: #111; font-size: 11pt; line-height: 1.72; }
   .post-content h2, .post-content h3, .post-content h4, .post-content strong, .post-content a { color: #111; }
   .post-content a { text-decoration: underline; }
   .post-content img { max-height: none; break-inside: avoid; }

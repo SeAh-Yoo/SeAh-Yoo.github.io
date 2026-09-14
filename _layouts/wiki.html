@@ -29,11 +29,9 @@
             {% if page.description or wiki_toc != '' or page.details.size > 0 %}
             <nav class="wiki-toc" aria-label="{{ wiki_copy.contents }}" data-i18n-aria-label="wiki.contents">
               <p class="eyebrow" data-i18n="wiki.contents">{{ wiki_copy.contents }}</p>
-              <ul>
-                {% if page.description %}<li><a href="#wiki-summary" data-i18n="wiki.summary">{{ wiki_copy.summary }}</a></li>{% endif %}
-                {{ wiki_toc }}
-                {% include wiki-details.html entry=page %}
-              </ul>
+              {% if page.description %}<ul><li><a href="#wiki-summary" data-i18n="wiki.summary">{{ wiki_copy.summary }}</a></li></ul>{% endif %}
+              {% if wiki_toc != '' %}<ol class="wiki-heading-list">{{ wiki_toc }}</ol>{% endif %}
+              {% if page.details.size > 0 %}<ul>{% include wiki-details.html entry=page %}</ul>{% endif %}
             </nav>
             {% endif %}
           </header>
@@ -52,14 +50,14 @@
             </aside>
             {% endif %}
           </div>
-          <aside class="wiki-backlinks" aria-labelledby="wiki-backlinks-title" data-wiki-backlinks data-wiki-index="{{ '/wiki-index.json' | relative_url }}">
+          {% include post-comments.html %}
+        </article>
+          <aside class="wiki-backlinks glass-panel" aria-labelledby="wiki-backlinks-title" data-wiki-backlinks data-wiki-index="{{ '/wiki-index.json' | relative_url }}">
             <h2 id="wiki-backlinks-title" data-i18n="wiki.backlinks">{{ wiki_copy.backlinks }}</h2>
             <p data-backlinks-status role="status" hidden>{{ wiki_copy.backlinks_loading }}</p>
             <ul data-backlinks-list data-no-interface-translation></ul>
             <noscript><p>{{ wiki_copy.backlinks_noscript }}</p></noscript>
           </aside>
-          {% include post-comments.html %}
-        </article>
       </main>
     </div>
     {% include analytics-tracking.html %}

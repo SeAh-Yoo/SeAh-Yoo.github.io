@@ -29,6 +29,8 @@ defaults:
 # Development checks are not published as site assets.
 exclude:
   - scripts/test-extended-headings.rb
+  - scripts/test-wiki-sections.rb
+  - scripts/test-wiki-sections.py
   - scripts/test-wiki.py
   - scripts/test-wiki-authoring.py
   - scripts/wiki-autolinks.test.cjs
