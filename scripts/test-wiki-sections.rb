@@ -43,4 +43,79 @@ class WikiSectionsTest < Minitest::Test
     assert_includes document.to_html, 'data-wiki-fold'
     assert document.warnings.any? { |warning| warning.include?('skips a level') }
   end
+
+  def test_rp_reading_implicit_and_explicit_forms
+    html = render("명총희[+시라유키 히나], {어둠 속의 명총희}[+시라유키 히나], A[+에이]\n")
+    assert_equal 3, html.scan('<ruby class="wiki-rp">').size
+    assert_includes html, '<span class="wiki-rp-base">명총희</span><rt class="wiki-rp-annotation">시라유키 히나</rt>'
+    assert_includes html, '<span class="wiki-rp-base">어둠 속의 명총희</span>'
+    assert_includes html, '<span class="wiki-rp-base">A</span><rt class="wiki-rp-annotation">에이</rt>'
+  end
+
+  def test_rp_allows_established_inline_links_but_not_nested_rp
+    source = "{명총희}[+[시라유키 히나](https://example.com)], " \
+             "{명총희}[+[치지직:b044e3a3b9259246bc92e863e7d3f3b8]{시라유키 히나}], " \
+             "{바깥}[+안쪽[+중첩]]\n"
+    html = render(source)
+    assert_includes html, '<rt class="wiki-rp-annotation"><a href="https://example.com">시라유키 히나</a></rt>'
+    assert_includes html, '<rt class="wiki-rp-annotation">[치지직:b044e3a3b9259246bc92e863e7d3f3b8]{시라유키 히나}</rt>'
+    assert_includes html, '<rt class="wiki-rp-annotation">안쪽[+중첩]</rt>'
+    refute_match(/<a[^>]*>.*<a/m, html)
+  end
+
+  def test_heading_reference_preserves_label_markup_and_target_text
+    html = render("{**무면라이더**}[->공무직 오리엔테이션 (2026.09.12)]\n\n#### 공무직 오리엔테이션 (2026.09.12)\n")
+    assert_includes html, 'data-wiki-heading-target="공무직 오리엔테이션 (2026.09.12)" data-wiki-no-autolink="">무면라이더</span>'
+    assert_match(/<h4 [^>]*id="[^"]+"/, html)
+  end
+
+  def test_code_escapes_and_invalid_wiki_syntax_stay_literal
+    source = "`명총희[+읽기]`와 `{표시}[->제목]`\n\n" \
+             "```md\n명총희[+읽기]\n{표시}[->제목]\n```\n\n" \
+             "명총희\\[+읽기] {}[+읽기] {명총희}[+] {표시}[->] 명총희[+열림\n"
+    html = render(source)
+    assert_includes html, '<code>명총희[+읽기]</code>'
+    assert_includes html, "명총희[+읽기]\n{표시}[-&gt;제목]"
+    assert_includes html.gsub(/<[^>]+>/, ''), '명총희[+읽기] {}[+읽기] {명총희}[+] {표시}[-&gt;] 명총희[+열림'
+    assert_equal 0, html.scan('<ruby').size
+    assert_equal 0, html.scan('data-wiki-heading-target').size
+  end
+
+  def test_existing_braces_links_images_and_ials_keep_precedence
+    source = "[링크](https://example.com) ![그림](/image.png) *강조* [^note]\n\n" \
+             "<span>속성</span>{:.kept}\n\n[^note]: 각주\n"
+    html = render(source)
+    assert_includes html, '<a href="https://example.com">링크</a>'
+    assert_includes html, '<img src="/image.png" alt="그림" />'
+    assert_includes html, '<em>강조</em>'
+    assert_includes html, 'class="kept"'
+    assert_includes html, 'class="footnote"'
+  end
+
+  def test_delimiters_inside_inline_code_and_link_urls
+    html = render('{명총희}[+`닫는 ] 문자` [링크](https://example.com/a]b)]')
+    assert_includes html, '<code>닫는 ] 문자</code>'
+    assert_includes html, 'href="https://example.com/a]b"'
+    assert_equal 1, html.scan('<ruby').size
+    assert_match(%r{</a></rt></ruby></p>}, html)
+  end
+
+  def test_nested_link_labels_and_nested_annotations_are_not_links
+    html = render('{[표시](https://example.com)}[->대상] {밖}[+**안[+중첩]**]')
+    assert_includes html, 'data-wiki-no-autolink="">표시</span>'
+    assert_equal 1, html.scan('<ruby').size
+    assert_includes html, '<strong>안[+중첩]</strong>'
+  end
+
+  def test_unclosed_outer_annotation_does_not_parse_inner_candidate
+    html = render('이름[+안쪽[+주석]')
+    refute_includes html, '<ruby'
+    assert_includes html.gsub(/<[^>]+>/, ''), '이름[+안쪽[+주석]'
+  end
+
+  def test_heading_reference_entities_and_links_keep_display_text
+    html = render('{A &amp; B}[->A &amp; **B** [C](https://example.com)]')
+    assert_includes html, 'data-wiki-heading-target="A &amp; B C"'
+    assert_includes html, '>A &amp; B</span>'
+  end
 end

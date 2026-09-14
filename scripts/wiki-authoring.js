@@ -2,6 +2,44 @@
   const copy = (key) => window.siteIdentity?.get(`wiki.${key}`, '') || '';
   const applyPlatforms = root => window.platformLinks?.apply(root);
 
+  const graphemeCount = (text) => {
+    if (typeof Intl.Segmenter === 'function') return Array.from(new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(text)).length;
+    return Array.from(text).length;
+  };
+  const balanceRp = (ruby) => {
+    const base = ruby.querySelector(':scope > .wiki-rp-base');
+    const annotation = ruby.querySelector(':scope > rt');
+    if (!base || !annotation) return;
+    base.style.removeProperty('--wiki-rp-spacing');
+    annotation.style.removeProperty('--wiki-rp-spacing');
+    ruby.classList.remove('wiki-rp-overflow');
+    const baseWidth = base.getBoundingClientRect().width;
+    const annotationWidth = annotation.getBoundingClientRect().width;
+    const [shorter, shorterWidth, longerWidth] = baseWidth < annotationWidth
+      ? [base, baseWidth, annotationWidth] : [annotation, annotationWidth, baseWidth];
+    const gaps = graphemeCount(shorter.textContent.trim()) - 1;
+    if (gaps > 0 && longerWidth - shorterWidth > 0.5) {
+      const fontSize = parseFloat(getComputedStyle(shorter).fontSize) || 16;
+      const spacing = Math.min((longerWidth - shorterWidth) / gaps, fontSize * 0.45);
+      shorter.style.setProperty('--wiki-rp-spacing', `${spacing}px`);
+    }
+    const viewportLimit = Math.max(0, Math.min(document.documentElement.clientWidth - 32, ruby.parentElement.clientWidth));
+    ruby.classList.toggle('wiki-rp-overflow', ruby.scrollWidth > viewportLimit);
+  };
+  const enhanceRp = (root = document) => {
+    const rubies = Array.from(root.querySelectorAll('ruby.wiki-rp'));
+    rubies.forEach(balanceRp);
+    if (typeof ResizeObserver === 'function') {
+      const observer = new ResizeObserver(() => rubies.forEach(balanceRp));
+      new Set(rubies.map(ruby => ruby.parentElement)).forEach(parent => observer.observe(parent));
+    }
+    document.fonts?.ready.then(() => rubies.forEach(balanceRp));
+    document.fonts?.addEventListener('loadingdone', () => rubies.forEach(balanceRp));
+    const mutations = new MutationObserver(() => rubies.forEach(balanceRp));
+    rubies.forEach(ruby => mutations.observe(ruby, { childList: true, subtree: true, characterData: true }));
+    return rubies;
+  };
+
   // The link itself opens the preview on hover or keyboard focus.
   const panel = document.createElement('aside');
   panel.className = 'wiki-preview';
@@ -89,6 +127,7 @@
       link.addEventListener('click', () => close());
     });
   };
-  window.wikiAuthoring = { applyPlatforms, enhancePreviews };
+  window.wikiAuthoring = { applyPlatforms, enhancePreviews, enhanceRp };
+  enhanceRp();
   enhancePreviews();
 })();

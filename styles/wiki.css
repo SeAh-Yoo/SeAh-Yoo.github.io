@@ -45,6 +45,7 @@
 .wiki-legacy-fold > summary:focus-visible { outline: 2px solid var(--color-accent-secondary); outline-offset: 3px; }
 @media (max-width: 900px) {
   .wiki-article :is(.post-header, .post-content) { width: 100%; }
+  .wiki-article .post-content :is(h1, h2, h3, h4, h5, h6) { scroll-margin-top: 10rem; }
 }
 @media print {
   .wiki-article :is(.post-header, .post-content) { width: 100%; }

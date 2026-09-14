@@ -28,3 +28,51 @@
 .post-content a.platform-channel { display: inline; line-height: inherit; vertical-align: baseline; text-decoration: underline; text-underline-offset: .18em; }
 .post-content a.platform-channel img { margin-inline-end: .3em; vertical-align: -.3em; }
 .platform-channel-name { overflow-wrap: anywhere; }
+
+/* RP readings use semantic ruby markup, with measured letter spacing applied
+   only to the shorter rendered row after fonts and platform icons settle. */
+ruby.wiki-rp {
+  display: inline-grid;
+  grid-template-areas: "annotation" "base";
+  justify-items: center;
+  align-items: end;
+  max-inline-size: 100%;
+  box-sizing: border-box;
+  margin-inline: .08em;
+  vertical-align: -.28em;
+  white-space: nowrap;
+  line-height: 1;
+}
+.wiki-rp-base { grid-area: base; min-inline-size: 0; letter-spacing: var(--wiki-rp-spacing, normal); }
+.wiki-rp-annotation {
+  grid-area: annotation;
+  min-inline-size: 0;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: .58em;
+  line-height: 1.25;
+  letter-spacing: var(--wiki-rp-spacing, normal);
+  text-align: center;
+}
+.wiki-rp rt a.platform-channel { font-size: inherit; line-height: inherit; }
+.wiki-rp rt a.platform-channel img {
+  width: 1em;
+  height: 1em;
+  margin-inline-end: .18em;
+  border-radius: .16em;
+  vertical-align: -.16em;
+}
+ruby.wiki-rp-overflow {
+  inline-size: 100%;
+  margin-inline: 0;
+  grid-template-columns: minmax(0, 1fr);
+  white-space: normal;
+}
+.wiki-rp-overflow :is(.wiki-rp-base, .wiki-rp-annotation) {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+  white-space: normal;
+  word-break: normal;
+  text-align: center;
+}
+.wiki-heading-reference[data-wiki-heading-status="missing"] { text-decoration: underline dotted; text-underline-offset: .18em; }

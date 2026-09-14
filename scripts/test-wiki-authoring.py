@@ -75,6 +75,28 @@ def run(temp):
 
 일반 플랫폼 이름 SOOP Twitch 치지직은 그대로.
 
+[치지직:b044e3a3b9259246bc92e863e7d3f3b8]{시라유키 히나}
+
+명총희[+시라유키 히나] {어둠 속의 명총희}[+시라유키 히나]
+
+A[+에이] {한글 English 혼합}[+Mixed 이름] {아주 긴 본문 이름}[+짧음]
+
+{모바일에서 화면보다 길어지는 아주 긴 이름을 안전하게 표시하는 실험용 본문 이름입니다}[+아주 긴 후리가나 주석도 화면 안에서 읽을 수 있도록 표시합니다 English and 한국어]
+
+{링크 안의 명총희}[+[시라유키 히나](https://example.com/profile)]
+
+{무면라이더}[->공무직 **오리엔테이션** (2026.09.12)]
+
+{중복 이동}[->중복 제목] {없는 이동}[->없는 제목]
+
+#### 공무직 **오리엔테이션** (2026.09.12)
+
+#### 중복 제목
+
+#### 중복 제목
+
+`코드[+주석]`과 `{코드}[->중복 제목]` 및 이스케이프 \\{표시}[->중복 제목]
+
 [SOOP](https://example.com/normal) `[SOOP]`
 
 ```text
@@ -134,6 +156,7 @@ references:
     assert '/scripts/post-actions.js' not in html and '/styles/post-actions.css' not in html
     assert 'data-giscus-container' in html and 'data-mapping="pathname"' in html
     assert '/scripts/document-comments.js' in html
+    assert '/scripts/wiki-markdown.js' in html
     assert 'class="page-note-grid' not in html
     assert 'class="page-note-grid' in (dest / 'wiki/index.html').read_text(encoding='utf-8')
     assert 'data-giscus-container' not in (dest / 'wiki/no-description/index.html').read_text(encoding='utf-8')
@@ -147,6 +170,14 @@ references:
     indexed = next(x for x in index if x['title'] == '작성 기능 검증')
     assert '<strong>공통 안내</strong>' in indexed['html'], 'Liquid include was not rendered in wiki index'
     assert '<table>' in indexed['html'] and '{%' not in indexed['html']
+    assert '<ruby class="wiki-rp">' in html
+    assert '<span class="wiki-rp-base">명총희</span><rt class="wiki-rp-annotation">시라유키 히나</rt>' in html
+    assert '<a href="https://example.com/profile">시라유키 히나</a></rt>' in html
+    assert 'data-wiki-heading-target="공무직 오리엔테이션 (2026.09.12)"' in html
+    assert 'data-wiki-heading-target="없는 제목"' in html
+    assert re.search(r'<code(?: [^>]*)?>코드\[\+주석\]</code>', html)
+    assert re.search(r'<code(?: [^>]*)?>\{코드\}\[-&gt;중복 제목\]</code>', html)
+    assert '{표시}[-&gt;중복 제목]' in html
     search = json.loads((dest / 'search.json').read_text(encoding='utf-8'))
     assert '공통 안내' in next(x for x in search if x['title'] == '작성 기능 검증')['content']
     assert next(x for x in search if x['title'] == '연결대상')['date'] == ''
