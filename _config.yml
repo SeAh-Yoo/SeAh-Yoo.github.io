@@ -6,7 +6,7 @@ timezone: "Asia/Seoul"
 permalink: /posts/:slug/
 markdown: kramdown
 kramdown:
-  input: GFM
+  input: ExtendedGFM
   hard_wrap: true
 
 collections:
@@ -28,6 +28,7 @@ defaults:
 
 # Development checks are not published as site assets.
 exclude:
+  - scripts/test-extended-headings.rb
   - scripts/test-wiki.py
   - scripts/test-wiki-authoring.py
   - scripts/wiki-autolinks.test.cjs

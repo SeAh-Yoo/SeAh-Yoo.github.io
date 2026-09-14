@@ -34,7 +34,7 @@ jobs:
       - name: Build the published URL manifest
         run: |
           gem install jekyll -v 3.10.0 --no-document
-          jekyll _3.10.0_ build --safe
+          jekyll _3.10.0_ build
 
       - name: Refresh post and wiki counters
         run: node scripts/refresh-reading-pulse.mjs

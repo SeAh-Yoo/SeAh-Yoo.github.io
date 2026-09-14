@@ -16,7 +16,11 @@
 .wiki-toc { margin-top: 1.75rem; padding: 1rem 1.25rem; border: 1px solid var(--color-border-subtle); border-radius: var(--radius-small); background: var(--color-background-soft); }
 .wiki-toc .eyebrow { margin: 0; }
 .wiki-heading-level-3 { margin-left: 0.75rem; }
-.wiki-heading-level-4, .wiki-heading-level-5, .wiki-heading-level-6 { margin-left: 1.5rem; }
+.wiki-heading-level-4 { margin-left: 1.5rem; }
+.wiki-heading-level-5 { margin-left: 2.25rem; }
+.wiki-heading-level-6 { margin-left: 3rem; }
+.wiki-heading-level-7 { margin-left: 3.75rem; }
+.wiki-heading-level-8 { margin-left: 4.5rem; }
 .wiki-aliases, .wiki-updated { color: var(--color-text-secondary); font-size: 0.85rem; line-height: 1.7; }
 .wiki-summary { padding: 1rem 1.25rem; border-left: 3px solid var(--color-accent-secondary); background: var(--color-accent-soft); margin-bottom: 2.5rem; }
 .wiki-summary h2 { margin-top: 0; }

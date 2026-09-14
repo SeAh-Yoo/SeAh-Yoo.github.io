@@ -236,6 +236,13 @@
   padding-left: 18px;
 }
 
+.post-toc .toc-level-4 { padding-left: 27px; }
+.post-toc .toc-level-5 { padding-left: 36px; }
+.post-toc .toc-level-6 { padding-left: 45px; }
+.post-toc .toc-level-7 { padding-left: 54px; }
+.post-toc .toc-level-8 { padding-left: 63px; }
+.post-toc a { overflow-wrap: anywhere; }
+
 .post .post-toc a {
   display: block;
   padding: 7px 10px;

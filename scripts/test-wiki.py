@@ -1,6 +1,6 @@
 """Check built wiki links, then build isolated empty and edge-case fixtures.
 
-Run after `jekyll build --safe`. Uses Python's standard library and installed Jekyll.
+Run after `jekyll build`. Uses Python's standard library and installed Jekyll.
 """
 import json
 import os
@@ -60,10 +60,10 @@ def check_site(site, base=''):
 
 
 def build(source, destination, base=''):
-    command = [shutil.which('jekyll') or 'jekyll', 'build', '--safe', '--source', str(source), '--destination', str(destination), '--baseurl', base]
+    command = [shutil.which('jekyll') or 'jekyll', 'build', '--source', str(source), '--destination', str(destination), '--baseurl', base]
     if os.environ.get('JEKYLL_VERSION'):
         command.insert(1, '_' + os.environ['JEKYLL_VERSION'] + '_')
-    result = subprocess.run(command, cwd=ROOT, capture_output=True, encoding='utf-8', errors='replace')
+    result = subprocess.run(command, cwd=source, capture_output=True, encoding='utf-8', errors='replace')
     assert result.returncode == 0, result.stdout + result.stderr
 
 
@@ -78,7 +78,7 @@ def main():
         source.mkdir()
         for name in ('_config.yml', 'wiki.html', 'wiki-index.json', 'search.json', 'sitemap.xml'):
             shutil.copy2(ROOT / name, source / name)
-        for name in ('_layouts', '_includes', '_data'):
+        for name in ('_plugins', '_layouts', '_includes', '_data'):
             shutil.copytree(ROOT / name, source / name)
         (source / '_wiki').mkdir()
         build(source, dest)
@@ -95,6 +95,8 @@ def main():
             metadata = '' if i else 'description: 간략 설명\naliases: [별칭]\ndetails:\n  - title: 다음 페이지\n    target: /wiki/entry-1/\n'
             body = '' if i else '\n## 자세한 설명 {#detail}\n\n~~농담~~\n\n### **하위** 설명 {#child}\n\n#### 깊은 설명 {#deep}\n\n## A & B {#symbols}\n\n```markdown\n## 가짜 제목\n```\n'
             (source / '_wiki' / f'entry-{i}.md').write_text(f'---\ntitle: {title}\n{metadata}---\n{body}', encoding='utf-8')
+        with (source / '_wiki/entry-0.md').open('a', encoding='utf-8') as fixture:
+            fixture.write('\n\n##### Five\n\n###### Six\n\n####### Seven {#seven}\n\n######## Eight {#eight}\n')
         build(source, dest, '/preview')
         assert len(check_site(dest, '/preview')) == len(titles)
         assert '<del>농담</del>' in (dest / 'wiki/entry-0/index.html').read_text(encoding='utf-8')
@@ -102,6 +104,12 @@ def main():
         assert Page(directory).groups == list('ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ') + ['A–Z', '0–9 / 기타']
         assert 'href="/preview/wiki/entry-0/#child"' in directory
         assert 'href="/preview/wiki/entry-0/#deep"' in directory
+        for level, anchor in [(7, 'seven'), (8, 'eight')]:
+            assert f'wiki-heading-level-{level}' in directory
+            assert f'/preview/wiki/entry-0/#{anchor}' in directory
+            article = (dest / 'wiki/entry-0/index.html').read_text(encoding='utf-8')
+            assert f'wiki-heading-level-{level}' in article
+            assert f'aria-level="{level}"' in article
         assert '가짜 제목</a>' not in directory
         assert 'data-no-interface-translation>하위 설명</a>' in directory
         assert 'data-no-interface-translation>A &amp; B</a>' in directory

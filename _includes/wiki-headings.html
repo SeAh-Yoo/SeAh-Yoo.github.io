@@ -1,5 +1,5 @@
 {%- comment -%}Kramdown HTML supplies stable heading IDs, including explicit {#ids}.
-Only rendered h2-h6 elements are indexed; escaped code examples are ignored.{%- endcomment -%}
+Rendered h2-h6 elements (including extended levels 7-8) are indexed; escaped code examples are ignored.{%- endcomment -%}
 {%- assign wiki_heading_parts = include.html | split: '<h' -%}
 {%- for wiki_heading_part in wiki_heading_parts offset: 1 -%}
   {%- assign wiki_heading_level = wiki_heading_part | slice: 0, 1 | plus: 0 -%}
@@ -8,6 +8,9 @@ Only rendered h2-h6 elements are indexed; escaped code examples are ignored.{%- 
     {%- assign wiki_heading_id = wiki_heading_open | split: 'id="' | last | split: '"' | first -%}
     {%- assign wiki_heading_end = '</h' | append: wiki_heading_level | append: '>' -%}
     {%- assign wiki_heading_text = wiki_heading_part | split: wiki_heading_end | first | remove_first: wiki_heading_open | remove_first: '>' | strip_html -%}
+    {%- if wiki_heading_open contains 'data-heading-level="' -%}
+      {%- assign wiki_heading_level = wiki_heading_open | split: 'data-heading-level="' | last | split: '"' | first -%}
+    {%- endif -%}
     <li class="wiki-heading-level-{{ wiki_heading_level }}"><a href="{{ include.url | relative_url }}#{{ wiki_heading_id }}" data-no-interface-translation>{{ wiki_heading_text }}</a></li>
   {%- endif -%}
 {%- endfor -%}

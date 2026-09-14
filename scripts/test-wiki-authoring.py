@@ -20,7 +20,7 @@ def run(temp):
     source.mkdir()
     for name in ('_config.yml', 'wiki.html', 'wiki-index.json', 'search.json', 'sitemap.xml', 'references.html'):
         shutil.copy2(ROOT / name, source / name)
-    for name in ('_layouts', '_includes', '_data', 'scripts', 'styles'):
+    for name in ('_plugins', '_layouts', '_includes', '_data', 'scripts', 'styles'):
         shutil.copytree(ROOT / name, source / name)
     shutil.copytree(ROOT / 'assets/svg', source / 'assets/svg')
     # Local fixtures must never send reading events.

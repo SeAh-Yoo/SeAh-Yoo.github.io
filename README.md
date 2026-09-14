@@ -189,7 +189,7 @@ HTML 줄바꿈·강조·링크를 사용할 수 있으며, 빈 목록은 `[]`로
 이미지는 선택 사항이며 `pages.about.images`에 같은 키를 추가하면 표시됩니다.
 
 ```powershell
-jekyll serve --safe --host 127.0.0.1 --port 4000 --livereload --force_polling
+jekyll serve --host 127.0.0.1 --port 4000 --livereload --force_polling
 ```
 
 `http://127.0.0.1:4000/about/`에서 확인합니다. Markdown, YAML, HTML, CSS를 저장하면
@@ -406,9 +406,9 @@ Esc                    검색창 닫기
 - 비밀키 없이 공개 `/counter/*.json` 응답만 사용
 
 ```powershell
-jekyll build --safe
+jekyll build
 node scripts/refresh-reading-pulse.mjs
-jekyll serve --safe --host 127.0.0.1 --port 4173
+jekyll serve --host 127.0.0.1 --port 4173
 ```
 
 스크립트는 기본 언어 포스트와 공개 위키 문서의 실제 Jekyll URL을 사용합니다.
@@ -654,7 +654,7 @@ details:
   한국어 위키는 영어·일본어 인터페이스에서도 검색됩니다. 위키 본문은 자동 번역하지 않습니다.
 - 수정일은 `last_modified_at`을 직접 갱신합니다. 위키는 게시물 목록과 RSS에 섞이지 않습니다.
 
-로컬 확인은 `jekyll build --safe` 후 `python scripts/test-wiki.py`와
+로컬 확인은 `jekyll build` 후 `python scripts/test-wiki.py`와
 `node --test scripts/wiki-autolinks.test.cjs scripts/navigation.test.cjs`를 실행합니다.
 브라우저 미리보기는 `python -m http.server 4173 --bind 127.0.0.1 --directory _site`로
 시작하여 `http://127.0.0.1:4173/wiki/`를 엽니다.
@@ -1051,7 +1051,7 @@ YouTube 표시 이름은 번역하지 않습니다. 기존 플랫폼 별칭과 �
 ### 개발 검증
 
 ```powershell
-jekyll build --safe
+jekyll build
 python scripts/test-wiki.py
 node --test scripts/wiki-autolinks.test.cjs scripts/navigation.test.cjs
 python scripts/test-wiki-authoring.py
@@ -1060,7 +1060,7 @@ python scripts/test-wiki-authoring.py
 GitHub Pages의 Jekyll 버전으로도 확인하려면 해당 gem을 설치한 환경에서 실행합니다.
 
 ```powershell
-jekyll _3.10.0_ build --safe
+jekyll _3.10.0_ build
 $env:JEKYLL_VERSION = "3.10.0"
 python scripts/test-wiki.py
 python scripts/test-wiki-authoring.py
@@ -1089,6 +1089,19 @@ Chrome에서 390px/320px 모바일 폭과 데스크톱을 확인하고, Tab/Ente
 - 태그 페이지는 `/tags/`, 방문 통계는 `/visitor-stats/`를 사용합니다. 이전 `/topics/`, `/reading-pulse/`는 검색 매개변수와 앵커를 유지하며 이동합니다.
 - 리디렉션 페이지는 사이트맵에서 제외하고 새 주소를 canonical로 지정합니다.
 - 새 페이지의 `analytics_path`는 기존 GoatCounter 경로를 유지합니다. 리디렉션 페이지에서는 집계하지 않아 중복 집계를 피합니다. 통계 스냅샷 파일과 갱신 도구 이름은 유지합니다.
-- 검증: `jekyll build --safe` 후 `node --test scripts/navigation.test.cjs`.
+- 검증: `jekyll build` 후 `node --test scripts/navigation.test.cjs`.
 
 안내소는 홈(`/`)으로 통합되어 있으며 `/start-here/`는 홈으로 이동합니다. 위키 목록은 `last_modified_at`(없으면 `date`) 내림차순으로 최대 5개를 표시합니다. 날짜가 모두 없으면 목록 끝에 배치합니다.
+
+
+### 2~8단계 제목과 목차
+
+위키 목록의 항목 세부 내용, 위키 본문, 포스트 목차는 `##`부터 `########`까지 지원합니다.
+제목 기호 뒤에 공백을 넣습니다. 7·8단계는 `_plugins/extended_headings.rb`에서 GFM을 확장하여
+`h6`와 `data-heading-level`, `aria-level`로 출력합니다. 기존 제목 ID와 `{#custom-id}`,
+코드 블록 및 이스케이프 규칙은 유지됩니다.
+
+로컬 빌드는 `jekyll build`, 검증은 `ruby scripts/test-extended-headings.rb` 및 위의 통합 테스트를 사용합니다.
+커스텀 파서가 필요하므로 `--safe`는 사용할 수 없습니다. 배포는 `.github/workflows/pages.yml`을 사용하며,
+이 변경을 기본 브랜치에 병합할 때 GitHub Settings → Pages → Build and deployment → Source를
+**GitHub Actions**로 전환해야 합니다. 작업 브랜치 푸시만으로 운영 사이트는 배포되지 않습니다.

@@ -692,11 +692,11 @@
       .trim();
     const declaredSubtitle = normalizeText(tocMount.dataset.postSubtitle);
     const excludedSections = '.footnotes, .post-series, .post-continuation, .post-comments, .post-share-dialog';
-    const headings = Array.from(article.querySelectorAll('h2, h3'))
+    const headings = Array.from(article.querySelectorAll('h2, h3, h4, h5, h6'))
       .filter((heading) => !heading.closest(excludedSections))
       .filter((heading) => !declaredSubtitle || normalizeText(heading.textContent) !== declaredSubtitle);
 
-    if (headings.length < 2) {
+    if (headings.length === 0) {
       tocMount.remove();
     } else {
       const usedIds = new Set(Array.from(document.querySelectorAll('[id]')).map((element) => element.id));
@@ -766,7 +766,7 @@
         const item = document.createElement('li');
         const link = document.createElement('a');
 
-        item.className = heading.tagName === 'H3' ? 'toc-level-3' : 'toc-level-2';
+        item.className = `toc-level-${heading.dataset.headingLevel || heading.tagName.slice(1)}`;
         link.href = `#${encodeURIComponent(heading.id)}`;
         link.textContent = heading.dataset.tocTitle;
         link.dataset.tocLink = heading.id;
