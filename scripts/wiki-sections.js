@@ -26,8 +26,8 @@
 
   // Give every heading its own content measure. This keeps paragraphs, lists,
   // quotes, tables, and images aligned with their heading's hierarchy. The
-  // first two levels intentionally share the base measure; indentation starts
-  // at the third wiki level.
+  // second wiki level starts indentation. Each wrapper adds only the distance
+  // from its parent, so nested sections never compound absolute offsets.
   const wrapHeadingContent = () => {
     headings.slice().reverse().forEach((heading) => {
       const parent = heading.parentElement;
@@ -36,6 +36,12 @@
       const body = document.createElement('div');
       body.className = 'wiki-heading-content';
       body.dataset.wikiContentDepth = String(depth);
+      let previous = heading.previousElementSibling;
+      while (previous && (!previous.matches('[data-wiki-depth]') || Number(previous.dataset.wikiDepth) >= depth)) previous = previous.previousElementSibling;
+      const parentDepth = previous ? Number(previous.dataset.wikiDepth) : 1;
+      const indent = Math.max(0, depth - parentDepth);
+      heading.style.setProperty('--wiki-indent-steps', indent);
+      body.style.setProperty('--wiki-indent-steps', indent);
       heading.after(body);
       let sibling = body.nextSibling;
       while (sibling) {

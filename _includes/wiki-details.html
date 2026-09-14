@@ -5,5 +5,5 @@
   {%- else -%}
     {%- assign wiki_detail_url = wiki_detail.target -%}
   {%- endif -%}
-  <li><a href="{{ wiki_detail_url | relative_url | escape }}" data-no-interface-translation>{{ wiki_detail.title | escape }}</a></li>
+  <li><span class="wiki-toc-row" data-no-interface-translation><a class="wiki-toc-number" href="{{ wiki_detail_url | relative_url | escape }}" aria-label="{{ wiki_detail.title | escape }}">{{ forloop.index }}.</a><span class="wiki-toc-title">{{ wiki_detail.title | escape }}</span></span></li>
 {%- endfor -%}

@@ -572,6 +572,7 @@ shared:
         contents: 이상위키 항목 목차
         summary: 설명 요약
         details: 항목 세부 내용
+        detail_contents: 항목 세부 목차
         backlinks: 이번 이상위키 항목과 연결된 다른 항목
         backlinks_loading: 연결된 이상위키를 확인하는 중…
         backlinks_found: 이 페이지가 언급된 다른 이상위키 항목입니다.
@@ -596,6 +597,7 @@ shared:
         contents: Strange wiki contents
         summary: Summary
         details: Further detail
+        detail_contents: Entry contents
         backlinks: Other entries connected to this strange wiki entry
         backlinks_loading: Checking connected strange wiki entries…
         backlinks_found: Other strange wiki entries that mention this page.
@@ -620,6 +622,7 @@ shared:
         contents: 異常ウィキの目次
         summary: 簡単な説明
         details: 詳しい説明
+        detail_contents: 項目の詳細目次
         backlinks: この異常ウィキ項目とつながるほかの項目
         backlinks_loading: つながる異常ウィキを確認中…
         backlinks_found: このページに言及しているほかの異常ウィキ項目です。

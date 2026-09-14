@@ -4,8 +4,8 @@
 .wiki-alphabet a:hover { background: var(--color-accent-soft); }
 .wiki-group { margin-top: 2.5rem; }
 .wiki-group h2 { color: var(--color-accent-secondary); }
-.wiki-entry-list { list-style: none; padding: 0; }
-.wiki-index-entry { padding: 1.5rem 0; border-bottom: 1px solid var(--color-border-subtle); overflow-wrap: anywhere; }
+.wiki-entry-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 1rem; list-style: none; padding: 0; }
+.wiki-index-entry { min-width: 0; padding: 1.4rem; border: 1px solid var(--color-border-subtle); border-radius: var(--radius-small); background: var(--color-background-soft); overflow-wrap: anywhere; }
 .wiki-index-entry h3 { margin: 0; font-size: 1.2rem; }
 .wiki-index-entry p { margin: 0.65rem 0; line-height: 1.8; }
 .wiki-summary-link { color: var(--color-text-secondary); text-decoration: none; }
@@ -30,16 +30,14 @@
   line-height: 1.35; letter-spacing: -0.02em; color: var(--color-text-primary);
   text-wrap: balance; word-break: keep-all; margin-block: 2.5em 0.7em;
 }
-.wiki-article [data-wiki-depth="3"] { margin-inline-start: var(--wiki-heading-indent); }
-.wiki-article [data-wiki-depth="4"] { margin-inline-start: calc(var(--wiki-heading-indent) * 2); }
-.wiki-article [data-wiki-depth="5"] { margin-inline-start: calc(var(--wiki-heading-indent) * 3); }
-.wiki-article [data-wiki-depth="6"] { margin-inline-start: calc(var(--wiki-heading-indent) * 4); }
-.wiki-article [data-wiki-depth="7"] { margin-inline-start: calc(var(--wiki-heading-indent) * 5); }
-.wiki-article [data-wiki-content-depth="3"] { margin-inline-start: var(--wiki-heading-indent); }
-.wiki-article [data-wiki-content-depth="4"] { margin-inline-start: calc(var(--wiki-heading-indent) * 2); }
-.wiki-article [data-wiki-content-depth="5"] { margin-inline-start: calc(var(--wiki-heading-indent) * 3); }
-.wiki-article [data-wiki-content-depth="6"] { margin-inline-start: calc(var(--wiki-heading-indent) * 4); }
-.wiki-article [data-wiki-content-depth="7"] { margin-inline-start: calc(var(--wiki-heading-indent) * 5); }
+/* Without JavaScript headings still show their absolute hierarchy. */
+.wiki-article [data-wiki-depth="2"] { --wiki-indent-steps: 1; }
+.wiki-article [data-wiki-depth="3"] { --wiki-indent-steps: 2; }
+.wiki-article [data-wiki-depth="4"] { --wiki-indent-steps: 3; }
+.wiki-article [data-wiki-depth="5"] { --wiki-indent-steps: 4; }
+.wiki-article [data-wiki-depth="6"] { --wiki-indent-steps: 5; }
+.wiki-article [data-wiki-depth="7"] { --wiki-indent-steps: 6; }
+.wiki-article :is([data-wiki-depth], .wiki-heading-content) { margin-inline-start: calc(var(--wiki-heading-indent) * var(--wiki-indent-steps, 0)); }
 .wiki-article .wiki-heading-content > :is(p, ul, ol, blockquote, table, .table-wrapper, details, .wiki-template) { margin-inline-start: var(--wiki-body-indent); }
 .wiki-article .post-content .wiki-legacy-fold { padding: 0; margin: 0; border: 0; background: transparent; }
 .wiki-article .wiki-legacy-fold > summary { display: block; list-style: none; }
@@ -91,4 +89,18 @@
 
 @media (min-width: 1200px) {
   .wiki-article { padding-inline: clamp(2.5rem, 5vw, 5.5rem); }
+}
+
+.wiki-index-entry h3 a, .wiki-index-entry h3 a:hover { text-decoration: none; }
+.wiki-index-entry h3 a:hover { color: var(--color-accent-secondary); }
+.wiki-index-entry h3 a:focus-visible { outline: 2px solid var(--color-accent-secondary); outline-offset: 4px; }
+.wiki-card-description { color: var(--color-text-secondary); }
+.wiki-toc-row { display: flex; align-items: baseline; gap: 0.45em; }
+.wiki-heading-list .wiki-toc-number { flex: 0 0 auto; min-width: 1.75em; padding: 0.2rem 0.15rem; color: var(--color-accent-secondary); font-variant-numeric: tabular-nums; }
+.wiki-toc-title { min-width: 0; padding-block: 0.2rem; text-decoration: none; overflow-wrap: anywhere; }
+.wiki-heading-list ol { padding-inline-start: clamp(0.65rem, 1.5vw, 1.25rem); }
+@media (max-width: 700px) {
+  .wiki-entry-list { grid-template-columns: minmax(0, 1fr); }
+  .wiki-index-entry { padding: 1rem; }
+  .wiki-article { --wiki-heading-indent: 0.6rem; --wiki-body-indent: 0.75rem; }
 }

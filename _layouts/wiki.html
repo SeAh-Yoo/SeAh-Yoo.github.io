@@ -29,9 +29,9 @@
             {% if page.description or wiki_toc != '' or page.details.size > 0 %}
             <nav class="wiki-toc" aria-label="{{ wiki_copy.contents }}" data-i18n-aria-label="wiki.contents">
               <p class="eyebrow" data-i18n="wiki.contents">{{ wiki_copy.contents }}</p>
-              {% if page.description %}<ul><li><a href="#wiki-summary" data-i18n="wiki.summary">{{ wiki_copy.summary }}</a></li></ul>{% endif %}
+              {% if page.description %}<ol class="wiki-heading-list"><li><span class="wiki-toc-row"><a class="wiki-toc-number" href="#wiki-summary" aria-label="{{ wiki_copy.summary }}" data-i18n-aria-label="wiki.summary">0.</a><span class="wiki-toc-title" data-i18n="wiki.summary">{{ wiki_copy.summary }}</span></span></li></ol>{% endif %}
               {% if wiki_toc != '' %}<ol class="wiki-heading-list">{{ wiki_toc }}</ol>{% endif %}
-              {% if page.details.size > 0 %}<ul>{% include wiki-details.html entry=page %}</ul>{% endif %}
+              {% if page.details.size > 0 %}<ul class="wiki-heading-list">{% include wiki-details.html entry=page %}</ul>{% endif %}
             </nav>
             {% endif %}
           </header>
@@ -46,7 +46,7 @@
             {% if page.details.size > 0 %}
             <aside class="wiki-detail-pages" aria-label="{{ wiki_copy.details }}" data-i18n-aria-label="wiki.details">
               <h2 id="wiki-detail-pages" data-i18n="wiki.details">{{ wiki_copy.details }}</h2>
-              <ul>{% include wiki-details.html entry=page %}</ul>
+              <ul class="wiki-heading-list">{% include wiki-details.html entry=page %}</ul>
             </aside>
             {% endif %}
           </div>

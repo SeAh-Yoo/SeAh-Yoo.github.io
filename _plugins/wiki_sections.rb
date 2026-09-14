@@ -64,7 +64,9 @@ module WikiSections
         id = attrs[/\bid="([^"]*)"/, 1]
         next unless id
         level = (attrs[/data-heading-level="(\d+)"/, 1] || tag).to_i
-        node = { level: level, id: id, text: text.gsub(/<[^>]*>/, ''), children: [] }
+        number = text[/<span\b[^>]*class="wiki-heading-number"[^>]*>(.*?)<\/span>/m, 1].to_s.strip
+        title = text.sub(/<span\b[^>]*class="wiki-heading-number"[^>]*>.*?<\/span>/m, '').gsub(/<[^>]*>/, '')
+        node = { level: level, id: id, number: number, text: title, children: [] }
         stack.pop while stack.last && stack.last[:level] >= level
         (stack.last ? stack.last[:children] : roots) << node
         stack << node
@@ -73,7 +75,9 @@ module WikiSections
         nodes.map do |node|
           children = node[:children].empty? ? '' : "<ol>#{render_nodes.call(node[:children])}</ol>"
           href = CGI.escapeHTML("#{url}##{CGI.unescapeHTML(node[:id])}")
-          "<li class=\"wiki-heading-level-#{node[:level]}\"><a href=\"#{href}\" data-no-interface-translation>#{node[:text]}</a>#{children}</li>"
+          title = CGI.escapeHTML(CGI.unescapeHTML(node[:text]))
+          label = CGI.escapeHTML(CGI.unescapeHTML("#{node[:number]} #{node[:text]}"))
+          "<li class=\"wiki-heading-level-#{node[:level]}\"><span class=\"wiki-toc-row\" data-no-interface-translation><a class=\"wiki-toc-number\" href=\"#{href}\" aria-label=\"#{label}\">#{node[:number]}</a><span class=\"wiki-toc-title\">#{title}</span></span>#{children}</li>"
         end.join
       end
       render_nodes.call(roots)

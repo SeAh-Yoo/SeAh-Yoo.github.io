@@ -17,11 +17,11 @@ permalink: /wiki/
         {% if entry_group == group %}
         <li class="wiki-index-entry" data-wiki-entry data-sort-title="{{ entry.sort_title | default: entry.title | escape }}">
           <h3><a href="{{ entry.url | relative_url }}" data-no-interface-translation>{{ entry.title | escape }}</a></h3>
-          {% if entry.description %}<p><a class="wiki-summary-link" href="{{ entry.url | relative_url }}#wiki-summary" data-no-interface-translation>{{ entry.description | escape }}</a></p>{% endif %}
+          {% if entry.description %}<p class="wiki-card-description" data-no-interface-translation>{{ entry.description | escape }}</p>{% endif %}
           {% assign entry_html = entry.content | wiki_markdownify %}
           {% capture entry_sections %}{% include wiki-headings.html html=entry_html url=entry.url %}{% endcapture %}
           {% assign entry_sections = entry_sections | strip %}
-          {% if entry_sections != '' or entry.details.size > 0 %}<details><summary>{{ wiki_copy.details }}</summary><ol class="wiki-heading-list">{{ entry_sections }}</ol>{% if entry.details.size > 0 %}<ul>{% include wiki-details.html entry=entry %}</ul>{% endif %}</details>{% endif %}
+          {% if entry_sections != '' or entry.details.size > 0 %}<details><summary data-i18n="wiki.detail_contents">{{ wiki_copy.detail_contents }}</summary><ol class="wiki-heading-list">{{ entry_sections }}</ol>{% if entry.details.size > 0 %}<ul class="wiki-heading-list">{% include wiki-details.html entry=entry %}</ul>{% endif %}</details>{% endif %}
         </li>
         {% endif %}
       {% endfor %}
