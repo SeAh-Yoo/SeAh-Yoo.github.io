@@ -1,8 +1,3 @@
-황인정
-
-종조이
-
----
 title: 봉누도 시즌2
 description: 2026년 치지직 스트리머 남봉이 진행한 GTA V 스트리머 전용 대형 RP 서버의 두 번째 시즌.
 aliases: [Bong-Nuh-Doh-2, NamBong-island-II, 봉누도2]
