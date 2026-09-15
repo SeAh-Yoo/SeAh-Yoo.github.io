@@ -3,7 +3,7 @@ title: 봉누도 시즌2
 description: 2026년 치지직 스트리머 남봉이 진행한 GTA V 스트리머 전용 대형 RP 서버의 두 번째 시즌.
 aliases: [Bong-Nuh-Doh-2, NamBong-island-II, 봉누도2]
 date: 2026-09-10
-last_modified_at: 2026-09-13
+last_modified_at: 2026-09-14
 ---
 
 이 문서는 봉누도 시즌2 기간 동안 직접 라이브를 시청하는 시점에서 서버 내에서 벌어진 핵심 서사, RP 인간 관계와 소소한 에피소드 등을 기록하는 일종의 개인 관찰 노트이자, 개인 위키이다.
