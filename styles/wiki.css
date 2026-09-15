@@ -196,20 +196,34 @@
   .wiki-directory-tools, .wiki-section-copy, .wiki-copy-notice, .wiki-copy-dialog { display: none !important; }
 }
 
-.wiki-article .wiki-service-table { width: 100%; table-layout: fixed; border-top: 3px solid var(--service-color); }
+.wiki-article .wiki-organization .wiki-service-table { display: table; width: 100%; min-width: 38rem; table-layout: auto; border-top: 3px solid var(--service-color, #7663a8); }
 .wiki-service-city { --service-color: #7663a8; }
 .wiki-service-police { --service-color: #3675b5; }
 .wiki-service-hospital { --service-color: #b84e66; }
 .wiki-service-broadcast { --service-color: #358478; }
 .wiki-service-transport { --service-color: #a97528; }
+.wiki-service-business { --service-color: #39786d; }
+.wiki-service-gang { --service-color: #8256a1; }
+.wiki-service-party { --service-color: #5475a1; }
+.wiki-service-organization { --service-color: #7663a8; }
+.wiki-organization { max-width: 100%; overflow-x: auto; margin-block: 1rem; }
+.wiki-organization:focus-visible { outline: 2px solid var(--color-accent-secondary); outline-offset: 2px; }
 .wiki-article .wiki-service-table thead th { background: var(--service-color); color: #fff; }
-.wiki-article .wiki-service-table th:first-child,
-.wiki-article .wiki-service-table td:first-child { width: 8em; }
+.wiki-article .wiki-service-table thead tr:last-child th:first-child,
+.wiki-article .wiki-service-table .wiki-org-rank { width: 6.5em; }
 .wiki-article .wiki-service-table td { overflow-wrap: anywhere; line-height: 2.2; }
-.wiki-article .wiki-service-table td:first-child { background: color-mix(in srgb, var(--service-color) 14%, transparent); font-weight: 600; }
-@media (max-width: 600px) {
-  .wiki-article .wiki-service-table th:first-child,
-  .wiki-article .wiki-service-table td:first-child { width: 5.5em; }
+.wiki-article .wiki-service-table .wiki-org-rank { background: color-mix(in srgb, var(--service-color) 14%, transparent); font-weight: 600; text-align: center; vertical-align: top; }
+.wiki-org-count { font-size: 0.85em; font-weight: 400; }
+.wiki-article .wiki-service-table .wiki-org-members { width: 44%; }
+.wiki-article .wiki-service-table .wiki-org-history { font-size: 0.9em; line-height: 1.8; vertical-align: top; }
+.wiki-article .wiki-service-table .wiki-org-title { padding: 1rem; background: color-mix(in srgb, var(--service-color) 12%, transparent); }
+.wiki-article .wiki-service-table .wiki-org-icon { display: inline-block; width: 40px; height: 40px; margin: 0 0.6rem 0 0; vertical-align: middle; border: 0; border-radius: 0; }
+.wiki-org-name { font-size: 1.2rem; font-weight: 800; vertical-align: middle; }
+.wiki-org-meta { display: block; font-size: 0.85rem; font-weight: 400; }
+.wiki-article .wiki-service-table tfoot td { text-align: center; font-weight: 700; border-top: 2px solid var(--service-color); }
+@media print {
+  .wiki-organization { overflow: visible; }
+  .wiki-article .wiki-organization .wiki-service-table { min-width: 0; }
 }
 
 .wiki-page-toc > summary { min-height: var(--tap-target); align-content: center; cursor: pointer; overflow-wrap: anywhere; }

@@ -1082,6 +1082,10 @@ YouTube 표시 이름은 번역하지 않습니다. 기존 플랫폼 별칭과 �
 
 ### 개발 검증
 
+공무직·사업체·갱단·정당의 자동 인원 표와 SVG 아이콘 작성법은
+[RP 조직 자동 틀 작성법](docs/wiki-organizations.md)을 참고하세요.
+명단을 변경하면 빌드 시 직책별 인원과 전체 합계가 갱신됩니다.
+
 ```powershell
 jekyll build
 python scripts/test-wiki.py

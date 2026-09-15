@@ -28,6 +28,7 @@ jobs:
       - uses: actions/configure-pages@v5
       - run: ruby scripts/test-extended-headings.rb
       - run: ruby scripts/test-wiki-sections.rb
+      - run: ruby scripts/test-wiki-organizations.rb
       - run: jekyll _3.10.0_ build
         env:
           JEKYLL_ENV: production
