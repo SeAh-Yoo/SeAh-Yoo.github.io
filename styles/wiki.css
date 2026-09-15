@@ -206,6 +206,7 @@
 .wiki-service-gang { --service-color: #8256a1; }
 .wiki-service-party { --service-color: #5475a1; }
 .wiki-service-organization { --service-color: #7663a8; }
+.wiki-service-citizen { --service-color: #547c80; }
 .wiki-organization { max-width: 100%; overflow-x: auto; margin-block: 1rem; }
 .wiki-organization:focus-visible { outline: 2px solid var(--color-accent-secondary); outline-offset: 2px; }
 .wiki-article .wiki-service-table thead th { background: var(--service-color); color: #fff; }
@@ -221,6 +222,11 @@
 .wiki-org-name { font-size: 1.2rem; font-weight: 800; vertical-align: middle; }
 .wiki-org-meta { display: block; font-size: 0.85rem; font-weight: 400; }
 .wiki-article .wiki-service-table tfoot td { text-align: center; font-weight: 700; border-top: 2px solid var(--service-color); }
+.wiki-article .wiki-organization .wiki-citizen-table { min-width: 30rem; }
+.wiki-article .wiki-citizen-table .wiki-citizen-group-title { background: color-mix(in srgb, var(--service-color) 18%, transparent); font-size: 0.9rem; }
+.wiki-article .wiki-citizen-table .wiki-citizen-name { width: 25%; font-weight: 600; }
+.wiki-article .wiki-citizen-table .wiki-citizen-streamer { width: 40%; }
+.wiki-article .wiki-citizen-table tbody td { line-height: 1.65; }
 @media print {
   .wiki-organization { overflow: visible; }
   .wiki-article .wiki-organization .wiki-service-table { min-width: 0; }

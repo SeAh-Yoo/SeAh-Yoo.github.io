@@ -1,6 +1,6 @@
 # Enrich the parsed Markdown tree, so counts also exist in static HTML and indexes.
 module WikiOrganizations
-  ICONS = %w[city police hospital broadcast transport business gang party organization].freeze
+  ICONS = %w[city police hospital broadcast transport business gang party organization citizen].freeze
   EMPTY = ['', '-', '—'].freeze
 
   def self.element(type, children = [], attrs = {})
@@ -64,21 +64,39 @@ module WikiOrganizations
   end
 
   def self.enrich(table, attrs)
+    citizens = attrs['data-org-kind'] == 'citizen'
     title = attrs.fetch('data-org-title', '').strip
     raise ArgumentError, '조직 틀의 title이 비어 있습니다.' if title.empty?
     header = table.children.find { |node| node.type == :thead }
     bodies = table.children.select { |node| node.type == :tbody }
     rows = bodies.flat_map(&:children)
     unless header && header.children.length == 1 && header.children.first.children.length == 3 && rows.all? { |row| row.children.length == 3 }
-      raise ArgumentError, "#{title}: 명단 표는 직책 / 소속 인원 / 기록의 3열이어야 합니다."
+      raise ArgumentError, "#{title}: 명단 표는 이름·직책 / 인원·방송인 / 기록의 3열이어야 합니다."
     end
     raise ArgumentError, "#{title}: 합계는 자동 생성됩니다. 수동 footer를 제거하세요." if table.children.any? { |node| node.type == :tfoot }
     seen = {}
     total = 0
     guides = 0
+    identified = []
+    unidentified = []
     rows.each do |row|
       rank, people, = row.children
       listed = members(people)
+      if citizens
+        unless listed.length == 1
+          raise ArgumentError, "#{title}: 시민은 한 행에 한 명의 방송인·채널을 기록하세요."
+        end
+        known = !EMPTY.include?(plain(rank).strip)
+        key = known ? "rp:#{plain(rank).strip.unicode_normalize(:nfc)}" : "streamer:#{listed.first[:key]}"
+        raise ArgumentError, "#{title}: #{key} 중복 기재." if seen[key]
+        seen[key] = true
+        (known ? identified : unidentified) << row
+        rank.attr['class'] = 'wiki-citizen-name'
+        people.attr['class'] = 'wiki-citizen-streamer'
+        row.children[2].attr['class'] = 'wiki-org-history'
+        total += 1
+        next
+      end
       listed.each do |person|
         raise ArgumentError, "#{title}: #{person[:key]} 중복 기재 (겸직은 기록 칸에 작성)." if seen[person[:key]]
         seen[person[:key]] = true
@@ -94,11 +112,19 @@ module WikiOrganizations
       people.attr['class'] = 'wiki-org-members'
       row.children[2].attr['class'] = 'wiki-org-history'
     end
+    if citizens
+      table.children.reject! { |node| node.type == :tbody }
+      [['RP 이름 확인', identified], ['RP 이름 미확인', unidentified]].each do |label, group|
+        cell = Kramdown::Element.new(:html_element, 'th', { 'colspan' => '3', 'scope' => 'rowgroup', 'class' => 'wiki-citizen-group-title' }, category: :block)
+        cell.children << text("#{label} · #{group.length}명")
+        table.children << element(:tbody, [element(:tr, [cell])] + group, 'class' => 'wiki-citizen-group')
+      end
+    end
     header.children.first.children.each { |cell| cell.attr['scope'] = 'col' }
     icon = attrs['data-org-icon']
     icon = 'organization' unless ICONS.include?(icon)
-    table.attr['class'] = "wiki-service-table wiki-service-#{icon}"
-    table.attr['aria-label'] = "#{title} 조직 명단"
+    table.attr['class'] = "wiki-service-table wiki-service-#{icon}#{citizens ? ' wiki-citizen-table' : ''}"
+    table.attr['aria-label'] = "#{title} 명단"
     baseurl = attrs.fetch('data-org-baseurl', '').sub(%r{/\z}, '')
     image = Kramdown::Element.new(:img, nil, {
       'src' => "#{baseurl}/assets/icons/organizations/#{icon}.svg", 'alt' => '',
@@ -112,7 +138,11 @@ module WikiOrganizations
       title_cell.children << span(prefix + value, 'wiki-org-meta')
     end
     header.children.unshift(element(:tr, [title_cell]))
-    summary = "총 #{total - guides}명 (가이드·운영자 포함 #{total}명)"
+    summary = if citizens
+                "총 #{total}명 (RP 이름 확인 #{identified.length}명 · 미확인 #{unidentified.length}명)"
+              else
+                "총 #{total - guides}명 (가이드·운영자 포함 #{total}명)"
+              end
     table.children << element(:tfoot, [element(:tr, [element(:td, [text(summary)], 'colspan' => '3')])])
   end
 end

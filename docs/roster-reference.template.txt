@@ -1,0 +1,10 @@
+# section|RP 이름|방송인·채널
+# 시민의 RP 이름 미확인은 ?로 표시한다.
+city|꼬봉이|남봉
+city|차호빵|운영자
+broadcast|이윤진|이춘향
+police|고상식|고수달
+hospital|도현정|강지
+transport|황인정|너불
+citizen|?|꽃빈
+citizen|확인된 RP|방송인 이름

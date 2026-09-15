@@ -72,4 +72,36 @@ class WikiOrganizationsTest < Minitest::Test
     assert_equal 1, indexed.scan('총 1명 (가이드·운영자 포함 1명)').length
     assert_equal 1, indexed.scan('wiki-org-count').length
   end
+
+  def test_citizens_are_grouped_by_rp_name_and_counted_per_person
+    html = render("| — | [채널미확인인물](https://example.com/a) | 첫 접속 대기 |\n| 확인인물 | 방송인 | 1일차 추합 |\n| | 다른방송인 | — |", 'data-org-kind="citizen" data-org-icon="citizen"')
+    assert_includes html, 'RP 이름 확인 · 1명'
+    assert_includes html, 'RP 이름 미확인 · 2명'
+    assert_includes html, '총 3명 (RP 이름 확인 1명 · 미확인 2명)'
+    assert_operator html.index('확인인물</td>'), :<, html.index('https://example.com/a')
+    refute_includes html, 'wiki-org-count'
+    assert_includes html, '/organizations/citizen.svg'
+  end
+
+  def test_filling_in_an_unknown_rp_name_moves_group_without_changing_total
+    before = render('| — | 방송인 | — |', 'data-org-kind="citizen"')
+    after = render('| 새이름 | 방송인 | — |', 'data-org-kind="citizen"')
+    assert_includes before, '총 1명 (RP 이름 확인 0명 · 미확인 1명)'
+    assert_includes after, '총 1명 (RP 이름 확인 1명 · 미확인 0명)'
+  end
+
+  def test_citizen_record_cell_never_adds_people_and_malformed_rows_fail
+    html = render('| 이름 | 방송인 | 과거인물[+방송인2]<br>참여 종료 |', 'data-org-kind="citizen"')
+    assert_includes html, '총 1명'
+    assert_raises(ArgumentError) { render('| 이름 | 방송인<br>방송인2 | — |', 'data-org-kind="citizen"') }
+    assert_raises(ArgumentError) { render('| 이름 | — | — |', 'data-org-kind="citizen"') }
+    assert_raises(ArgumentError) { render("| 이름 | 방송인 | — |\n| 이름 | 방송인2 | — |", 'data-org-kind="citizen"') }
+  end
+
+  def test_citizens_reparse_in_search_without_double_grouping
+    html = render('| — | 방송인 | — |', 'data-org-kind="citizen"')
+    indexed = Kramdown::Document.new(html, input: 'WikiGFM').to_html
+    assert_equal 2, indexed.scan('class="wiki-citizen-group-title"').length
+    assert_equal 1, indexed.scan('총 1명').length
+  end
 end
