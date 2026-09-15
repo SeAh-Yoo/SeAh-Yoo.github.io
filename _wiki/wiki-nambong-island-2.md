@@ -130,7 +130,7 @@ last_modified_at: 2026-09-15
 | 견습 | 밥돼길[+[치지직:26253bf7ed6b95832c40f4f43f6d049d]{티뭉}] |
 {: .wiki-service-table .wiki-service-broadcast }
 {% endcapture %}
-{% include wiki-template.html name="공무직명단" title="봉누도방송국" subtitle="Bongnudo Broadcast System" period="2026년 9월 12일 ~ (창설일 기준)" members="10명 + 가이드·운영자 1명 (총 11명)" body=service_roster %}
+{% include wiki-template.html name="공무직명단" title="봉누도방송국" subtitle="Bongnudo Broadcast System" period="2026년 9월 14일 ~ (창설일 기준)" members="10명 + 가이드·운영자 1명 (총 11명)" body=service_roster %}
 
 #### 봉누도경찰서
 2026년 09월 14일 서버 오픈 시점 봉누도경찰서의 인원은 전체 인원 209명 중에서 총 16명이다. (가이드 포함 17명)
@@ -149,7 +149,7 @@ last_modified_at: 2026-09-15
 | 교육생 | 녕호재[+[치지직:c7d3b49d29be2d2b1d74ba8403f5851a]{미녕이데려오께}]<br>김청순[+[치지직:42956fe0a0af5cea4fce3fa5721fe2f9]{빗 시}]<br>목진압[+[치지직:4d39d99252f247f06de349ccc0d444a7]{승우아빠}]<br>야루[+아카네 리제]<br>최빵빵[+[치지직:5ce274d07db05c2d68769162547ec267]{짜누1}]: 유일한 경찰 경력직<br>김억척[+[치지직:b73696a325726b5aba0c391b4c70ab46]{카가야키 노바}]<br>안보영[+카네코 파냐 Planeta]<br>방하범[+[치지직:fce65e450906db84132d3d0dd5bd6c3c]{콩천}]<br>정지혜[+[치지직:64d76089fba26b180d9c9e48a32600d9]{텐코 시부키}]<br>이십세[+[치지직:88eb7dda524ca626ad3e08359b182900]{텐플라스텐 텐텐}]<br>희지뢰[+[치지직:0d7600fc87a6a8621d5149d12da58ef8]{희 지}] |
 {: .wiki-service-table .wiki-service-police }
 {% endcapture %}
-{% include wiki-template.html name="공무직명단" title="봉누도경찰청" subtitle="Bongnudo National Police Agency" period="2026년 9월 12일 ~ (창설일 기준)" members="16명 + 가이드·운영자 1명 (총 17명)" body=service_roster %}
+{% include wiki-template.html name="공무직명단" title="봉누도경찰청" subtitle="Bongnudo National Police Agency" period="2026년 9월 14일 ~ (창설일 기준)" members="16명 + 가이드·운영자 1명 (총 17명)" body=service_roster %}
 
 #### 봉누도병원 (E.M.S)
 2026년 09월 14일 서버 오픈 시점 봉누도병원의 인원은 전체 인원 209명 중에서 총 16명이다. 가이드 포함 (17명)
@@ -167,7 +167,7 @@ last_modified_at: 2026-09-15
 | 인턴 | 왁뿌용[+[치지직:c8ce4df6e6cf691f05df554739ad05ed]{그냥 뿌요}]<br>퀸자몽[+[치지직:b814e815228894a3f75c67cac4f829d3]{김총무}]<br>배나온[+[치지직:554e99695decc451d57788b1fd5d5c07]{배돈}]<br>백초식[+백곰파]<br>구해영[+[치지직:36ddb9bb4f17593b60f1b63cec86611d]{사키하네 후야}]<br>차수진[+[치지직:aa66ed6da9e203c26807c0cd3579983a]{스즈 SUZU}]<br>안성실[+[치지직:eaf7b569c9992d0e57db0059eb5c0eeb]{이글콥}]<br>용몽원[+[치지직:db43350be77c4f6a9ff08d83574019a3]{자몽뀨1}]<br>빙세라[+[치지직:0d4e078913f04f0412f0092e10974492]{코오리 세라 Kori Serah}]<br>윤수아[+[치지직:81bd5b50f0c0728128442daf7db626fc]{토종 아오리}]<br>헤간호[+[치지직:b14e49789bae3c00b6b4c98d60ff036d]{HERA 헤라}]<br>레도연[+[치지직:a96cea2d2c39cec636ba8170c66a0510]{RED레드}] |
 {: .wiki-service-table .wiki-service-hospital }
 {% endcapture %}
-{% include wiki-template.html name="공무직명단" title="봉누도 EMS" subtitle="Bongnudo Hospital" period="2026년 9월 12일 ~ (창설일 기준)" members="16명 + 가이드·운영자 1명 (총 17명)" body=service_roster %}
+{% include wiki-template.html name="공무직명단" title="봉누도 EMS" subtitle="Bongnudo Hospital" period="2026년 9월 14일 ~ (창설일 기준)" members="16명 + 가이드·운영자 1명 (총 17명)" body=service_roster %}
 
 
 #### 교통정비공사
