@@ -3,7 +3,7 @@ title: 봉누도 시즌2
 description: 2026년 치지직 스트리머 남봉이 진행한 GTA V 스트리머 전용 대형 RP 서버의 두 번째 시즌.
 aliases: [Bong-Nuh-Doh-2, NamBong-island-II, 봉누도2]
 date: 2026-09-10
-last_modified_at: 2026-09-14
+last_modified_at: 2026-09-15
 ---
 
 이 문서는 봉누도 시즌2 기간 동안 직접 라이브를 시청하는 시점에서 서버 내에서 벌어진 핵심 서사, RP 인간 관계와 소소한 에피소드 등을 기록하는 일종의 개인 관찰 노트이자, 개인 위키이다.
@@ -47,19 +47,19 @@ last_modified_at: 2026-09-14
 - 1대 시장: 고봉이[+[치지직:ac6a03808bffbe58b3bfb0e25271836e]{남봉}][^nb-said-0913]
 
 ##### 봉누도 방송국
-- 국장: 이윤진[+[치지직:aed9d6557bebfb21ab3d081b862cdd2d]{이춘향}]
-- 인턴: 명총희[+[치지직:b044e3a3b9259246bc92e863e7d3f3b8]{시라유키 히나}]
-- 인턴: 밥돼길[+[치지직:26253bf7ed6b95832c40f4f43f6d049d]{티뭉}]
+- 편집국장: 이윤진[+[치지직:aed9d6557bebfb21ab3d081b862cdd2d]{이춘향}]
+- 기자: 명총희[+[치지직:b044e3a3b9259246bc92e863e7d3f3b8]{시라유키 히나}]
+- 견습: 밥돼길[+[치지직:26253bf7ed6b95832c40f4f43f6d049d]{티뭉}]
 
 ##### 봉누도 경찰서
-- 청창: 고상식[+[치지직:1343a0e30ff0acb09f2477a698d070a4]{고수달}]
+- 경찰청장: 고상식[+[치지직:1343a0e30ff0acb09f2477a698d070a4]{고수달}]
 - 순경: 오순찰[+[치지직:29f20622463916fa48ad735057b145ce]{멋사}]
 - 교육생: 야루[+[치지직:4325b1d5bbc321fad3042306646e2e50]{아카네 리제}]
 - 교육생: 안보영[+[치지직:5ead7124638ac4c568f2cde0224b3b6b]{카네코 파냐 Planeta}]
 
 ##### 봉누도 병원 (EMS)
 - 병원장: 도현정[+[치지직:b5ed5db484d04faf4d150aedd362f34b]{강지}]
-- 견습: 백초식[+[치지직:20ef78f064ebfd8dd4f7ec8a3a222fd2]{백곰파}]
+- 인턴: 백초식[+[치지직:20ef78f064ebfd8dd4f7ec8a3a222fd2]{백곰파}]
 
 ##### 교통정비공사
 - 사장: 황인정[+[치지직:af3323d30e11ae42c39d7203c7e07fa2]{너불}]
@@ -102,46 +102,89 @@ last_modified_at: 2026-09-14
 ### 공무직 [_접기]
 기본적으로 직책이 높은 순으로 정렬하며, 직책이 동일한 경우 `RP 이름`이 아닌 `스트리머 이름`을 기준으로 가나다 순 정렬이다.
 
+<!-- 공무직 틀 수정: 각 service_roster의 마크다운 표에서 직책 행과 인원을 직접 추가·이동한다. 한 직책의 여러 인원은 <br>로 구분한다. 인원이 바뀌면 include의 members와 본문 인원 설명도 함께 갱신한다. —는 명단에 기재된 인원이 없는 직책이다. -->
+
 #### 봉누도시청
 초대 봉누도시청 행정부는 시장인 남봉을 제외하고 전원 가이드로 구성되므로, 방송하는 인원이 없다.
 
-{% capture service_members_0 %}고봉이[+남봉]{% endcapture %}
-{% capture service_members_1 %}차호빵[+운영자]<br>멍카롱[+가이드]<br>제이[+가이드]<br>이다미[+가이드]{% endcapture %}
-{% include wiki-template.html name="공무직명단" department="시청" rank_1=service_members_0 rank_2=service_members_1 %}
+{% capture service_roster %}
+| 직책 | 소속 인원 |
+| :--- | :--- |
+| 시장 | 고봉이[+남봉] |
+| 공무원 | 차호빵[+운영자]<br>멍카롱[+가이드]<br>제이[+가이드]<br>이다미[+가이드] |
+{: .wiki-service-table .wiki-service-city }
+{% endcapture %}
+{% include wiki-template.html name="공무직명단" title="봉누도시청" members="1명 + 가이드·운영자 4명 (총 5명)" body=service_roster %}
 
 #### 봉누도방송국
 2026년 09월 14일 서버 오픈 시점 봉누도방송국의 인원은 전체 인원 209명 중에서 총 10명이다. (가이드 포함 11명)
 
-{% capture service_members_0 %}이윤진[+이춘향]{% endcapture %}
-{% capture service_members_1 %}오치에[+가이드]{% endcapture %}
-{% capture service_members_2 %}이줄만[+[치지직:17a4bfff01d96ffad065f641ce90bdde]{로마러}]<br>숭해춘[+[치지직:4ebef1eb4194611996dc38abf1d226d1]{마레 플로스}]<br>명총희[+시라유키 히나]<br>나익수[+[치지직:2e15ecbee8e01f6d43dbc9ec84530431]{위구리}]<br>신이버[+[치지직:8fd39bb8de623317de90654718638b10]{유즈하 리코}]<br>피터장파커[+[치지직:014a50b6ab22bd1a02a6c761917c062b]{장마군}]<br>고묵희[+[치지직:010379f20da3ec9249bfe0bbdcb05762]{코무키}]<br>킹기자[+[치지직:3eb9808e8ec29e79c6d54060c964b1a5]{킹설아}]<br>밥돼길[+치지직:티뭉]{% endcapture %}
-{% include wiki-template.html name="공무직명단" department="방송국" rank_1=service_members_0 rank_5=service_members_1 rank_6=service_members_2 %}
+{% capture service_roster %}
+| 직책 | 소속 인원 |
+| :--- | :--- |
+| 편집국장 | 이윤진[+이춘향] |
+| 부장 | — |
+| 선임기자 | — |
+| 수석기자 | — |
+| 기자 | 오치에[+가이드]<br>이줄만[+[치지직:17a4bfff01d96ffad065f641ce90bdde]{로마러}]<br>숭해춘[+[치지직:4ebef1eb4194611996dc38abf1d226d1]{마레 플로스}]<br>명총희[+시라유키 히나]<br>나익수[+[치지직:2e15ecbee8e01f6d43dbc9ec84530431]{위구리}]<br>신이버[+[치지직:8fd39bb8de623317de90654718638b10]{유즈하 리코}]<br>피터장파커[+[치지직:014a50b6ab22bd1a02a6c761917c062b]{장마군}]<br>고묵희[+[치지직:010379f20da3ec9249bfe0bbdcb05762]{코무키}]<br>킹기자[+[치지직:3eb9808e8ec29e79c6d54060c964b1a5]{킹설아}] |
+| 견습 | 밥돼길[+[치지직:26253bf7ed6b95832c40f4f43f6d049d]{티뭉}] |
+{: .wiki-service-table .wiki-service-broadcast }
+{% endcapture %}
+{% include wiki-template.html name="공무직명단" title="봉누도방송국" subtitle="Bongnudo Broadcast System" period="2026년 9월 12일 ~ (창설일 기준)" members="10명 + 가이드·운영자 1명 (총 11명)" body=service_roster %}
 
 #### 봉누도경찰서
 2026년 09월 14일 서버 오픈 시점 봉누도경찰서의 인원은 전체 인원 209명 중에서 총 16명이다. (가이드 포함 17명)
 
-{% capture service_members_0 %}고상식[+고수달]{% endcapture %}
-{% capture service_members_1 %}강도풍[+가이드]<br>오순찰[+멋사]{% endcapture %}
-{% capture service_members_2 %}고춘애[+[치지직:a9a343510e132ea3026ff3cf682820b5]{계춘회}]<br>김창후[+[치지직:1542ba72a3d56f4d774c67925734a4a5]{델로략국}]<br>녕호재[+[치지직:c7d3b49d29be2d2b1d74ba8403f5851a]{미녕이데려오께}]<br>김청순[+[치지직:42956fe0a0af5cea4fce3fa5721fe2f9]{빗 시}]<br>목진압[+[치지직:4d39d99252f247f06de349ccc0d444a7]{승우아빠}]<br>야루[+아카네 리제]<br>고민중[+[치지직:912b559dcdd9c9ea1fe97864925738bf]{왈도쿤}]<br>최빵빵[+[치지직:5ce274d07db05c2d68769162547ec267]{짜누1}]: 유일한 경찰 경력직<br>김억척[+[치지직:b73696a325726b5aba0c391b4c70ab46]{카가야키 노바}]<br>안보영[+카네코 파냐 Planeta]<br>방하범[+[치지직:fce65e450906db84132d3d0dd5bd6c3c]{콩천}]<br>정지혜[+[치지직:64d76089fba26b180d9c9e48a32600d9]{텐코 시부키}]<br>이십세[+[치지직:88eb7dda524ca626ad3e08359b182900]{텐플라스텐 텐텐}]<br>희지뢰[+[치지직:0d7600fc87a6a8621d5149d12da58ef8]{희 지}]{% endcapture %}
-{% include wiki-template.html name="공무직명단" department="경찰" rank_1=service_members_0 rank_8=service_members_1 rank_9=service_members_2 %}
+{% capture service_roster %}
+| 직책 | 소속 인원 |
+| :--- | :--- |
+| 경찰청장 | 고상식[+고수달] |
+| 서장 | — |
+| 경정 | — |
+| 경감 | — |
+| 경위 | — |
+| 경사 | — |
+| 경장 | 강도풍[+가이드] |
+| 순경 | 고춘애[+[치지직:a9a343510e132ea3026ff3cf682820b5]{계춘회}]<br>김창후[+[치지직:1542ba72a3d56f4d774c67925734a4a5]{델로략국}]<br>오순찰[+멋사]<br>고민중[+[치지직:912b559dcdd9c9ea1fe97864925738bf]{왈도쿤}] |
+| 교육생 | 녕호재[+[치지직:c7d3b49d29be2d2b1d74ba8403f5851a]{미녕이데려오께}]<br>김청순[+[치지직:42956fe0a0af5cea4fce3fa5721fe2f9]{빗 시}]<br>목진압[+[치지직:4d39d99252f247f06de349ccc0d444a7]{승우아빠}]<br>야루[+아카네 리제]<br>최빵빵[+[치지직:5ce274d07db05c2d68769162547ec267]{짜누1}]: 유일한 경찰 경력직<br>김억척[+[치지직:b73696a325726b5aba0c391b4c70ab46]{카가야키 노바}]<br>안보영[+카네코 파냐 Planeta]<br>방하범[+[치지직:fce65e450906db84132d3d0dd5bd6c3c]{콩천}]<br>정지혜[+[치지직:64d76089fba26b180d9c9e48a32600d9]{텐코 시부키}]<br>이십세[+[치지직:88eb7dda524ca626ad3e08359b182900]{텐플라스텐 텐텐}]<br>희지뢰[+[치지직:0d7600fc87a6a8621d5149d12da58ef8]{희 지}] |
+{: .wiki-service-table .wiki-service-police }
+{% endcapture %}
+{% include wiki-template.html name="공무직명단" title="봉누도경찰청" subtitle="Bongnudo National Police Agency" period="2026년 9월 12일 ~ (창설일 기준)" members="16명 + 가이드·운영자 1명 (총 17명)" body=service_roster %}
 
 #### 봉누도병원 (E.M.S)
 2026년 09월 14일 서버 오픈 시점 봉누도병원의 인원은 전체 인원 209명 중에서 총 16명이다. 가이드 포함 (17명)
 
-{% capture service_rank_1 %}도현정[+강지]{% endcapture %}
-{% capture service_rank_7 %}채봄[+가이드]{% endcapture %}
-{% capture service_rank_8 %}공하나[+[치지직:93fe884808459fb4e4a3c7d64f0eef03]{고차비}]<br>왁뿌용[+[치지직:c8ce4df6e6cf691f05df554739ad05ed]{그냥 뿌요}]<br>퀸자몽[+[치지직:b814e815228894a3f75c67cac4f829d3]{김총무}]<br>인나유[+[치지직:d58ace43901fd369f1b4efa4ed175103]{미 유}]<br>배나온[+[치지직:554e99695decc451d57788b1fd5d5c07]{배돈}]<br>백초식[+백곰파]<br>구해영[+[치지직:36ddb9bb4f17593b60f1b63cec86611d]{사키하네 후야}]<br>차수진[+[치지직:aa66ed6da9e203c26807c0cd3579983a]{스즈 SUZU}]<br>안성실[+[치지직:eaf7b569c9992d0e57db0059eb5c0eeb]{이글콥}]<br>금희주[+[치지직:ed21d36a44d1956520189a784afc27ed]{이초홍}]<br>용몽원[+[치지직:db43350be77c4f6a9ff08d83574019a3]{자몽뀨1}]<br>빙세라[+[치지직:0d4e078913f04f0412f0092e10974492]{코오리 세라 Kori Serah}]<br>윤수아[+[치지직:81bd5b50f0c0728128442daf7db626fc]{토종 아오리}]<br>헤간호[+[치지직:b14e49789bae3c00b6b4c98d60ff036d]{HERA 헤라}]<br>레도연[+[치지직:a96cea2d2c39cec636ba8170c66a0510]{RED레드}]{% endcapture %}
-{% include wiki-template.html name="공무직명단" department="병원" rank_1=service_rank_1 rank_7=service_rank_7 rank_8=service_rank_8 %}
+{% capture service_roster %}
+| 직책 | 소속 인원 |
+| :--- | :--- |
+| 병원장 | 도현정[+강지] |
+| 부원장 | — |
+| 총괄실장 | — |
+| 진료부장 | — |
+| 응급부장 | — |
+| 수석응급구조사 | — |
+| 응급구조사 | 채봄[+가이드]<br>인나유[+[치지직:d58ace43901fd369f1b4efa4ed175103]{미 유}]<br>공하나[+[치지직:93fe884808459fb4e4a3c7d64f0eef03]{고차비}]<br>금희주[+[치지직:ed21d36a44d1956520189a784afc27ed]{이초홍}] |
+| 인턴 | 왁뿌용[+[치지직:c8ce4df6e6cf691f05df554739ad05ed]{그냥 뿌요}]<br>퀸자몽[+[치지직:b814e815228894a3f75c67cac4f829d3]{김총무}]<br>배나온[+[치지직:554e99695decc451d57788b1fd5d5c07]{배돈}]<br>백초식[+백곰파]<br>구해영[+[치지직:36ddb9bb4f17593b60f1b63cec86611d]{사키하네 후야}]<br>차수진[+[치지직:aa66ed6da9e203c26807c0cd3579983a]{스즈 SUZU}]<br>안성실[+[치지직:eaf7b569c9992d0e57db0059eb5c0eeb]{이글콥}]<br>용몽원[+[치지직:db43350be77c4f6a9ff08d83574019a3]{자몽뀨1}]<br>빙세라[+[치지직:0d4e078913f04f0412f0092e10974492]{코오리 세라 Kori Serah}]<br>윤수아[+[치지직:81bd5b50f0c0728128442daf7db626fc]{토종 아오리}]<br>헤간호[+[치지직:b14e49789bae3c00b6b4c98d60ff036d]{HERA 헤라}]<br>레도연[+[치지직:a96cea2d2c39cec636ba8170c66a0510]{RED레드}] |
+{: .wiki-service-table .wiki-service-hospital }
+{% endcapture %}
+{% include wiki-template.html name="공무직명단" title="봉누도 EMS" subtitle="Bongnudo Hospital" period="2026년 9월 12일 ~ (창설일 기준)" members="16명 + 가이드·운영자 1명 (총 17명)" body=service_roster %}
 
 
 #### 교통정비공사
 2026년 09월 14일 서버 오픈 시점 교통정비공사의 인원은 전체 인원 209명 중에서 총 11명이다. (가이드 포함 12명)
 
-{% capture service_rank_1 %}황인정[+너불]{% endcapture %}
-{% capture service_rank_3 %}김웅[+[치지직:17f0cfcba4ff608de5eabb5110d134d0]{김뿡}] (9월 14일 새벽 수습기사에서 폭풍진급){% endcapture %}
-{% capture service_rank_4 %}세콩[+가이드] (9월 14일 새벽 일반기사에서 진급)<br />정다정[+[치지직:41d1490bd67b3818d7dc53427a4d6cea]{앵보}] (9월 14일 새벽 수습기사에서 진급)<br>추학한[+[치지직:2d4aa2f79b0a397d032c479ef1b37a67]{후추}] (9월 14일 새벽 수습기사에서 진급){% endcapture %}
-{% capture service_rank_5 %}종조이[+달콤레나 씨] (9월 14일 새벽 수습기사에서 진급)<br>하진혁[+바테바테] (9월 14일 새벽 수습기사에서 진급)<br>좋마담[+아로AURO] (9월 14일 새벽 수습기사에서 진급)<br><br>채재희[+[치지직:0e604eba7206f04b1e5f15e0a1cb2616]{채현찌}] (9월 14일 새벽 수습기사에서 진급)<br>도미나[+[치지직:d5e2e0c14dcca4c4b10c7c9633022f52]{치치 Planeta}]<br>김분내[+[치지직:57aeb13825bf7d402273ecfa936356e4]{카토kato}] (9월 14일 새벽 수습기사에서 진급)<br>베이비[+[치지직:5786141997728cc2fcd660a15ef5f3af]{호시에 제로}] (9월 14일 새벽 수습기사에서 진급){% endcapture %}
-{% include wiki-template.html name="공무직명단" department="교통정비공사" rank_1=service_rank_1 rank_3=service_rank_3 rank_4=service_rank_4 rank_5=service_rank_5 %}
+{% capture service_roster %}
+| 직책 | 소속 인원 |
+| :--- | :--- |
+| 사장 | 황인정[+너불] |
+| 실장 | — |
+| 고위기사 | 김웅[+[치지직:17f0cfcba4ff608de5eabb5110d134d0]{김뿡}] (9월 14일 새벽 수습기사에서 폭풍진급) |
+| 모범기사 | 세콩[+가이드] (9월 14일 새벽 일반기사에서 진급)<br>정다정[+[치지직:41d1490bd67b3818d7dc53427a4d6cea]{앵보}] (9월 14일 새벽 수습기사에서 진급)<br>추학한[+[치지직:2d4aa2f79b0a397d032c479ef1b37a67]{후추}] (9월 14일 새벽 수습기사에서 진급) |
+| 일반기사 | 종조이[+달콤레나 씨] (9월 14일 새벽 수습기사에서 진급)<br>하진혁[+바테바테] (9월 14일 새벽 수습기사에서 진급)<br>좋마담[+아로AURO] (9월 14일 새벽 수습기사에서 진급)<br>채재희[+[치지직:0e604eba7206f04b1e5f15e0a1cb2616]{채현찌}] (9월 14일 새벽 수습기사에서 진급)<br>도미나[+[치지직:d5e2e0c14dcca4c4b10c7c9633022f52]{치치 Planeta}]<br>김분내[+[치지직:57aeb13825bf7d402273ecfa936356e4]{카토kato}] (9월 14일 새벽 수습기사에서 진급)<br>베이비[+[치지직:5786141997728cc2fcd660a15ef5f3af]{호시에 제로}] (9월 14일 새벽 수습기사에서 진급) |
+| 수습기사 | — |
+{: .wiki-service-table .wiki-service-transport }
+{% endcapture %}
+{% include wiki-template.html name="공무직명단" title="교통정비공사" members="11명 + 가이드·운영자 1명 (총 12명)" body=service_roster %}
 
 - 2026년 09월 14일 서버 종료 직전 황인정[+너불]이 성과를 확인하여 진급이 이루어졌다. 진급 누락과 티키타카가 있었으나 최종적으로 등급이 재조정되며 서버가 종료되었다.
 
