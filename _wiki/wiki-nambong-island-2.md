@@ -138,10 +138,10 @@ last_modified_at: 2026-09-14
 2026년 09월 14일 서버 오픈 시점 교통정비공사의 인원은 전체 인원 209명 중에서 총 11명이다. (가이드 포함 12명)
 
 {% capture service_rank_1 %}황인정[+너불]{% endcapture %}
-{% capture service_rank_3 %}김웅[+[치지직:17f0cfcba4ff608de5eabb5110d134d0]{김뿡}] (9월 14일 새벽 수습기사에서 폭풍진급)
-{% capture service_rank_4 %}세콩[+가이드] (9월 14일 새벽 일반기사에서 진급)<br />정다정[+[치지직:41d1490bd67b3818d7dc53427a4d6cea]{앵보}] (9월 14일 새벽 수습기사에서 진급)<br>추학한[+[치지직:2d4aa2f79b0a397d032c479ef1b37a67]{후추}] (9월 14일 새벽 수습기사에서 진급)
+{% capture service_rank_3 %}김웅[+[치지직:17f0cfcba4ff608de5eabb5110d134d0]{김뿡}] (9월 14일 새벽 수습기사에서 폭풍진급){% endcapture %}
+{% capture service_rank_4 %}세콩[+가이드] (9월 14일 새벽 일반기사에서 진급)<br />정다정[+[치지직:41d1490bd67b3818d7dc53427a4d6cea]{앵보}] (9월 14일 새벽 수습기사에서 진급)<br>추학한[+[치지직:2d4aa2f79b0a397d032c479ef1b37a67]{후추}] (9월 14일 새벽 수습기사에서 진급){% endcapture %}
 {% capture service_rank_5 %}종조이[+달콤레나 씨] (9월 14일 새벽 수습기사에서 진급)<br>하진혁[+바테바테] (9월 14일 새벽 수습기사에서 진급)<br>좋마담[+아로AURO] (9월 14일 새벽 수습기사에서 진급)<br><br>채재희[+[치지직:0e604eba7206f04b1e5f15e0a1cb2616]{채현찌}] (9월 14일 새벽 수습기사에서 진급)<br>도미나[+[치지직:d5e2e0c14dcca4c4b10c7c9633022f52]{치치 Planeta}]<br>김분내[+[치지직:57aeb13825bf7d402273ecfa936356e4]{카토kato}] (9월 14일 새벽 수습기사에서 진급)<br>베이비[+[치지직:5786141997728cc2fcd660a15ef5f3af]{호시에 제로}] (9월 14일 새벽 수습기사에서 진급){% endcapture %}
-{% include wiki-template.html name="공무직명단" department="교통정비공사" rank_1=service_rank_1 rank_6=service_rank_6 %}
+{% include wiki-template.html name="공무직명단" department="교통정비공사" rank_1=service_rank_1 rank_3=service_rank_3 rank_4=service_rank_4 rank_5=service_rank_5 %}
 
 - 2026년 09월 14일 서버 종료 직전 황인정[+너불]이 성과를 확인하여 진급이 이루어졌다. 진급 누락과 티키타카가 있었으나 최종적으로 등급이 재조정되며 서버가 종료되었다.
 
