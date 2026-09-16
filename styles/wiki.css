@@ -34,6 +34,28 @@
   --wiki-rp-background: color-mix(in srgb, var(--color-text-muted) 18%, var(--color-background-soft));
 }
 .wiki-article .post-content { color: var(--wiki-body-text); }
+/* Fit tables to the reading area instead of sizing them to unwrapped text. */
+.wiki-article .post-content table:not(.footnotes table) {
+  display: table;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  table-layout: auto;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+.wiki-article .post-content :is(th, td) { padding: 0.45rem 0.55rem; }
+.wiki-article .post-content table :is(p, li) { font-size: inherit; line-height: inherit; }
+.wiki-article .post-content table p { margin-block: 0 0.5em; }
+.wiki-article .post-content table p:last-child { margin-bottom: 0; }
+.wiki-article .post-content table tbody tr:nth-child(even) { background: var(--color-background-soft); }
+.wiki-article .post-content .wiki-heading-content > :is(table, .table-wrapper) { margin-inline-start: 0; }
+@media (max-width: 700px) {
+  .wiki-article .post-content table:not(.footnotes table) { font-size: 0.8125rem; }
+  .wiki-article .post-content :is(th, td) { padding: 0.35rem 0.3rem; }
+}
 .wiki-article .post-content :is(p, li, blockquote, td, figcaption) { color: var(--wiki-body-text); }
 .wiki-article a,
 .wiki-article a:hover,
@@ -196,7 +218,7 @@
   .wiki-directory-tools, .wiki-section-copy, .wiki-copy-notice, .wiki-copy-dialog { display: none !important; }
 }
 
-.wiki-article .wiki-organization .wiki-service-table { display: table; width: 100%; min-width: 38rem; table-layout: auto; border-top: 3px solid var(--service-color, #7663a8); }
+.wiki-article .wiki-organization .wiki-service-table { display: table; width: 100%; min-width: 0; table-layout: auto; border-top: 3px solid var(--service-color, #7663a8); }
 .wiki-service-city { --service-color: #7663a8; }
 .wiki-find { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin-block: .8rem; }
 .wiki-find input { flex: 1 1 13rem; min-width: 0; padding: .7rem; border: 1px solid var(--color-text-secondary); border-radius: .5rem; color: inherit; background: var(--color-surface, transparent); }
@@ -215,8 +237,7 @@ mark.wiki-find-current { background: #ffad32; outline: 2px solid #885300; }
 .wiki-grade-1 { color: #a97513; fill: #ffe29a; }
 .wiki-grade-2 { color: #68778a; fill: #e0e5eb; }
 .wiki-grade-3 { color: #a46045; fill: #e1b09b; }
-.wiki-article .wiki-organization .wiki-expanded-table { min-width: 65rem; }
-.wiki-expanded-table th, .wiki-expanded-table td { min-width: 7rem; }
+.wiki-article .wiki-organization .wiki-expanded-table { min-width: 0; }
 @media print { .wiki-find { display: none; } .wiki-sort::after { display: none; } }
 .wiki-service-police { --service-color: #3675b5; }
 .wiki-service-hospital { --service-color: #b84e66; }
@@ -232,21 +253,31 @@ mark.wiki-find-current { background: #ffad32; outline: 2px solid #885300; }
 .wiki-article .wiki-service-table thead th { background: var(--service-color); color: #fff; }
 .wiki-article .wiki-service-table thead tr:last-child th:first-child,
 .wiki-article .wiki-service-table .wiki-org-rank { width: 6.5em; }
-.wiki-article .wiki-service-table td { overflow-wrap: anywhere; line-height: 2.2; }
+.wiki-article .wiki-service-table td { overflow-wrap: anywhere; line-height: 1.65; }
 .wiki-article .wiki-service-table .wiki-org-rank { background: color-mix(in srgb, var(--service-color) 14%, transparent); font-weight: 600; text-align: center; vertical-align: top; }
 .wiki-org-count { font-size: 0.85em; font-weight: 400; }
 .wiki-article .wiki-service-table .wiki-org-members { width: 44%; }
-.wiki-article .wiki-service-table .wiki-org-history { font-size: 0.9em; line-height: 1.8; vertical-align: top; }
-.wiki-article .wiki-service-table .wiki-org-title { padding: 1rem; background: color-mix(in srgb, var(--service-color) 12%, transparent); }
-.wiki-article .wiki-service-table .wiki-org-icon { display: inline-block; width: 40px; height: 40px; margin: 0 0.6rem 0 0; vertical-align: middle; border: 0; border-radius: 0; }
-.wiki-org-name { font-size: 1.2rem; font-weight: 800; vertical-align: middle; }
-.wiki-org-meta { display: block; font-size: 0.85rem; font-weight: 400; }
+.wiki-article .wiki-service-table .wiki-org-history { font-size: 1em; line-height: 1.55; vertical-align: top; }
+.wiki-article .wiki-service-table .wiki-org-title { padding: 0.6em; background: color-mix(in srgb, var(--service-color) 12%, transparent); }
+.wiki-article .wiki-service-table .wiki-org-icon { display: inline-block; width: 2em; height: 2em; margin: 0 0.5em 0 0; vertical-align: middle; border: 0; border-radius: 0; }
+.wiki-org-name { font-size: 1.15em; font-weight: 800; vertical-align: middle; }
+.wiki-org-meta { display: block; font-size: 1em; font-weight: 400; }
 .wiki-article .wiki-service-table tfoot td { text-align: center; font-weight: 700; border-top: 2px solid var(--service-color); }
-.wiki-article .wiki-organization .wiki-citizen-table { min-width: 30rem; }
-.wiki-article .wiki-citizen-table .wiki-citizen-group-title { background: color-mix(in srgb, var(--service-color) 18%, transparent); font-size: 0.9rem; }
+.wiki-article .wiki-organization .wiki-citizen-table { min-width: 0; }
+.wiki-article .wiki-citizen-table .wiki-citizen-group-title { background: color-mix(in srgb, var(--service-color) 18%, transparent); font-size: 1em; }
 .wiki-article .wiki-citizen-table .wiki-citizen-name { width: 25%; font-weight: 600; }
 .wiki-article .wiki-citizen-table .wiki-citizen-streamer { width: 40%; }
 .wiki-article .wiki-citizen-table tbody td { line-height: 1.65; }
+/* Expanded rosters have six columns; the three-column rank width does not apply. */
+.wiki-article .wiki-expanded-table thead tr:last-child th:first-child { width: auto; }
+.wiki-article .post-content table .wiki-sort { padding-inline: 0; overflow-wrap: anywhere; }
+.wiki-article .post-content table a.platform-channel img { width: 1.25em; height: 1.25em; }
+@media (max-width: 700px) {
+  .wiki-article .post-content .wiki-organization { margin-inline: 0; padding: 0.25rem; }
+  .wiki-article .post-content table.wiki-expanded-table:not(.footnotes table) { font-size: 0.75rem; }
+  .wiki-article .post-content .wiki-expanded-table :is(th, td) { padding: 0.35rem 0.2rem; }
+  .wiki-article .wiki-expanded-table thead tr:last-child th:first-child { width: 3.5em; }
+}
 @media print {
   .wiki-organization { overflow: visible; }
   .wiki-article .wiki-organization .wiki-service-table { min-width: 0; }
