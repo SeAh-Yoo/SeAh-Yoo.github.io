@@ -1,6 +1,7 @@
 # Wiki-only Markdown rendering. Keep the normal post converter unchanged.
 require_relative 'extended_headings'
 require_relative 'wiki_organizations'
+require_relative 'wiki_citizens'
 require 'cgi'
 
 module WikiSections
@@ -287,6 +288,7 @@ module Kramdown
 
       def parse
         super
+        WikiCitizens.transform(@root)
         WikiOrganizations.transform(@root)
         counters = Array.new(7, 0)
         previous = 1

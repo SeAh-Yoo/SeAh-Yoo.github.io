@@ -65,6 +65,26 @@ def source_roster(text, section)
   abort "위키에서 #{section} 구간을 찾을 수 없습니다." unless start && finish
 
   rows = table_rows(text[start...finish])
+  if text.include?('.wiki-citizen-source')
+    # The two-column rosters now refer to the document's ten-column source.
+    registry = {}
+    text.each_line do |line|
+      next unless line.start_with?('|')
+      cells = line.strip.split('|', -1)[1...-1]&.map(&:strip)
+      next unless cells&.length == 10 && %w[1등급 2등급 3등급].include?(cells[0])
+      streamer = cells[1].scan(/\{([^{}]*)\}/).flatten.last || cells[1]
+      rp = placeholder?(cells[2]) ? '?' : normalize(cells[2])
+      key = rp == '?' ? "@#{streamer}" : rp
+      registry[normalize(key).delete(' ')] = [rp, normalize(streamer)]
+    end
+    return text[start...finish].each_line.filter_map do |line|
+      next unless line.start_with?('|')
+      cells = line.strip.split('|', -1)[1...-1]&.map(&:strip)
+      next unless cells&.length == 2
+      next if cells[0] == 'RP 이름' || cells[0].match?(/\A:?-+\z/)
+      registry.fetch(normalize(cells[0]).delete(' ')) { abort "전체 시민에 없는 이름: #{cells[0]}" }
+    end
+  end
   if section == 'citizen'
     rows.map do |rp, streamer, _history|
       rp = placeholder?(rp) ? '?' : normalize(rp)

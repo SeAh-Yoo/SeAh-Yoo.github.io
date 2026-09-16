@@ -198,6 +198,26 @@
 
 .wiki-article .wiki-organization .wiki-service-table { display: table; width: 100%; min-width: 38rem; table-layout: auto; border-top: 3px solid var(--service-color, #7663a8); }
 .wiki-service-city { --service-color: #7663a8; }
+.wiki-find { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin-block: .8rem; }
+.wiki-find input { flex: 1 1 13rem; min-width: 0; padding: .7rem; border: 1px solid var(--color-text-secondary); border-radius: .5rem; color: inherit; background: var(--color-surface, transparent); }
+.wiki-find button { min-height: 44px; padding: .5rem .8rem; border: 1px solid currentColor; border-radius: .4rem; color: inherit; background: transparent; cursor: pointer; }
+.wiki-find button:disabled { opacity: .45; cursor: default; }
+.wiki-find output { font-size: .85rem; }
+.wiki-find-active { position: sticky; top: var(--wiki-find-top, .5rem); z-index: 20; padding: .5rem; border-radius: .5rem; background: var(--color-surface); box-shadow: 0 2px 12px #0002; }
+.wiki-find input:focus-visible, .wiki-find button:focus-visible, .wiki-sort:focus-visible { outline: 3px solid var(--color-accent-secondary); outline-offset: 2px; }
+mark[data-wiki-find-hit] { background: #ffe599; color: #242015; scroll-margin-block: 7rem; }
+mark.wiki-find-current { background: #ffad32; outline: 2px solid #885300; }
+.wiki-sort { width: 100%; min-height: 44px; text-align: inherit; font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
+[aria-sort="none"] .wiki-sort::after { content: ' ↕'; }
+[aria-sort="ascending"] .wiki-sort::after { content: ' ↑'; }
+[aria-sort="descending"] .wiki-sort::after { content: ' ↓'; }
+.wiki-grade-icon { width: 1.5em; height: 1.5em; margin-right: .3em; vertical-align: middle; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.wiki-grade-1 { color: #a97513; fill: #ffe29a; }
+.wiki-grade-2 { color: #68778a; fill: #e0e5eb; }
+.wiki-grade-3 { color: #a46045; fill: #e1b09b; }
+.wiki-article .wiki-organization .wiki-expanded-table { min-width: 65rem; }
+.wiki-expanded-table th, .wiki-expanded-table td { min-width: 7rem; }
+@media print { .wiki-find { display: none; } .wiki-sort::after { display: none; } }
 .wiki-service-police { --service-color: #3675b5; }
 .wiki-service-hospital { --service-color: #b84e66; }
 .wiki-service-broadcast { --service-color: #358478; }

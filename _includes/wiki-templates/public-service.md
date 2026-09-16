@@ -1,1 +1,1 @@
-{% include wiki-templates/organization.md args=include.args %}
+{% include wiki-templates/organization.md args=include.args layout="service" %}

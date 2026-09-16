@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<title>Wiki find regression tests</title>
+<body data-wiki-document>
+<article><div class="post-content">
+<h2 id="outer" data-wiki-depth="1" data-wiki-fold>접힌 부모</h2>
+<h3 id="inner" data-wiki-depth="2" data-wiki-fold>접힌 자식</h3>
+<p>검색대상 검색대상 <strong>굵은</strong> 링크 <a href="#outer">문장</a> [a+b]</p>
+<details><summary>별도 접기</summary><p>세부검색</p></details>
+<h2 id="table" data-wiki-depth="1">표</h2>
+<table aria-label="검증 표"><thead><tr><th>이름</th><th>등급</th></tr></thead>
+<tbody><tr><td>하나</td><td>2</td></tr><tr><td>가나</td><td>10</td></tr><tr><td>나나</td><td>1</td></tr></tbody>
+<tfoot><tr><td colspan="2">3명</td></tr></tfoot></table>
+</div></article>
+<pre id="results" role="status">Running…</pre>
+<script src="/scripts/wiki-sections.js"></script>
+<script src="/scripts/wiki-find.js"></script>
+<script>
+(async () => {
+  const results = [];
+  const assert = (ok, name) => { if (!ok) throw new Error(name); results.push(`PASS: ${name}`); };
+  const forms = document.querySelectorAll('.wiki-find');
+  const input = forms[0].querySelector('input');
+  const body = document.querySelector('.post-content');
+  const search = async (value, field = input) => {
+    field.value = value;
+    field.dispatchEvent(new Event('input', { bubbles: true }));
+    await new Promise(resolve => setTimeout(resolve, 240));
+  };
+  const end = () => forms[0].querySelector('button:last-child').click();
+  const opened = () => body.querySelectorAll('.wiki-section-body:not([hidden])').length;
+  try {
+    await search('검색대상');
+    assert(forms[0].querySelector('output').textContent === '1 / 2개', 'all occurrences counted');
+    assert(opened() === 2, 'nested ancestors opened');
+    forms[0].querySelectorAll('button')[1].click();
+    assert(forms[0].querySelector('output').textContent === '2 / 2개', 'next result');
+    forms[0].querySelectorAll('button')[1].click();
+    assert(forms[0].querySelector('output').textContent === '1 / 2개', 'wrap to first result');
+    end();
+    assert(opened() === 0 && !document.querySelector('mark'), 'original folds restored and marks removed');
+    await search('굵은 링크 문장');
+    assert(forms[0].querySelector('output').textContent === '1 / 1개', 'match across inline formatting and links');
+    end();
+    assert(document.querySelector('a[href="#outer"]').textContent === '문장', 'link retained after cleanup');
+    await search('[a+b]');
+    assert(forms[0].querySelector('output').textContent === '1 / 1개', 'regular expression characters are literal');
+    await search('없는문자열');
+    assert(forms[0].querySelector('output').textContent === '0 / 0개', 'no results');
+    await search('');
+    assert(opened() === 0, 'clearing input restores folds');
+    document.querySelector('#outer .wiki-section-toggle').click();
+    await search('검색대상');
+    end();
+    assert(opened() === 1, 'user-opened parent stays open');
+    await search('검색대상');
+    document.querySelector('#inner .wiki-section-toggle').click();
+    end();
+    assert(opened() === 1, 'manual fold during search is retained');
+    await search('세부검색');
+    assert(document.querySelector('details').open, 'native details revealed');
+    await search('하나', forms[1].querySelector('input'));
+    assert(forms[1].querySelector('output').textContent === '1 / 1개', 'table-only search');
+    forms[1].querySelector('button:last-child').click();
+    assert(!document.querySelector('details').open && opened() === 1, 'switching scope retains original fold snapshot');
+    const grade = document.querySelectorAll('table .wiki-sort')[1];
+    grade.click();
+    assert([...document.querySelector('tbody').rows].map(r => r.cells[1].textContent).join(',') === '1,2,10', 'numeric ascending sorting');
+    grade.click();
+    assert([...document.querySelector('tbody').rows].map(r => r.cells[1].textContent).join(',') === '10,2,1', 'numeric descending sorting');
+    assert(document.querySelector('tfoot').textContent === '3명', 'footer stays fixed');
+    document.querySelector('#results').textContent = results.join('\n') + '\nALL PASSED';
+  } catch (error) {
+    document.querySelector('#results').textContent = results.join('\n') + '\nFAIL: ' + error.message;
+  }
+})();
+</script>
+</body></html>

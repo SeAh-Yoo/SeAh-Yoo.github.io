@@ -29,6 +29,8 @@ defaults:
 # Development checks are not published as site assets.
 exclude:
   - scripts/test-wiki-organizations.rb
+  - scripts/test-wiki-citizens.rb
+  - scripts/test-wiki-find.html
   - scripts/test-extended-headings.rb
   - scripts/test-wiki-sections.rb
   - scripts/test-wiki-sections.py

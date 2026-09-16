@@ -4,6 +4,7 @@
   const headings = Array.from(root.querySelectorAll('[data-wiki-depth]'));
   const sections = new Map();
   const byHeading = new Map();
+  let searchState;
   const copy = (key, fallback) => window.siteIdentity?.get(`wiki.${key}`, fallback) || fallback;
   const book = (open) => `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${open
     ? '<path d="M12 5c-3-2-6-2-10-1v15c4-1 7-1 10 1 3-2 6-2 10-1V4c-4-1-7-1-10 1Zm0 0v15"/>'
@@ -93,7 +94,10 @@
     byHeading.set(heading, section);
     heading.append(button);
     setOpen(section, false);
-    button.addEventListener('click', () => setOpen(section, body.hasAttribute('hidden')));
+    button.addEventListener('click', () => {
+      setOpen(section, body.hasAttribute('hidden'));
+      if (searchState) searchState.set(section, isOpen(section));
+    });
     body.addEventListener('beforematch', () => reveal(body));
   });
 
@@ -186,6 +190,9 @@
     sections.set(details, section);
     update(section);
     details.addEventListener('toggle', () => update(section));
+    summary.addEventListener('click', () => {
+      if (searchState) searchState.set(section, !details.open);
+    });
   });
 
   function reveal(target) {
@@ -195,6 +202,14 @@
     }
     if (byHeading.has(target)) setOpen(byHeading.get(target), true);
   }
+  root.addEventListener('wiki-find-start', () => {
+    if (!searchState) searchState = new Map(Array.from(sections.values(), section => [section, isOpen(section)]));
+  });
+  root.addEventListener('wiki-find-reveal', event => reveal(event.detail));
+  root.addEventListener('wiki-find-end', () => {
+    searchState?.forEach((open, section) => setOpen(section, open));
+    searchState = null;
+  });
   const hashTarget = (hash) => {
     try { return hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null; }
     catch { return null; }
