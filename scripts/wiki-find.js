@@ -43,7 +43,7 @@
     current = (current + direction + hits.length) % hits.length;
     const hit = hits[current];
     root.querySelectorAll(`mark[data-wiki-find-index="${current}"]`).forEach(mark => mark.classList.add('wiki-find-current'));
-    emit('reveal', hit);
+    emit('reveal', { target: hit, scope: active.scope });
     // Let newly revealed until-found sections acquire their full layout first.
     requestAnimationFrame(() => {
       if (!active || hits[current] !== hit) return;
@@ -59,6 +59,9 @@
     const query = control.input.value.trim();
     if (active !== control) {
       if (active) {
+        // Restore the previous search's temporary folds before changing scope.
+        // Keep the destination table's ancestors open so its controls stay usable.
+        emit('end', control.scope === root ? null : control.scope);
         active.input.value = '';
         active.form.classList.remove('wiki-find-active');
         active.status.textContent = '검색어를 입력하세요';
@@ -70,7 +73,7 @@
     positionToolbar();
     clearMarks();
     if (!query) { emit('end'); status(); return; }
-    emit('start');
+    emit('start', control.scope);
     // Build no per-table index on load. Walk only the requested scope on input.
     const walker = document.createTreeWalker(control.scope, NodeFilter.SHOW_TEXT, {
       acceptNode(node) {
@@ -175,7 +178,7 @@
   };
   addControl(root, root, '페이지 내 검색');
   root.querySelectorAll('table').forEach(table => {
-    addControl(table.tBodies[0]?.parentElement || table, table.closest('.wiki-organization') || table, `${table.getAttribute('aria-label') || '표'} 내 검색`);
+    addControl(table, table.closest('.wiki-organization') || table, `${table.getAttribute('aria-label') || '표'} 내 검색`);
   });
   const collator = new Intl.Collator('ko', { numeric: true, sensitivity: 'base' });
   root.querySelectorAll('table').forEach(table => {

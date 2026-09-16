@@ -62,8 +62,12 @@
     assert(document.querySelector('details').open, 'native details revealed');
     await search('하나', forms[1].querySelector('input'));
     assert(forms[1].querySelector('output').textContent === '1 / 1개', 'table-only search');
+    assert(!document.querySelector('details').open && opened() === 1, 'table search immediately restores unrelated global-search folds');
+    await search('검색대상', forms[1].querySelector('input'));
+    assert(forms[1].querySelector('output').textContent === '0 / 0개' && opened() === 1, 'table search cannot find or reveal text outside its table');
+    document.querySelector('#inner .wiki-section-toggle').click();
     forms[1].querySelector('button:last-child').click();
-    assert(!document.querySelector('details').open && opened() === 1, 'switching scope retains original fold snapshot');
+    assert(!document.querySelector('details').open && opened() === 2, 'ending table search preserves manual changes outside the table');
     const grade = document.querySelectorAll('table .wiki-sort')[1];
     grade.click();
     assert([...document.querySelector('tbody').rows].map(r => r.cells[1].textContent).join(',') === '1,2,10', 'numeric ascending sorting');

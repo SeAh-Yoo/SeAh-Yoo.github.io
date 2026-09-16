@@ -195,19 +195,24 @@
     });
   });
 
-  function reveal(target) {
-    for (let node = target; node && node !== root; node = node.parentElement) {
+  function reveal(target, boundary = root) {
+    for (let node = target; node && node !== boundary; node = node.parentElement) {
       if (sections.has(node)) setOpen(sections.get(node), true);
       if (node.matches('details')) node.open = true;
     }
     if (byHeading.has(target)) setOpen(byHeading.get(target), true);
   }
-  root.addEventListener('wiki-find-start', () => {
-    if (!searchState) searchState = new Map(Array.from(sections.values(), section => [section, isOpen(section)]));
+  root.addEventListener('wiki-find-start', event => {
+    const scope = event.detail || root;
+    if (!searchState) searchState = new Map(Array.from(sections.values())
+      .filter(section => scope.contains(section.body))
+      .map(section => [section, isOpen(section)]));
   });
-  root.addEventListener('wiki-find-reveal', event => reveal(event.detail));
-  root.addEventListener('wiki-find-end', () => {
-    searchState?.forEach((open, section) => setOpen(section, open));
+  root.addEventListener('wiki-find-reveal', event => reveal(event.detail.target, event.detail.scope));
+  root.addEventListener('wiki-find-end', event => {
+    searchState?.forEach((open, section) => {
+      if (!event.detail || !section.body.contains(event.detail)) setOpen(section, open);
+    });
     searchState = null;
   });
   const hashTarget = (hash) => {
