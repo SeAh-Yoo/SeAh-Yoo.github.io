@@ -15,8 +15,8 @@
   --wiki-width-promotion: calc(var(--wiki-width-streamer) * 1.2); /* 진급 기록 */
   --wiki-width-reputation: var(--wiki-width-promotion); /* 조직 내 평판·역할 */
   --wiki-width-notes: 5.8;         /* 특이사항 */
-  --wiki-table-font-size: 0.875rem; /* 표 기본 글자 크기 */
-  --wiki-table-detail-scale: 0.88; /* 채널·요약·기록 본문 글자 배율 */
+  --wiki-table-font-size: 1.1rem; /* 표 기본 글자 크기 */
+  --wiki-table-detail-scale: 0.95; /* 채널·요약·기록 본문 글자 배율 */
 }
 .wiki-index { margin-top: 1rem; padding: clamp(1.25rem, 4vw, 3rem); }
 .wiki-alphabet { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border-subtle); }
