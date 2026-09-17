@@ -292,3 +292,72 @@ mark.wiki-find-current { background: #ffad32; outline: 2px solid #885300; }
   .wiki-toc-action { display: none; }
   .wiki-page-toc > summary { list-style: none; }
 }
+
+/* Registry rosters: stable column proportions, independent of cell contents. */
+body:has([data-wiki-fixed-columns]) .shell { width: min(100%, 120rem); }
+.wiki-article:has([data-wiki-fixed-columns]) { padding-inline: 1rem; }
+.wiki-article:has([data-wiki-fixed-columns]) .post-content { width: 100%; }
+.wiki-article .post-content .wiki-template:has([data-wiki-fixed-columns]) { margin-inline: 0; padding: 0.35rem; }
+.wiki-article .wiki-heading-content:has(> .wiki-template [data-wiki-fixed-columns]),
+.wiki-article .wiki-heading-content:has(> .wiki-organization [data-wiki-fixed-columns]) { margin-inline-start: 0; }
+.wiki-organization:has([data-wiki-fixed-columns]) { container-type: inline-size; }
+.wiki-article .post-content table[data-wiki-fixed-columns]:not(.footnotes table) {
+  table-layout: fixed;
+  width: 100%;
+  min-width: 0;
+  font-size: min(0.875rem, calc(100cqi / var(--wiki-table-units)));
+  line-height: 1.5;
+}
+.wiki-article .post-content table[data-wiki-fixed-columns] :is(th, td) {
+  padding: 0.4em 0.3em;
+  line-height: 1.5;
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+.wiki-article .post-content table[data-wiki-fixed-columns] td:is(.wiki-col-streamer, .wiki-col-concept, .wiki-col-promotion, .wiki-col-reputation) {
+  font-size: 0.88em;
+  line-height: 1.45;
+}
+.wiki-article .post-content table[data-wiki-fixed-columns] .wiki-sort { min-height: 44px; padding: 0; line-height: 1.4; }
+.wiki-article .post-content table[data-wiki-fixed-columns] .wiki-grade-icon { width: 1.2em; height: 1.2em; margin-right: 0.2em; }
+.wiki-article .post-content .wiki-affiliation-icon {
+  display: inline-block; width: 1.25em; height: 1.25em; margin: 0 0.25em 0 0;
+  border: 0; border-radius: 0; background: transparent; vertical-align: -0.2em;
+}
+.wiki-affiliation { color: var(--wiki-body-text); }
+.wiki-article .post-content table[data-wiki-fixed-columns] tbody tr:hover,
+.wiki-article .post-content table[data-wiki-fixed-columns] tbody tr:focus-within { background: var(--color-accent-soft); }
+/* Give narrow desktop windows room for the nine-column registry. */
+@media (min-width: 901px) and (max-width: 1399px) {
+  body:has([data-wiki-fixed-columns]) .shell { display: block; }
+  body:has([data-wiki-fixed-columns]) .sidebar {
+    position: static; display: grid; grid-template-columns: 14rem minmax(0, 1fr);
+    gap: 1.5rem; max-height: none; margin-bottom: 1rem;
+  }
+  body:has([data-wiki-fixed-columns]) .sidebar-collapse-inner { display: grid; grid-template-columns: minmax(0, 1fr) 13rem; column-gap: 1.5rem; }
+  body:has([data-wiki-fixed-columns]) .primary-nav { grid-row: 1 / 3; margin-top: 0; }
+  body:has([data-wiki-fixed-columns]) .primary-nav ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body:has([data-wiki-fixed-columns]) .theme-switcher { margin-top: 0; }
+  body:has([data-wiki-fixed-columns]) .sidebar-license { grid-column: 2; }
+}
+@media (min-width: 901px) {
+  .wiki-organization:has([data-wiki-fixed-columns]) { overflow: visible; }
+}
+@media (max-width: 900px) {
+  .wiki-organization:has([data-wiki-fixed-columns]) { overflow-x: auto; overscroll-behavior-inline: contain; }
+  .wiki-article .post-content table[data-wiki-fixed-columns]:not(.footnotes table) {
+    font-size: 0.875rem;
+    width: calc(var(--wiki-table-units) * 1em);
+    min-width: 100%;
+    max-width: none;
+  }
+  .wiki-article .post-content table[data-wiki-fixed-columns] .wiki-col-rp:not(col) {
+    position: sticky; left: 0; z-index: 1; background: var(--color-surface-elevated);
+  }
+  .wiki-article .post-content table[data-wiki-fixed-columns] thead th.wiki-col-rp { background: var(--service-color, #547c80); }
+}
+@media print {
+  .wiki-organization:has([data-wiki-fixed-columns]) { overflow: visible; }
+  .wiki-article .post-content table[data-wiki-fixed-columns]:not(.footnotes table) { width: 100%; min-width: 0; font-size: min(0.875rem, calc(100cqi / var(--wiki-table-units))); }
+  .wiki-article .post-content table[data-wiki-fixed-columns] :is(th, td) { position: static !important; }
+}

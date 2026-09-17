@@ -2,6 +2,43 @@
 module WikiCitizens
   extend self
 
+  COLUMNS = {
+    '직책' => ['role', 5.8], 'RP 이름' => ['rp', 8.8],
+    '방송인·채널' => ['streamer', 9.6], 'RP·컨셉 요약' => ['concept', 9.6],
+    '시민 등급' => ['grade', 6.2], '소속' => ['affiliation', 9.2],
+    '진급 기록' => ['promotion', 11.52], '조직 내 평판·역할' => ['reputation', 11.52],
+    '특이사항' => ['notes', 5.8]
+  }.freeze
+  AFFILIATIONS = {
+    /경찰/ => 'police', /EMS|병원|의료/i => 'hospital', /시청/ => 'city',
+    /방송/ => 'broadcast', /교통|정비/ => 'transport', /갱단/ => 'gang',
+    /정당/ => 'party', /무소속|시민/ => 'citizen', /사업|회사/ => 'business'
+  }.freeze
+
+  def append_note(notes, value)
+    return if WikiOrganizations::EMPTY.include?(value) || plain(notes).include?(value)
+    notes.children = [] if WikiOrganizations::EMPTY.include?(plain(notes))
+    notes.children << WikiOrganizations.element(:br) unless notes.children.empty?
+    notes.children << WikiOrganizations.text(value)
+  end
+
+  def affiliation_icons(c, baseurl)
+    parts = [[]]
+    c.children.each { |child| WikiOrganizations.break?(child) ? parts << [] : parts.last << child }
+    c.children = parts.flat_map.with_index do |nodes, index|
+      label = nodes.map { |n| plain(n) }.join
+      next nodes if WikiOrganizations::EMPTY.include?(label)
+      kind = AFFILIATIONS.find { |pattern, _| pattern.match?(label) }&.last || 'organization'
+      icon = Kramdown::Element.new(:img, nil, {
+        'src' => "#{baseurl}/assets/icons/organizations/#{kind}.svg", 'alt' => '',
+        'class' => 'wiki-affiliation-icon', 'width' => '16', 'height' => '16', 'aria-hidden' => 'true'
+      })
+      badge = Kramdown::Element.new(:html_element, 'span', { 'class' => "wiki-affiliation wiki-service-#{kind}" }, category: :span)
+      badge.children = [icon] + nodes
+      index.zero? ? [badge] : [WikiOrganizations.element(:br), badge]
+    end
+  end
+
   def walk(node, &block)
     yield node
     node.children.each { |child| walk(child, &block) }
@@ -41,8 +78,14 @@ module WikiCitizens
     source = sources.first
     registry = {}
     rows(source).each do |row|
-      raise ArgumentError, '전체 시민 표는 10열이어야 합니다.' unless row.children.length == 10
+      raise ArgumentError, '전체 시민 표는 9열이어야 합니다.' unless [9, 10].include?(row.children.length)
       grade, streamer, rp = row.children
+      notes = row.children[5]
+      status = row.children[9] && plain(row.children[9])
+      append_note(notes, status) if status && status != '참여 중'
+      append_note(notes, '현재 미접속/RP 이름 없음') if WikiOrganizations::EMPTY.include?(plain(rp))
+      row.attr['data-guide'] = 'true' if %w[가이드 운영자].include?(plain(streamer))
+      row.attr['data-ended'] = 'true' if plain(notes).include?('참여 종료')
       raise ArgumentError, '시민 등급은 1등급, 2등급, 3등급 중 하나입니다.' unless %w[1등급 2등급 3등급].include?(plain(grade))
       id = key(WikiOrganizations::EMPTY.include?(plain(rp)) ? "@#{streamer_name(streamer)}" : plain(rp))
       raise ArgumentError, "전체 시민 중복: #{id}" if registry.key?(id)
@@ -66,7 +109,7 @@ module WikiCitizens
         raise ArgumentError, "#{title}: 공무직은 1등급이어야 합니다." if mode == 'service' && plain(grade) != '1등급'
         raise ArgumentError, "#{title}: 정식 갱단은 3등급이어야 합니다." if mode == 'gang' && plain(grade) != '3등급'
         combined = copy(notes)
-        unless WikiOrganizations::EMPTY.include?(plain(row.children[1]))
+        unless WikiOrganizations::EMPTY.include?(plain(row.children[1])) && row.children[1].children.none? { |n| n.type == :footnote }
           combined.children = [] if WikiOrganizations::EMPTY.include?(plain(combined))
           combined.children << WikiOrganizations.element(:br) unless combined.children.empty?
           combined.children.concat(copy(row.children[1]).children)
@@ -74,17 +117,17 @@ module WikiCitizens
         fields = if %w[service gang crew].include?(mode)
                    # Multiple offices are stored as organization: role lines in the source.
                    scoped = plain(role).include?(':') ? plain(role).split(';').find { |part| part.strip.start_with?("#{title}:") }&.split(':', 2)&.last&.strip : plain(role)
-                   [cell(scoped || '—'), copy(rp), copy(streamer), copy(promotion), copy(reputation), copy(concept), combined]
+                   [cell(scoped || '—'), copy(rp), copy(streamer), copy(concept), copy(promotion), copy(reputation), combined]
                  else
-                   [copy(rp), copy(streamer), copy(affiliation), copy(grade), copy(concept), combined]
+                   [copy(rp), copy(streamer), copy(concept), copy(grade), copy(affiliation), combined]
                  end
         result = WikiOrganizations.element(:tr, fields)
         result.attr['data-guide'] = 'true' if %w[가이드 운영자].include?(plain(streamer))
-        result.attr['data-ended'] = 'true' if plain(status) == '참여 종료'
+        result.attr['data-ended'] = 'true' if plain(combined).include?('참여 종료')
         result.attr['data-uncertain'] = 'true' if plain(combined).include?('멤버 미확정')
         result
       end
-      labels = %w[service gang crew].include?(mode) ? ['직책', 'RP 이름', '방송인·채널', '진급 기록', '조직 내 평판·역할', 'RP·컨셉 요약', '특이사항'] : ['RP 이름', '방송인·채널', '소속', '시민 등급', 'RP·컨셉 요약', '특이사항']
+      labels = %w[service gang crew].include?(mode) ? ['직책', 'RP 이름', '방송인·채널', 'RP·컨셉 요약', '진급 기록', '조직 내 평판·역할', '특이사항'] : ['RP 이름', '방송인·채널', 'RP·컨셉 요약', '시민 등급', '소속', '특이사항']
       table.children = [WikiOrganizations.element(:thead, [WikiOrganizations.element(:tr, labels.map { |label| cell(label) })]), WikiOrganizations.element(:tbody, output)]
       decorate(table, org.attr, output)
       org.attr['data-org-rendered'] = 'true'
@@ -92,6 +135,18 @@ module WikiCitizens
     # Source order is grade, streamer name, then RP name; browser sorting uses Korean collation.
     body = source.children.find { |n| n.type == :tbody }
     body.children.sort_by! { |r| [plain(r.children[0]), streamer_name(r.children[1]).downcase, plain(r.children[2])] }
+    body.children.each do |r|
+      r.children = [6, 2, 1, 4, 0, 3, 7, 8, 5].map { |index| r.children[index] }
+      role = r.children.first
+      if plain(role).include?(':')
+        role.attr['title'] = plain(role)
+        parts = plain(role).split(';').map { |part| part.split(':', 2).last.strip }
+        role.children = parts.flat_map.with_index do |part, index|
+          index.zero? ? [WikiOrganizations.text(part)] : [WikiOrganizations.element(:br), WikiOrganizations.text(part)]
+        end
+      end
+    end
+    source.children.first.children.first.children = COLUMNS.keys.map { |label| cell(label) }
     source_attrs = { 'data-org-title' => '전체 시민', 'data-org-icon' => 'citizen' }
     walk(root) do |node|
       source_attrs.merge!(node.attr) if node.children.include?(source)
@@ -104,6 +159,21 @@ module WikiCitizens
     table.attr['class'] = "#{table.attr['class']} wiki-service-table wiki-expanded-table wiki-service-#{attrs.fetch('data-org-icon', 'citizen')}"
     table.attr['data-wiki-sortable'] = ''
     table.attr['aria-label'] = attrs['data-org-title']
+    headers = table.children.first.children.first.children
+    columns = headers.map { |c| COLUMNS.fetch(plain(c)) }
+    total = columns.sum { |_, width| width }.round(2)
+    table.attr['style'] = "--wiki-table-units: #{total}"
+    table.attr['data-wiki-fixed-columns'] = ''
+    baseurl = attrs.fetch('data-org-baseurl', '').sub(%r{/\z}, '')
+    headers.each_with_index do |c, index|
+      name, width = columns[index]
+      c.attr['class'] = "wiki-col-#{name}"
+      c.attr['style'] = "width: #{(width / total * 100).round(6)}%"
+      entries.each do |row|
+        row.children[index].attr['class'] = "wiki-col-#{name}"
+        affiliation_icons(row.children[index], baseurl) if name == 'affiliation'
+      end
+    end
     table.children.first.children.first.children.each do |c|
       c.type = :html_element
       c.value = 'th'
@@ -120,8 +190,8 @@ module WikiCitizens
         c.children.unshift(icon)
       end
     end
-    guides = entries.count { |r| r.attr['data-guide'] == 'true' || (count == 10 && %w[가이드 운영자].include?(plain(r.children[1]))) }
-    ended = entries.count { |r| r.attr['data-ended'] == 'true' || (count == 10 && plain(r.children[9]) == '참여 종료') }
+    guides = entries.count { |r| r.attr['data-guide'] == 'true' }
+    ended = entries.count { |r| r.attr['data-ended'] == 'true' && r.attr['data-guide'] != 'true' }
     uncertain = entries.count { |r| r.attr['data-uncertain'] == 'true' }
     summary = "총 #{entries.length}명 (참여자 #{entries.length - guides - ended}명 · 가이드·운영자 #{guides}명"
     summary += " · 참여 종료 #{ended}명" if ended > 0
@@ -144,5 +214,12 @@ module WikiCitizens
     end
     table.children.first.children.unshift(WikiOrganizations.element(:tr, [heading]))
     table.children << WikiOrganizations.element(:tfoot, [WikiOrganizations.element(:tr, [WikiOrganizations.element(:td, [WikiOrganizations.text(summary)], 'colspan' => count.to_s)])])
+    group = Kramdown::Element.new(:html_element, 'colgroup', {}, category: :block)
+    columns.each do |name, width|
+      group.children << Kramdown::Element.new(:html_element, 'col', {
+        'class' => "wiki-col-#{name}", 'style' => "width: #{(width / total * 100).round(6)}%"
+      }, category: :block, is_closed: true)
+    end
+    table.children.unshift(group)
   end
 end

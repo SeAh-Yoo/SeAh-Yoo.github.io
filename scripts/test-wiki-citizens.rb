@@ -33,7 +33,7 @@ class WikiCitizensTest < Minitest::Test
     assert_equal 2, html.scan('기본 기록').length
     assert_equal 2, html.scan('설정').length
     assert_includes html, '지역 기록'
-    assert_includes html, '<th scope="col">방송인·채널</th>'
+    assert_match(/<th[^>]*scope="col"[^>]*>방송인·채널<\/th>/, html)
     assert_includes html, 'wiki-grade-1'
     assert_includes html, 'colspan="6"'
     assert_includes render(reference + "\n" + registry.gsub('설정', '새 설정')), '새 설정'
@@ -65,5 +65,29 @@ class WikiCitizensTest < Minitest::Test
     assert_includes html, '참여자 0명 · 가이드·운영자 1명 · 참여 종료 1명'
     assert_includes html, '멤버 미확정 1명 포함'
     assert_includes render(reference('citizen', '둘') + "\n" + source), '참여자 0명 · 가이드·운영자 0명 · 참여 종료 1명'
+  end
+
+  def test_column_order_notes_and_affiliation_icons
+    source = registry('| 2등급 | 방송인 | — | 경찰<br>무소속 | 설정 | 기존 기록 | — | — | — | 참여 종료 |')
+    html = render(reference('citizen', '@방송인') + "\n" + source)
+    assert_includes html, '현재 미접속/RP 이름 없음'
+    refute_includes html, '>참여 상태</th>'
+    refute_includes html, '참여 중'
+    assert_includes html, 'organizations/police.svg'
+    assert_includes html, 'organizations/citizen.svg'
+    assert_includes html, '기존 기록<br />참여 종료<br />현재 미접속/RP 이름 없음<br />지역 기록'
+    headers = html.scan(/<th[^>]*scope="col"[^>]*>(.*?)<\/th>/).flatten
+    assert_equal ['RP 이름', '방송인·채널', 'RP·컨셉 요약', '시민 등급', '소속', '특이사항'], headers.first(6)
+    assert_equal WikiCitizens::COLUMNS.keys, headers.last(9)
+    assert_equal 15, html.scan(/<col class=/).length
+    assert_in_delta WikiCitizens::COLUMNS['방송인·채널'][1] * 1.2, WikiCitizens::COLUMNS['진급 기록'][1]
+    assert_includes render(source.sub(' | 참여 종료 |', ' |').sub(' | 참여 상태 |', ' |').sub('| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |', '| --- | --- | --- | --- | --- | --- | --- | --- | --- |')), 'colspan="9"'
+    assert_includes render(reference.sub('data-org-title=', 'data-org-baseurl="/preview" data-org-title=') + "\n" + registry.gsub('기관 | 설정', '경찰 | 설정')), '/preview/assets/icons/organizations/police.svg'
+  end
+
+  def test_reference_can_contain_only_a_footnote
+    html = render(reference.sub('지역 기록', '[^note]') + "\n" + registry + "\n[^note]: 추천 이유\n")
+    assert_includes html, 'href="#fn:note"'
+    assert_includes html, '추천 이유'
   end
 end
