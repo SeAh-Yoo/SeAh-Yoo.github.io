@@ -13,7 +13,7 @@ module WikiCitizens
                         '진급 기록', '조직 내 평판·역할', '특이사항'].freeze
   AFFILIATIONS = {
     /경찰/ => 'police', /EMS|병원|의료/i => 'hospital', /시청/ => 'city',
-    /방송/ => 'broadcast', /교통|정비/ => 'transport', /갱단/ => 'gang',
+    /방송/ => 'broadcast', /교정국|교통|정비/ => 'transport', /갱|크루|조직/ => 'gang',
     /정당/ => 'party', /무소속|시민/ => 'citizen', /사업|회사/ => 'business'
   }.freeze
 
