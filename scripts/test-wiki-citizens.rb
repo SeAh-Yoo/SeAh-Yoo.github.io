@@ -78,7 +78,8 @@ class WikiCitizensTest < Minitest::Test
     assert_includes html, '기존 기록<br />참여 종료<br />현재 미접속/RP 이름 없음<br />지역 기록'
     headers = html.scan(/<th[^>]*scope="col"[^>]*>(.*?)<\/th>/).flatten
     assert_equal ['RP 이름', '방송인·채널', 'RP·컨셉 요약', '시민 등급', '소속', '특이사항'], headers.first(6)
-    assert_equal WikiCitizens::COLUMNS.keys, headers.last(9)
+    assert_equal WikiCitizens::FULL_TABLE_COLUMNS, headers.last(9)
+    assert_match(/wiki-col-grade[^>]*>.*?2등급.*?wiki-col-rp[^>]*>—.*?wiki-col-streamer[^>]*>방송인.*?wiki-col-concept[^>]*>설정.*?wiki-col-affiliation/m, html)
     assert_equal 15, html.scan(/<col class=/).length
     assert_in_delta WikiCitizens::COLUMNS['방송인·채널'][1] * 1.2, WikiCitizens::COLUMNS['진급 기록'][1]
     assert_includes render(source.sub(' | 참여 종료 |', ' |').sub(' | 참여 상태 |', ' |').sub('| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |', '| --- | --- | --- | --- | --- | --- | --- | --- | --- |')), 'colspan="9"'
