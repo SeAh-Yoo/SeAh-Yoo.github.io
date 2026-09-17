@@ -459,14 +459,14 @@ last_modified_at: 2026-09-16
 {% capture crew_roster %}
 | RP 이름 | 특이사항 |
 | :--- | :--- |
-| 유세라 | — |
-| 뇨롱이 | — |
-| 버찌 | — |
-| 마뮤뮤 | — |
-| 피엔 | — |
-| 씨랙 | — |
-| 총아야 | — |
-| 파크상 | — |
+| 유옥기 | — |
+| 아마도 | — |
+| 찹츄르 | — |
+| 먀조희 | — |
+| 빠라밤 | — |
+| 이고니 | — |
+| 허세아 | — |
+| 백지화 | — |
 {: .wiki-service-table }
 {% endcapture %}
 {% include wiki-template.html name="임시크루명단" title="유옥기(유세라) 파티" icon="gang" source="citizens" layout="crew" body=crew_roster %}
