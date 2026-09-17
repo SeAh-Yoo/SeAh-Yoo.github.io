@@ -361,7 +361,7 @@ last_modified_at: 2026-09-16
 | 봉예나 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 블랙리스트" title="블랙리스트" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="블랙리스트" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 비질란테 (가칭)
 
@@ -378,7 +378,7 @@ last_modified_at: 2026-09-16
 | 빙초선 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 비질란테 (가칭)" title="비질란테 (가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="비질란테 (가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 부산 갈매기
 
@@ -394,7 +394,7 @@ last_modified_at: 2026-09-16
 | 오구라함마 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 부산 갈매기" title="부산 갈매기" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="부산 갈매기" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 네오경찰 (가칭)
 
@@ -408,7 +408,7 @@ last_modified_at: 2026-09-16
 | 강하린 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 네오경찰 (가칭)" title="네오경찰 (가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="네오경찰 (가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 최루탄 피트스탑 (가칭)
 
@@ -421,7 +421,7 @@ last_modified_at: 2026-09-16
 | 정조준 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 최루탄 피트스탑 (가칭)" title="최루탄 피트스탑 (가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="최루탄 피트스탑 (가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 와이키키비치(카에데) 파티
 
@@ -435,7 +435,7 @@ last_modified_at: 2026-09-16
 | 각시탈 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 와이키키비치 파티" title="와이키키비치 파티" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="와이키키비치 파티" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 월터 황(조매력) 파티
 
@@ -452,7 +452,7 @@ last_modified_at: 2026-09-16
 | 소에로 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 월터 황(조매력) 파티" title="월터 황(조매력) 파티" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="월터 황(조매력) 파티" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 유옥기(유세라) 파티
 
@@ -469,7 +469,7 @@ last_modified_at: 2026-09-16
 | 파크상 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 유옥기(유세라) 파티" title="유옥기(유세라) 파티" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="유옥기(유세라) 파티" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 최루탄(빅헤드) 피트스탑
 
@@ -482,7 +482,7 @@ last_modified_at: 2026-09-16
 | 정조준 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 최루탄(빅헤드) 피트스탑" title="최루탄(빅헤드) 피트스탑" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="최루탄(빅헤드) 피트스탑" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 깨갱 (가칭)
 
@@ -494,7 +494,7 @@ last_modified_at: 2026-09-16
 | 펭구인 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 깨갱" title="깨갱 (가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="깨갱 (가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 약해연(릴카) 파티
 
@@ -506,7 +506,7 @@ last_modified_at: 2026-09-16
 | 반동석 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 약해연(릴카) 파티" title="약해연(릴카) 파티" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="약해연(릴카) 파티" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 임하룡(맹숙) 파티
 
@@ -518,7 +518,7 @@ last_modified_at: 2026-09-16
 | 돌만이 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 임하룡(맹숙) 파티" title="임하룡(맹숙) 파티" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="임하룡(맹숙) 파티" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 
 
@@ -762,7 +762,7 @@ last_modified_at: 2026-09-16
 | 1등급 | [치지직:4325b1d5bbc321fad3042306646e2e50]{아카네 리제} | 야루 | 경찰 | — | — | 교육생 | — | — |
 | 1등급 | [치지직:41d1490bd67b3818d7dc53427a4d6cea]{앵보} | 정다정 | 교통 | — | — | 모범기사 | 정다정: 9월 14일 새벽 수습기사에서 진급 | — |
 | 1등급 | [치지직:912b559dcdd9c9ea1fe97864925738bf]{왈도쿤} | 고민중 | 경찰 | — | — | 경장 | — | 순찰조장 |
-| 1등급 | 운영자 | 차호빵 | 시청 | — | 운영자 | 봉누도시청: 가이드 | — | — |
+| 1등급 | 운영자 | 차호빵 | 시청 | — | 운영자 | 공무원 | — | — |
 | 1등급 | [치지직:2e15ecbee8e01f6d43dbc9ec84530431]{위구리} | 나익수 | 방송 | — | — | 기자 | — | — |
 | 1등급 | [치지직:8fd39bb8de623317de90654718638b10]{유즈하 리코} | 신이비 | 방송 | — | — | 기자 | — | — |
 | 1등급 | [치지직:eaf7b569c9992d0e57db0059eb5c0eeb]{이글콥} | 안성실 | 병원 | — | — | 진료부장 | — | — |
@@ -1006,7 +1006,7 @@ last_modified_at: 2026-09-16
 
 #### 공무직 오리엔테이션 (2026.09.12)
 - 교통정비공사: 종조이[+달콤레나 씨]는 전 공무직 인원 중 유일하게 운전 면허 시험 불합격, 사장인 황인정[+너불]에게 이틀 간 면허 시험 응시 금지되었다.[^banned-test-0912]
-- 봉누도경찰서: 봉누도 전체 첫 사건으로 황인정[+너불]의 E.M.S 치료비 먹튀 사건이 있다. 오순찰[+멋사]와 -가 출동하여 체포하여 치료비를 입금하였다.
+- 봉누도경찰서: 봉누도 전체 첫 사건으로 황인정[+너불]의 E.M.S 치료비 먹튀 사건이 있다. 오순찰[+멋사]와 ??가 출동하여 체포하여 치료비를 입금하였다.
 - 봉누도방송국: 명총희[+시라유키 히나]는 운전 면허 시험을 6회나 시도한 끝에 합격하였다.
 
 #### 서버 오픈 직전 (2026.09.13)
