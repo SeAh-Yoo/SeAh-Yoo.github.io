@@ -289,7 +289,7 @@ last_modified_at: 2026-09-16
 | 감도이 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 흑수협" title="흑수협 (원양 어업)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="흑수협 (원양 어업)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 농사 그룹 (가칭)
 
@@ -306,7 +306,7 @@ last_modified_at: 2026-09-16
 | 한세월 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 농사 그룹 (가칭)" title="농사 그룹 (예정, 가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="농사 그룹 (예정, 가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 꽃게잇츠 (가칭, 일식집 예정)
 
@@ -320,7 +320,7 @@ last_modified_at: 2026-09-16
 | 하이연 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 꽃게잇츠 (가칭)" title="꽃게잇츠 (일식집 예정, 가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="꽃게잇츠 (일식집 예정, 가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 튜닝샵 그룹 (예정)
 
@@ -333,7 +333,7 @@ last_modified_at: 2026-09-16
 | 모해요 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시 크루: 튜닝샵 그룹 (가칭)" title="튜닝샵 그룹 (예정, 가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="튜닝샵 그룹 (예정, 가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 
 ### 갱단 (평판: 악 성향) [_접기]
@@ -346,7 +346,7 @@ last_modified_at: 2026-09-16
 
 서버 진행 2일차 종료 시점의 결성 준비 명단이다. 정식 갱단의 3등급 조건과 별개로, 현재 등급은 전체 시민 원본에 기록된 2등급을 유지한다. 직책·진급·평판·RP 설정은 확인 전까지 빈칸(—)으로 둔다. 미확정 인원은 합계에 별도로 표시한다.
 
-##### 블랙리스트
+##### 블랙리스트 (가칭)
 
 {% capture crew_roster %}
 | RP 이름 | 특이사항 |
@@ -361,7 +361,7 @@ last_modified_at: 2026-09-16
 | 봉예나 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시크루명단" title="블랙리스트" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="블랙리스트 (가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 비질란테 (가칭)
 
@@ -380,7 +380,7 @@ last_modified_at: 2026-09-16
 {% endcapture %}
 {% include wiki-template.html name="임시크루명단" title="비질란테 (가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
-##### 부산 갈매기
+##### 부산 갈매기 (가칭)
 
 {% capture crew_roster %}
 | RP 이름 | 특이사항 |
@@ -394,7 +394,7 @@ last_modified_at: 2026-09-16
 | 오구라함마 | — |
 {: .wiki-service-table }
 {% endcapture %}
-{% include wiki-template.html name="임시크루명단" title="부산 갈매기" icon="gang" source="citizens" layout="crew" body=crew_roster %}
+{% include wiki-template.html name="임시크루명단" title="부산 갈매기 (가칭)" icon="gang" source="citizens" layout="crew" body=crew_roster %}
 
 ##### 네오경찰 (가칭)
 
