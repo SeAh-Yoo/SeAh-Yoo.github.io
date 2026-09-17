@@ -9,6 +9,8 @@ module WikiCitizens
     '진급 기록' => ['promotion', 11.52], '조직 내 평판·역할' => ['reputation', 11.52],
     '특이사항' => ['notes', 5.8]
   }.freeze
+  FULL_TABLE_COLUMNS = ['시민 등급', 'RP 이름', '방송인·채널', 'RP·컨셉 요약', '소속', '직책',
+                        '진급 기록', '조직 내 평판·역할', '특이사항'].freeze
   AFFILIATIONS = {
     /경찰/ => 'police', /EMS|병원|의료/i => 'hospital', /시청/ => 'city',
     /방송/ => 'broadcast', /교통|정비/ => 'transport', /갱단/ => 'gang',
@@ -136,8 +138,8 @@ module WikiCitizens
     body = source.children.find { |n| n.type == :tbody }
     body.children.sort_by! { |r| [plain(r.children[0]), streamer_name(r.children[1]).downcase, plain(r.children[2])] }
     body.children.each do |r|
-      r.children = [6, 2, 1, 4, 0, 3, 7, 8, 5].map { |index| r.children[index] }
-      role = r.children.first
+      r.children = [0, 2, 1, 4, 3, 6, 7, 8, 5].map { |index| r.children[index] }
+      role = r.children[5]
       if plain(role).include?(':')
         role.attr['title'] = plain(role)
         parts = plain(role).split(';').map { |part| part.split(':', 2).last.strip }
@@ -146,7 +148,7 @@ module WikiCitizens
         end
       end
     end
-    source.children.first.children.first.children = COLUMNS.keys.map { |label| cell(label) }
+    source.children.first.children.first.children = FULL_TABLE_COLUMNS.map { |label| cell(label) }
     source_attrs = { 'data-org-title' => '전체 시민', 'data-org-icon' => 'citizen' }
     walk(root) do |node|
       source_attrs.merge!(node.attr) if node.children.include?(source)
