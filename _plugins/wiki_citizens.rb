@@ -161,14 +161,14 @@ module WikiCitizens
     table.attr['aria-label'] = attrs['data-org-title']
     headers = table.children.first.children.first.children
     columns = headers.map { |c| COLUMNS.fetch(plain(c)) }
-    total = columns.sum { |_, width| width }.round(2)
-    table.attr['style'] = "--wiki-table-units: #{total}"
+    units = columns.map { |name, width| "var(--wiki-width-#{name}, #{width})" }
+    table.attr['style'] = "--wiki-table-units: calc(#{units.join(' + ')})"
     table.attr['data-wiki-fixed-columns'] = ''
     baseurl = attrs.fetch('data-org-baseurl', '').sub(%r{/\z}, '')
     headers.each_with_index do |c, index|
       name, width = columns[index]
       c.attr['class'] = "wiki-col-#{name}"
-      c.attr['style'] = "width: #{(width / total * 100).round(6)}%"
+      c.attr['style'] = "width: calc(100% * var(--wiki-width-#{name}, #{width}) / var(--wiki-table-units))"
       entries.each do |row|
         row.children[index].attr['class'] = "wiki-col-#{name}"
         affiliation_icons(row.children[index], baseurl) if name == 'affiliation'
@@ -217,7 +217,7 @@ module WikiCitizens
     group = Kramdown::Element.new(:html_element, 'colgroup', {}, category: :block)
     columns.each do |name, width|
       group.children << Kramdown::Element.new(:html_element, 'col', {
-        'class' => "wiki-col-#{name}", 'style' => "width: #{(width / total * 100).round(6)}%"
+        'class' => "wiki-col-#{name}", 'style' => "width: calc(100% * var(--wiki-width-#{name}, #{width}) / var(--wiki-table-units))"
       }, category: :block, is_closed: true)
     end
     table.children.unshift(group)

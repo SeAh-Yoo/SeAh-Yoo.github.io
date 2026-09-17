@@ -1,3 +1,23 @@
+/* 직접 조정하는 위키 너비 설정 (저장하면 Jekyll이 자동 빌드합니다).
+ * 열 값은 단위 없는 양수입니다. PC에서는 열 사이의 너비 비율,
+ * 모바일에서는 기본 글자 크기(em)를 기준으로 한 너비가 됩니다.
+ * 예: RP 이름을 넓히려면 --wiki-width-rp: 8.8을 10으로 변경하세요.
+ * content-width는 본문 안쪽만 조정하며 블로그 전체/메뉴 너비는 바꾸지 않습니다.
+ */
+.wiki-article {
+  --wiki-content-width: calc(var(--reading-width) * 1.2);
+  --wiki-width-role: 5.8;          /* 직책 */
+  --wiki-width-rp: 8.8;            /* RP 이름 */
+  --wiki-width-streamer: 9.6;      /* 방송인·채널 */
+  --wiki-width-concept: var(--wiki-width-streamer); /* RP·컨셉 요약 */
+  --wiki-width-grade: 6.2;         /* 시민 등급 */
+  --wiki-width-affiliation: 9.2;   /* 소속 */
+  --wiki-width-promotion: calc(var(--wiki-width-streamer) * 1.2); /* 진급 기록 */
+  --wiki-width-reputation: var(--wiki-width-promotion); /* 조직 내 평판·역할 */
+  --wiki-width-notes: 5.8;         /* 특이사항 */
+  --wiki-table-font-size: 0.875rem; /* 표 기본 글자 크기 */
+  --wiki-table-detail-scale: 0.88; /* 채널·요약·기록 본문 글자 배율 */
+}
 .wiki-index { margin-top: 1rem; padding: clamp(1.25rem, 4vw, 3rem); }
 .wiki-alphabet { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border-subtle); }
 .wiki-alphabet a { display: inline-flex; align-items: center; justify-content: center; min-height: var(--tap-target); min-width: var(--tap-target); padding: 0.4rem 0.7rem; border: 1px solid var(--color-border-strong); border-radius: var(--radius-small); text-decoration: none; }
@@ -294,9 +314,7 @@ mark.wiki-find-current { background: #ffad32; outline: 2px solid #885300; }
 }
 
 /* Registry rosters: stable column proportions, independent of cell contents. */
-body:has([data-wiki-fixed-columns]) .shell { width: min(100%, 120rem); }
-.wiki-article:has([data-wiki-fixed-columns]) { padding-inline: 1rem; }
-.wiki-article:has([data-wiki-fixed-columns]) .post-content { width: 100%; }
+.wiki-article:has([data-wiki-fixed-columns]) .post-content { width: min(100%, var(--wiki-content-width)); }
 .wiki-article .post-content .wiki-template:has([data-wiki-fixed-columns]) { margin-inline: 0; padding: 0.35rem; }
 .wiki-article .wiki-heading-content:has(> .wiki-template [data-wiki-fixed-columns]),
 .wiki-article .wiki-heading-content:has(> .wiki-organization [data-wiki-fixed-columns]) { margin-inline-start: 0; }
@@ -305,7 +323,7 @@ body:has([data-wiki-fixed-columns]) .shell { width: min(100%, 120rem); }
   table-layout: fixed;
   width: 100%;
   min-width: 0;
-  font-size: min(0.875rem, calc(100cqi / var(--wiki-table-units)));
+  font-size: min(var(--wiki-table-font-size), calc(100cqi / var(--wiki-table-units)));
   line-height: 1.5;
 }
 .wiki-article .post-content table[data-wiki-fixed-columns] :is(th, td) {
@@ -315,7 +333,7 @@ body:has([data-wiki-fixed-columns]) .shell { width: min(100%, 120rem); }
   overflow-wrap: anywhere;
 }
 .wiki-article .post-content table[data-wiki-fixed-columns] td:is(.wiki-col-streamer, .wiki-col-concept, .wiki-col-promotion, .wiki-col-reputation) {
-  font-size: 0.88em;
+  font-size: calc(var(--wiki-table-detail-scale) * 1em);
   line-height: 1.45;
 }
 .wiki-article .post-content table[data-wiki-fixed-columns] .wiki-sort { min-height: 44px; padding: 0; line-height: 1.4; }
@@ -327,26 +345,13 @@ body:has([data-wiki-fixed-columns]) .shell { width: min(100%, 120rem); }
 .wiki-affiliation { color: var(--wiki-body-text); }
 .wiki-article .post-content table[data-wiki-fixed-columns] tbody tr:hover,
 .wiki-article .post-content table[data-wiki-fixed-columns] tbody tr:focus-within { background: var(--color-accent-soft); }
-/* Give narrow desktop windows room for the nine-column registry. */
-@media (min-width: 901px) and (max-width: 1399px) {
-  body:has([data-wiki-fixed-columns]) .shell { display: block; }
-  body:has([data-wiki-fixed-columns]) .sidebar {
-    position: static; display: grid; grid-template-columns: 14rem minmax(0, 1fr);
-    gap: 1.5rem; max-height: none; margin-bottom: 1rem;
-  }
-  body:has([data-wiki-fixed-columns]) .sidebar-collapse-inner { display: grid; grid-template-columns: minmax(0, 1fr) 13rem; column-gap: 1.5rem; }
-  body:has([data-wiki-fixed-columns]) .primary-nav { grid-row: 1 / 3; margin-top: 0; }
-  body:has([data-wiki-fixed-columns]) .primary-nav ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  body:has([data-wiki-fixed-columns]) .theme-switcher { margin-top: 0; }
-  body:has([data-wiki-fixed-columns]) .sidebar-license { grid-column: 2; }
-}
 @media (min-width: 901px) {
   .wiki-organization:has([data-wiki-fixed-columns]) { overflow: visible; }
 }
 @media (max-width: 900px) {
   .wiki-organization:has([data-wiki-fixed-columns]) { overflow-x: auto; overscroll-behavior-inline: contain; }
   .wiki-article .post-content table[data-wiki-fixed-columns]:not(.footnotes table) {
-    font-size: 0.875rem;
+    font-size: var(--wiki-table-font-size);
     width: calc(var(--wiki-table-units) * 1em);
     min-width: 100%;
     max-width: none;
@@ -358,6 +363,6 @@ body:has([data-wiki-fixed-columns]) .shell { width: min(100%, 120rem); }
 }
 @media print {
   .wiki-organization:has([data-wiki-fixed-columns]) { overflow: visible; }
-  .wiki-article .post-content table[data-wiki-fixed-columns]:not(.footnotes table) { width: 100%; min-width: 0; font-size: min(0.875rem, calc(100cqi / var(--wiki-table-units))); }
+  .wiki-article .post-content table[data-wiki-fixed-columns]:not(.footnotes table) { width: 100%; min-width: 0; font-size: min(var(--wiki-table-font-size), calc(100cqi / var(--wiki-table-units))); }
   .wiki-article .post-content table[data-wiki-fixed-columns] :is(th, td) { position: static !important; }
 }
