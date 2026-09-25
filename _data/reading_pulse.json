@@ -1,13 +1,13 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-09-24T08:31:55.213Z",
+  "generated_at": "2026-09-25T08:53:30.493Z",
   "period": {
-    "start": "2026-08-26",
-    "end": "2026-09-24",
+    "start": "2026-08-27",
+    "end": "2026-09-25",
     "timezone": "Asia/Seoul"
   },
   "site": {
-    "total": 437
+    "total": 440
   },
   "posts": [
     {
@@ -64,7 +64,7 @@
       "path": "/wiki/wiki-nambong-island-2/",
       "url": "/wiki/wiki-nambong-island-2/",
       "month": 17,
-      "total": 17
+      "total": 18
     },
     {
       "title": "팰월드",
