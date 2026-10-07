@@ -1,13 +1,13 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-06T10:25:25.353Z",
+  "generated_at": "2026-10-07T10:21:00.130Z",
   "period": {
-    "start": "2026-09-07",
-    "end": "2026-10-06",
+    "start": "2026-09-08",
+    "end": "2026-10-07",
     "timezone": "Asia/Seoul"
   },
   "site": {
-    "total": 445
+    "total": 447
   },
   "posts": [
     {
@@ -63,8 +63,8 @@
       "title": "봉누도 시즌2",
       "path": "/wiki/wiki-nambong-island-2/",
       "url": "/wiki/wiki-nambong-island-2/",
-      "month": 20,
-      "total": 21
+      "month": 22,
+      "total": 23
     },
     {
       "title": "팰월드",
