@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-11T10:05:14.516Z",
+  "generated_at": "2026-10-12T10:58:06.662Z",
   "period": {
-    "start": "2026-09-12",
-    "end": "2026-10-11",
+    "start": "2026-09-13",
+    "end": "2026-10-12",
     "timezone": "Asia/Seoul"
   },
   "site": {
@@ -16,7 +16,7 @@
       "path": "/posts/2026-ai-spread/",
       "url": "/posts/2026-ai-spread/",
       "translationKey": "ai-spread",
-      "month": 2,
+      "month": 1,
       "total": 23,
       "read75": 1,
       "readComplete": 1
@@ -27,7 +27,7 @@
       "path": "/posts/2026-ncsoft-trust/",
       "url": "/posts/2026-ncsoft-trust/",
       "translationKey": "ncsoft-trust",
-      "month": 1,
+      "month": 0,
       "total": 18,
       "read75": 4,
       "readComplete": 2
@@ -38,7 +38,7 @@
       "path": "/posts/game-for-girls/",
       "url": "/posts/game-for-girls/",
       "translationKey": "game-for-girls",
-      "month": 2,
+      "month": 1,
       "total": 30,
       "read75": 11,
       "readComplete": 8
@@ -49,35 +49,35 @@
       "title": "악어의 놀이터2",
       "path": "/wiki/wiki-acau-pg2/",
       "url": "/wiki/wiki-acau-pg2/",
-      "month": 2,
+      "month": 0,
       "total": 2
     },
     {
       "title": "봉누도 시즌1",
       "path": "/wiki/wiki-nambong-island-1/",
       "url": "/wiki/wiki-nambong-island-1/",
-      "month": 4,
+      "month": 2,
       "total": 6
     },
     {
       "title": "봉누도 시즌2",
       "path": "/wiki/wiki-nambong-island-2/",
       "url": "/wiki/wiki-nambong-island-2/",
-      "month": 23,
+      "month": 21,
       "total": 23
     },
     {
       "title": "팰월드",
       "path": "/wiki/wiki-palworld/",
       "url": "/wiki/wiki-palworld/",
-      "month": 2,
+      "month": 0,
       "total": 3
     },
     {
       "title": "유전원 USB 허브",
       "path": "/wiki/wiki-usb-hub/",
       "url": "/wiki/wiki-usb-hub/",
-      "month": 1,
+      "month": 0,
       "total": 1
     }
   ]
