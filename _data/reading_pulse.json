@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-13T10:42:10.371Z",
+  "generated_at": "2026-10-14T08:47:51.635Z",
   "period": {
-    "start": "2026-09-14",
-    "end": "2026-10-13",
+    "start": "2026-09-15",
+    "end": "2026-10-14",
     "timezone": "Asia/Seoul"
   },
   "site": {
@@ -16,7 +16,7 @@
       "path": "/posts/2026-ai-spread/",
       "url": "/posts/2026-ai-spread/",
       "translationKey": "ai-spread",
-      "month": 1,
+      "month": 0,
       "total": 23,
       "read75": 1,
       "readComplete": 1
@@ -38,7 +38,7 @@
       "path": "/posts/game-for-girls/",
       "url": "/posts/game-for-girls/",
       "translationKey": "game-for-girls",
-      "month": 1,
+      "month": 0,
       "total": 30,
       "read75": 11,
       "readComplete": 8
@@ -56,14 +56,14 @@
       "title": "봉누도 시즌1",
       "path": "/wiki/wiki-nambong-island-1/",
       "url": "/wiki/wiki-nambong-island-1/",
-      "month": 2,
+      "month": 1,
       "total": 6
     },
     {
       "title": "봉누도 시즌2",
       "path": "/wiki/wiki-nambong-island-2/",
       "url": "/wiki/wiki-nambong-island-2/",
-      "month": 20,
+      "month": 19,
       "total": 23
     },
     {
