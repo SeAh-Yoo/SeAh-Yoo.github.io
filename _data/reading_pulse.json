@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-28T09:46:16.015Z",
+  "generated_at": "2026-10-29T10:04:29.185Z",
   "period": {
-    "start": "2026-09-29",
-    "end": "2026-10-28",
+    "start": "2026-09-30",
+    "end": "2026-10-29",
     "timezone": "Asia/Seoul"
   },
   "site": {
