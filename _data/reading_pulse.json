@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-03T10:57:53.977Z",
+  "generated_at": "2026-11-04T11:01:58.626Z",
   "period": {
-    "start": "2026-10-05",
-    "end": "2026-11-03",
+    "start": "2026-10-06",
+    "end": "2026-11-04",
     "timezone": "Asia/Seoul"
   },
   "site": {
@@ -63,7 +63,7 @@
       "title": "봉누도 시즌2",
       "path": "/wiki/wiki-nambong-island-2/",
       "url": "/wiki/wiki-nambong-island-2/",
-      "month": 4,
+      "month": 3,
       "total": 23
     },
     {
