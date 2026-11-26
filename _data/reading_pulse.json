@@ -1,13 +1,13 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-25T13:03:37.037Z",
+  "generated_at": "2026-11-26T12:43:51.912Z",
   "period": {
-    "start": "2026-10-27",
-    "end": "2026-11-25",
+    "start": "2026-10-28",
+    "end": "2026-11-26",
     "timezone": "Asia/Seoul"
   },
   "site": {
-    "total": 456
+    "total": 458
   },
   "posts": [
     {
